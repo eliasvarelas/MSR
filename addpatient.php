@@ -91,14 +91,13 @@
       margin-left: 200px;
       margin-right: 0px;
       background-color: #1a66ff;
-      
+
     }
-    div.form{    /* there is an overflowing-x issue with the form, make it Responsive */
-      max-width: 100%;
+    .form{    /* there is an overflowing-x issue with the form, make it Responsive */
       display: block;
-      float: left;
-      margin: auto;
-      background-color: #1a66ff;
+      max-width: 100%;
+      margin-right: 1em;
+      /* text-align:center; */
     }
 
     /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
@@ -152,15 +151,8 @@
       $password = "bioinformatics";
       $dbname = "BIHElab";
 
-
       $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      // if (is_null($pdo)) {
-      //     return $pdo -> prepare($query);
-      //     // echo"Connection is null";
-      // } else {
-      //     // echo "Connection active! \n";
-      // }
 
       $doc = $_SESSION['user_id'];
       //get the POST data
@@ -196,7 +188,7 @@
       }
       ?>
 
-      <form action="addpatient.php" method="post" class="form">
+      <form class="form" action="addpatient.php" method="post">
         <table>
           <tr>
             <th>Assign a Patient ID</th><th>First and Last Name</th><th>Phone Number</th><th>Email</th>
@@ -206,7 +198,7 @@
             <td><input type="number" name="phone"></td><td><input type="email" name="email"></td>
           </tr>
         </table>
-        <input type="submit" name="Submit">
+        <label for="Submit"> <input type="submit" name="Submit"></label>
       </form>
     </article>
 

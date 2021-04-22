@@ -170,8 +170,7 @@ session_start();?>
                       echo "<td>" . $row['Patient_name'] . "</td>";
                       echo "<td>" . $row['Phonenum'] . "</td>";
                       echo "<td>" . $row['Email'] . "</td>";
-                      echo "<td>" . "<a href='/previousvisits.php'</a>" . 'Previous Visits' . "</td>";
-                      // $pat_id =$row['Patient_id']; // for filtering previous visits
+                      echo "<td>" . "<a href='/previousvisits.php'</a>" . 'Previous Visits' ."</td>";
                       echo "<td>" . "<a href='/Multiple_Sclerosis_app.html'</a>" . 'Add Follow Up' . "</td>";
                   echo "</tr>";
               }
