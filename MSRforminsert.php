@@ -27,7 +27,7 @@
   $TREATMENT = $_POST['TREATMENT'];
   $eddsscore = $_POST['eddsscore'];
   $edsstime = $_POST['edsstime'];
-  $edssdist = $_POST['edssdist'];
+  // $edssdist = $_POST['edssdist'];
   $EDSSdate = $_POST['EDSSdate'];
   $EDSSdaterad = $_POST['EDSSdaterad'];
   $Pregnant = $_POST['Pregnant'];
@@ -62,15 +62,15 @@
     $sql = "INSERT INTO $table (NDS,NDSdate,NDSnum,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
     onsetdate, Noofrelapses,Noofrelapsesrad,
     pastTREATMENT,pastTREATMENTdate,pastTREATMENTcheck,TREATMENTdate, TREATMENT, eddsscore,edsstime,
-    edssdist, EDSSdate,EDSSdaterad,
+    EDSSdate,
     Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,signer,Submit)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";        //using prepared statements for security towards sql injections
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";        //using prepared statements for security towards sql injections
 
     // testing a new method
   if (isset($_POST["Submit"])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$NDS,$NDSdate,$NDSnum,$Sex,$Age,$Race,$Comorbidities,$convsprad,$convspnum,$dateofdia,$dateofdiarad,$onsetdate,$Noofrelapses,$Noofrelapsesrad,$pastTREATMENT,
-    $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime,$edssdist,$EDSSdate,$EDSSdaterad,$Pregnant,$Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$signer,$Submit]);
+    $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime,$EDSSdate,$Pregnant,$Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$signer,$Submit]);
     echo "records inserted successfully!!!!!!!!";
   } else {
     echo "Im sorry, there was an error";

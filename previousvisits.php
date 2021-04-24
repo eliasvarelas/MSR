@@ -146,7 +146,8 @@ session_start();
 
       try{
         include 'previousvisitfilter.php';
-          $sql = "SELECT * FROM MSR WHERE NDSnum = $pat_id ";
+        $sql = "SELECT * FROM MSR";
+          // $sql = "SELECT * FROM MSR WHERE NDSnum = $pat_id ";
           $result = $pdo->query($sql);
           if($result->rowCount() > 0){
             while($row = $result->fetch()){

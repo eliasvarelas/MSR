@@ -151,30 +151,62 @@ session_start();?>
 
 
       try{
-          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid";
-          $result = $pdo->query($sql);
-          if($result->rowCount() > 0){
-              echo "<table border = '1'>";
-
-                  echo "<tr>";
-                      echo "<th>Patient Id</th>";
-                      echo "<th>Patient Name</th>";
-                      echo "<th>Phone Number</th>";
-                      echo "<th>Email</th>";
-                      echo "<th>History</th>";
-                      echo "<th>Add a Follow Up Visit</th>";
-                  echo "</tr>";
-              while($row = $result->fetch()){
-                  echo "<tr>";
-                      echo "<td>" . $row['Patient_id'] . "</td>";
-                      echo "<td>" . $row['Patient_name'] . "</td>";
-                      echo "<td>" . $row['Phonenum'] . "</td>";
-                      echo "<td>" . $row['Email'] . "</td>";
-                      echo "<td>" . "<a href='/previousvisits.php'</a>" . 'Previous Visits' ."</td>";
-                      echo "<td>" . "<a href='/Multiple_Sclerosis_app.html'</a>" . 'Add Follow Up' . "</td>";
-                  echo "</tr>";
+          // $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid";
+          // $result = $pdo->query($sql);
+          // if($result->rowCount() > 0){
+          //     echo "<table border = '1'>";
+          //
+          //         echo "<tr>";
+          //             echo "<th>Patient Id</th>";
+          //             echo "<th>Patient Name</th>";
+          //             echo "<th>Phone Number</th>";
+          //             echo "<th>Email</th>";
+          //             echo "<th>History</th>";
+          //             echo "<th>Add a Follow Up Visit</th>";
+          //             echo "<th>Remove Patient</th>";
+          //         echo "</tr>";
+          //     while($row = $result->fetch()){
+          //         echo "<tr>";
+          //             echo "<td>" . $row['Patient_id'] . "</td>";
+          //             echo "<td>" . $row['Patient_name'] . "</td>";
+          //             echo "<td>" . $row['Phonenum'] . "</td>";
+          //             echo "<td>" . $row['Email'] . "</td>";
+          //             echo "<td>" . "<a href='/previousvisits.php'</a>" . 'Previous Visits' ."</td>";
+          //             echo "<td>" . "<a href='/Multiple_Sclerosis_app.html'</a>" . 'Add Follow Up' . "</td>";
+          //             echo "<td>" . "<";
+          //         echo "</tr>";
+          //     }
+          //     echo "</table>";
+          //     unset($result);
+          // } else{
+          //     echo "No records matching your query were found.";
+          // }
+          ?>
+          <table>
+            <tr>
+              <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
+              <th>Add a Follow Up Visit</th><th>Remove Patient</th>
+            </tr>
+            <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid";
+            $result = $pdo->query($sql);
+            if($result->rowCount() > 0){
+              while($row = $result->fetch()){?>
+            <tr>
+              <td><?php echo $row['Patient_id']; ?></td>
+              <td><?php echo $row['Patient_name'] ; ?></td>
+              <td><?php echo $row['Phonenum'] ; ?></td>
+              <td><?php echo $row['Email']; ?></td>
+              <td><?php echo "<a href='/previousvisits.php'</a>" . 'Previous Visits'; ?></td>
+              <td><?php echo "<a href='/Multiple_Sclerosis_app.html'</a>" . 'Add Follow Up' ; }?></td>
+              <!-- <td> <script>
+              function deletepatient(){
+                let dlt = confirm('Click Ok to Remove the Patient');
               }
-              echo "</table>";
+                  </script> remove user <?php  ?></td> -->
+
+            </tr>
+          </table>
+          <?php
               unset($result);
           } else{
               echo "No records matching your query were found.";
