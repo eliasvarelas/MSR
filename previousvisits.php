@@ -65,7 +65,7 @@ session_start();
     .sidebar {
       margin: 0;
       padding: 0;
-      height: auto;
+      height: 100%;
       width: 200px;
       background-color: #99bbff;
       position: absolute;
@@ -146,7 +146,6 @@ session_start();
 
       try{
         $patientID = $_GET["id"];
-        echo $patientID;
         $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
           $result = $pdo->query($sql);
           if($result->rowCount() > 0){

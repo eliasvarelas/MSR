@@ -91,6 +91,9 @@ session_start();?>
       margin-left: 200px;
       margin-right: 0px;
     }
+    #removeuser a {
+      color:red;
+    }
 
     /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
     @media screen and (max-width: 600px) {
@@ -191,6 +194,7 @@ session_start();?>
               <td><?php echo $row['Email']; ?></td>
               <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
               <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."'>Add Follow up</a>"; ?></td>
+              <td id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></td>
             </tr>
               <?php } ?>
           </table>

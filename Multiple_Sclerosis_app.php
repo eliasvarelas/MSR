@@ -1,6 +1,7 @@
 <?php
 session_start();
 $patientID = $_GET["id"];
+$patientNAME = $_GET["nm"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -158,7 +159,7 @@ $patientID = $_GET["id"];
    <form target="_blank" action="MSRforminsert.php" method="post" class="header">
      <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
-    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" autofocus></textarea>
+    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientNAME; ?>" autofocus></textarea>
       <br> </p>
     <table style="width:100%;">
       <tr>
