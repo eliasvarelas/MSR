@@ -181,7 +181,9 @@ $patientNAME = $_GET["nm"];
           <option value="Caucasian">Caucasian</option>
           <option value="Unknown">Unknown</option>
         </select>
-        </td><td><input type="text" name="Comorbidities"></td>
+      </td><td><select name="Comorbidities" name="Comorbidities" required> <!-- want to make a dropdown with a freetext as a last input -->
+        <option value="Diabetes">Diabetes</option>
+        <option><input type="text" name="Comorbidities"></option>
       </tr>
     </table>
     <br>
