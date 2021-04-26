@@ -142,13 +142,6 @@ session_start();?>
 
       $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      // if (is_null($pdo)) {
-      //     return $pdo -> prepare($query);
-      //     // echo"Connection is null";
-      // } else {
-      //     // echo "Connection active! \n";
-      // }
-
 
       try{
           // $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid";
@@ -196,25 +189,19 @@ session_start();?>
               <td><?php echo $row['Patient_name'] ; ?></td>
               <td><?php echo $row['Phonenum'] ; ?></td>
               <td><?php echo $row['Email']; ?></td>
-              <td><?php echo "<a href='/previousvisits.php'</a>" . 'Previous Visits'; ?></td>
-              <td><?php echo "<a href='/Multiple_Sclerosis_app.html'</a>" . 'Add Follow Up' ; }?></td>
-              <!-- <td> <script>
-              function deletepatient(){
-                let dlt = confirm('Click Ok to Remove the Patient');
-              }
-                  </script> remove user <?php  ?></td> -->
-
+              <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
+              <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."'>Add Follow up</a>"; ?></td>
             </tr>
+              <?php } ?>
           </table>
           <?php
               unset($result);
-          } else{
+            } else{
               echo "No records matching your query were found.";
-          }
+            }
       } catch(PDOException $e){
           die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
-
       ?>
     </article>
 

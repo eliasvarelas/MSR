@@ -145,9 +145,9 @@ session_start();
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       try{
-        include 'previousvisitfilter.php';
-        $sql = "SELECT * FROM MSR";
-          // $sql = "SELECT * FROM MSR WHERE NDSnum = $pat_id ";
+        $patientID = $_GET["id"];
+        echo $patientID;
+        $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
           $result = $pdo->query($sql);
           if($result->rowCount() > 0){
             while($row = $result->fetch()){

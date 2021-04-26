@@ -1,3 +1,7 @@
+<?php
+session_start();
+$patientID = $_GET["id"];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -158,7 +162,7 @@
       <br> </p>
     <table style="width:100%;">
       <tr>
-        <th>Date: <input type="date" name="NDSdate"  max="" ></th><th>Study ID: <input type="number" min=0 name="NDSnum"></th>
+        <th>Date: <input type="date" name="NDSdate"  max="" ></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
       </tr>
     </table>
     <table style="width:100%;">
