@@ -194,15 +194,15 @@ session_start();?>
               <td><?php echo $row['Email']; ?></td>
               <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
               <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."'>Add Follow up</a>"; ?></td>
-              <td id="removeuser"><button onclick="remove_user()"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>
+              <td><button onclick="remove_user('Are you Sure????')" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>
               <script>
                 function remove_user() {
                   var sql;
-                  var r = confirm("Are You Sure?");
+                  var r = confirm('Are you Sure?')
                   if (r == true) {
                     sql = "DELETE FROM patients WHERE Patient_id = $PatientID";
                   } else {
-                    continue;
+                    sql = "";   // works, but there is something going on with the buttons...
                   }
                   document.getElementById("removeuser").innerHTML = sql;
                 }
