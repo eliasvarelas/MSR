@@ -194,7 +194,19 @@ session_start();?>
               <td><?php echo $row['Email']; ?></td>
               <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
               <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."'>Add Follow up</a>"; ?></td>
-              <td id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></td>
+              <td id="removeuser"><button onclick="remove_user()"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>
+              <script>
+                function remove_user() {
+                  var sql;
+                  var r = confirm("Are You Sure?");
+                  if (r == true) {
+                    sql = "DELETE FROM patients WHERE Patient_id = $PatientID";
+                  } else {
+                    continue;
+                  }
+                  document.getElementById("removeuser").innerHTML = sql;
+                }
+              </script>
             </tr>
               <?php } ?>
           </table>

@@ -304,7 +304,7 @@ $patientNAME = $_GET["nm"];
                 <td>Time: <input type="time" name="edsstime" required><br>
               </tr>
               <tr>
-                <td id="purple">Nine-Hole PEG Test</td><td>Time: <input type="time"></td>
+                <td id="purple">Nine-Hole PEG Test</td><td>Time: <input type="time" name="edsstimePEG"></td>
               </tr>
             </table>
           </div>
