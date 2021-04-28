@@ -142,7 +142,7 @@ session_start();?>
 
       $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      
+
     try{ ?>
         <form class="form" action="searching.php" method="post">
           <table>
@@ -169,8 +169,7 @@ session_start();?>
           $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry";
           $result = $pdo->query($sql);
           if ($result->rowCount()>0) {
-            while($row = $result->fetch()){
-              ?>
+            while($row = $result->fetch()){ ?>
               <table>
                 <tr>
                   <th>Patient ID</th><th>Name</th><th>Phone Number</th><th>Email</th>
