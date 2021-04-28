@@ -142,32 +142,17 @@ session_start();?>
 
       $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      // isert a dropdown menu to use as a user input method for searching
-      // dynamicly in the sqlquery (ex. Attribute:Sex, Value: Female)
-      try{?>
+      
+    try{ ?>
         <form class="form" action="searching.php" method="post">
           <table>
             <tr>
               <th><select class="selection" name="Attributes">
-                <option disabled>Attributes</option>
-                <option>Patient ID</option>
-                <option>Name</option>
-                <option>Phone Number</option>
-                <option>Email</option>
-                <!--<option>Sex</option>
-                <option>Age</option>
-                <option>Race</option>
-                <option>Comorbidities</option>
-                <option>Date of Diagnosis</option>
-                <option>Onset Date</option>
-                <option>Past Treatment</option>
-                <option>Present Treatment</option>
-                <option>Current EDSS Score</option>
-                <option>Pregnancy</option>
-                <option>Onset Localisation</option>
-                <option>Smoker</option>
-                <option>Onset Symptoms</option> -->
+                <option disabled>Options</option>
+                <option value="ID">Patient ID</option>
+                <option value="Name">Name</option>
+                <option value="Phone Number">Phone Number</option>
+                <option value="Email">Email</option>
               </select> </th>
             </tr>
             <tr>
@@ -177,49 +162,87 @@ session_start();?>
           <input type="submit" name="Searchbtn" value="Search">
         </form>
 
-        <?php $option = $_POST['srchoption'];
+        <?php
+        $option = $_POST['Attributes'];
+        $entry = $_POST['srchoption'];
         if ($option == 'ID'){
-          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$option";
+          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry";
           $result = $pdo->query($sql);
           if ($result->rowCount()>0) {
             while($row = $result->fetch()){
-              echo $option;
-            }
+              ?>
+              <table>
+                <tr>
+                  <th>Patient ID</th><th>Name</th><th>Phone Number</th><th>Email</th>
+                </tr>
+                <tr>
+                  <td> <?php echo $row['Patient_id']; ?> </td><td><?php echo $row['Patient_name']; ?></td>
+                  <td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                </tr>
+              </table>
+            <?php }
           } else {
             echo "No patient exists with this information.";
           }
         }
         if ($option == 'Name'){
-          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name =$option";
+          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name ='$entry'";
           $result = $pdo->query($sql);
           if ($result->rowCount()>0) {
-            while($row = $result->fetch()){
-              echo $option;
-            }
-          } else {
-            echo "No patient exists with this information.";
-          }
-        }if ($option == 'Phone Number'){
-          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum =$option";
-          $result = $pdo->query($sql);
-          if ($result->rowCount()>0) {
-            while($row = $result->fetch()){
-              echo $option;
-            }
-          } else {
-            echo "No patient exists with this information.";
-          }
-        }if ($option == 'Email'){
-          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Email =$option";
-          $result = $pdo->query($sql);
-          if ($result->rowCount()>0) {
-            while($row = $result->fetch()){
-              echo $option;
-            }
+            while($row = $result->fetch()){ ?>
+              <table>
+                <tr>
+                  <th>Name</th><th>Patient ID</th><th>Phone Number</th><th>Email</th>
+                </tr>
+                <tr>
+                  <td><?php echo $row['Patient_name']; ?></td><td> <?php echo $row['Patient_id']; ?> </td>
+                  <td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                </tr>
+              </table>
+      <?php }
           } else {
             echo "No patient exists with this information.";
           }
         }
+        if ($option == 'Phone Number'){
+          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum =$entry";
+          $result = $pdo->query($sql);
+          if ($result->rowCount()>0) {
+            while($row = $result->fetch()){ ?>
+              <table>
+                <tr>
+                  <th>Phone Number</th><th>Patient ID</th><th>Name</th><th>Email</th>
+                </tr>
+                <tr>
+                  <td><?php echo $row['Phonenum']; ?></td><td> <?php echo $row['Patient_id']; ?> </td>
+                  <td><?php echo $row['Patient_name']; ?></td><td><?php echo $row['Email']; ?></td>
+                </tr>
+              </table>
+            <?php }
+            }
+          } else {
+            echo "No patient exists with this information.";
+          }
+        if ($option == 'Email'){
+          $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Email =$option";
+          $result = $pdo->query($sql);
+          if ($result->rowCount()>0) {
+            while($row = $result->fetch()){ ?>
+              <table>
+                <tr>
+                  <th>Phone Number</th><th>Patient ID</th><th>Name</th><th>Email</th>
+                </tr>
+                <tr>
+                  <td><?php echo $row['Email']; ?></td><td> <?php echo $row['Patient_id']; ?> </td>
+                  <td><?php echo $row['Patient_name']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                </tr>
+              </table>
+            <?php }
+            }
+          } else {
+            echo "No patient exists with this information.";
+          }
+
       } catch(PDOException $e){
           die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }

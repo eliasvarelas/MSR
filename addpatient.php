@@ -116,6 +116,19 @@
       .sidebar a {float: left;}
       div.content {margin-left: 0;}
     }
+    /* @media screen and (min-width: 1000px) {     /* Center the table in larger screens 
+      .sidebar {
+        width: 50%;
+        height: auto;
+        position: relative;
+        float: left;
+      }
+      .sidebar a {float: left;}
+      div.content {
+        margin-left: 0%;
+        margin-right: 50%;
+      }
+    } */
 
     @media screen and (max-width: 400px) {
       .sidebar a {
