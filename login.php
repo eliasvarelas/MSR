@@ -86,12 +86,12 @@ try {
       display :block;
     }
     div{
-      margin: auto;
-      width: 60%;
-      padding: 0;
+      margin: 0;
+      position: absolute;
       top: 50%;
       left: 50%;
-      bottom: 50%;
+      transform: translate(-50%, -50%);
+      padding: 1em 1em;
       text-align: center;
       font-family: arial;
       background-color: lightblue;
