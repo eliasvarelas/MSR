@@ -91,10 +91,12 @@ try {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      padding: 1em 1em;
+      padding: 1em 1.5em;
       text-align: center;
       font-family: arial;
       background-color: lightblue;
+      border-style: solid;
+      border-radius: 14%;
     }
     .box input[type = "text"], .box input[type = "password"]{
 

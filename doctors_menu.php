@@ -44,7 +44,7 @@ session_start();
       height: auto;
       font-family: Arial;
       border-style: double;
-      border-width: 0.5em;
+      border-width: 0.4em;
 
     }
     table, th, td {
@@ -78,7 +78,7 @@ session_start();
       position: absolute;
       overflow: auto;
       border-style: double;
-      border-width: 0.5em;
+      border-width: 0.4em;
     }
 
     .sidebar a {
