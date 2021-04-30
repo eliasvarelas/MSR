@@ -1,7 +1,7 @@
 <?php
 session_start();
-$patientID = $_GET["id"];
-$patientNAME = $_GET["nm"];
+$patientID = $_GET["id"];   // used to pass the patient id directly in the form
+$patientNAME = $_GET["name"]; // used to pass the pateint name directly in the form
 ?>
 <!DOCTYPE html>
 <html>
@@ -148,19 +148,19 @@ $patientNAME = $_GET["nm"];
 </head>
 
 <body>
-    <input type="image" class="lang" id="gr" src="gr.png">
+    <input type="image" class="lang" id="gr" src="gr.png">    <!-- redirects the user to the greek form -->
     <script type="text/javascript">
       document.getElementById("gr").onclick = function () {
-          location.href = "Multiple_Sclerosis_app_gr.html";
+          location.href = "Multiple_Sclerosis_app_gr.php";
       };
     </script>
 
+
                 <!-- Starting the form -->
-   <form target="_blank" action="MSRforminsert.php" method="post" class="header">
+   <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
      <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
-    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientNAME; ?>" autofocus></textarea>
-      <br> </p>
+    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientNAME; ?>" autofocus></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
     <table style="width:100%;">
       <tr>
         <th>Date: <input type="date" name="NDSdate"  max="" ></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
@@ -314,11 +314,6 @@ $patientNAME = $_GET["nm"];
               <tr>
                 <td id="purple" colspan="3"> Date EDSS was taken: <input type="date" name="EDSSdate" required></td>
               </tr>
-              <!-- <tr>
-                <td><label for="Self Estimated">Self Estimated</label><br><input type="radio" id="Self Estimated" name="EDSSdaterad" value="Self Estimated" required></td>
-                <td><label for="Trundle wheel">Trundle wheel</label><br><input type="radio" id="Trundle wheel" name="EDSSdaterad" value="Trundle wheel" required></td>
-                <td><label for="Treadmill">Treadmill</label><br><input type="radio" id="Treadmill" name="EDSSdaterad" value="Treadmill" required></td>
-              </tr> -->
             </table>
           </div>
         </div>

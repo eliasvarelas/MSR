@@ -1,6 +1,5 @@
 <?php
-  session_start();
-
+  session_start(); //neccesary for the declaration of a particullar active user
   echo "Logout Successfully ";
   session_destroy();   // function that Destroys Session
   $script = file_get_contents('jsredirectlogin.js');

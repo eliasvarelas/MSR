@@ -1,7 +1,6 @@
 <?php
 session_start();
 ?>
-                <!-- make this page an initial menu, with some basic info and maybe a new calendar -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -137,7 +136,7 @@ session_start();
 <body>
   <header>
     Welcome Doctor: <?php $user_name = $_SESSION['user'];
-    echo $user_name;?>!
+    echo $user_name;?>! <!-- prints the active username -->
     <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
   </header>
   <div class="sidebar">
@@ -152,6 +151,7 @@ session_start();
     <article>
       <img src="MSregistry_ionian2_bg_lightblue.png" alt="Logo">
       <?php
+      //database connection
       $usersid = $_SESSION['user_id'];
       $servername = "127.0.0.1";
       $username = "root";
@@ -160,6 +160,7 @@ session_start();
 
       $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      //establishing the connection and informing the user of its status
       if (is_null($pdo)) {
           return $pdo -> prepare($query);
           echo"The Connection with the Database has failed \n";
@@ -167,8 +168,7 @@ session_start();
           echo "<h1>The Connection with the Database is Active! \n</h1>";
       }
       ?>
-      <h4>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</h4>
-
+      <h4>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</h4>  <!-- Basic information for the app -->
     </article>
 
   </div>

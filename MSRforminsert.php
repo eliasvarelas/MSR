@@ -1,4 +1,5 @@
 <?php
+  //database connection
   $servername = "127.0.0.1";
   $username = "root";
   $password = "bioinformatics";
@@ -59,6 +60,7 @@
  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   try {
+    // inserting the data from the form in the MSR table
     $sql = "INSERT INTO $table (NDS,NDSdate,NDSnum,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
     onsetdate, Noofrelapses,Noofrelapsesrad,
     pastTREATMENT,pastTREATMENTdate,pastTREATMENTcheck,TREATMENTdate, TREATMENT, eddsscore,edsstime7_5m,edsstimePEG,
@@ -66,21 +68,15 @@
     Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,signer,Submit)
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";        //using prepared statements for security towards sql injections
 
-    // testing a new method
+    //Execute
   if (isset($_POST["Submit"])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$NDS,$NDSdate,$NDSnum,$Sex,$Age,$Race,$Comorbidities,$convsprad,$convspnum,$dateofdia,$dateofdiarad,$onsetdate,$Noofrelapses,$Noofrelapsesrad,$pastTREATMENT,
     $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime7_5m,$edssPEG,$EDSSdate,$Pregnant,$Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$signer,$Submit]);
     echo "records inserted successfully!!!!!!!!";
   } else {
-    echo "Im sorry, there was an error";
+    echo "Im sorry, there was an error";  // basic error handling
   }
-
-    // if ($pdo->query($sql) === TRUE) {         //Makes hardcoded tables procceed to the db
-    // echo "New record created successfully";
-    // } else {
-    // echo "Error: " . $sql . "<br>" . $conn->error;
-    // }
 
   if ($sql) {
     //Redirect to the Doctors Menu

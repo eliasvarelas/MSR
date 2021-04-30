@@ -128,7 +128,7 @@ session_start();?>
 <body>
   <header>
     Welcome Doctor: <?php $user_name = $_SESSION['user'];
-    echo $user_name;?>!
+    echo $user_name;?>! <!-- prints the active username -->
     <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
   </header>
   <div class="sidebar">
@@ -139,9 +139,10 @@ session_start();?>
         <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
       </ul>
   </div>
-  <div class="content">
+  <div class="content">  <!-- main content of the page -->
     <article>
       <?php
+      //database connection
       $usersid = $_SESSION['user_id'] ;
       $servername = "127.0.0.1";
       $username = "root";
@@ -152,12 +153,12 @@ session_start();?>
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       try{ ?>
-        <table>
+        <table>    <!-- prints the table with the patients -->
           <tr>
             <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
             <th>Add a Follow Up Visit</th><th>Remove Patient</th>
           </tr>
-            <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid";
+            <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
             $result = $pdo->query($sql);
             if($result->rowCount() > 0){
               while($row = $result->fetch()){?>
@@ -167,16 +168,16 @@ session_start();?>
                     <td><?php echo $row['Phonenum'] ; ?></td>
                     <td><?php echo $row['Email']; ?></td>
                     <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                    <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."'>Add Follow up</a>"; ?></td>
-                    <td><button onclick="remove_user('Are you Sure????')" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>
+                    <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                    <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
               <script>
-                function remove_user() {
+                function remove_user() {    //a simple function for confirming the removal of a patient
                   var sql;
                   var r = confirm('Are you Sure?')
                   if (r == true) {
                     sql = "DELETE FROM patients WHERE Patient_id = $PatientID";
                   } else {
-                    sql = "";   // works, but there is something going on with the buttons...
+                    sql = "";   // works, but there is something going on with the buttons needs to be revisited
                   }
                   document.getElementById("removeuser").innerHTML = sql;
                 }
@@ -186,7 +187,7 @@ session_start();?>
           </table>
           <?php
               unset($result);
-            } else{
+            } else{     // basic error checking
               echo "No records matching your query were found.";
             }
       } catch(PDOException $e){

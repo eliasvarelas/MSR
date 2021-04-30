@@ -1,3 +1,8 @@
+<?php
+session_start();
+$patientID = $_GET["id"];   // used to pass the patient id directly in the form
+$patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,7 +150,7 @@
     <input type="image" class="lang" id="eng" src="England.png">
     <script type="text/javascript">
       document.getElementById("eng").onclick = function () {
-          location.href = "Multiple_Sclerosis_app.html";
+          location.href = "Multiple_Sclerosis_app.php";
       };
     </script>
 

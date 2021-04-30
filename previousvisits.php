@@ -127,7 +127,7 @@ session_start();
 <body>
   <header>
     Welcome Doctor: <?php $user_name = $_SESSION['user'];
-    echo $user_name;?>!
+    echo $user_name;?>! <!-- prints the active username -->
     <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
   </header>
   <div class="sidebar">
@@ -150,12 +150,12 @@ session_start();
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       try{
-        $patientID = $_GET["id"];
+        $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
         $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
           $result = $pdo->query($sql);
           if($result->rowCount() > 0){
             while($row = $result->fetch()){
-              echo "<table border = '1' bordercollapse = 'collapse'>";
+              echo "<table border = '1' bordercollapse = 'collapse'>";  // the MSR table for the particular patient id
                   echo "<tr>";
                       echo "<th> Visit Number</th>";
                       echo "<th>Name & Address</th>";
@@ -169,7 +169,6 @@ session_start();
                       echo "<th>Conversion to SP</th>";
                       echo "<th>Date of Diagnosis</th>";
                       echo "<th>MS Type at Diagnosis</th>";
-
                   echo "</tr>";
                   echo "<tr>";
                     echo "<td>" . $row['id'] . "</td>";
@@ -232,7 +231,7 @@ session_start();
               echo "</table>";
               // Free result set
               unset($result);
-          } else{
+          } else{   // basic error checking
               echo "No records matching your query were found.";
           }
       } catch(PDOException $e){

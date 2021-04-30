@@ -7,22 +7,16 @@ $username = "root";
 $password = "bioinformatics";
 $dbname = "BIHElab";
 
-
-//If the POST var "register" exists (our submit button), then we can
-//assume that the user has submitted the registration form.
-
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
 if(isset($_POST['register'])){
-    //Retrieve the field values from our registration form.
+    //Retrieve the field values from the registration form.
     $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
     $pass = !empty($_POST['password']) ? trim($_POST['password']) : null;
 
     //Construct the SQL statement and prepare it.
     $sql = "SELECT * FROM users WHERE username = :username";
     $stmt = $pdo->prepare($sql);
-
-
 
     //Bind the provided username to the prepared statement.
     $stmt->bindValue(':username', $username);
@@ -42,11 +36,11 @@ if(isset($_POST['register'])){
     //password_hash
     $passwordHash = password_hash($pass, PASSWORD_BCRYPT, array("cost" => 12));
 
-    //Prepare our INSERT statement.
+    //INSERT statement.
     $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
     $stmt = $pdo->prepare($sql);
 
-    //Bind our variables.
+    //Bind the variables.
     $stmt->bindValue(':username', $username);
     $stmt->bindValue(':password', $passwordHash);
 
