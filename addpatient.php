@@ -23,6 +23,7 @@
       font-size: 40px;
       font-family: Arial;
       color: black;
+      border-style: solid;
     }
     nav {
       float: left;
@@ -36,11 +37,13 @@
       display: block;
       float: left;
       padding: 20px;
-      background-color: #6699ff;
+      background-color: #1a66ff;
       width: 100%;
       margin: auto;
       height: auto;
       font-family: Arial;
+      border-style: double;
+      border-width: 0.5em;
     }
     table, th, td {
       border: 1px solid black;
@@ -69,6 +72,8 @@
       background-color: #99bbff;
       position: fixed;
       overflow: auto;
+      border-style: double;
+      border-width: 0.5em;
     }
 
     .sidebar a {
@@ -116,7 +121,7 @@
       .sidebar a {float: left;}
       div.content {margin-left: 0;}
     }
-    /* @media screen and (min-width: 1000px) {     /* Center the table in larger screens 
+    /* @media screen and (min-width: 1000px) {     /* Center the table in larger screens
       .sidebar {
         width: 50%;
         height: auto;

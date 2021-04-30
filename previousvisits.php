@@ -25,6 +25,7 @@ session_start();
       font-size: 40px;
       font-family: Arial;
       color: black;
+      border-style: solid;
     }
     nav {
       float: left;
@@ -42,6 +43,8 @@ session_start();
       margin: auto;
       font-family: Arial;
       height: auto;
+      border-style: double;
+      border-width: 0.5em;
     }
     table, th, td {
       border: 1px solid black;
@@ -70,6 +73,8 @@ session_start();
       background-color: #99bbff;
       position: absolute;
       overflow: auto;
+      border-style: double;
+      border-width: 0.5em;
     }
 
     .sidebar a {

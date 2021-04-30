@@ -21,6 +21,7 @@ session_start();?>
       font-size: 40px;
       font-family: Arial;
       color: black;
+      border-style: solid;
     }
     nav {
       float: left;
@@ -38,6 +39,8 @@ session_start();?>
       margin: auto;
       font-family: Arial;
       height: auto;
+      border-style: double;
+      border-width: 0.5em;
     }
     table, th, td {
       border: 1px solid black;
@@ -69,6 +72,8 @@ session_start();?>
       background-color: #99bbff;
       position: fixed;
       overflow: auto;
+      border-style: double;
+      border-width: 0.5em;
     }
 
     .sidebar a {
@@ -147,16 +152,15 @@ session_start();?>
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       try{ ?>
-
+        <table>
+          <tr>
+            <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
+            <th>Add a Follow Up Visit</th><th>Remove Patient</th>
+          </tr>
             <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid";
             $result = $pdo->query($sql);
             if($result->rowCount() > 0){
               while($row = $result->fetch()){?>
-                <table>
-                  <tr>
-                    <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
-                    <th>Add a Follow Up Visit</th><th>Remove Patient</th>
-                  </tr>
                   <tr>
                     <td><?php echo $row['Patient_id']; ?></td>
                     <td><?php echo $row['Patient_name'] ; ?></td>

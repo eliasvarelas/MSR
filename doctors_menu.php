@@ -24,6 +24,7 @@ session_start();
       font-size: 40px;
       font-family: Arial;
       color: black;
+      border-style: solid;
     }
     nav {
       float: left;
@@ -31,7 +32,7 @@ session_start();
       background: #ccddff;
       padding: 20px;
       font-family: Arial;
-
+      border-right-style: dashed;
     }
     article {
       display: block;
@@ -42,6 +43,9 @@ session_start();
       margin: auto;
       height: auto;
       font-family: Arial;
+      border-style: double;
+      border-width: 0.5em;
+
     }
     table, th, td {
       border: 1px solid black;
@@ -72,9 +76,9 @@ session_start();
       width: 200px;
       background-color: #99bbff;
       position: absolute;
-      /* position: sticky;
-      left:1em; */
       overflow: auto;
+      border-style: double;
+      border-width: 0.5em;
     }
 
     .sidebar a {
