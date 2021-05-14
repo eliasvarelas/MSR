@@ -129,12 +129,12 @@ session_start();?>
     <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
   </header>
   <div class="sidebar">
-      <ul>
-        <li><a href="/doctors_menu.php">Main Menu</a></li>      <!-- Doctors Main menu -->
-        <li><a href="/patientsinfo.php">Existing Patients</a></li>       <!-- shows the patients of the active user_id -->
-        <li><a href="/addpatient.php">Add a new patient</a></li>      <!-- adds a new patient into the patients table with tha active doctor id -->
-        <li><a href=" ">Search Query</a></li>   <!-- Advanced search query via Attributes -->
-      </ul>
+    <ul>
+      <li><a href="/doctors_menu.php">Main Menu</a></li>      <!-- Doctors Main menu -->
+      <li><a href="/patientsinfo.php">Existing Patients</a></li>       <!-- shows the patients of the active user_id -->
+      <li><a href="/addpatient.php">Add a new patient</a></li>      <!-- adds a new patient into the patients table with tha active doctor id -->
+      <li><a href=" ">Search Query</a></li>   <!-- Advanced search query via Attributes -->
+    </ul>
   </div>
   <div class="content">
     <article>
@@ -254,7 +254,6 @@ session_start();?>
       }
       ?>
     </article>
-
   </div>
 </body>
 </html>

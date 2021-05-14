@@ -151,13 +151,12 @@
     <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
   </header>
   <div class="sidebar">
-
-      <ul>        <!-- side menu -->
-        <li><a href="/doctors_menu.php">Main Menu</a></li>    <!-- Doctors Main menu -->
-        <li><a href="/patientsinfo.php">Existing Patients</a></li>  <!-- shows the patients of the active user_id -->
-        <li><a href=" ">Add a new patient</a></li>  <!-- adds a new patient into the patients table with tha active doctor id -->
-        <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
-      </ul>
+    <ul>        <!-- side menu -->
+      <li><a href="/doctors_menu.php">Main Menu</a></li>    <!-- Doctors Main menu -->
+      <li><a href="/patientsinfo.php">Existing Patients</a></li>  <!-- shows the patients of the active user_id -->
+      <li><a href=" ">Add a new patient</a></li>  <!-- adds a new patient into the patients table with tha active doctor id -->
+      <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
+    </ul>
 
   </div>
   <div class="content">   <!-- main content of the page -->
@@ -181,18 +180,18 @@
       $Submit = $_POST['Submit'];
 
       try{  //using MySQL PDOAttribute for the Exceptions
-          $sql = "INSERT INTO patients (Doctor_ID,Patient_id,Patient_name,Phonenum,Email,Submit) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO patients (Doctor_ID,Patient_id,Patient_name,Phonenum,Email,Submit) VALUES (?,?,?,?,?,?)";
 
-          if(isset($_POST['Submit'])){
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$doc,$pat_id,$flname,$phonenum,$email,$Submit]);
+        if(isset($_POST['Submit'])){
+          $stmt = $pdo->prepare($sql);
+          $stmt->execute([$doc,$pat_id,$flname,$phonenum,$email,$Submit]);
 
-          } else{
-              echo "Something went wrong. Sorry.";
-          }
+        } else{
+          echo "Something went wrong. Sorry.";
+        }
 
       } catch(PDOException $e){
-          die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
       ?>
 

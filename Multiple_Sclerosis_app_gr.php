@@ -84,7 +84,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       color: black;
       margin: auto;
     }
-                            /* table positioning... in development */
+    /* table positioning... in development */
 
     .header {
       background-color: #ffffff;
@@ -146,21 +146,17 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 </head>
 
 <body>
-    <!-- <button id="eng">English</button><button id="gr">Ελληνικά</button> -->
-    <input type="image" class="lang" id="eng" src="England.png">
-    <script type="text/javascript">
-      document.getElementById("eng").onclick = function () {
-          location.href = "Multiple_Sclerosis_app.php";
-      };
-    </script>
+  <input type="image" class="lang" id="eng" src="England.png">
+  <script type="text/javascript">
+    document.getElementById("eng").onclick = function () {
+      location.href = "Multiple_Sclerosis_app.php";
+    };
+  </script>
 
-   <form target="_blank" action="MSRforminsert.php" method="post" class="header">        <!-- action="form.php"-->
-     <!-- make a file with the completed action (or redirect to the form -->
+  <form target="_blank" action="MSRforminsert.php" method="post" class="header">        <!-- action="form.php"-->
+
     <img src="MSregistryionian2.png" alt="Intro" style="float:left;">
-    <!-- textarea to the left half of the screen, while photo+ ids to the right -->
-
     <br>
-
     <p style="font-family: arial;">Όνομα & Διεύθυνση:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" autofocus></textarea> <br> </p>
     <table style="width:100%;">
       <tr>
@@ -180,7 +176,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
     <h4 style="text-align:center; font-family: arial;">ΚΑΤΗΓΟΡΙΑ 1 ΟΛΑ ΠΡΕΠΕΙ ΝΑ ΣΥΜΠΛΗΡΩΘΟΥΝ</h4>
 
-                                          <!-- all the tables, not yet organized to fit in to a single page,prob css -->
+                      <!-- all the tables, not yet organized to fit in to a single page,prob css -->
     <section id="mstype">
       <div class="container">
         <div class="split">

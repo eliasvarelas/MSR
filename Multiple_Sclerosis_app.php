@@ -148,17 +148,17 @@ $patientNAME = $_GET["name"]; // used to pass the pateint name directly in the f
 </head>
 
 <body>
-    <input type="image" class="lang" id="gr" src="gr.png">    <!-- redirects the user to the greek form -->
-    <script type="text/javascript">
-      document.getElementById("gr").onclick = function () {
-          location.href = "Multiple_Sclerosis_app_gr.php";
-      };
-    </script>
+  <input type="image" class="lang" id="gr" src="gr.png">    <!-- redirects the user to the greek form -->
+  <script type="text/javascript">
+    document.getElementById("gr").onclick = function () {
+      location.href = "Multiple_Sclerosis_app_gr.php";
+    };
+  </script>
 
 
                 <!-- Starting the form -->
    <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
-     <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
+    <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
     <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientNAME; ?>" autofocus></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
     <table style="width:100%;">
@@ -181,7 +181,8 @@ $patientNAME = $_GET["name"]; // used to pass the pateint name directly in the f
           <option value="Caucasian">Caucasian</option>
           <option value="Unknown">Unknown</option>
         </select>
-      </td><td><select name="Comorbidities" name="Comorbidities" required> <!-- want to make a dropdown with a freetext as a last input -->
+        </td>
+        <td><select name="Comorbidities" name="Comorbidities" required> <!-- want to make a dropdown with a freetext as a last input -->
         <option value="Diabetes">Diabetes</option>
         <option><input type="text" name="Comorbidities"></option>
       </tr>

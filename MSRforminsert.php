@@ -48,10 +48,10 @@
 
     //checking that the Connection doesnt return null
   if (is_null($pdo)) {
-      return $pdo -> prepare($query);
-      echo"Connection is null";
+    return $pdo -> prepare($query);
+    echo"Connection is null";
   } else {
-      echo "Connection active! \n";
+    echo "Connection active! \n";
   }
   //cahtching exceptions
   } catch(PDOException $e) {
@@ -84,9 +84,9 @@
     echo "<script>".$script."</script>";
   }
 
-  } catch(PDOException $e) {
-        echo $sql . "<br>" . $e->getMessage();
-        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+  }catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
   }
 
 ?>

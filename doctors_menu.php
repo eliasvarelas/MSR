@@ -140,12 +140,12 @@ session_start();
     <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
   </header>
   <div class="sidebar">
-      <ul>
-        <li><a href="/doctors_menu.php">Main Menu</a></li>    <!-- Doctors Main menu -->
-        <li><a href="/patientsinfo.php">Existing Patients</a></li>  <!-- shows the patients of the active user_id -->
-        <li><a href="/addpatient.php">Add a new patient</a></li>  <!-- adds a new patient into the patients table with tha active doctor id -->
-        <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
-      </ul>
+    <ul>
+      <li><a href="/doctors_menu.php">Main Menu</a></li>    <!-- Doctors Main menu -->
+      <li><a href="/patientsinfo.php">Existing Patients</a></li>  <!-- shows the patients of the active user_id -->
+      <li><a href="/addpatient.php">Add a new patient</a></li>  <!-- adds a new patient into the patients table with tha active doctor id -->
+      <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
+    </ul>
   </div>
   <div class="content">
     <article>
@@ -162,8 +162,8 @@ session_start();
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       //establishing the connection and informing the user of its status
       if (is_null($pdo)) {
-          return $pdo -> prepare($query);
-          echo"The Connection with the Database has failed \n";
+        return $pdo -> prepare($query);
+        echo"The Connection with the Database has failed \n";
       } else {
           echo "<h1>The Connection with the Database is Active! \n</h1>";
       }
