@@ -182,9 +182,14 @@ $patientNAME = $_GET["name"]; // used to pass the pateint name directly in the f
           <option value="Unknown">Unknown</option>
         </select>
         </td>
-        <td><select name="Comorbidities" name="Comorbidities" required> <!-- want to make a dropdown with a freetext as a last input -->
-        <option value="Diabetes">Diabetes</option>
-        <option><input type="text" name="Comorbidities"></option>
+          <td>
+            <input type="text" list="Comorbidities" name="Comorbidities"/>
+            <datalist id="Comorbidities">
+              <option value="Diabetes">Diabetes</option>
+              <option value="Obesity">Obesity</option>
+              <option value="Heart Disease">Heart Disease</option>
+            </datalist>
+          </td>
       </tr>
     </table>
     <br>

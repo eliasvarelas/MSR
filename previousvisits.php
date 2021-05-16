@@ -154,7 +154,7 @@ session_start();
         $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
           $result = $pdo->query($sql);
           if($result->rowCount() > 0){
-            while($row = $result->fetch()){
+            while($row = $result->fetch()){ //make it with more html for responsiveness
               echo "<table border = '1' bordercollapse = 'collapse'>";  // the MSR table for the particular patient id
                   echo "<tr>";
                       echo "<th> Visit Number</th>";
