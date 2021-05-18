@@ -160,7 +160,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
    <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
     <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
-    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientID?>"></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p> 
+    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientID?>"></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
 
     <table style="width:100%;">
       <tr>
@@ -327,7 +327,51 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       </div>
     </section>
 
-  <h4 style="text-align:center; font-family: arial;">TIER 2 <br> </h4>
+    <section>
+      <h3 style="text-align:center;">TIER 2 MRI ALL MUST BE COMPLETED</h3>
+      <div class="container">
+        <div class="split">
+          <div>
+            <table>
+              <tr>
+                <th colspan="5">CNS MRI Onset Localisation</th>
+              </tr>
+              <tr>
+                <td>Spinal<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
+                <td>Cortex<br><input type="checkbox" name="MRIonsetlocalisation" value="Cortex"></td>
+                <td>Brainstem<br><input type="checkbox" name="MRIonsetlocalisation" value="Brainstem"></td>
+                <td>Cerebellum<br><input type="checkbox" name="MRIonsetlocalisation" value="Cerebellum"></td>
+                <td>Visual<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr>
+                <th colspan="5">CNS MRI enhancing lesions last 12 months</th>
+              </tr>
+              <tr>
+                <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing"><br>No<input type="radio" value="No" name="MRIenhancing"></td>
+                <td colspan="3">Number: <input name="MRInum" type="number" required></td>
+              </tr>
+              <tr>
+                <th colspan="5">Location</th>
+              </tr>
+              <tr>
+                <td>Spinal<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal"></td>
+                <td>Cortex<br><input type="checkbox" name="MRIenhancinglocation" value="Cortex"></td>
+                <td>Brainstem<br><input type="checkbox" name="MRIenhancinglocation" value="Brainstem"></td>
+                <td>Cerebellum<br><input type="checkbox" name="MRIenhancinglocation" value="Cerebellum"></td>
+                <td>Visual<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  <h4 style="text-align:center; font-family: arial;">TIER 3 <br> </h4>
 
     <section>
       <div class="container">
@@ -359,6 +403,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         </div>
       </div>
     </section>
+
 
     <section>
       <div class="container">
