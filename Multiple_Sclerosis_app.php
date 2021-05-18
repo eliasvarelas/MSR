@@ -162,37 +162,40 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     <br>
     <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientID?>"></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
 
-    <table style="width:100%;">
-      <tr>
-        <th>Date: <input type="date" name="NDSdate"  max="" ></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
-      </tr>
-    </table>
-    <table style="width:100%;">
-      <tr>
-        <th colspan="2">Gender</th><th>Age</th><th>Race</th><th>Comorbidities</th>
-      </tr>
-      <tr>
-        <td> Male<br><input type="radio" name="Sex" value="Male" required></td><td>Female<br><input type="radio" name="Sex" value="Female" required></td>
-        <td> <input type="number" name="Age" min="1"></td>
-        <td><select id="Race" name="Race" required>
-          <option value="American Indian">American Indian</option>
-          <option value="Asian">Asian</option>
-          <option value="Black">Black</option>
-          <option value="Hispanic">Hispanic</option>
-          <option value="Caucasian">Caucasian</option>
-          <option value="Unknown">Unknown</option>
-        </select>
-        </td>
-          <td>
-            <input type="text" list="Comorbidities" name="Comorbidities"/>
-            <datalist id="Comorbidities">
-              <option value="Diabetes">Diabetes</option>
-              <option value="Obesity">Obesity</option>
-              <option value="Heart Disease">Heart Disease</option>
-            </datalist>
+    <div class="container">
+      <table style="width:100%;">
+        <tr>
+          <th>Date: <input type="date" name="NDSdate"  max="" ></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
+        </tr>
+      </table>
+      <table style="width:100%;">
+        <tr>
+          <th colspan="2">Gender</th><th>Age</th><th>Race</th><th>Comorbidities</th>
+        </tr>
+        <tr>
+          <td> Male<br><input type="radio" name="Sex" value="Male" required></td><td>Female<br><input type="radio" name="Sex" value="Female" required></td>
+          <td> <input type="number" name="Age" min="1"></td>
+          <td><select id="Race" name="Race" required>
+            <option value="American Indian">American Indian</option>
+            <option value="Asian">Asian</option>
+            <option value="Black">Black</option>
+            <option value="Hispanic">Hispanic</option>
+            <option value="Caucasian">Caucasian</option>
+            <option value="Unknown">Unknown</option>
+          </select>
           </td>
-      </tr>
-    </table>
+            <td>
+              <input type="text" list="Comorbidities" name="Comorbidities"/>
+              <datalist id="Comorbidities">
+                <option value="Diabetes">Diabetes</option>
+                <option value="Obesity">Obesity</option>
+                <option value="Heart Disease">Heart Disease</option>
+              </datalist>
+            </td>
+        </tr>
+      </table>
+    </div>
+
     <br>
     <h4 style="text-align:center; font-family: arial;">TIER 1 All MUST BE FILLED IN</h4>
 
