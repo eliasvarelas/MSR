@@ -1,7 +1,7 @@
 <?php
 session_start();
 $patientID = $_GET["id"];   // used to pass the patient id directly in the form
-$patientNAME = $_GET["name"]; // used to pass the pateint name directly in the form
+$patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
 ?>
 <!DOCTYPE html>
 <html>
@@ -160,7 +160,8 @@ $patientNAME = $_GET["name"]; // used to pass the pateint name directly in the f
    <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
     <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
-    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientNAME; ?>" autofocus></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
+    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientID?>"></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p> 
+
     <table style="width:100%;">
       <tr>
         <th>Date: <input type="date" name="NDSdate"  max="" ></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>

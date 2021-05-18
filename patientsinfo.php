@@ -168,7 +168,7 @@ session_start();?>
                     <td><?php echo $row['Phonenum'] ; ?></td>
                     <td><?php echo $row['Email']; ?></td>
                     <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                    <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                    <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&?nm=". $row['Patient_name'] ."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
                     <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
               <script>
                 function remove_user() {    //a simple function for confirming the removal of a patient
