@@ -311,7 +311,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
               </tr>
               <tr>
                 <td>7,5 meters Timed Walk</td>
-                <td>Time: <input type="time" name="edsstime" required><br>
+                <td>Time: <input type="time" name="edsstime"><br>
               </tr>
               <tr>
                 <td id="purple">Nine-Hole PEG Test</td><td>Time: <input type="time" name="edsstimePEG"></td>
@@ -365,7 +365,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
                 <td>Cortex<br><input type="checkbox" name="MRIenhancinglocation" value="Cortex"></td>
                 <td>Brainstem<br><input type="checkbox" name="MRIenhancinglocation" value="Brainstem"></td>
                 <td>Cerebellum<br><input type="checkbox" name="MRIenhancinglocation" value="Cerebellum"></td>
-                <td>Visual<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal"></td>
+                <td>Visual<br><input type="checkbox" name="MRIenhancinglocation" value="Visual"></td>
               </tr>
             </table>
           </div>

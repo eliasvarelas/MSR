@@ -31,12 +31,17 @@
   $edssPEG = $_POST['edsstimePEG'];
   $EDSSdate = $_POST['EDSSdate'];
   $EDSSdaterad = $_POST['EDSSdaterad'];
+  $MRIonset = $_POST['MRIonsetlocalisation'];
   $Pregnant = $_POST['Pregnant'];
   $Onsetlocalisation = $_POST['Onsetlocalisation'];
   $smoker = $_POST['smoker'];
   $cigars = $_POST['cigars'];
   $cigardate = $_POST['cigardate'];
   $onsetsymptoms = $_POST['onsetsymptoms'];
+  $MRIonsetlocalisation = $_POST['MRIonsetlocalisation'];
+  $MRIenhancing = $_POST['MRIenhancing'];
+  $MRInum = $_POST['MRInum'];
+  $MRIenhancinglocation = $_POST['MRIenhancinglocation'];
   $signer = $_POST['signer'];
   $submit = $_POST['Submit'];
 
@@ -64,15 +69,15 @@
     $sql = "INSERT INTO $table (NDS,NDSdate,NDSnum,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
     onsetdate, Noofrelapses,Noofrelapsesrad,
     pastTREATMENT,pastTREATMENTdate,pastTREATMENTcheck,TREATMENTdate, TREATMENT, eddsscore,edsstime7_5m,edsstimePEG,
-    EDSSdate,
-    Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,signer,Submit)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";        //using prepared statements for security towards sql injections
+    EDSSdate,Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,MRIonsetlocalisation,MRIenhancing,MRInum,MRIenhancinglocation,
+    signer,Submit)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";        //using prepared statements for security towards sql injections
 
     //Execute
   if (isset($_POST["Submit"])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$NDS,$NDSdate,$NDSnum,$Sex,$Age,$Race,$Comorbidities,$convsprad,$convspnum,$dateofdia,$dateofdiarad,$onsetdate,$Noofrelapses,$Noofrelapsesrad,$pastTREATMENT,
-    $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime7_5m,$edssPEG,$EDSSdate,$Pregnant,$Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$signer,$Submit]);
+    $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime7_5m,$edssPEG,$EDSSdate,$Pregnant,$Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$MRIonsetlocalisation,$MRIenhancing,$MRInum,$MRIenhancinglocation,$signer,$Submit]);
     echo "records inserted successfully!!!!!!!!";
   } else {
     echo "Im sorry, there was an error";  // basic error handling
