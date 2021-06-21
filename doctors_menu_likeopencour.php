@@ -1,4 +1,4 @@
-<?php session_start(); ?>  
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html> <!-- try making it look like opencourses -->
 <head>
@@ -36,6 +36,9 @@
       text-align:center;
       font-family: arial;
     }
+    table{
+      margin-left: 10em;
+    }
     th {
       background-color: #ccddff;         /* Title box color */
       color: black;
@@ -55,7 +58,7 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      width: 24em;
+      width: 12em;
       background-color: lightblue;
       position: absolute;
       text-align: center;
@@ -88,12 +91,16 @@
     div.box{        /* main content */
       display: block;
       /* position: float; */
-      margin-left: 24em;
+      margin-left: 12.5em;
       margin-right: 0em;
       margin-top: 1.5em;
       border-radius: 10px;
-      background-color: green;
+      background-color: #f2f2f2;
       text-align: center;
+    }
+    div.al-center{
+      position: absolute;
+      margin-left: 10em;
     }
     /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (700px wide or less) */
     @media screen and (max-width: 700px) {
@@ -133,8 +140,8 @@
     <article>
       <div class="box">
         <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
-        <h1>Welcome Doctor: <?php $user_name = $_SESSION['user'];
-        echo "<b>".$user_name."</b>";?>! <!-- prints the active username --></h1>
+        <h1>Welcome Doctor: <u><?php $user_name = $_SESSION['user'];
+        echo "<b>".$user_name."</b>";?></u>! <!-- prints the active username --></h1>
 
         <br>
         <br>
@@ -158,6 +165,28 @@
         }
         ?>
         <h4>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</h4>  <!-- Basic information for the app -->
+
+        <table style="align-self: center;">    <!-- prints the table with the patients -->
+              <tr>
+                <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
+                <th>Add a Follow Up Visit</th><th>Remove Patient</th>
+              </tr>
+                <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
+                $result = $pdo->query($sql);
+                if($result->rowCount() > 0){
+                  while($row = $result->fetch()){?>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td><?php echo $row['Patient_name'] ; ?></td>
+                        <td><?php echo $row['Phonenum'] ; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
+                        <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&?nm=". $row['Patient_name'] ."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                        <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
+                      </tr>
+                    <?php } } ?>
+              </table>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </div>
     </article>
 </body>

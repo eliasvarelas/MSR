@@ -1,1 +1,1 @@
-window.location.replace("/doctors_menu.php");
+window.location.replace("/doctors_menu_likeopencour.php");
