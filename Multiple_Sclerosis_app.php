@@ -154,9 +154,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       location.href = "Multiple_Sclerosis_app_gr.php";
     };
   </script>
-
-
-                <!-- Starting the form -->
+    <!-- Starting the form -->
    <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
     <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
@@ -165,7 +163,13 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     <div class="container">
       <table style="width:100%;">
         <tr>
-          <th>Date: <input type="date" name="NDSdate"  max="" ></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
+          <th>Date: <input id="date" type="text" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
+          <script type="text/javascript">
+            function setcurrentDate(){
+              // document.getElementById('date').value = Date();
+              document.getElementById('date').value = (new Date()).format("m/dd/yy");
+            }
+          </script>
         </tr>
       </table>
       <table style="width:100%;">
@@ -198,8 +202,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
     <br>
     <h4 style="text-align:center; font-family: arial;">TIER 1 All MUST BE FILLED IN</h4>
-
-                                          <!-- all the tables organized to fit in to a single page -->
+    <!-- all the tables organized to fit in to a single page -->
     <section id="mstype">
       <div class="container">
         <div class="split">
@@ -450,7 +453,13 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
   <h3 style="text-align:center;">Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
   </form>
+  <script type="text/javascript">
+    function testDates() {
+      if (document.getElementById('')) {
 
+      }
+    }
+  </script>
 
 </body>
 </html>
