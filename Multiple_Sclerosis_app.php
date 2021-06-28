@@ -18,22 +18,21 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       body {
         margin: 0;
       }
-
       .split{
         display: flex;
         flex-direction: row;
         margin: 0 auto;
-
+        width: 100%;
       }
       .split > * {
         flex-basis: 100%;
+        max-width: 100%;
       }
       .split > * + * {      /* space between the side-side tables */
         margin-left:1em;
         margin-right:1em;
       }
-
-      @media (max-width: 40em){   /* some responsiveness for laptop-desktop screens */
+      @media (max-width: 40em){
         .split{
           flex-direction: column;
           flex-basis: 100%;
@@ -44,15 +43,13 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
           margin-top: 1em;
         }
       }
-
       .container{
         margin: 0  auto;
-        width: min(90%, 70rem);
+        width: min(95%, 70rem);
       }
       section{
         padding: 0.5em 0;
       }
-
       table {
         border-collapse: collapse;
         border-spacing: 0;
@@ -62,31 +59,23 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         font-family: arial;
         min-height:100%;      /* kinda helps, but not the ideal solution, maybe use ids */
       }
-
       th, td {
         padding: 16px;
         height: auto;
       }
-
-
-
     th, td {
       border: 1px solid black;
       border-collapse: collapse;
       padding:5px;
       text-align:center;
       font-family: arial;
-
-
     }
-
     th {
       background-color: #6699ff;              /* Title box color */
       color: black;
       margin: auto;
     }
-                            /* table positioning... in development */
-
+    /* table positioning... in development */
     .header {
       background-color: #ffffff;
       text-align: left;
@@ -96,7 +85,6 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       margin: auto;
       font-family: arial;
     }
-
     img {                   /*  image alignment for the MS image */
       display: block;
       margin-right: auto;
@@ -112,7 +100,6 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       border-collapse: collapse;
       margin: 1rem 1rem;
     }
-
     input[type=date], input[type=number] {
       padding: 5px 5px;
       margin: 8px 0;
@@ -136,13 +123,14 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       width: auto;
     }
     tr:nth-child(even) {
-      background-color: #ffffff;
+      background-color: white;
       font-family: arial;
     }
     #purple{
       background-color: #b366ff;
     }
-
+    #cntr{
+    }
   </style>
 
 </head>
@@ -150,7 +138,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 <body>
   <input type="image" class="lang" id="gr" src="gr.png">    <!-- redirects the user to the greek form -->
   <script type="text/javascript">
-    document.getElementById("gr").onclick = function () {
+    document.getElementById("gr").onclick = function() {
       location.href = "Multiple_Sclerosis_app_gr.php";
     };
   </script>
@@ -163,16 +151,24 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     <div class="container">
       <table style="width:100%;">
         <tr>
-          <th>Date: <input id="date" type="text" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
+          <th>Date: <input id="ndsdate" type="date" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
           <script type="text/javascript">
             function setcurrentDate(){
-              // document.getElementById('date').value = Date();
-              document.getElementById('date').value = (new Date()).format("m/dd/yy");
+              var date = new Date();
+              var day = date.getDate(),
+                  month = date.getMonth() + 1,
+                  year = date.getFullYear();
+
+              month = (month < 10 ? "0" : "") + month;
+              day = (day < 10 ? "0" : "") + day;
+
+              var today = day + "/" + month + "/" + year,
+              document.getElementById('ndsdate').value = today;
             }
           </script>
         </tr>
       </table>
-      <table style="width:100%;">
+      <table> <!-- style width 100% -->
         <tr>
           <th colspan="2">Gender</th><th>Age</th><th>Race</th><th>Comorbidities</th>
         </tr>
@@ -203,7 +199,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     <br>
     <h4 style="text-align:center; font-family: arial;">TIER 1 All MUST BE FILLED IN</h4>
     <!-- all the tables organized to fit in to a single page -->
-    <section id="mstype">
+    <section>
       <div class="container">
         <div class="split">
           <div>
@@ -229,26 +225,37 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
                 <th>Date of Diagnosis</th><th colspan="4">MS Type at Diagnosis</th>
               </tr>
               <tr>
-                <td><input type="date" name="dateofdia" required></td>
+                <td><input type="date" name="dateofdia" id="dateofdia" required></td>
                 <td><label for="RR">RR</label><br><input type="radio" id="RR" name="dateofdiarad" value="RR" required></td>
                 <td><label for="SP">SP</label><br><input type="radio" id="SP" name="dateofdiarad" value="SP" required></td>
                 <td><label for="PP">PP</label><br><input type="radio" id="PP" name="dateofdiarad" value="PP" required></td>
                 <td><label for="Other">Other</label><br><input type="radio" id="Other" name="dateofdiarad" value="Other" required></td>
               </tr>
               <tr>
-                <th >Date of Onset:</th><td colspan="4"><input type="date" name="onsetdate"></td>
+                <th >Date of Onset:</th><td colspan="4"><input type="date" name="onsetdate" id="dateonset"></td>
+                <script type="text/javascript"> // i want to disable some dates based on facts.... first attempt, doesnt work properly.
+                var dtToday = new Date();
+                var month = dtToday.getMonth() + 1;     // getMonth() is zero-based
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                    day = '0' + day.toString();
+
+                var onsetDate = year + '-' + month + '-' + day;
+                $('#dateonset').attr('max', onsetDate);
+                </script>
              </tr>
             </table>
           </div>
         </div>
       </div>
     </section>
-
-         <br>
-
+    <br>
     <section>
       <div class="container">
-          <table>  <!-- center -->
+          <table id="cntr">  <!-- center -->
             <tr>
               <th>No. of Relapses(RR only)<br>(since last visit/year)</th><th colspan="3">Severity</th>
             </tr>
@@ -262,7 +269,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         <br>
           <table>   <!-- center -->
             <tr>
-              <th colspan="7">PAST Disease modifying treatment:(tick) Date Started: <input type="date" name="pastTREATMENT" required></th>    <!-- whole width -->
+              <th colspan="7">PAST Disease modifying treatment:(tick) Date Started: <input type="date" name="pastTREATMENT" id="pastDate" required></th>    <!-- whole width -->
             </tr>
             <tr>
               <td>Alemtuzumab<br><input type="checkbox" name="pastTREATMENT" value="Alemtuzumab" ></td><td>Avonex<br><input type="checkbox" name="pastTREATMENT" value="Avonex"></td>
@@ -282,6 +289,19 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
               <td><label for="Other">Other</label><br><input type="checkbox" id="Other" name="pastTREATMENTcheck" value="Other"></td>
             </tr>
           </table>
+          <script type="text/javascript">
+          var dtToday = new Date();
+          var month = dtToday.getMonth() + 1;     // getMonth() is zero-based
+          var day = dtToday.getDate();
+          var year = dtToday.getFullYear();
+          if(month < 10)
+              month = '0' + month.toString();
+          if(day < 10)
+              day = '0' + day.toString();
+
+          var pastDate = year + '-' + month + '-' + day;
+          $('#pastDate').attr('max', pastDate);
+          </script>
 
         <br>
 

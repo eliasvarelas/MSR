@@ -40,7 +40,7 @@
       margin-left: 10em;
     }
     th {
-      background-color: #ccddff;         /* Title box color */
+      background-color: #2980b9;         /* Title box color */
       color: black;
       margin: auto;
     }
@@ -102,7 +102,26 @@
       position: absolute;
       margin-left: 10em;
     }
+    div.aligner{
+      position: relative;
+      vertical-align: middle;
+    }
+    #removeuser a {
+      color:red;
+    }
+    tr:nth-child(even) {
+      background-color: #e9e9e9;
+      font-family: arial;
+    }
     /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (700px wide or less) */
+    @media screen and (max-width: 1000px) {
+      .column {
+        width: 50%;
+      }
+      .aligner{
+        margin-left: 25em;
+      }
+    }
     @media screen and (max-width: 700px) {
       .column {
         width: 50%;
@@ -113,7 +132,6 @@
         width: 100%;
         height: auto;
         position: relative;
-
       }
       .sidebar a {float: left;}
       div.content {margin-left: 0;}
@@ -141,7 +159,7 @@
       <div class="box">
         <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
         <h1>Welcome Doctor: <u><?php $user_name = $_SESSION['user'];
-        echo "<b>".$user_name."</b>";?></u>! <!-- prints the active username --></h1>
+        echo $user_name;?></u>! <!-- prints the active username --></h1>
 
         <br>
         <br>
@@ -165,27 +183,29 @@
         }
         ?>
         <h4>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</h4>  <!-- Basic information for the app -->
+        <div class="aligner">
+          <table style="align-self: center;">    <!-- prints the table with the patients -->
+                <tr>
+                  <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
+                  <th>Add a Follow Up Visit</th><th>Remove Patient</th>
+                </tr>
+                  <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
+                  $result = $pdo->query($sql);
+                  if($result->rowCount() > 0){
+                    while($row = $result->fetch()){?>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td>
+                          <td><?php echo $row['Patient_name'] ; ?></td>
+                          <td><?php echo $row['Phonenum'] ; ?></td>
+                          <td><?php echo $row['Email']; ?></td>
+                          <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
+                          <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&?nm=". $row['Patient_name'] ."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                          <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
+                        </tr>
+                      <?php } } ?>
+                </table>
+        </div>
 
-        <table style="align-self: center;">    <!-- prints the table with the patients -->
-              <tr>
-                <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
-                <th>Add a Follow Up Visit</th><th>Remove Patient</th>
-              </tr>
-                <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
-                $result = $pdo->query($sql);
-                if($result->rowCount() > 0){
-                  while($row = $result->fetch()){?>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td>
-                        <td><?php echo $row['Patient_name'] ; ?></td>
-                        <td><?php echo $row['Phonenum'] ; ?></td>
-                        <td><?php echo $row['Email']; ?></td>
-                        <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                        <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&?nm=". $row['Patient_name'] ."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                        <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
-                      </tr>
-                    <?php } } ?>
-              </table>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </div>
     </article>

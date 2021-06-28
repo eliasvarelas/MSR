@@ -12,35 +12,23 @@ session_start();?>
       box-sizing: border-box;
     }
     body{
-      background-color: #6699ff;
+      background-color: lightblue;
     }
-    header {
-      background-color:   #6666ff;
-      padding: 30px;
+    div.header{
+      position: absolute;
+      display: block;
+      height: 1em;
+      margin-left: 30%;
       text-align: center;
-      font-size: 40px;
-      font-family: Arial;
-      color: black;
-      border-style: solid;
+      background-color: black;
+      color:white;
     }
     nav {
       float: left;
       width: 30%;
-      background: #ccddff;
       padding: 20px;
       font-family: Arial;
-
-    }
-    article {
-      float: left;
-      padding: 20px;
-      background-color: #1a66ff;
-      width: 100%;
-      margin: auto;
-      font-family: Arial;
-      height: auto;
-      border-style: double;
-      border-width: 0.5em;
+      background-color: yellow;
     }
     table, th, td {
       border: 1px solid black;
@@ -49,8 +37,11 @@ session_start();?>
       text-align:center;
       font-family: arial;
     }
+    table{
+      margin-left: 10em;
+    }
     th {
-      background-color: #ccddff;         /* Title box color */
+      background-color: #2980b9;         /* Title box color */
       color: black;
       margin: auto;
     }
@@ -61,61 +52,64 @@ session_start();?>
     }
     button{
       float: right;
+      margin-top: 0.5em;
+      margin-right: 0.5em;
     }
-
-
     .sidebar {
       margin: 0;
       padding: 0;
       height: 100%;
-      width: 200px;
-      background-color: #99bbff;
-      position: fixed;
-      overflow: auto;
-      border-style: double;
-      border-width: 0.5em;
+      width: 12em;
+      background-color: lightblue;
+      position: absolute;
+      text-align: center;
     }
-
     .sidebar a {
       display: block;
-      color: black;
       padding: 16px;
       text-decoration: none;
     }
-
     .sidebar a.active {
       background-color: lightblue;
       color: white;
     }
-
     .sidebar a:hover:not(.active) {
       background-color: #3973ac;
       color: white;
     }
-    div.content {
-      margin-left: 200px;
-      margin-right: 0px;
+    div.box{        /* main content */
+      display: block;
+      /* position: float; */
+      margin-left: 12.5em;
+      margin-right: 0em;
+      margin-top: 1.5em;
+      border-radius: 10px;
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+    div.al-center{
+      position: absolute;
+      margin-left: 10em;
     }
     #removeuser a {
       color:red;
     }
-
-    /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
-    @media screen and (max-width: 600px) {
+    /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (700px wide or less) */
+    @media screen and (max-width: 700px) {
       .column {
         width: 50%;
       }
     }
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 600px) {
       .sidebar {
         width: 100%;
         height: auto;
         position: relative;
+
       }
       .sidebar a {float: left;}
       div.content {margin-left: 0;}
     }
-
     @media screen and (max-width: 400px) {
       .sidebar a {
         text-align: center;
@@ -126,22 +120,26 @@ session_start();?>
 </head>
 
 <body>
-  <header>
-    Welcome Doctor: <?php $user_name = $_SESSION['user'];
-    echo $user_name;?>! <!-- prints the active username -->
-    <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
-  </header>
+
   <div class="sidebar">
+    <img class="img" src="MSregistry_ionian2_bg_lightblue_small.png" alt="Logo">
       <ul>
-        <li><a href="/doctors_menu.php">Main Menu</a></li>  <!-- Doctors Main menu -->
+        <li><a href="/doctors_menu_likeopencour.php">Main Menu</a></li>  <!-- Doctors Main menu -->
         <li><a href=" ">Existing Patients</a></li>       <!-- shows the patients of the active user_id -->
         <li><a href="/addpatient.php">Add a new patient</a></li>  <!-- adds a new patient into the patients table with tha active doctor id -->
         <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
       </ul>
   </div>
-  <div class="content">  <!-- main content of the page -->
-    <article>
-      <?php
+
+  <div class="box">
+    <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
+    <h1>Welcome Doctor: <u><?php $user_name = $_SESSION['user'];
+    echo $user_name;?></u>!</h1> <!-- prints the active username -->
+    <br>
+    <br>
+    <h4>Bellow you can see and edit your patients</h4>
+    <br>
+    <?php
       //database connection
       $usersid = $_SESSION['user_id'] ;
       $servername = "127.0.0.1";
@@ -183,9 +181,9 @@ session_start();?>
                 }
               </script>
             </tr>
-              <?php } ?>
+    <?php } ?>
           </table>
-          <?php
+    <?php
               unset($result);
             } else{     // basic error checking
               echo "No records matching your query were found.";
@@ -193,9 +191,10 @@ session_start();?>
       } catch(PDOException $e){
           die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
-      ?>
-    </article>
-
-  </div>
+    ?>
+    <footer>
+      <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
+    </footer>
+    </div>
 </body>
 </html>
