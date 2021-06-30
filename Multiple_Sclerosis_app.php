@@ -31,7 +31,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       }
       .split > * + * {      /* space between the side-side tables */
         margin-left:1em;
-        margin-right:1em;
+        margin-right:0;
       }
       @media (max-width: 40em){
         .split{
@@ -474,6 +474,6 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     }
   }
   </script>
-  
+
 </body>
 </html>
