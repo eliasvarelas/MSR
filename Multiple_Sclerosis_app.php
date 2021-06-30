@@ -10,8 +10,9 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <html lang="en-us">
   <meta charset="utf-8" />
+  <!-- <script src="functions.js" charset="utf-8"></script> -->
   <style>
-  /*   make it responsive (the right way) without messing up the table possitioning   */
+    /*   make it responsive (the right way) without messing up the table possitioning   */
       * {
         box-sizing: border-box;
       }
@@ -44,6 +45,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         }
       }
       .container{
+        position:relative;
         margin: 0  auto;
         width: min(95%, 70rem);
       }
@@ -132,7 +134,6 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     #cntr{
     }
   </style>
-
 </head>
 
 <body>
@@ -153,18 +154,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         <tr>
           <th>Date: <input id="ndsdate" type="date" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
           <script type="text/javascript">
-            function setcurrentDate(){
-              var date = new Date();
-              var day = date.getDate(),
-                  month = date.getMonth() + 1,
-                  year = date.getFullYear();
 
-              month = (month < 10 ? "0" : "") + month;
-              day = (day < 10 ? "0" : "") + day;
-
-              var today = day + "/" + month + "/" + year,
-              document.getElementById('ndsdate').value = today;
-            }
           </script>
         </tr>
       </table>
@@ -233,19 +223,6 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
               </tr>
               <tr>
                 <th >Date of Onset:</th><td colspan="4"><input type="date" name="onsetdate" id="dateonset"></td>
-                <script type="text/javascript"> // i want to disable some dates based on facts.... first attempt, doesnt work properly.
-                var dtToday = new Date();
-                var month = dtToday.getMonth() + 1;     // getMonth() is zero-based
-                var day = dtToday.getDate();
-                var year = dtToday.getFullYear();
-                if(month < 10)
-                    month = '0' + month.toString();
-                if(day < 10)
-                    day = '0' + day.toString();
-
-                var onsetDate = year + '-' + month + '-' + day;
-                $('#dateonset').attr('max', onsetDate);
-                </script>
              </tr>
             </table>
           </div>
@@ -289,19 +266,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
               <td><label for="Other">Other</label><br><input type="checkbox" id="Other" name="pastTREATMENTcheck" value="Other"></td>
             </tr>
           </table>
-          <script type="text/javascript">
-          var dtToday = new Date();
-          var month = dtToday.getMonth() + 1;     // getMonth() is zero-based
-          var day = dtToday.getDate();
-          var year = dtToday.getFullYear();
-          if(month < 10)
-              month = '0' + month.toString();
-          if(day < 10)
-              day = '0' + day.toString();
 
-          var pastDate = year + '-' + month + '-' + day;
-          $('#pastDate').attr('max', pastDate);
-          </script>
 
         <br>
 
@@ -377,18 +342,19 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
                 <th colspan="5">CNS MRI enhancing lesions last 12 months</th>
               </tr>
               <tr>
-                <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing"><br>No<input type="radio" value="No" name="MRIenhancing"></td>
-                <td colspan="3">Number: <input name="MRInum" type="number" required></td>
+                <!-- <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing" id="MRIenhancing" checked><br>No<input type="radio" value="No" name="MRIenhancing"></td> -->
+                <td colspan="2"><select id="MRIenhancing"><option value="Yes">Yes</option><option value="No">No</option> </select></td>
+                <td colspan="3">Number: <input name="MRInum" type="number" id="MRInum"></td>
               </tr>
               <tr>
                 <th colspan="5">Location</th>
               </tr>
               <tr>
-                <td>Spinal<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal"></td>
-                <td>Cortex<br><input type="checkbox" name="MRIenhancinglocation" value="Cortex"></td>
-                <td>Brainstem<br><input type="checkbox" name="MRIenhancinglocation" value="Brainstem"></td>
-                <td>Cerebellum<br><input type="checkbox" name="MRIenhancinglocation" value="Cerebellum"></td>
-                <td>Visual<br><input type="checkbox" name="MRIenhancinglocation" value="Visual"></td>
+                <td>Spinal<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal" id="MRIloc"></td>
+                <td>Cortex<br><input type="checkbox" name="MRIenhancinglocation" value="Cortex" id="MRIloc1"></td>
+                <td>Brainstem<br><input type="checkbox" name="MRIenhancinglocation" value="Brainstem" id="MRIloc2"></td>
+                <td>Cerebellum<br><input type="checkbox" name="MRIenhancinglocation" value="Cerebellum" id="MRIloc3"></td>
+                <td>Visual<br><input type="checkbox" name="MRIenhancinglocation" value="Visual" id="MRIloc4"></td>
               </tr>
             </table>
           </div>
@@ -437,13 +403,14 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
           <div>
             <table>           <!-- left hand side -->
               <tr>
-                <th>Smoker</th><td>Yes<br><input type="radio" name="smoker" value="Yes"></td><td>No<br><input type="radio" name="smoker" value="No"></td>
+                <th>Smoker</th><!--<td>Yes<br><input type="radio" name="smoker" value="Yes" id="smokeryes" ></td><td>No<br><input type="radio" name="smoker" value="No" id="smokern" checked></td>-->
+                <td><select id="smoker"><option value="Yes">Yes</option><option value="No">No</option></td>
               </tr>
               <tr>
-                <td>No. per day:</td><td colspan="2"><input type="number" min="0" name="cigars" value="0"></td>
+                <td>No. per day:</td><td colspan="2"><input type="number" min="0" name="cigars" value="0" id="numofcig" ></td>
               </tr>
               <tr>
-                <td>Smoked since:</td><td colspan="2"><input type="date" name="cigardate"></td>
+                <td>Smoked since:</td><td colspan="2"><input type="date" name="cigardate" id="dateofcig" ></td>
               </tr>
             </table>
           </div>
@@ -473,13 +440,40 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
   <h3 style="text-align:center;">Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
   </form>
-  <script type="text/javascript">
-    function testDates() {
-      if (document.getElementById('')) {
 
+
+  <script type="text/javascript">
+    document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
+      if (this.value === 'Yes') {
+        document.getElementById('MRInum').disabled = false;
+        document.getElementById('MRIloc').disabled = false;
+        document.getElementById("MRIloc1").disabled = false;
+        document.getElementById("MRIloc2").disabled = false;
+        document.getElementById("MRIloc3").disabled = false;
+        document.getElementById("MRIloc4").disabled = false;
+      }
+      else if (this.value === 'No') {
+        document.getElementById("MRInum").disabled = true;
+        document.getElementById("MRIloc").disabled = true;
+        document.getElementById("MRIloc1").disabled = true;
+        document.getElementById("MRIloc2").disabled = true;
+        document.getElementById("MRIloc3").disabled = true;
+        document.getElementById("MRIloc4").disabled = true;
       }
     }
+    </script>
+  <script type="text/javascript">
+  document.getElementById('smoker').onchange = function disableInpsmok() {
+    if (this.value === 'Yes') {
+      document.getElementById('numofcig').disabled = false;
+      document.getElementById('dateofcig').disabled = false;
+    }
+    else if (this.value === 'No') {
+      document.getElementById('numofcig').disabled = true;
+      document.getElementById('dateofcig').disabled = true;
+    }
+  }
   </script>
-
+  
 </body>
 </html>
