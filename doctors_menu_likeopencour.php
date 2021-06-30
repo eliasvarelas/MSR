@@ -203,10 +203,11 @@
                           <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
                         </tr>
                       <?php } } ?>
-                </table>
+          </table>
         </div>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <footer>
+          <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
+        </footer>
       </div>
     </article>
 </body>

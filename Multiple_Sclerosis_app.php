@@ -164,7 +164,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         </tr>
         <tr>
           <td> Male<br><input type="radio" name="Sex" value="Male" required></td><td>Female<br><input type="radio" name="Sex" value="Female" required></td>
-          <td> <input type="number" name="Age" min="1"></td>
+          <td> <input type="number" name="Age" min="1" max="150"></td>
           <td><select id="Race" name="Race" required>
             <option value="American Indian">American Indian</option>
             <option value="Asian">Asian</option>
@@ -260,7 +260,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
               <td>Teriflunomide<br><input type="checkbox" name="pastTREATMENT" value="Teriflunomide"></td><td colspan="2">None<br><input type="checkbox" name="pastTREATMENT" value="None"></td>
             </tr>
             <tr>
-              <th>Date stopped:</th><td><input type="date" name="pastTREATMENTdate" ></td><th>Reason</th>
+              <th>Date stopped:</th><td><input type="date" name="pastTREATMENTdate" id="datestoped"></td><th>Reason</th>
               <td colspan="2"><label for="Lack of efficasy">Lack of efficasy</label><br><input type="checkbox" id="Lack of efficasy" name="pastTREATMENTcheck" value="Lack of efficasy"></td>
               <td><label for="Side effects">Side effects</label><br><input type="checkbox" id="Side effects" name="pastTREATMENTcheck" value="Side effects"></td>
               <td><label for="Other">Other</label><br><input type="checkbox" id="Other" name="pastTREATMENTcheck" value="Other"></td>
@@ -272,7 +272,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
           <table>   <!-- center -->
             <tr>
-              <th colspan="7">PRESENT Disease modifying treatment:(tick)  Date Started: <input type="date" name="TREATMENTdate" required></th>    <!-- whole width -->
+              <th colspan="7">PRESENT Disease modifying treatment:(tick)  Date Started: <input type="date" name="TREATMENTdate" id="presentdate" required></th>    <!-- whole width -->
             </tr>
             <tr>
               <td>Alemtuzumab<br><input type="checkbox" name="TREATMENT" value="Alemtuzumab"></td><td>Avonex<br><input type="checkbox" name="TREATMENT" value="Avonex" ></td>
@@ -343,7 +343,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
               </tr>
               <tr>
                 <!-- <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing" id="MRIenhancing" checked><br>No<input type="radio" value="No" name="MRIenhancing"></td> -->
-                <td colspan="2"><select id="MRIenhancing"><option value="Yes">Yes</option><option value="No">No</option> </select></td>
+                <td colspan="2"><select id="MRIenhancing" name="MRIenhancing"><option value="Yes">Yes</option><option value="No">No</option> </select></td>
                 <td colspan="3">Number: <input name="MRInum" type="number" id="MRInum"></td>
               </tr>
               <tr>
@@ -404,7 +404,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
             <table>           <!-- left hand side -->
               <tr>
                 <th>Smoker</th><!--<td>Yes<br><input type="radio" name="smoker" value="Yes" id="smokeryes" ></td><td>No<br><input type="radio" name="smoker" value="No" id="smokern" checked></td>-->
-                <td><select id="smoker"><option value="Yes">Yes</option><option value="No">No</option></td>
+                <td><select name="smoker" id="smoker"><option value="Yes">Yes</option><option value="No">No</option></td>
               </tr>
               <tr>
                 <td>No. per day:</td><td colspan="2"><input type="number" min="0" name="cigars" value="0" id="numofcig" ></td>
@@ -441,8 +441,26 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
   <h3 style="text-align:center;">Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
   </form>
 
+  <script type="text/javascript"> // date validating client-side
+    var today = new Date();
+    var date = today.getDay()+(today.getMonth()+1)+today.getFullYear();
+    // var today = new Date();
+    // var dd = today.getDate();
+    // var mm = today.getMonth()+1; //January is 0!
+    // var yyyy = today.getFullYear();
+    //  if(dd<10){
+    //         dd='0'+dd
+    //     }
+    //     if(mm<10){
+    //         mm='0'+mm
+    //     }
+    //
+    // today = yyyy+'-'+mm+'-'+dd;
+    var datestop = document.getElementById.value('datestoped');
+    document.getElementById('presentdate').setAttribute("min",datestop);
+  </script>
 
-  <script type="text/javascript">
+  <script type="text/javascript"> // dynamicly disabling certain input boxes in the MRI tier
     document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
       if (this.value === 'Yes') {
         document.getElementById('MRInum').disabled = false;
@@ -462,17 +480,17 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       }
     }
     </script>
-  <script type="text/javascript">
-  document.getElementById('smoker').onchange = function disableInpsmok() {
-    if (this.value === 'Yes') {
-      document.getElementById('numofcig').disabled = false;
-      document.getElementById('dateofcig').disabled = false;
+  <script type="text/javascript">// dynamicly disabling certain input boxes in the Smoker tier
+    document.getElementById('smoker').onchange = function disableInpsmok() {
+      if (this.value === 'Yes') {
+        document.getElementById('numofcig').disabled = false;
+        document.getElementById('dateofcig').disabled = false;
+      }
+      else if (this.value === 'No') {
+        document.getElementById('numofcig').disabled = true;
+        document.getElementById('dateofcig').disabled = true;
+      }
     }
-    else if (this.value === 'No') {
-      document.getElementById('numofcig').disabled = true;
-      document.getElementById('dateofcig').disabled = true;
-    }
-  }
   </script>
 
 </body>
