@@ -29,9 +29,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     }
     .split > * + * {      /* space between the side-side tables */
       margin-left:1em;
-      margin-right:1em;
     }
-
     @media (max-width: 40em){   /* some responsiveness for laptop-desktop screens */
       .split{
         flex-direction: column;
@@ -158,20 +156,37 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     <img src="MSregistryionian2.png" alt="Intro" style="float:left;">
     <br>
     <p style="font-family: arial;">Όνομα & Διεύθυνση:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" autofocus></textarea> <br> </p>
-    <table style="width:100%;">
-      <tr>
-        <th>Ημερομηνία: <input type="date" name="NDSdate"></th><th>ΑΜΚΑ: <input type="number" min=0 name="NDSnum"></th>
-      </tr>
-    </table>
-    <table style="width:100%;">
-      <tr>
-        <th colspan="2">Φύλο</th><th>Ηλικία</th><th>Φυλή</th><th>Συννοσηρότητες</th>
-      </tr>
-      <tr>
-        <td> Αρσενικό<br><input type="radio" name="Sex" value="Male"></td><td>Θηλυκό<br><input type="radio" name="Sex" value="Female"></td>
-        <td> <input type="number" name="Age" min="1"></td><td>Φυλή</td><td><input type="text" name="Comorbidities"></td>
-      </tr>
-    </table>
+    <div class="container">
+      <table style="width:100%;">
+        <tr>
+          <th>Ημερομηνία: <input type="date" name="NDSdate"></th><th>ΑΜΚΑ: <input type="number" min=0 name="NDSnum"></th>
+        </tr>
+      </table>
+      <table style="width:100%;">
+        <tr>
+          <th colspan="2">Φύλο</th><th>Ηλικία</th><th>Φυλή</th><th>Συννοσηρότητες</th>
+        </tr>
+        <tr>
+          <td> Αρσενικό<br><input type="radio" name="Sex" value="Male"></td><td>Θηλυκό<br><input type="radio" name="Sex" value="Female"></td>
+          <td> <input type="number" name="Age" min="1" max="150"></td>  <td><select id="Race" name="Race" required>
+              <option value="American Indian">American Indian</option>
+              <option value="Asian">Asian</option>
+              <option value="Black">Black</option>
+              <option value="Hispanic">Hispanic</option>
+              <option value="Caucasian" selected>Caucasian</option>
+              <option value="Unknown">Unknown</option>
+            </select>
+            </td>
+            <td><input type="text" list="Comorbidities" name="Comorbidities"/>
+            <datalist id="Comorbidities">
+              <option value="Diabetes">Διαβήτης</option>
+              <option value="Obesity">Παχυσαρκία</option>
+              <option value="Heart Disease">Heart Disease</option>
+            </datalist></td>
+        </tr>
+      </table>
+    </div>
+
     <br>
 
     <h4 style="text-align:center; font-family: arial;">ΚΑΤΗΓΟΡΙΑ 1 ΟΛΑ ΠΡΕΠΕΙ ΝΑ ΣΥΜΠΛΗΡΩΘΟΥΝ</h4>
@@ -233,7 +248,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       <br>
         <table>
           <tr>
-            <th colspan="7">ΠΑΡΕΛΘΟΝΤΙΚΗ Θεραπεία τροποποίησης ασθένειας :(tick) Ημερομηνία έναρξης: <input type="date" name="pastTREATMENT" required></th>    <!-- whole width -->
+            <th colspan="7">ΠΑΡΕΛΘΟΝΤΙΚΗ Θεραπεία τροποποίησης ασθένειας :(tick) Ημερομηνία έναρξης: <input type="date" name="pastTREATMENT" id="pastDate" required></th>    <!-- whole width -->
           </tr>
           <tr>
             <td>Alemtuzumab<br><input type="checkbox" name="pastTREATMENT" value="Alemtuzumab" ></td><td>Avonex<br><input type="checkbox" name="pastTREATMENT" value="Avonex"></td>
@@ -247,7 +262,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
             <td>Teriflunomide<br><input type="checkbox" name="pastTREATMENT" value="Teriflunomide"></td><td colspan="2">Καμία<br><input type="checkbox" name="pastTREATMENT" value="None"></td>
           </tr>
           <tr>
-            <th>Ημερομηνία τερματισμού:</th><td><input type="date" name="pastTREATMENTdate" ></td><th>Λόγος</th>
+            <th>Ημερομηνία τερματισμού:</th><td><input type="date" name="pastTREATMENTdate" id="datestoped"></td><th>Λόγος</th>
             <td colspan="2"><label for="Lack of efficasy">Έλλειψη Αποτελεσματικότητας</label><br><input type="checkbox" id="Lack of efficasy" name="pastTREATMENTcheck" value="Lack of efficasy"></td>
             <td><label for="Side effects">Παρενέργειες</label><br><input type="checkbox" id="Side effects" name="pastTREATMENTcheck" value="Side effects"></td>
             <td><label for="Other">Άλλο</label><br><input type="checkbox" id="Other" name="pastTREATMENTcheck" value="Other"></td>
@@ -256,7 +271,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       <br>
         <table>
           <tr>
-            <th colspan="7">Παρούσα Θεραπεία τροποποίησης ασθένειας:(tick)  Ημερομηνία έναρξης: <input type="date" name="TREATMENTdate" required></th>    <!-- whole width -->
+            <th colspan="7">Παρούσα Θεραπεία τροποποίησης ασθένειας:(tick)  Ημερομηνία έναρξης: <input type="date" name="TREATMENTdate" id="presentdate" required></th>    <!-- whole width -->
           </tr>
           <tr>
             <td>Alemtuzumab<br><input type="checkbox" name="TREATMENT" value="Alemtuzumab"></td><td>Avonex<br><input type="checkbox" name="TREATMENT" value="Avonex" ></td>
@@ -306,7 +321,52 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       </div>
     </section>
 
-  <h4 style="text-align:center; font-family: arial;">ΚΑΤΗΓΟΡΙΑ 2 <br> </h4>
+    <section>
+      <h3 style="text-align:center;">ΚΑΤΗΓΟΡΙΑ 2</h3>
+      <div class="container">
+        <div class="split">
+          <div>
+            <table>
+              <tr>
+                <th colspan="5">CNS MRI Onset Localisation/ΚΝΣ Τοποθεσία αρχικής MRI</th>
+              </tr>
+              <tr>
+                <td>Spinal<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
+                <td>Cortex<br><input type="checkbox" name="MRIonsetlocalisation" value="Cortex"></td>
+                <td>Brainstem<br><input type="checkbox" name="MRIonsetlocalisation" value="Brainstem"></td>
+                <td>Cerebellum<br><input type="checkbox" name="MRIonsetlocalisation" value="Cerebellum"></td>
+                <td>Visual<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr>
+                <th colspan="5">Οι βλάβες που ενισχύουν τη μαγνητική τομογραφία του ΚΝΣ τους τελευταίους 12 μήνες</th>
+              </tr>
+              <tr>
+                <!-- <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing" id="MRIenhancing" checked><br>No<input type="radio" value="No" name="MRIenhancing"></td> -->
+                <td colspan="2"><select id="MRIenhancing" name="MRIenhancing"><option value="Yes">Ναι</option><option value="No">Όχι</option> </select></td>
+                <td colspan="3">Αριθμός: <input name="MRInum" type="number" id="MRInum"></td>
+              </tr>
+              <tr>
+                <th colspan="5">Τοποθεσία</th>
+              </tr>
+              <tr>
+                <td>Νωτιαίος<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal" id="MRIloc"></td>
+                <td>Φλοιός<br><input type="checkbox" name="MRIenhancinglocation" value="Cortex" id="MRIloc1"></td>
+                <td>Εγκεφαλικό<br><input type="checkbox" name="MRIenhancinglocation" value="Brainstem" id="MRIloc2"></td>
+                <td>Παρεγκεφαλικό<br><input type="checkbox" name="MRIenhancinglocation" value="Cerebellum" id="MRIloc3"></td>
+                <td>Οπτικό<br><input type="checkbox" name="MRIenhancinglocation" value="Visual" id="MRIloc4"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  <h4 style="text-align:center; font-family: arial;">ΚΑΤΗΓΟΡΙΑ 3 <br> </h4>
 
     <section>
       <div class="container">
@@ -344,13 +404,14 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
           <div>
             <table>
               <tr>
-                <th>Καπνιστής</th><td>Ναι<br><input type="radio" name="smoker" value="Yes"></td><td>Όχι<br><input type="radio" name="smoker" value="No"></td>
+                <th>Καπνιστής</th>
+                <td><select name="smoker" id="smoker"><option value="Yes">Ναι</option><option value="No">Όχι</option></td>
               </tr>
               <tr>
-                <td>Αριθμός τσιγάρων ανα μέρα:</td><td colspan="2"><input type="number" min="0" name="cigars" value="0"></td>
+                <td>Αριθμός τσιγάρων ανα μέρα:</td><td colspan="2"><input type="number" min="0" name="cigars" id="numofcig" value="0"></td>
               </tr>
               <tr>
-                <td>Κάπνισε τελευταία φορά:</td><td colspan="2"><input type="date" name="cigardate"></td>
+                <td>Κάπνισε τελευταία φορά:</td><td colspan="2"><input type="date" name="cigardate" id="dateofcig"></td>
               </tr>
             </table>
           </div>
@@ -376,5 +437,52 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
   <h3 style="text-align:center;">Άτομο που συμπληρώνει την φόρμα:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
   </form>
+
+  <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
+    document.getElementById('pastDate').addEventListener("change", function() {
+      var inputpastdateStart = this.value;
+      var pastdatestart = new Date(inputpastdateStart);
+      document.getElementById('datestoped').setAttribute("min",inputpastdateStart);
+    });
+  </script>
+  <script type="text/javascript"> // date validating client-side for past-present treatment
+    document.getElementById('datestoped').addEventListener("change", function() {
+      var inputpastdateStop = this.value;
+      var pastdatestop = new Date(inputpastdateStop);
+      document.getElementById('presentdate').setAttribute("min",inputpastdateStop);
+    });
+  </script>
+  <script type="text/javascript"> // dynamicly disabling certain input boxes in the MRI tier
+    document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
+      if (this.value === 'Yes') {
+        document.getElementById('MRInum').disabled = false;
+        document.getElementById('MRIloc').disabled = false;
+        document.getElementById("MRIloc1").disabled = false;
+        document.getElementById("MRIloc2").disabled = false;
+        document.getElementById("MRIloc3").disabled = false;
+        document.getElementById("MRIloc4").disabled = false;
+      }
+      else if (this.value === 'No') {
+        document.getElementById("MRInum").disabled = true;
+        document.getElementById("MRIloc").disabled = true;
+        document.getElementById("MRIloc1").disabled = true;
+        document.getElementById("MRIloc2").disabled = true;
+        document.getElementById("MRIloc3").disabled = true;
+        document.getElementById("MRIloc4").disabled = true;
+      }
+    }
+    </script>
+  <script type="text/javascript">// dynamicly disabling certain input boxes in the Smoker tier
+    document.getElementById('smoker').onchange = function disableInpsmok() {
+      if (this.value === 'Yes') {
+        document.getElementById('numofcig').disabled = false;
+        document.getElementById('dateofcig').disabled = false;
+      }
+      else if (this.value === 'No') {
+        document.getElementById('numofcig').disabled = true;
+        document.getElementById('dateofcig').disabled = true;
+      }
+    }
+  </script>
 </body>
 </html>

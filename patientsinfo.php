@@ -66,8 +66,10 @@ session_start();?>
     }
     .sidebar a {
       display: block;
-      padding: 16px;
+      padding: 10px;
+      /* background-color: #30819c; */
       text-decoration: none;
+      color: black;
     }
     .sidebar a.active {
       background-color: lightblue;
@@ -120,7 +122,6 @@ session_start();?>
 </head>
 
 <body>
-
   <div class="sidebar">
     <img class="img" src="MSregistry_ionian2_bg_lightblue_small.png" alt="Logo">
       <ul>
@@ -130,7 +131,6 @@ session_start();?>
         <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
       </ul>
   </div>
-
   <div class="box">
     <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
     <h1>Welcome Doctor: <u><?php $user_name = $_SESSION['user'];

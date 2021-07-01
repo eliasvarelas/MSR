@@ -65,8 +65,11 @@
     }
     .sidebar a {
       display: block;
-      padding: 16px;
+      padding: 10px;
+      /* background-color: #30819c; */
       text-decoration: none;
+      color: black;
+    }
     }
     .sidebar a.active {
       background-color: lightblue;

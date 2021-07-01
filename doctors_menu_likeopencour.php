@@ -65,8 +65,10 @@
     }
     .sidebar a {
       display: block;
-      padding: 16px;
+      padding: 10px;
+      /* background-color: #30819c; */
       text-decoration: none;
+      color: black;
     }
     .sidebar a.active {
       background-color: lightblue;
@@ -75,18 +77,6 @@
     .sidebar a:hover:not(.active) {
       background-color: #3973ac;
       color: white;
-    }
-    /* div.content {
-      display: block;
-      margin-left: 1em;
-      margin-right: 0px;
-    } */
-    article {     /* main content */
-      /* display: block;
-      float: left;
-      width: 100%;
-      height: auto;
-      font-family: Arial; */
     }
     div.box{        /* main content */
       display: block;
@@ -155,11 +145,10 @@
       <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
     </ul>
   </div>
-    <article>
-      <div class="box">
+  <div class="box">
         <button type="button" name="Logout" id="logout" class="button"><?php echo "<a href='logout.php'> Logout</a> "; ?></button>
         <h1>Welcome Doctor: <u><?php $user_name = $_SESSION['user'];
-        echo $user_name;?></u>! <!-- prints the active username --></h1>
+        echo $user_name;?></u>!</h1> <!-- prints the active username -->
 
         <br>
         <br>
@@ -209,6 +198,5 @@
           <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
         </footer>
       </div>
-    </article>
 </body>
 </html>

@@ -441,25 +441,20 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
   <h3 style="text-align:center;">Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
   </form>
 
-  <script type="text/javascript"> // date validating client-side
-    var today = new Date();
-    var date = today.getDay()+(today.getMonth()+1)+today.getFullYear();
-    // var today = new Date();
-    // var dd = today.getDate();
-    // var mm = today.getMonth()+1; //January is 0!
-    // var yyyy = today.getFullYear();
-    //  if(dd<10){
-    //         dd='0'+dd
-    //     }
-    //     if(mm<10){
-    //         mm='0'+mm
-    //     }
-    //
-    // today = yyyy+'-'+mm+'-'+dd;
-    var datestop = document.getElementById.value('datestoped');
-    document.getElementById('presentdate').setAttribute("min",datestop);
+  <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
+    document.getElementById('pastDate').addEventListener("change", function() {
+      var inputpastdateStart = this.value;
+      var pastdatestart = new Date(inputpastdateStart);
+      document.getElementById('datestoped').setAttribute("min",inputpastdateStart);
+    });
   </script>
-
+  <script type="text/javascript"> // date validating client-side for past-present treatment
+    document.getElementById('datestoped').addEventListener("change", function() {
+      var inputpastdateStop = this.value;
+      var pastdatestop = new Date(inputpastdateStop);
+      document.getElementById('presentdate').setAttribute("min",inputpastdateStop);
+    });
+  </script>
   <script type="text/javascript"> // dynamicly disabling certain input boxes in the MRI tier
     document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
       if (this.value === 'Yes') {
