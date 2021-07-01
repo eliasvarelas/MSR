@@ -30,8 +30,8 @@
       background-color: yellow;
     }
     table, th, td {
-      border: 1px solid black;
       border-collapse: collapse;
+      border: 1px solid black;
       padding:5px;
       text-align:center;
       font-family: arial;
@@ -139,7 +139,7 @@
   <div class="sidebar">
     <img class="img" src="MSregistry_ionian2_bg_lightblue_small.png" alt="Logo">
     <ul>
-      <li><a href="/doctors_menu.php">Main Menu</a></li>    <!-- Doctors Main menu -->
+      <li><a href="/doctors_menu_likeopencour.php.php">Main Menu</a></li>    <!-- Doctors Main menu -->
       <li><a href="/patientsinfo.php">Existing Patients</a></li>  <!-- shows the patients of the active user_id -->
       <li><a href="/addpatient.php">Add a new patient</a></li>  <!-- adds a new patient into the patients table with tha active doctor id -->
       <li><a href="/searching.php">Search Query</a></li>  <!-- Advanced search query via Attributes -->
