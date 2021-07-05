@@ -168,18 +168,6 @@ session_start();?>
                     <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                     <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&?nm=". $row['Patient_name'] ."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
                     <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
-              <script>
-                function remove_user() {    //a simple function for confirming the removal of a patient
-                  var sql;
-                  var r = confirm('Are you Sure?')
-                  if (r == true) {
-                    sql = "DELETE FROM patients WHERE Patient_id = $PatientID";
-                  } else {
-                    sql = "";   // works, but there is something going on with the buttons needs to be revisited
-                  }
-                  document.getElementById("removeuser").innerHTML = sql;
-                }
-              </script>
             </tr>
     <?php } ?>
           </table>
@@ -196,5 +184,17 @@ session_start();?>
       <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
     </footer>
     </div>
+    <script>
+      function remove_user() {    //a simple function for confirming the removal of a patient
+        var sql;
+        var r = confirm('Are you Sure?')
+        if (r == true) {
+          sql = "DELETE FROM patients WHERE Patient_id = $PatientID";
+        } else {
+          sql = "";   // works, but there is something going on with the buttons needs to be revisited
+        }
+        document.getElementById("removeuser").innerHTML = sql;
+      }
+    </script>
 </body>
 </html>
