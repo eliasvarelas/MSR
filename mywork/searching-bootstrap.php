@@ -212,6 +212,7 @@
                 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
             }
             ?>
+            <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>

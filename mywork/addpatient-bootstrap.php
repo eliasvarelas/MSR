@@ -143,6 +143,7 @@
               </table>
               <label for="Submit"> <input type="submit" name="Submit"></label>
             </form>
+            <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
