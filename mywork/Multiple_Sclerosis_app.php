@@ -73,7 +73,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       font-family: arial;
     }
     th {
-      background-color: #6699ff;              /* Title box color */
+      background-color: #7386D5;              /* Title box color */
       color: black;
       margin: auto;
     }

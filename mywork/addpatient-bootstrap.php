@@ -32,14 +32,14 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="" >
+                    <a href="/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
                     </a>
 
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/patientinfo-bootstrap.php">
                         <i class="fas fa-folder"></i>
                         Existing Patients
                     </a>
@@ -47,13 +47,13 @@
 
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/searching-bootstrap.php">
                         <i class="fas fa-search"></i>
                         Advanced Search
                     </a>
@@ -83,7 +83,7 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
+                            <li class="navbar-btn">
                                 <a class="nav-link" href="#">
                                   <i class="fas fa-user"></i>
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
@@ -98,47 +98,51 @@
 
             <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
             <?php
-              //database connection
-              $usersid = $_SESSION['user_id'];
-              $servername = "127.0.0.1";
-              $username = "root";
-              $password = "bioinformatics";
-              $dbname = "BIHElab";
+            //database connection
+            $servername = "127.0.0.1";
+            $username = "root";
+            $password = "bioinformatics";
+            $dbname = "BIHElab";
 
-              $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-              $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-              try{ ?>
-                <table>    <!-- prints the table with the patients -->
-                  <tr>
-                    <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
-                    <th>Add a Follow Up Visit</th><th>Remove Patient</th>
-                  </tr>
-                    <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
-                    $result = $pdo->query($sql);
-                    if($result->rowCount() > 0){
-                      while($row = $result->fetch()){?>
-                          <tr>
-                            <td><?php echo $row['Patient_id']; ?></td>
-                            <td><?php echo $row['Patient_name'] ; ?></td>
-                            <td><?php echo $row['Phonenum'] ; ?></td>
-                            <td><?php echo $row['Email']; ?></td>
-                            <td><?php echo "<a href='/previousvisits.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                            <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&?nm=". $row['Patient_name'] ."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                            <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
-                          </tr>
-                    <?php
-                    }
-                      unset($result);
-                    } else{     // basic error checking
-                      echo "No records matching your query were found.";
-                    }
-              } catch(PDOException $e){
-                  die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+            $doc = $_SESSION['user_id'];
+            //getting the POST data
+            $pat_id = $_POST['assignid'];
+            $flname = $_POST['flname'];
+            $phonenum = $_POST['phone'];
+            $email = $_POST['email'];
+            $Submit = $_POST['Submit'];
+
+            try{  //using MySQL PDOAttribute for the Exceptions
+              $sql = "INSERT INTO patients (Doctor_ID,Patient_id,Patient_name,Phonenum,Email,Submit) VALUES (?,?,?,?,?,?)";
+
+              if(isset($_POST['Submit'])){
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$doc,$pat_id,$flname,$phonenum,$email,$Submit]);
+
+              } else{
+                echo "Something went wrong.";
               }
+
+            } catch(PDOException $e){
+              die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+            }
             ?>
 
-            <!-- <div class="line"></div> -->
+            <form class="form" action="addpatient-bootstrap.php" method="post"> <!-- basic form to pass the data in the database for the creation of a new patient -->
+              <table>
+                <tr>
+                  <th>Assign a Patient ID</th><th>First and Last Name</th><th>Phone Number</th><th>Email</th>
+                </tr>
+                <tr>
+                  <td><input type="number" name="assignid"></td><td><input type="text" name="flname"></td>
+                  <td><input type="number" name="phone"></td><td><input type="email" name="email"></td>
+                </tr>
+              </table>
+              <label for="Submit"> <input type="submit" name="Submit"></label>
+            </form>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>

@@ -78,7 +78,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     }
 
     th {
-      background-color: #6699ff;              /* Title box color */
+      background-color: #7386D5;              /* Title box color */
       color: black;
       margin: auto;
     }
@@ -181,7 +181,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
             <datalist id="Comorbidities">
               <option value="Diabetes">Διαβήτης</option>
               <option value="Obesity">Παχυσαρκία</option>
-              <option value="Heart Disease">Heart Disease</option>
+              <option value="Heart Disease">Καρδιακή Πάθηση</option>
             </datalist></td>
         </tr>
       </table>
