@@ -204,7 +204,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
                 <td><label for="Other">Other</label><br><input type="radio" id="Other" name="convsprad" value="Other" required></td>
               </tr>
               <tr>
-                <th colspan="4">CONVERSION TO SP (if possible)<input type="text" name="convspnum" ></th>
+                <th colspan="4">CONVERSION TO SP (if possible)<input type="number" name="convspnum" ></th>
               </tr>
             </table>
           </div>

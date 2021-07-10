@@ -32,7 +32,7 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="/mywork/menu.php" >
+                    <a href="/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
                     </a>

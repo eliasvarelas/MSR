@@ -168,7 +168,7 @@
         if (r == true) {
           sql = "DELETE FROM patients WHERE Patient_id = $PatientID";
         } else {
-          sql = "";   // works, but there is something going on with the buttons needs to be revisited
+          <?php echo "Error" ?>   // works, but there is something going on with the buttons needs to be revisited
         }
         document.getElementById("removeuser").innerHTML = sql;
       }
