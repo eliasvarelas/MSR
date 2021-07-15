@@ -60,79 +60,83 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         padding: 16px;
         font-family: arial;
         min-height:100%;      /* kinda helps, but not the ideal solution, maybe use ids */
+        max-width: 100%;
+        word-break: break-all;
       }
       th, td {
         padding: 16px;
         height: auto;
       }
-    th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      padding:5px;
-      text-align:center;
-      font-family: arial;
-    }
-    th {
-      background-color: #7386D5;              /* Title box color */
-      color: black;
-      margin: auto;
-    }
-    /* table positioning... in development */
-    .header {
-      background-color: #ffffff;
-      text-align: left;
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 80%;
-      margin: auto;
-      font-family: arial;
-    }
-    img {                   /*  image alignment for the MS image */
-      display: block;
-      margin-right: auto;
-      width: 30%;
-    }
-    .lang {
-      position: right;
-      height:40px;
-      width:80px;
-      box-sizing:border-box;
-      padding: 2px;
-      border: 2px solid black;
-      border-collapse: collapse;
-      margin: 1rem 1rem;
-    }
-    input[type=date], input[type=number] {
-      padding: 5px 5px;
-      margin: 8px 0;
-      box-sizing: border-box;
-      font-family: arial;
-    }
+      th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding:5px;
+        text-align:center;
+        font-family: arial;
+      }
+      th {
+        background-color: #7386D5;              /* Title box color */
+        color: black;
+        margin: auto;
+      }
+      /* table positioning... in development */
+      .header {
+        background-color: #ffffff;
+        text-align: left;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 80%;
+        margin: auto;
+        font-family: arial;
+      }
+      img {                   /*  image alignment for the MS image */
+        display: block;
+        margin-right: auto;
+        width: 30%;
+      }
+      .lang {
+        position: right;
+        height:40px;
+        width:80px;
+        box-sizing:border-box;
+        padding: 2px;
+        border: 2px solid black;
+        border-collapse: collapse;
+        margin: 1rem 1rem;
+      }
+      input[type=date], input[type=number] {
+        padding: 5px 5px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-family: arial;
+      }
+      h3,h4 {
+        text-align: center;
+        font-family: Arial;
+      }
 
-    input[type=text] {
-      border: none;
-      border-bottom: 1px solid black;
-      font-family: arial;
-      padding: 5px 5px;
-      margin: 8px 0;
-    }
-    textarea {
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      resize: none;
-      font-family: arial;
-      width: auto;
-    }
-    tr:nth-child(even) {
-      background-color: white;
-      font-family: arial;
-    }
-    #purple{
-      background-color: #b366ff;
-    }
-    #cntr{
-    }
+      input[type=text] {
+        border: none;
+        border-bottom: 1px solid black;
+        font-family: arial;
+        padding: 5px 5px;
+        margin: 8px 0;
+      }
+      textarea {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        resize: none;
+        font-family: arial;
+        width: auto;
+      }
+      tr:nth-child(even) {
+        background-color: white;
+        font-family: arial;
+      }
+      #purple{
+        background-color: #b366ff;
+      }
   </style>
 </head>
 
@@ -143,19 +147,16 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       location.href = "Multiple_Sclerosis_app_gr.php";
     };
   </script>
+
     <!-- Starting the form -->
    <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
     <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
-    <p style="font-family: arial;"> Name & Address:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" value="<?php echo $patientID?>"></textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
-
+    <p> Name & Address:<br><textarea name="NDS" rows="5" cols="40" name="NDS"> <?php echo $patientNAME?> </textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
     <div class="container">
-      <table style="width:100%;">
+      <table>
         <tr>
           <th>Date: <input id="ndsdate" type="date" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
-          <script type="text/javascript">
-
-          </script>
         </tr>
       </table>
       <table> <!-- style width 100% -->
@@ -180,6 +181,10 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
                 <option value="Diabetes">Diabetes</option>
                 <option value="Obesity">Obesity</option>
                 <option value="Heart Disease">Heart Disease</option>
+                <option value="Renal Failure">Renal Failure</option>
+                <option value="Hepatic Failure">Hepatic Failure</option>
+                <option value="Dyslipidemia">Dyslipidemia</option>
+                <option value="Autoimmune">Autoimmune</option>
               </datalist>
             </td>
         </tr>
@@ -187,7 +192,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     </div>
 
     <br>
-    <h4 style="text-align:center; font-family: arial;">TIER 1 All MUST BE FILLED IN</h4>
+    <h3>TIER 1 All MUST BE FILLED IN</h3>
     <!-- all the tables organized to fit in to a single page -->
     <section>
       <div class="container">
@@ -232,17 +237,30 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     <br>
     <section>
       <div class="container">
-          <table id="cntr">  <!-- center -->
-            <tr>
-              <th>No. of Relapses(RR only)<br>(since last visit/year)</th><th colspan="3">Severity</th>
-            </tr>
-            <tr>
-              <td><input type="number" min="0" name="Noofrelapses" required></td>
-              <td><label for="Mild">Mild</label><br><input type="radio" id="Mild" name="Noofrelapsesrad" value="Mild" required></td>
-              <td><label for="Moderate">Moderate</label><br><input type="radio" id="Moderate" name="Noofrelapsesrad" value="Moderate" required></td>
-              <td><label for="Severe">Severe</label><br><input type="radio" id="Severe" name="Noofrelapsesrad" value="Severe" required></td>
-            </tr>
-          </table>
+        <div class="split">
+          <div>
+            <table>  <!-- center -->
+              <tr>
+                <th>No. of Relapses(RR only)<br>(since last visit/year)</th>
+              </tr>
+              <tr>
+                <td><input type="number" min="0" name="Noofrelapses" required></td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr>
+                <th colspan="3">Severity</th>
+              </tr>
+              <tr>
+                <td><label for="Mild">Mild</label><br><input type="radio" id="Mild" name="Noofrelapsesrad" value="Mild" required></td>
+                <td><label for="Moderate">Moderate</label><br><input type="radio" id="Moderate" name="Noofrelapsesrad" value="Moderate" required></td>
+                <td><label for="Severe">Severe</label><br><input type="radio" id="Severe" name="Noofrelapsesrad" value="Severe" required></td>
+              </tr>
+            </table>
+          </div>
+        </div>
         <br>
           <table>   <!-- center -->
             <tr>
@@ -319,7 +337,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     </section>
 
     <section>
-      <h3 style="text-align:center;">TIER 2 MRI ALL MUST BE COMPLETED</h3>
+      <h3>TIER 2 MRI ALL MUST BE COMPLETED</h3>
       <div class="container">
         <div class="split">
           <div>
@@ -363,7 +381,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
     </section>
 
-  <h4 style="text-align:center; font-family: arial;">TIER 3 <br> </h4>
+  <h3>TIER 3 <br> </h3>
 
     <section>
       <div class="container">
@@ -438,7 +456,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     </section>
   <br>
 
-  <h3 style="text-align:center;">Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
+  <h3>Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
   </form>
 
   <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment

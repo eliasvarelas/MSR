@@ -11,135 +11,131 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
   <html lang="en-us">
   <meta charset="utf-8" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-    }
-
-    .split{
-      display: flex;
-      flex-direction: row;
-      margin: 0 auto;
-
-    }
-    .split > * {
-      flex-basis: 100%;
-    }
-    .split > * + * {      /* space between the side-side tables */
-      margin-left:1em;
-    }
-    @media (max-width: 40em){   /* some responsiveness for laptop-desktop screens */
+    /*   make it responsive (the right way) without messing up the table possitioning   */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
       .split{
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .split > * {
         flex-basis: 100%;
+        max-width: 100%;
       }
-      .split > * + * {
+      .split > * + * {      /* space between the side-side tables */
         margin-left:1em;
-        margin-right:1em;
-        margin-top: 1em;
+        margin-right:0;
       }
-    }
+      @media (max-width: 40em){
+        .split{
+          flex-direction: column;
+          flex-basis: 100%;
+        }
+        .split > * + * {
+          margin-left:1em;
+          margin-right:1em;
+          margin-top: 1em;
+        }
+      }
+      .container{
+        position:relative;
+        margin: 0  auto;
+        width: min(95%, 70rem);
+      }
+      section{
+        padding: 0.5em 0;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+        padding: 16px;
+        font-family: arial;
+        min-height:100%;      /* kinda helps, but not the ideal solution, maybe use ids */
+        max-width: 100%;
+        word-break: break-all;
+      }
+      th, td {
+        padding: 16px;
+        height: auto;
+      }
+      th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding:5px;
+        text-align:center;
+        font-family: arial;
+      }
+      th {
+        background-color: #7386D5;              /* Title box color */
+        color: black;
+        margin: auto;
+      }
+      /* table positioning... in development */
+      .header {
+        background-color: #ffffff;
+        text-align: left;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 80%;
+        margin: auto;
+        font-family: arial;
+      }
+      img {                   /*  image alignment for the MS image */
+        display: block;
+        margin-right: auto;
+        width: 30%;
+      }
+      .lang {
+        position: right;
+        height:40px;
+        width:80px;
+        box-sizing:border-box;
+        padding: 2px;
+        border: 2px solid black;
+        border-collapse: collapse;
+        margin: 1rem 1rem;
+      }
+      input[type=date], input[type=number] {
+        padding: 5px 5px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-family: arial;
+      }
+      h3,h4 {
+        text-align: center;
+        font-family: Arial;
+      }
 
-    .container{
-      margin: 0  auto;
-      width: min(90%, 70rem);
-    }
-    section{
-      padding: 0.5em 0;
-    }
-
-    table {
-      border-collapse: collapse;
-      border-spacing: 0;
-      width: 100%;
-      border: 1px solid #ddd;
-      padding: 16px;
-      font-family: arial;
-      min-height:100%;      /* kinda helps, but not the ideal solution, maybe use ids */
-    }
-
-    th, td {
-      padding: 16px;
-      height: auto;
-    }
-
-
-
-    th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      padding:5px;
-      text-align:center;
-      font-family: arial;
-
-
-    }
-
-    th {
-      background-color: #7386D5;              /* Title box color */
-      color: black;
-      margin: auto;
-    }
-    /* table positioning... in development */
-
-    .header {
-      background-color: #ffffff;
-      text-align: left;
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 80%;
-      margin: auto;
-      font-family: arial;
-    }
-
-    img {                   /*  image alignment for the MS image */
-      display: block;
-      margin-right: auto;
-      width: 30%;
-    }
-    .lang {
-      position: right;
-      height:40px;
-      width:80px;
-      box-sizing:border-box;
-      padding: 2px;
-      border: 2px solid black;
-      border-collapse: collapse;
-      margin: 1rem 1rem;
-    }
-
-    input[type=date], input[type=number] {
-      padding: 5px 5px;
-      margin: 8px 0;
-      box-sizing: border-box;
-      font-family: arial;
-    }
-
-    input[type=text] {
-      border: none;
-      border-bottom: 1px solid black;
-      font-family: arial;
-      padding: 5px 5px;
-      margin: 8px 0;
-    }
-    textarea {
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      resize: none;
-      font-family: arial;
-      width: auto;
-    }
-    tr:nth-child(even) {
-      background-color: #ffffff;
-      font-family: arial;
-    }
-    #purple{
-      background-color: #b366ff;
-    }
-
+      input[type=text] {
+        border: none;
+        border-bottom: 1px solid black;
+        font-family: arial;
+        padding: 5px 5px;
+        margin: 8px 0;
+      }
+      textarea {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        resize: none;
+        font-family: arial;
+        width: auto;
+      }
+      tr:nth-child(even) {
+        background-color: white;
+        font-family: arial;
+      }
+      #purple{
+        background-color: #b366ff;
+      }
   </style>
 </head>
 
@@ -182,6 +178,10 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
               <option value="Diabetes">Διαβήτης</option>
               <option value="Obesity">Παχυσαρκία</option>
               <option value="Heart Disease">Καρδιακή Πάθηση</option>
+              <option value="Renal Failure">Νεφρική Ανεπάρκεια</option>
+              <option value="Hepatic Failure">Ηπατική Ανεπάρκεια</option>
+              <option value="Dyslipidemia">Δυσλιπιδαιμία</option>
+              <option value="Autoimmune">Αυτοάνοσα</option>
             </datalist></td>
         </tr>
       </table>
@@ -189,7 +189,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
 
     <br>
 
-    <h4 style="text-align:center; font-family: arial;">ΚΑΤΗΓΟΡΙΑ 1 ΟΛΑ ΠΡΕΠΕΙ ΝΑ ΣΥΜΠΛΗΡΩΘΟΥΝ</h4>
+    <h3>ΚΑΤΗΓΟΡΙΑ 1 ΟΛΑ ΠΡΕΠΕΙ ΝΑ ΣΥΜΠΛΗΡΩΘΟΥΝ</h3>
 
                       <!-- all the tables, not yet organized to fit in to a single page,prob css -->
     <section id="mstype">
@@ -234,17 +234,30 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
          <br>
     <section>
       <div class="container">
-        <table>
-          <tr>
-            <th>Αριθμός Υποτροπιάσεων (ΜΟΝΟ RR)<br>(απο την τελευταία επίσκεψη/χρόνο)</th><th colspan="3">Σοβαρότητα</th>
-          </tr>
-          <tr>
-            <td><input type="number" min="0" name="Noofrelapses" required></td>
-            <td><label for="Mild">Ήπια</label><br><input type="radio" id="Mild" name="Noofrelapsesrad" value="Mild" required></td>
-            <td><label for="Moderate">Μέτρια</label><br><input type="radio" id="Moderate" name="Noofrelapsesrad" value="Moderate" required></td>
-            <td><label for="Severe">Σοβαρή</label><br><input type="radio" id="Severe" name="Noofrelapsesrad" value="Severe" required></td>
-          </tr>
-        </table>
+        <div class="split">
+          <div>
+            <table>
+              <tr>
+                <th>Αριθμός Υποτροπιάσεων (ΜΟΝΟ RR απο την τελευταία επίσκεψη/χρόνο)</th>
+              </tr>
+              <tr>
+                <td><input type="number" min="0" name="Noofrelapses" required></td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr>
+                <th colspan="3">Σοβαρότητα</th>
+              </tr>
+              <tr>
+                <td><label for="Mild">Ήπια</label><br><input type="radio" id="Mild" name="Noofrelapsesrad" value="Mild" required></td>
+                <td><label for="Moderate">Μέτρια</label><br><input type="radio" id="Moderate" name="Noofrelapsesrad" value="Moderate" required></td>
+                <td><label for="Severe">Σοβαρή</label><br><input type="radio" id="Severe" name="Noofrelapsesrad" value="Severe" required></td>
+              </tr>
+            </table>
+          </div>
+        </div>
       <br>
         <table>
           <tr>
