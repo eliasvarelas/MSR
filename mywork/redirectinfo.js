@@ -1,1 +1,1 @@
-window.location.replace("/patientsinfo-bootstrap.php");
+window.location.replace("/patientinfo-bootstrap.php");

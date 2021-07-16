@@ -14,6 +14,9 @@ table, th, td {
   text-align:center;
   font-family: arial;
 }
+#standard{
+  min-width: 100%;
+}
 th {
   background-color: #7386D5;         /* Title box color */
   color: black;

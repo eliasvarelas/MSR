@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>MS Registry Searching Queries</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -31,7 +31,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
+                <li>
                     <a href="/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
@@ -52,7 +52,7 @@
                         Add a new Patient
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="">
                         <i class="fas fa-search"></i>
                         Advanced Search
@@ -96,7 +96,6 @@
                 </div>
             </nav>
 
-            <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
             <?php
             $usersid = $_SESSION['user_id'] ;
             $servername = "127.0.0.1";
@@ -113,11 +112,12 @@
                   <tr>
                     <th><select class="selection" name="Attributes">
                       <option disabled>Options</option>
-                      <option value="ID">Patient ID</option>
-                      <option value="Name">Name</option>
-                      <option value="Phone Number">Phone Number</option>
-                      <option value="Email">Email</option>
-                    </select> </th>
+                      <option value="ID" id="patientId">Patient ID</option>
+                      <option value="Age" id="patientAge">Age</option>
+                      <option value="Name" id="patientName">Name</option>
+                      <option value="Phone Number" id="patientPhonenum">Phone Number</option>
+                      <option value="Email" id="patientEmail">Email</option>
+                    </select></th>
                   </tr>
                   <tr>
                     <td><input type="text" name="srchoption"></td>
@@ -134,14 +134,14 @@
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
-                    if($row = $result->fetch()){ ?>
-                      <table>
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
                         </tr>
                         <tr>
                           <td> <?php echo $row['Patient_id']; ?> </td><td><?php echo $row['Patient_name']; ?></td>
-                          <td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
                     <?php }
@@ -149,18 +149,37 @@
                     echo "No patient exists with this information.";
                   }
                 }
+                if ($option == 'Age'){  // add the option about searching with an age limit ex. "Age > 50"
+                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                      </tr>
+                    </table>
+               <?php }
+                  } else {
+                    echo "No patient exists with this information.";
+                  }
+                }
                 if ($option == 'Name'){
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name ='$entry'";
+                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
-                    if($row = $result->fetch()){ ?>
-                      <table>
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
                         <tr>
-                          <th>Name</th><th>Patient ID</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
                         </tr>
                         <tr>
-                          <td><?php echo $row['Patient_name']; ?></td><td> <?php echo $row['Patient_id']; ?> </td>
-                          <td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
+                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
                <?php }
@@ -172,14 +191,14 @@
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum =$entry";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
-                    if($row = $result->fetch()){ ?>
-                      <table>
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
                         <tr>
-                          <th>Phone Number</th><th>Patient ID</th><th>Name</th><th>Email</th>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
                         </tr>
                         <tr>
-                          <td><?php echo $row['Phonenum']; ?></td><td> <?php echo $row['Patient_id']; ?> </td>
-                          <td><?php echo $row['Patient_name']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
+                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
                     <?php }
@@ -191,14 +210,14 @@
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Email ='$entry'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
-                    if($row = $result->fetch()){ ?>
-                      <table>
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
                         <tr>
-                          <th>Phone Number</th><th>Patient ID</th><th>Name</th><th>Email</th>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
                         </tr>
                         <tr>
-                          <td><?php echo $row['Email']; ?></td><td> <?php echo $row['Patient_id']; ?> </td>
-                          <td><?php echo $row['Patient_name']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
+                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
                     <?php }
@@ -232,6 +251,16 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+    </script>
+
+    <script type="text/javascript">
+      document.getElementsByName('Attributes').addEventListener("change",function changeInputbox() {
+        if (this.value === 'ID') {
+          document.getElementById('srchoption').type = "number";
+        } else if (this.value === 'Name') {
+          document.getElementById('srchoption').type = 'text';
+        }
+      });
     </script>
 
 

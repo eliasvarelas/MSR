@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>MS Registry Adding a Patient</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -31,7 +31,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
+                <li>
                     <a href="/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
@@ -46,7 +46,7 @@
 
 
                 </li>
-                <li>
+                <li class="active">
                     <a href="">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
@@ -96,7 +96,6 @@
                 </div>
             </nav>
 
-            <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
             <?php
             //database connection
             $servername = "127.0.0.1";
@@ -111,16 +110,17 @@
             //getting the POST data
             $pat_id = $_POST['assignid'];
             $flname = $_POST['flname'];
+            $dob = $_POST['dob'];
             $phonenum = $_POST['phone'];
             $email = $_POST['email'];
             $Submit = $_POST['Submit'];
 
             try{  //using MySQL PDOAttribute for the Exceptions
-              $sql = "INSERT INTO patients (Doctor_ID,Patient_id,Patient_name,Phonenum,Email,Submit) VALUES (?,?,?,?,?,?)";
+              $sql = "INSERT INTO patients (Doctor_ID,Patient_id,Patient_name,DOB,Phonenum,Email,Submit) VALUES (?,?,?,?,?,?,?)";
 
               if(isset($_POST['Submit'])){
                 $stmt = $pdo->prepare($sql);
-                $stmt->execute([$doc,$pat_id,$flname,$phonenum,$email,$Submit]);
+                $stmt->execute([$doc,$pat_id,$flname,$dob,$phonenum,$email,$Submit]);
 
               } else{
                 echo "Something went wrong.";
@@ -134,10 +134,10 @@
             <form class="form" action="addpatient-bootstrap.php" method="post"> <!-- basic form to pass the data in the database for the creation of a new patient -->
               <table>
                 <tr>
-                  <th>Assign a Patient ID</th><th>First and Last Name</th><th>Phone Number</th><th>Email</th>
+                  <th>Assign a Patient ID</th><th>First and Last Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
                 </tr>
                 <tr>
-                  <td><input type="number" name="assignid"></td><td><input type="text" name="flname"></td>
+                  <td><input type="number" name="assignid"></td><td><input type="text" name="flname"></td><td><input type="date" name="dob" ></td>
                   <td><input type="number" name="phone"></td><td><input type="email" name="email"></td>
                 </tr>
               </table>
@@ -156,7 +156,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -164,7 +163,6 @@
             });
         });
     </script>
-
 
 </body>
 

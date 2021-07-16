@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>MS Registry Existing Patients</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -31,14 +31,14 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
+                <li>
                     <a href="menu.php">
                         <i class="fas fa-home"></i>
                         Home
                     </a>
 
                 </li>
-                <li>
+                <li class="active">
                     <a href="">
                         <i class="fas fa-folder"></i>
                         Existing Patients
@@ -84,7 +84,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="navbar-btn">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="/logout.php" id="Logout">
                                   <i class="fas fa-user"></i>
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
@@ -96,7 +96,6 @@
                 </div>
             </nav>
 
-            <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
             <?php
               //database connection
               $usersid = $_SESSION['user_id'];
@@ -108,26 +107,27 @@
               $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
               $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-              try{ ?>
-                <table>    <!-- prints the table with the patients -->
-                  <tr>
-                    <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
-                    <th>Add a Follow Up Visit</th><th>Remove Patient</th>
-                  </tr>
-                    <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
-                    $result = $pdo->query($sql);
-                    if($result->rowCount() > 0){
-                      while($row = $result->fetch()){?>
-                          <tr>
-                            <td><?php echo $row['Patient_id']; ?></td>
-                            <td><?php echo $row['Patient_name'] ; ?></td>
-                            <td><?php echo $row['Phonenum'] ; ?></td>
-                            <td><?php echo $row['Email']; ?></td>
-                            <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                            <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."&?nm=".$row['Patient_name']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                            <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
-                          </tr>
-                    <?php
+              try{
+                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
+                $result = $pdo->query($sql);
+                if($result->rowCount() > 0){
+                  while($row = $result->fetch()){?>
+                    <table id="standard">    <!-- prints the table with the patients -->
+                      <tr>
+                        <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>History</th>
+                        <th>Add a Follow Up Visit</th><th>Remove Patient</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td><?php echo $row['Patient_name'] ; ?></td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum'] ; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
+                        <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."&?nm=".$row['Patient_name']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                        <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
+                      </tr>
+                <?php
                     }
                       unset($result);
                     } else{     // basic error checking
@@ -137,8 +137,6 @@
                   die("ERROR: Could not able to execute $sql. " . $e->getMessage());
               }
             ?>
-
-
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>

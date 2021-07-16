@@ -16,6 +16,7 @@ try {     //Connection!
    Doctor_ID INT(5) NOT NULL,
    Patient_id INT(5) NOT NULL UNIQUE,
    Patient_name VARCHAR(1000) NOT NULL,
+   DOB Date NOT NULL,
    Phonenum VARCHAR(1000) NOT NULL,
    Email VARCHAR(200) NOT NULL,
    Submit VARCHAR(20) NOT NULL,
