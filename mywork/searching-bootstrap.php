@@ -120,7 +120,7 @@
                     </select></th>
                   </tr>
                   <tr>
-                    <td><input type="text" name="srchoption"></td>
+                    <td><input name="srchoption"></td>
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
@@ -150,20 +150,20 @@
                   }
                 }
                 if ($option == 'Age'){  // add the option about searching with an age limit ex. "Age > 50"
-                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
-                        <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
-                      </tr>
-                    </table>
-               <?php }
+                  $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
+                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                        </tr>
+                      </table>
+                <?php }
                   } else {
                     echo "No patient exists with this information.";
                   }
@@ -182,7 +182,7 @@
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
-               <?php }
+                  <?php }
                   } else {
                     echo "No patient exists with this information.";
                   }
@@ -251,18 +251,20 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+         var option = document.getElementsByName('Attributes').addEventListener("change",function changeInputbox() {
+          if (option.value === 'ID') {
+            document.getElementById('srchoption').type = 'number';
+          } else if (option.value === 'Age') {
+            document.getElementById('srchoption').type = 'number';
+          } else if (option.value === 'Name') {
+            document.getElementById('srchoption').type = 'text';
+          } else if (option.value === 'Phone Number') {
+            document.getElementById('srchoption').type = 'number';
+          } else if (option.value === 'Email') {
+            document.getElementById('srchoption').type = 'email';
+          }
+        });
     </script>
-
-    <script type="text/javascript">
-      document.getElementsByName('Attributes').addEventListener("change",function changeInputbox() {
-        if (this.value === 'ID') {
-          document.getElementById('srchoption').type = "number";
-        } else if (this.value === 'Name') {
-          document.getElementById('srchoption').type = 'text';
-        }
-      });
-    </script>
-
 
 </body>
 

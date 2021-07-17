@@ -33,15 +33,18 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         margin-left:1em;
         margin-right:0;
       }
-      @media (max-width: 40em){
+      @media (max-width: 600px){
         .split{
+          display: flex;
           flex-direction: column;
           flex-basis: 100%;
+          margin: 0 auto;
         }
         .split > * + * {
-          margin-left:1em;
-          margin-right:1em;
+          margin-left:0;
+          margin-right:0;
           margin-top: 1em;
+          flex-basis: 100%;
         }
       }
       .container{
@@ -59,7 +62,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         border: 1px solid #ddd;
         padding: 16px;
         font-family: arial;
-        min-height:100%;      /* kinda helps, but not the ideal solution, maybe use ids */
+        min-height:100%;
         max-width: 100%;
         word-break: break-all;
       }
@@ -79,7 +82,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         color: black;
         margin: auto;
       }
-      /* table positioning... in development */
+      /* table positioning */
       .header {
         background-color: #ffffff;
         text-align: left;
@@ -135,7 +138,23 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         font-family: arial;
       }
       #purple{
-        background-color: #b366ff;
+        background-color: #ce99ff;
+      }
+      .note-wrapper{
+        display: block;
+        margin-top: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+        /* margin-bottom: 1em; */
+        padding-top: 2em;
+        padding-bottom: 2em;
+        text-align: center;
+        background-color: #ffff33;
+        border-radius: 24px;
+      }
+      .important{
+        font-weight: bold;
+        /* color: red; */
       }
   </style>
 </head>
@@ -316,11 +335,11 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
                 <th colspan="2">Current EDSS Score (1-10): <input type="number" min="1" max="10" name="eddsscore"required></th>
               </tr>
               <tr>
-                <td>7,5 meters Timed Walk</td>
-                <td>Time: <input type="time" name="edsstime"><br>
+                <td id="purple">7,5 meters Timed Walk</td>
+                <td id="purple">Time: <input type="time" name="edsstime"><br>
               </tr>
               <tr>
-                <td id="purple">Nine-Hole PEG Test</td><td>Time: <input type="time" name="edsstimePEG"></td>
+                <td id="purple">Nine-Hole PEG Test</td><td id="purple">Time: <input type="time" name="edsstimePEG"></td>
               </tr>
             </table>
           </div>
@@ -328,7 +347,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
           <div>
             <table> <!-- right hand side -->
               <tr>
-                <td id="purple" colspan="3"> Date EDSS was taken: <input type="date" name="EDSSdate" required></td>
+                <th colspan="3"> Date EDSS was taken: <input type="date" name="EDSSdate" required></th>
               </tr>
             </table>
           </div>
@@ -457,6 +476,12 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
   <br>
 
   <h3>Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
+
+  <div class="note-wrapper">
+    <p><strong>By clicking the <i>Reset</i> button any input that you have entered in the form will be erased and will NOT be saved!</strong></p>
+  </div>
+  <h3> Reset the form? <br><input type="reset" name="resetform" id="resetbutton" class="important"></h3>
+
   </form>
 
   <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
@@ -502,6 +527,16 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       else if (this.value === 'No') {
         document.getElementById('numofcig').disabled = true;
         document.getElementById('dateofcig').disabled = true;
+      }
+    }
+  </script>
+  <script type="text/javascript">
+    document.getElementById('resetbutton').onclick = function resetForm() {
+      var rsbtn = confirm("Are you sure you want to erase the form?");
+      if (rsbtn == false) {
+        return false;
+      } else {
+        return true;
       }
     }
   </script>

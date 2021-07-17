@@ -104,7 +104,7 @@
                 </div>
             </nav>
 
-            
+
             <?php
               //database connection
               $usersid = $_SESSION['user_id'];

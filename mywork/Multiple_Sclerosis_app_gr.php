@@ -32,15 +32,18 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         margin-left:1em;
         margin-right:0;
       }
-      @media (max-width: 40em){
+      @media (max-width: 600px){
         .split{
+          display: flex;
           flex-direction: column;
           flex-basis: 100%;
+          margin: 0 auto;
         }
         .split > * + * {
-          margin-left:1em;
-          margin-right:1em;
+          margin-left:0;
+          margin-right:0;
           margin-top: 1em;
+          flex-basis: 100%;
         }
       }
       .container{
@@ -135,6 +138,22 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       }
       #purple{
         background-color: #b366ff;
+      }
+      .note-wrapper{
+        display: block;
+        margin-top: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+        /* margin-bottom: 1em; */
+        padding-top: 2em;
+        padding-bottom: 2em;
+        text-align: center;
+        background-color: #ffff33;
+        border-radius: 24px;
+      }
+      .important{
+        font-weight: bold;
+        /* color: red; */
       }
   </style>
 </head>
@@ -448,9 +467,14 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       </div>
     </section>
 
-  <h3 style="text-align:center;">Άτομο που συμπληρώνει την φόρμα:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
-  </form>
+  <h3>Άτομο που συμπληρώνει την φόρμα:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
+  <div class="note-wrapper">
+    <p><strong>Κάνοντας κλίκ επάνω στο κουμπί <i>Reset</i> οτιδήποτε πληροφορία έχετε περάσει στην φόρμα θα διαγραφεί και ΔΕΝ θα αποθηκευτεί!</strong></p>
+  </div>
+  <h3> Επαναφορά Φόρμας; <br><input type="reset" value="Επαναφορά" name="resetform" id="resetbutton" class="important"></h3>
 
+  </form>
+  
   <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
     document.getElementById('pastDate').addEventListener("change", function() {
       var inputpastdateStart = this.value;
@@ -494,6 +518,16 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       else if (this.value === 'No') {
         document.getElementById('numofcig').disabled = true;
         document.getElementById('dateofcig').disabled = true;
+      }
+    }
+  </script>
+  <script type="text/javascript">
+    document.getElementById('resetbutton').onclick = function resetForm() {
+      var rsbtn = confirm("Είστε σίγουρος οτι θέλετε να επαναφέρετε την φόρμα;");
+      if (rsbtn == false) {
+        return false;
+      } else {
+        return true;
       }
     }
   </script>

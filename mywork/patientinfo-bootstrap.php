@@ -107,27 +107,26 @@
               $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
               $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-              try{
-                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
-                $result = $pdo->query($sql);
-                if($result->rowCount() > 0){
-                  while($row = $result->fetch()){?>
-                    <table id="standard">    <!-- prints the table with the patients -->
-                      <tr>
-                        <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>History</th>
-                        <th>Add a Follow Up Visit</th><th>Remove Patient</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td>
-                        <td><?php echo $row['Patient_name'] ; ?></td>
-                        <td><?php echo $row['DOB']; ?></td>
-                        <td><?php echo $row['Phonenum'] ; ?></td>
-                        <td><?php echo $row['Email']; ?></td>
-                        <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                        <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']."&?nm=".$row['Patient_name']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                        <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
-                      </tr>
-                <?php
+              try{ ?>
+                <table>    <!-- prints the table with the patients -->
+                  <tr>
+                    <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
+                    <th>Add a Follow Up Visit</th><th>Remove Patient</th>
+                  </tr>
+                    <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
+                    $result = $pdo->query($sql);
+                    if($result->rowCount() > 0){
+                      while($row = $result->fetch()){?>
+                          <tr>
+                            <td><?php echo $row['Patient_id']; ?></td>
+                            <td><?php echo $row['Patient_name'] ; ?></td>
+                            <td><?php echo $row['Phonenum'] ; ?></td>
+                            <td><?php echo $row['Email']; ?></td>
+                            <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
+                            <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&?nm=". $row['Patient_name'] ."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                            <td><button id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
+                          </tr>
+                    <?php
                     }
                       unset($result);
                     } else{     // basic error checking
@@ -137,9 +136,11 @@
                   die("ERROR: Could not able to execute $sql. " . $e->getMessage());
               }
             ?>
-            <footer>
+
+            <header>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
-            </footer>
+            </header>
+
             <div class="line"></div>
         </div>
     </div>
@@ -151,7 +152,7 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
+    <script type="text/javascript"> //bootstrap sidebar collaplse
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
@@ -160,15 +161,14 @@
     </script>
 
     <script>
-      function remove_user() {    //a simple function for confirming the removal of a patient
-        var sql;
-        var r = confirm('Are you Sure?')
+      document.getElementById('removeuser').onclick = function remove_user() { //a simple function for confirming the removal of a patient
+        var r = confirm('Are you Sure?');
         if (r == true) {
-          sql = "DELETE FROM patients WHERE Patient_id = $PatientID";
+          file_get_contents('removeuser.php');
         } else {
-          <?php echo "Error" ?>   // works, but there is something going on with the buttons needs to be revisited
+          return false;
         }
-        document.getElementById("removeuser").innerHTML = sql;
+        // document.getElementById("removeuser").innerHTML = sql;
       }
     </script>
 
