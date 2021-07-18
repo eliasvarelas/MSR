@@ -191,8 +191,10 @@
                           echo "<td>" . $row['signer'] . "</td>";
                           echo "<td>" . $row['reg_date'] . "</td>";
                       echo "</tr>";
-                    }
-                    echo "</table>";
+                      echo "</table>";
+                      ?> <div class="line"></div>
+              <?php }
+
                     // Free result set
                     unset($result);
                 } else{   // basic error checking

@@ -115,8 +115,9 @@
                       <option value="ID" id="patientId">Patient ID</option>
                       <option value="Age" id="patientAge">Age</option>
                       <option value="Name" id="patientName">Name</option>
-                      <option value="Phone Number" id="patientPhonenum">Phone Number</option>
+                      <option value="PhoneNumber" id="patientPhonenum">Phone Number</option>
                       <option value="Email" id="patientEmail">Email</option>
+                      <option value="Comorbidities">Comorbidities</option>
                     </select></th>
                   </tr>
                   <tr>
@@ -144,6 +145,7 @@
                           <td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
+
                     <?php }
                   } else {
                     echo "No patient exists with this information.";
@@ -163,6 +165,7 @@
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
+                      <div class="line"></div>
                 <?php }
                   } else {
                     echo "No patient exists with this information.";
@@ -182,13 +185,14 @@
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
+                      <div class="line"></div>
                   <?php }
                   } else {
                     echo "No patient exists with this information.";
                   }
                 }
-                if ($option == 'Phone Number'){
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum =$entry";
+                if ($option == 'PhoneNumber'){
+                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum ='$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
@@ -201,6 +205,7 @@
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
+                      <div class="line"></div>
                     <?php }
                     }
                   } else {
@@ -220,11 +225,29 @@
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
                         </tr>
                       </table>
+
+              <?php }
+                  }
+                }
+                if ($option == 'Comorbidities'){
+                  $sql = "SELECT patients.Patient_name,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                        </tr>
+                        <tr>
+                          <td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['Comorbidities']; ?></td><td><?php echo $row['Email']; ?></td>
+                        </tr>
+                      </table>
                     <?php }
-                    }
                   } else {
                     echo "No patient exists with this information.";
                   }
+                }
               }
 
             } catch(PDOException $e){
