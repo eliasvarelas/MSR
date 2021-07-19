@@ -37,26 +37,30 @@
     <form class="" action="test.html" method="post">
       <table>
         <tr>
-          <th colspan="5">CNS MRI enhancing lesions last 12 months</th>
+          <th> <select class="" name="some" id="Attributes">
+            <option value="num" >THIS SHOULD BE A NUMBER </option>
+            <option value="radio" >This shoyld be a radio</option>
+            <option value="text" >this should be a text</option>
+          </select> </th>
         </tr>
         <tr>
-          <!-- <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing" id="MRIenhancing" checked><br>No<input type="radio" value="No" name="MRIenhancing"></td> -->
-          <td colspan="2"><select id="MRIenhancing"><option value="Yes">Yes</option><option value="No">No</option> </select></td>
-          <td colspan="3">Number: <input name="MRInum" type="number" id="MRInum"></td>
+          <td><input type="text" name="button" id="button"></td>
         </tr>
       </table>
     </form>
     <script type="text/javascript">
-
-      document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
-        if (this.value === 'Yes') {
-          document.getElementById('MRInum').disabled = false;
-        }
-        else if (this.value === 'No') {
-          document.getElementById("MRInum").disabled = true;
+      function addressChange() {
+        var inputBox = document.getElementById('button');
+        // this.value == 'radio' ? inputBox.type = 'radio' : inputBox.type = 'text';
+        if (this.value == 'num') {
+          inputBox.type = 'number';
+        } else if (this.value == 'radio') {
+          inputBox.type = 'radio';
+        } else if (this.value == 'text') {
+          inputBox.type = 'text';
         }
       }
-
+      document.getElementById('Attributes').addEventListener('change', addressChange);
     </script>
   </body>
 </html>

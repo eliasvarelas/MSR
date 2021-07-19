@@ -108,9 +108,10 @@
 
           try{ ?>
               <form class="form" action="searching-bootstrap.php" method="post">
+                <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
                 <table>
                   <tr>
-                    <th><select class="selection" name="Attributes">
+                    <th><select class="selection" name="Attributes" id="Attributes">
                       <option disabled>Options</option>
                       <option value="Name" id="p_Name">Name</option>
                       <option value="ID" id="p_Id">Patient ID</option>
@@ -121,23 +122,22 @@
                       <option value="Email" id="p_Email">Email</option>
                       <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
                       <option value="EDSS" id="p_eddsscore">EDSS Score</option>
-                      <option value="Pregnant" id="p_Pregnant">Is Pregnant (Yes/No)</option>
-                      <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation!!</option>
-                      <option value="Smoker" id="p_Smoker">Is a Smoker(Yes/No)</option>
+                      <option value="Pregnant" id="p_Pregnant">Is Pregnant</option>
+                      <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation</option>
+                      <option value="Smoker" id="p_Smoker">Is a Smoker</option>
                       <option value="onsetsymptoms" id="p_onsetsymptoms">Onset Symptoms</option>
-                      <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions (Yes/No)</option>
+                      <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions</option>
                       <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
-                      <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation!!</option>
+                      <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
                     </select></th>
                   </tr>
                   <tr>
-                    <td><input name="srchoption"></td>
+                    <td><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
-
-
               </form>
+              <div class="line"></div>
 
               <?php
               $option = $_POST['Attributes'];
@@ -178,7 +178,7 @@
                         </tr>
                       </table>
                       <div class="line"></div>
-                <?php }
+              <?php }
                   } else {
                     echo "No patient exists with this information. Age";
                   }
@@ -261,7 +261,7 @@
                   }
                 }
               }
-              if ($option == 'EDSS'){
+                if ($option == 'EDSS'){
                 $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -280,7 +280,7 @@
                   echo "No patient exists with this information. EDSS";
                 }
               }
-              if ($option == 'Pregnant'){
+                if ($option == 'Pregnant'){
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -299,7 +299,7 @@
                   echo "No patient exists with this information. Pregnant";
                 }
               }
-              if ($option == 'Onsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
+                if ($option == 'Onsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -318,7 +318,7 @@
                   echo "No patient exists with this information. Comorbidities";
                 }
               }
-              if ($option == 'Smoker'){
+                if ($option == 'Smoker'){
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -337,7 +337,7 @@
                   echo "No patient exists with this information. Smoker";
                 }
               }
-              if ($option == 'MRIenhancing'){
+                if ($option == 'MRIenhancing'){
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -356,7 +356,7 @@
                   echo "No patient exists with this information. MRI enhancing";
                 }
               }
-              if ($option == 'MRIonsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
+                if ($option == 'MRIonsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -375,7 +375,7 @@
                   echo "No patient exists with this information. MRI enhancing";
                 }
               }
-              if ($option == 'onsetsymptoms'){
+                if ($option == 'onsetsymptoms'){
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -394,7 +394,7 @@
                   echo "No patient exists with this information. MRI enhancing";
                 }
               }
-              if ($option == 'MRInum'){
+                if ($option == 'MRInum'){
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -413,7 +413,7 @@
                   echo "No patient exists with this information. MRI enhancing";
                 }
               }
-              if ($option == 'Sex'){
+                if ($option == 'Sex'){
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -432,7 +432,7 @@
                   echo "No patient exists with this information. MRI enhancing";
                 }
               }
-              if ($option == 'Race'){
+                if ($option == 'Race'){
                 $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
@@ -456,7 +456,7 @@
                 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
             }
             ?>
-            <div class="line"></div>
+            <!-- <div class="line"></div> -->
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
@@ -476,21 +476,80 @@
                 $('#sidebar').toggleClass('active');
             });
         });
-         var option = document.getElementsByName('Attributes').addEventListener("change",function changeInputbox() {
-          if (option.value === 'ID') {
-            document.getElementById('srchoption').type = 'number';
-          } else if (option.value === 'Age') {
-            document.getElementById('srchoption').type = 'number';
-          } else if (option.value === 'Name') {
-            document.getElementById('srchoption').type = 'text';
-          } else if (option.value === 'Phone Number') {
-            document.getElementById('srchoption').type = 'number';
-          } else if (option.value === 'Email') {
-            document.getElementById('srchoption').type = 'email';
-          }
-        });
     </script>
 
+    <script type="text/javascript">
+    function inputBoxChange() {
+      var inputBox = document.getElementById('srchoption');
+      var introParagraph = document.getElementById('intro');
+      if (this.value == 'ID') {
+        inputBox.type = 'number';
+        inputBox.setAttribute('placeholder','Patient ID');
+        introParagraph.innerHTML = "Enter the ID of the Patient You Are Looking for ";
+      } else if (this.value == 'Sex') {
+        inputBox.type = 'text'; // print male-female
+        inputBox.setAttribute('placeholder','Male or Female');
+        introParagraph.innerHTML = "Enter the Sex of the Patient You Are Looking for ";
+      } else if (this.value == 'Email') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Email Address');
+        introParagraph.innerHTML = "Enter the Email Address You Are Looking for ";
+      } else if (this.value == 'Smoker') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Yes / No');
+        introParagraph.innerHTML = "Enter if the Patient is a Smoker or Not";
+      } else if (this.value == 'Name') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Full Name');
+        introParagraph.innerHTML = "Enter the Name of the Patient You Are Looking For";
+      } else if (this.value == 'Race') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Race');
+        introParagraph.innerHTML = "Enter the Race of the Patient You Are Looking For";
+      } else if (this.value == 'Comorbidities') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Comorbidities');
+        introParagraph.innerHTML = "Enter Any Comorbidities the Patient You Are Looking For May Have";
+      } else if (this.value == 'Pregnant') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Yes / No');
+        introParagraph.innerHTML = "Enter if the Patient is Pregnant or Not";
+      } else if (this.value == 'Onsetlocalisation') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Onset Localisation');
+        introParagraph.innerHTML = "Enter The Onset Localisation of The Patient You Are Looking For";
+      } else if (this.value == 'onsetsymptoms') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder',' Onset Symptoms');
+        introParagraph.innerHTML = "Enter Any Onset Symptoms of The Patient You Are Looking For";
+      } else if (this.value == 'MRIonsetlocalisation') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','MRI Localisation');
+        introParagraph.innerHTML = "Enter The MRI Onset Localisation of the Patient You Are Looking For";
+      } else if (this.value == 'MRInum') {
+        inputBox.type = 'number';
+        inputBox.setAttribute('placeholder','MRI Lesions');
+        introParagraph.innerHTML = "Enter The Number of MRI Lesions That The Patient You Are Looking For Has";
+      } else if (this.value == 'PhoneNumber') {
+        inputBox.type = 'number';
+        inputBox.setAttribute('placeholder','Phone Number');
+        introParagraph.innerHTML = "Enter The Phone Number of The Patient You Are Looking For";
+      } else if (this.value == 'MRIenhancing') {
+        inputBox.type = 'text';
+        inputBox.setAttribute('placeholder','Yes / No');
+        introParagraph.innerHTML = "Enter If the Patient Had Enhancing Lesions in His MRI";
+      } else if (this.value == 'Age') {
+        inputBox.type = 'number';
+        inputBox.setAttribute('placeholder','Age');
+        introParagraph.innerHTML = "Enter The Age of The Patient You Are Looking For";
+      } else if (this.value == 'EDSS') {
+        inputBox.type = 'number';
+        inputBox.setAttribute('placeholder','EDSS Score');
+        introParagraph.innerHTML = "Enter The EDSS Score of The Patient You Are Looking For";
+      }
+    }
+    document.getElementById('Attributes').addEventListener('change', inputBoxChange);
+    </script>
 </body>
 
 </html>
