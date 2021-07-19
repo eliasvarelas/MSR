@@ -112,12 +112,22 @@
                   <tr>
                     <th><select class="selection" name="Attributes">
                       <option disabled>Options</option>
-                      <option value="ID" id="patientId">Patient ID</option>
-                      <option value="Age" id="patientAge">Age</option>
-                      <option value="Name" id="patientName">Name</option>
-                      <option value="PhoneNumber" id="patientPhonenum">Phone Number</option>
-                      <option value="Email" id="patientEmail">Email</option>
-                      <option value="Comorbidities">Comorbidities</option>
+                      <option value="Name" id="p_Name">Name</option>
+                      <option value="ID" id="p_Id">Patient ID</option>
+                      <option value="Sex" id="p_Sex">Sex</option>
+                      <option value="Age" id="p_Age">Age</option>
+                      <option value="Race" id="p_Race">Race</option>
+                      <option value="PhoneNumber" id="p_Phonenum">Phone Number</option>
+                      <option value="Email" id="p_Email">Email</option>
+                      <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
+                      <option value="EDSS" id="p_eddsscore">EDSS Score</option>
+                      <option value="Pregnant" id="p_Pregnant">Is Pregnant (Yes/No)</option>
+                      <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation!!</option>
+                      <option value="Smoker" id="p_Smoker">Is a Smoker(Yes/No)</option>
+                      <option value="onsetsymptoms" id="p_onsetsymptoms">Onset Symptoms</option>
+                      <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions (Yes/No)</option>
+                      <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
+                      <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation!!</option>
                     </select></th>
                   </tr>
                   <tr>
@@ -125,6 +135,8 @@
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
+
+
               </form>
 
               <?php
@@ -148,7 +160,7 @@
 
                     <?php }
                   } else {
-                    echo "No patient exists with this information.";
+                    echo "No patient exists with this information. ID";
                   }
                 }
                 if ($option == 'Age'){  // add the option about searching with an age limit ex. "Age > 50"
@@ -168,7 +180,7 @@
                       <div class="line"></div>
                 <?php }
                   } else {
-                    echo "No patient exists with this information.";
+                    echo "No patient exists with this information. Age";
                   }
                 }
                 if ($option == 'Name'){
@@ -188,7 +200,7 @@
                       <div class="line"></div>
                   <?php }
                   } else {
-                    echo "No patient exists with this information.";
+                    echo "No patient exists with this information. Name";
                   }
                 }
                 if ($option == 'PhoneNumber'){
@@ -209,7 +221,7 @@
                     <?php }
                     }
                   } else {
-                    echo "No patient exists with this information.";
+                    // echo "No patient exists with this information. Phone";
                   }
                 if ($option == 'Email'){
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Email ='$entry'";
@@ -230,23 +242,213 @@
                   }
                 }
                 if ($option == 'Comorbidities'){
-                  $sql = "SELECT patients.Patient_name,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$entry'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Comorbidities</th>
                         </tr>
                         <tr>
-                          <td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['Phonenum']; ?></td>
-                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['Comorbidities']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['Comorbidities']; ?></td>
                         </tr>
                       </table>
                     <?php }
                   } else {
-                    echo "No patient exists with this information.";
+                    echo "No patient exists with this information. Comorbidities";
                   }
+                }
+              }
+              if ($option == 'EDSS'){
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>EDSS Score 1-10</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['eddsscore']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. EDSS";
+                }
+              }
+              if ($option == 'Pregnant'){
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is Pregnant? (Y/N)</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Pregnant']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Pregnant";
+                }
+              }
+              if ($option == 'Onsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Localisation</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Onsetlocalisation']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Comorbidities";
+                }
+              }
+              if ($option == 'Smoker'){
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is a Smoker? (Y/N)</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['smoker']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Smoker";
+                }
+              }
+              if ($option == 'MRIenhancing'){
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions (Yes/No)</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIenhancing']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. MRI enhancing";
+                }
+              }
+              if ($option == 'MRIonsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Onset Localisation</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIonsetlocalisation']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. MRI enhancing";
+                }
+              }
+              if ($option == 'onsetsymptoms'){
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Symptoms</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['onsetsymptoms']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. MRI enhancing";
+                }
+              }
+              if ($option == 'MRInum'){
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions No.</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRInum']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. MRI enhancing";
+                }
+              }
+              if ($option == 'Sex'){
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Sex</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Sex']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. MRI enhancing";
+                }
+              }
+              if ($option == 'Race'){
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$entry'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount()>0) {
+                  while($row = $result->fetch()){ ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Race</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Race']; ?></td>
+                      </tr>
+                    </table>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. MRI enhancing";
                 }
               }
 
