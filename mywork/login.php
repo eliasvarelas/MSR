@@ -73,10 +73,11 @@ try {
   <title>Login : MS Registry</title>
   <style>
     body{
-      background-color: lightblue;
-      display :block;
+      background-color: #7386D5;
+      display: block;
     }
     div{
+      display: block;
       margin: 0;
       position: absolute;
       top: 50%;
@@ -85,14 +86,14 @@ try {
       padding: 1em 1.5em;
       text-align: center;
       font-family: arial;
-      background-color: lightblue;
+      background-color: white;
       border-style: solid;
       border-radius: 14%;
     }
     .box input[type = "text"], .box input[type = "password"]{
 
       text-align: center;
-      /* border-radius: 24px; */
+      background-color: #fafafa;
     }
     .box input[type = "submit"]{
       cursor: pointer;
@@ -108,7 +109,7 @@ try {
 <body>
   <div>
     <form action="login.php" method="post" class="box" style="text-align:center;"> <!-- basic login form -->
-      <img src="MSregistry_ionian2_bg_lightblue.png">
+      <img src="MSregistryionian2.png">
         <p>
           <h3>Please Login </h3>
           <label for="user_name">Username:</label>

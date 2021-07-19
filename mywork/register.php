@@ -65,10 +65,11 @@ if(isset($_POST['register'])){
     <title>Doctor Registration</title>
     <style>
       body{
-        background-color: lightblue;
+        background-color: #7386D5;
         display :block;
       }
       div{
+        display: block;
         margin: 0;
         position: absolute;
         top: 50%;
@@ -77,12 +78,13 @@ if(isset($_POST['register'])){
         padding: 1em 1.5em;
         text-align: center;
         font-family: arial;
-        background-color: lightblue;
+        background-color: white;
         border-style: solid;
         border-radius: 14%;
       }
       .box input[type = "text"], .box input[type = "password"]{
         text-align: center;
+        background-color: #fafafa;
       }
       .box input[type = "submit"]{
         cursor: pointer;
@@ -97,7 +99,7 @@ if(isset($_POST['register'])){
   </head>
   <body>
     <div>
-      <img src="MSregistry_ionian2_bg_lightblue.png">
+      <img src="MSregistryionian2.png">
       <h3>Welcome Doctor, please create an account below:</h3>
       <form action="register.php" method="post" class="box">
           <!-- <label for="username">Username</label> -->
