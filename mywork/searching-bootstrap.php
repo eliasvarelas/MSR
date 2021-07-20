@@ -184,7 +184,7 @@
                   }
                 }
                 if ($option == 'Name'){
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '$entry%'";
+                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
