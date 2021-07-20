@@ -84,7 +84,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="navbar-btn">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="/logout.php" id="Logout">
                                   <i class="fas fa-user"></i>
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
@@ -198,13 +198,14 @@
                     // Free result set
                     unset($result);
                 } else{   // basic error checking
-                    echo "No records matching your query were found.";
+                    echo "No records matching your query were found."; ?>
+                    <div class="line"></div> <?php
                 }
             } catch(PDOException $e){
                 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
             }
             ?>
-            <div class="line"></div>
+            <!-- <div class="line"></div> -->
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>

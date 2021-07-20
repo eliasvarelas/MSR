@@ -103,6 +103,7 @@ try {
     }
     button{
       cursor: pointer;
+      margin-top: 0.3em;
     }
   </style>
 </head>
