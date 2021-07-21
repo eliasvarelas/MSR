@@ -491,13 +491,6 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       document.getElementById('datestoped').setAttribute("min",inputpastdateStart);
     });
   </script>
-  <script type="text/javascript"> // date validating client-side for past-present treatment
-    document.getElementById('datestoped').addEventListener("change", function() {
-      var inputpastdateStop = this.value;
-      var pastdatestop = new Date(inputpastdateStop);
-      document.getElementById('presentdate').setAttribute("min",inputpastdateStop);
-    });
-  </script>
   <script type="text/javascript"> // dynamicly disabling certain input boxes in the MRI tier
     document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
       if (this.value === 'Yes') {

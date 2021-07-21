@@ -474,7 +474,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
   <h3> Επαναφορά Φόρμας; <br><input type="reset" value="Επαναφορά" name="resetform" id="resetbutton" class="important"></h3>
 
   </form>
-  
+
   <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
     document.getElementById('pastDate').addEventListener("change", function() {
       var inputpastdateStart = this.value;
@@ -482,12 +482,6 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       document.getElementById('datestoped').setAttribute("min",inputpastdateStart);
     });
   </script>
-  <script type="text/javascript"> // date validating client-side for past-present treatment
-    document.getElementById('datestoped').addEventListener("change", function() {
-      var inputpastdateStop = this.value;
-      var pastdatestop = new Date(inputpastdateStop);
-      document.getElementById('presentdate').setAttribute("min",inputpastdateStop);
-    });
   </script>
   <script type="text/javascript"> // dynamicly disabling certain input boxes in the MRI tier
     document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
