@@ -116,10 +116,10 @@
                       <option value="Name" id="p_Name">Name</option>
                       <option value="ID" id="p_Id">Patient ID</option>
                       <option value="Sex" id="p_Sex">Sex</option>
-                      <option value="Age" id="p_Age">Age</option>
+                      <option value="Age" id="p_Age">Age ></option>
+                      <option value="Agesmaller">Age <</option>
                       <option value="Race" id="p_Race">Race</option>
                       <option value="PhoneNumber" id="p_Phonenum">Phone Number</option>
-                      <option value="Email" id="p_Email">Email</option>
                       <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
                       <option value="EDSS" id="p_eddsscore">EDSS Score</option>
                       <option value="Pregnant" id="p_Pregnant">Is Pregnant</option>
@@ -183,6 +183,26 @@
                     echo "No patient exists with this information. Age";
                   }
                 }
+                if ($option == 'Agesmaller'){  // add the option about searching with an age limit ex. "Age > 50"
+                  $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' AND Doctor_ID = $usersid";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
+                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+              <?php }
+                  } else {
+                    echo "No patient exists with this information. Age";
+                  }
+                }
                 if ($option == 'Name'){
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
@@ -223,24 +243,6 @@
                   } else {
                     // echo "No patient exists with this information. Phone";
                   }
-                if ($option == 'Email'){
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Email ='$entry'";
-                  $result = $pdo->query($sql);
-                  if ($result->rowCount()>0) {
-                    while($row = $result->fetch()){ ?>
-                      <table id="standard">
-                        <tr>
-                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
-                        </tr>
-                        <tr>
-                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
-                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
-                        </tr>
-                      </table>
-
-              <?php }
-                  }
-                }
                 if ($option == 'Comorbidities'){
                   $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$entry'";
                   $result = $pdo->query($sql);
@@ -490,14 +492,11 @@
         inputBox.type = 'text'; // print male-female
         inputBox.setAttribute('placeholder','Male or Female');
         introParagraph.innerHTML = "Enter the Sex of the Patient You Are Looking for ";
-      } else if (this.value == 'Email') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','Email Address');
-        introParagraph.innerHTML = "Enter the Email Address You Are Looking for ";
-      } else if (this.value == 'Smoker') {
-        inputBox.type = 'text';
+      }  else if (this.value == 'Smoker') {
+        inputBox.type = 'radio'; // want to make it output 2 radio buttons for Y/N
         inputBox.setAttribute('placeholder','Yes / No');
         introParagraph.innerHTML = "Enter if the Patient is a Smoker or Not";
+        // var yes = document.createElement("radio");
       } else if (this.value == 'Name') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Full Name');
@@ -540,12 +539,16 @@
         introParagraph.innerHTML = "Enter If the Patient Had Enhancing Lesions in His MRI";
       } else if (this.value == 'Age') {
         inputBox.type = 'number';
-        inputBox.setAttribute('placeholder','Age');
-        introParagraph.innerHTML = "Enter The Age of The Patient You Are Looking For";
+        inputBox.setAttribute('placeholder','Age > than');
+        introParagraph.innerHTML = "Enter The Lower Age Threshold of The Patients You Are Looking For";
       } else if (this.value == 'EDSS') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','EDSS Score');
         introParagraph.innerHTML = "Enter The EDSS Score of The Patient You Are Looking For";
+      } else if (this.value == 'Agesmaller') {
+        inputBox.type = 'number';
+        inputBox.setAttribute('placeholder','Age < than');
+        introParagraph.innerHTML = "Enter The Higher Age Threshold of The Patients You Are Looking For";
       }
     }
     document.getElementById('Attributes').addEventListener('change', inputBoxChange);
