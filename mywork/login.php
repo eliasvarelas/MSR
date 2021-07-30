@@ -55,10 +55,12 @@ try {
 
       } else{
           //Passwords do not match.
-          echo "<p> Incorrect Username or Password, Please Try Again</p>";
+          // echo "<p> Incorrect Username or Password, Please Try Again</p>";
           // make it delay for 2,5 seconds before redirecting
-          $script = file_get_contents('jsredirectlogin.js');
-          echo "<script>".$script."</script>";
+          echo '<script type="text/javascript">',
+            'alert("Wrong Username or Password. Please try again");',
+            '</script>'
+          ;
         }
       }
   }
