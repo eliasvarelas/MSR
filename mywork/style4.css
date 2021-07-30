@@ -17,6 +17,9 @@ table, th, td {
 #standard{
   min-width: 100%;
 }
+#removeuser{
+  color: red;
+}
 th {
   background-color: #7386D5;         /* Title box color */
   color: black;
