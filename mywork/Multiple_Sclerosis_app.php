@@ -2,6 +2,7 @@
 session_start();
 $patientID = $_GET["id"];   // used to pass the patient id directly in the form
 $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
+$patientDOB = $_GET["DOB"]; // used to pass the pateints age directly in the form
 ?>
 <!DOCTYPE html>
 <html>
@@ -184,7 +185,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
         </tr>
         <tr>
           <td> Male<br><input type="radio" name="Sex" value="Male" required></td><td>Female<br><input type="radio" name="Sex" value="Female" required></td>
-          <td> <input type="number" name="Age" min="1" max="150"></td>
+          <td> <input type="number" name="Age" min="1" max="150" id="Age"></td>
           <td><select id="Race" name="Race" required>
             <option value="American Indian">American Indian</option>
             <option value="Asian">Asian</option>
@@ -481,7 +482,7 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
     <p><strong>By clicking the <i>Reset</i> button any input that you have entered in the form will be erased and will NOT be saved!</strong></p>
   </div>
   <h3> Reset the form? <br><input type="reset" name="resetform" id="resetbutton" class="important"></h3>
-
+  <input type="date" id="dob" value="<?php echo $patientDOB;?>" hidden>
   </form>
 
   <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
@@ -531,6 +532,23 @@ $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the for
       } else {
         return true;
       }
+    }
+  </script>
+  <script type="text/javascript">
+    function calcAge() {
+      var date = new Date();
+      var day = date.getDate(),
+          month = date.getMonth() + 1,
+          year = date.getFullYear();
+
+      month = (month < 10 ? "0" : "") + month;
+      day = (day < 10 ? "0" : "") + day;
+
+      var today = year + "/" + month + "/" + day;
+      var dateOfBirth = document.getElementById('dob');
+      var Age = today - dateOfBirth;
+
+      var ageinputbox = document.getElementById('Age').innerHTML = Age;  // make it print the calculated Age on page load
     }
   </script>
 
