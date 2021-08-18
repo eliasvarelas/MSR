@@ -58,12 +58,12 @@
                         Advanced Search
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="#">
+                <li>
+                    <a href="/visual_analytics.php">
                         <i class="fas fa-paper-plane"></i>
-                        Contact
+                        Visual Analytics Tool D3
                     </a>
-                </li> -->
+                </li>
             </ul>
         </nav>
 
@@ -103,48 +103,9 @@
                     </div>
                 </div>
             </nav>
+            <div id="app">
 
-
-            <?php
-              //database connection
-              $usersid = $_SESSION['user_id'];
-              $servername = "127.0.0.1";
-              $username = "root";
-              $password = "bioinformatics";
-              $dbname = "BIHElab";
-
-              $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-              $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-              try{ ?>
-                <table>    <!-- prints the table with the patients -->
-                  <tr>
-                    <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
-                    <th>Add a Follow Up Visit</th><th>Remove Patient</th>
-                  </tr>
-                    <?php  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
-                    $result = $pdo->query($sql);
-                    if($result->rowCount() > 0){
-                      while($row = $result->fetch()){?>
-                          <tr>
-                            <td><?php echo $row['Patient_id']; ?></td>
-                            <td><?php echo $row['Patient_name'] ; ?></td>
-                            <td><?php echo $row['Phonenum'] ; ?></td>
-                            <td><?php echo $row['Email']; ?></td>
-                            <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                            <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']. "&dob=". $row['DOB']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                            <td><button onclick="remove_user()" id="removeuser"><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
-                          </tr>
-                    <?php
-                    }
-                      unset($result);
-                    } else{     // basic error checking
-                      echo "No records matching your query were found.";
-                    }
-              } catch(PDOException $e){
-                  die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-              }
-            ?>
+            </div>
 
 
             <footer>
@@ -168,8 +129,7 @@
             });
         });
     </script>
-
-
+    <script src="/calendar.js"></script>
 </body>
 
 </html>

@@ -58,12 +58,12 @@
                         Advanced Search
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="#">
+                <li>
+                    <a href="/visual_analytics.php">
                         <i class="fas fa-paper-plane"></i>
-                        Contact
+                        Visual Analytics Tool D3
                     </a>
-                </li> -->
+                </li>
             </ul>
         </nav>
 
