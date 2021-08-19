@@ -484,6 +484,7 @@
     function inputBoxChange() {
       var inputBox = document.getElementById('srchoption');
       var introParagraph = document.getElementById('intro');
+      var optional = document.createElement('input');
       if (this.value == 'ID') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Patient ID');
@@ -492,6 +493,12 @@
         inputBox.type = 'text'; // print male-female
         inputBox.setAttribute('placeholder','Male or Female');
         introParagraph.innerHTML = "Enter the Sex of the Patient You Are Looking for ";
+        // inputBox.setAttribute('type','radio');
+        // inputBox.setAttribute('name','Sex');
+        // inputBox.setAttribute('value','Male');
+        // optional.setAttribute('type','radio');
+        // optional.setAttribute('name','Sex');
+        // optional.setAttribute('value','Female');
       }  else if (this.value == 'Smoker') {
         inputBox.type = 'radio'; // want to make it output 2 radio buttons for Y/N
         inputBox.setAttribute('placeholder','Yes / No');

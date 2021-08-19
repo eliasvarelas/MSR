@@ -90,22 +90,10 @@
                                   echo $user_name; ?></u>
                                 </a>
                             </li>
-                            <!-- <li class="nav navbar-nav ml-auto">
-                                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link" >User</a>
-                                <ul class="collapse list-unstyled" id="homeSubmenu">
-                                    <li>
-                                        <a href="/logout.php">Logout</a>
-                                    </li>
-
-                                </ul>
-                            </li> -->
                         </ul>
                     </div>
                 </div>
             </nav>
-            <div id="app">
-
-            </div>
 
 
             <footer>
@@ -129,7 +117,6 @@
             });
         });
     </script>
-    <script src="/calendar.js"></script>
 </body>
 
 </html>
