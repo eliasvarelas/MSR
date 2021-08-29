@@ -94,8 +94,8 @@
                     </div>
                 </div>
             </nav>
-
-
+            <!-- main Content -->
+            <!-- space for callendar with real time data - probably json and js -->
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
