@@ -29,8 +29,8 @@ if(isset($_POST['register'])){
 
   //If the provided username already exists - display error.
   if($row > 0){
-      echo "'That username already exists!";
-      die();
+    $scriptuser = file_get_contents('redirect_error_register.js');
+    echo "<script>".$scriptuser."</script>";
   }
 
   //password_hash

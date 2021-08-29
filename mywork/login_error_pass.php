@@ -38,12 +38,11 @@ try {
 
 
     if($user === false){
-      //username doesnt exist in database
-      $scriptuser = file_get_contents('redirect_error_login_user.js');
+      //user doesnt exist
+      $scriptuser = file_get_contents('redirect_error_user.js');
       echo "<script>".$scriptuser."</script>";
-
     } else{
-
+      //Comparing the encrypted passwords
       $validPassword = password_verify($passwordAttempt, $user['password']);
       if($validPassword){
           //Provide the user with a login session.
@@ -85,7 +84,7 @@ try {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      padding: 1em 1.5em;
+      padding: 1.5em 1.5em;
       text-align: center;
       font-family: arial;
       background-color: white;
@@ -103,16 +102,31 @@ try {
     .button{
       cursor: pointer;
     }
+    .red-alert-error{
+      display: block;
+      background-color: red;
+      color: white;
+      margin: 0;
+      border-radius: 0;
+      margin-top: 0em;
+    }
     button{
       cursor: pointer;
       margin-top: 0.3em;
+    }
+    img{
+      margin-bottom: 4em;
     }
   </style>
 </head>
 <body>
   <div>
     <form action="login.php" method="post" class="box" style="text-align:center;"> <!-- basic login form -->
+      <div class="red-alert-error">
+        <h5>Your Password was Incorrect, Please try Again!</h5>
+      </div>
       <img src="MSregistryionian2.png">
+
         <p>
           <h3>Please Login </h3>
           <label for="user_name">Username:</label>
