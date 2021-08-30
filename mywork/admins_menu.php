@@ -1,4 +1,15 @@
-<?php session_start(); ?>
+<?php session_start();
+$servername = "127.0.0.1";
+$username = "root";
+$password = "bioinformatics";
+$dbname = "BIHElab";
+
+$pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// assign a variable to each doctor in the db table users
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -86,7 +97,7 @@
                             <li class="navbar-btn">
                                 <a class="nav-link" href="/logout.php" id="Logout">
                                   <i class="fas fa-user"></i>
-                                  Doctor: <u><?php $user_name = $_SESSION['user'];
+                                   <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
                                 </a>
                             </li>
@@ -95,8 +106,13 @@
                 </div>
             </nav>
             <!-- main Content -->
-            <!-- space for callendar with real time data - probably json and js -->
-            <h1>callendar</h1>
+            <!-- Loop throught all the users in table users and echo their patients -->
+            <h1>admin</h1>
+<?php
+            foreach ($variable as $key => $value) {
+              // code...
+            }
+?>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>

@@ -14,7 +14,7 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
 try {
   if(isset($_SESSION['use'])){
-    header("Location:doctors_menu.php");
+    header("Location:menu.php");
   }
   //checking if the form has been submitted
   if(isset($_POST['Submit'])){
@@ -45,7 +45,7 @@ try {
     } else{
 
       $validPassword = password_verify($passwordAttempt, $user['password']);
-      if($validPassword){
+      if($validPassword && $user_name !== 'admin'){ 
           //Provide the user with a login session.
           $_SESSION['user_id'] = $user['id'];
           $_SESSION['logged_in'] = time();
@@ -55,8 +55,16 @@ try {
           $script = file_get_contents('redirectMenu.js');
           echo "<script>".$script."</script>";
 
+      } elseif ($validPassword && $user_name === 'admin') {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['logged_in'] = time();
+        $_SESSION['user'] = $user['username'];
+
+        //Redirect to the Menu page
+        $script = file_get_contents('redirectmenu_admin.js');
+        echo "<script>".$script."</script>";
       } else{
-          //Passwords do not match.
+          //Password error.
           $scriptpass = file_get_contents('redirect_errorlogin.js');
           echo "<script>".$scriptpass."</script>";
 
