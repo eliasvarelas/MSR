@@ -124,7 +124,7 @@ try {
   <div>
     <form action="login.php" method="post" class="box" style="text-align:center;"> <!-- basic login form -->
       <div class="red-alert-error">
-        <h5>Your Password was Incorrect, Please try Again!</h5>
+        <h5>Your Session has Timed Out, Please Log In Again!</h5>
       </div>
       <img src="MSregistryionian2.png">
 

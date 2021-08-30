@@ -1,4 +1,14 @@
-<?php session_start(); ?>
+<?php session_start();
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+    $scripttimedout = file_get_contents('timeout.js');
+    echo "<script>".$scripttimedout."</script>";
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+
+?>
 <!DOCTYPE html>
 <html>
 

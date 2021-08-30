@@ -109,6 +109,7 @@ try {
       margin: 0;
       border-radius: 0;
       margin-top: 0em;
+      width: 80%;
     }
     button{
       cursor: pointer;

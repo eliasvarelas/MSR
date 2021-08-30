@@ -8,7 +8,17 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // assign a variable to each doctor in the db table users
+$select_query_total = "SELECT users.username,users.id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID";
+$select_query_doctors = "SELECT users.username FROM users WHERE username != 'admin'";
 
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+    $scripttimedout = file_get_contents('timeout.js');
+    echo "<script>".$scripttimedout."</script>";
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,7 +28,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>MS Registry Main Menu</title>
+    <title>MS Registry ADMIN's Menu</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -50,7 +60,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 </li>
                 <li>
-                    <a href="/patientinfo-bootstrap.php">
+                    <a href="">
                         <i class="fas fa-folder"></i>
                         Existing Patients
                     </a>
@@ -58,19 +68,19 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 </li>
                 <li>
-                    <a href="/addpatient-bootstrap.php">
+                    <a href="">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
                     </a>
                 </li>
                 <li>
-                    <a href="/searching-bootstrap.php">
+                    <a href="">
                         <i class="fas fa-search"></i>
                         Advanced Search
                     </a>
                 </li>
                 <li>
-                    <a href="/visual_analytics.php">
+                    <a href="">
                         <i class="fas fa-paper-plane"></i>
                         Visual Analytics Tool D3
                     </a>
@@ -108,11 +118,56 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <!-- main Content -->
             <!-- Loop throught all the users in table users and echo their patients -->
             <h1>admin</h1>
+            <table>
+              <tr>
+                <th>Doctor</th>
+              </tr>
+              <tr>
+
 <?php
-            foreach ($variable as $key => $value) {
-              // code...
+            $result = $pdo->query($select_query_doctors);
+            if($result->rowCount() > 0){
+              while($row = $result->fetch()){
+?>
+
+                    <td><?php echo $row['username']; ?></td>
+
+<?php
+            }
+              unset($result);
+            } else{     // basic error checking
+              echo "No records matching your query were found.";
             }
 ?>
+              </tr>
+            </table>
+
+            <div class="line"></div>
+
+            <table>
+              <tr>
+                <th>Doctor</th><th>Patients</th><th>Date of Birth</th><th>Emails</th>
+              </tr>
+<?php
+              $results = $pdo->query($select_query_total);
+              if($results->rowCount() > 0){
+                while($row = $results->fetch()){
+?>
+
+              <tr>
+                <td><?php echo $row['username']; ?></td>
+                <td><?php echo $row['Patient_name']; ?></td>
+                <td><?php echo $row['DOB']; ?></td>
+                <td><?php echo $row['Email']; ?></td>
+              </tr>
+<?php
+            }
+            unset($results);
+            } else{     // basic error checking
+              echo "No records matching your query were found.";
+            }
+?>
+            </table>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
