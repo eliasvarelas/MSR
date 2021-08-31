@@ -8,8 +8,8 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // assign a variable to each doctor in the db table users
-$select_query_total = "SELECT users.username,users.id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID";
-$select_query_doctors = "SELECT users.username FROM users WHERE username != 'admin'";
+$select_query_total = "SELECT users.username,users.id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID ORDER BY users.username";
+$select_query_doctors = "SELECT users.username FROM users WHERE username != 'admin' ORDER BY username";
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
@@ -117,57 +117,63 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </nav>
             <!-- main Content -->
             <!-- Loop throught all the users in table users and echo their patients -->
-            <h1>admin</h1>
-            <table>
-              <tr>
-                <th>Doctor</th>
-              </tr>
-              <tr>
+            <div class="split">
+              <div>
+                <table>
+                  <tr>
+                    <th>Doctors</th>
+                  </tr>
+    <?php
+                $result = $pdo->query($select_query_doctors);
+                if($result->rowCount() > 0){
+                  while($row = $result->fetch()){
+    ?>
+                      <tr>
+                        <td><?php echo $row['username']; ?></td>
+                      </tr>
+    <?php
+                }
+                  unset($result);
+                } else{     // basic error checking
+                  echo "No records matching your query were found.";
+                }
+    ?>
+                </table>
+              </div>
 
-<?php
-            $result = $pdo->query($select_query_doctors);
-            if($result->rowCount() > 0){
-              while($row = $result->fetch()){
-?>
+              <!-- <div class="line"></div> -->
+              <div>
+                <table>
+                  <tr>
+                    <th colspan="4">Total Patients</th>
+                  </tr>
+                  <tr>
+                    <th>Doctor</th><th>Patients</th><th>Date of Birth</th><th>Emails</th>
+                  </tr>
+    <?php
+                  $results = $pdo->query($select_query_total);
+                  if($results->rowCount() > 0){
+                    while($row = $results->fetch()){
+    ?>
 
+                  <tr>
                     <td><?php echo $row['username']; ?></td>
-
-<?php
-            }
-              unset($result);
-            } else{     // basic error checking
-              echo "No records matching your query were found.";
-            }
-?>
-              </tr>
-            </table>
+                    <td><?php echo $row['Patient_name']; ?></td>
+                    <td><?php echo $row['DOB']; ?></td>
+                    <td><?php echo $row['Email']; ?></td>
+                  </tr>
+    <?php
+                }
+                unset($results);
+                } else{     // basic error checking
+                  echo "No records matching your query were found.";
+                }
+    ?>
+                </table>
+              </div>
+            </div>
 
             <div class="line"></div>
-
-            <table>
-              <tr>
-                <th>Doctor</th><th>Patients</th><th>Date of Birth</th><th>Emails</th>
-              </tr>
-<?php
-              $results = $pdo->query($select_query_total);
-              if($results->rowCount() > 0){
-                while($row = $results->fetch()){
-?>
-
-              <tr>
-                <td><?php echo $row['username']; ?></td>
-                <td><?php echo $row['Patient_name']; ?></td>
-                <td><?php echo $row['DOB']; ?></td>
-                <td><?php echo $row['Email']; ?></td>
-              </tr>
-<?php
-            }
-            unset($results);
-            } else{     // basic error checking
-              echo "No records matching your query were found.";
-            }
-?>
-            </table>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
