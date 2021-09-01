@@ -8,7 +8,7 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // assign a variable to each doctor in the db table users
-$select_query_total = "SELECT users.username,users.id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID ORDER BY users.username";
+$select_query_total = "SELECT users.username,users.id,patients.Patient_id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID ORDER BY users.username";
 $select_query_doctors = "SELECT users.username FROM users WHERE username != 'admin' ORDER BY username";
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
@@ -145,10 +145,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               <div>
                 <table>
                   <tr>
-                    <th colspan="4">Total Patients</th>
+                    <th colspan="5">Total Patients</th>
                   </tr>
                   <tr>
-                    <th>Doctor</th><th>Patients</th><th>Date of Birth</th><th>Emails</th>
+                    <th>Doctor</th><th>Patient IDs</th><th>Patients</th><th>Date of Birth</th><th>Emails</th>
                   </tr>
     <?php
                   $results = $pdo->query($select_query_total);
@@ -158,6 +158,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                   <tr>
                     <td><?php echo $row['username']; ?></td>
+                    <td><?php echo $row['Patient_id'] ?></td>
                     <td><?php echo $row['Patient_name']; ?></td>
                     <td><?php echo $row['DOB']; ?></td>
                     <td><?php echo $row['Email']; ?></td>
