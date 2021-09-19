@@ -142,7 +142,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </select></th>
                   </tr>
                   <tr>
-                    <td><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
+                    <td><input name="srchoption" id="srchoption" placeholder="Full Name"> <input name="optional" hidden> </td>
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
@@ -510,10 +510,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         // optional.setAttribute('name','Sex');
         // optional.setAttribute('value','Female');
       }  else if (this.value == 'Smoker') {
-        inputBox.type = 'radio'; // want to make it output 2 radio buttons for Y/N
-        inputBox.setAttribute('placeholder','Yes / No');
+        inputBox.type = 'text'; // want to make it output 2 radio buttons for Y/N
+        // var input = createElement('input');
+        inputBox.setAttribute('placeholder','Yes/No');
         introParagraph.innerHTML = "Enter if the Patient is a Smoker or Not";
-        // var yes = document.createElement("radio");
       } else if (this.value == 'Name') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Full Name');
