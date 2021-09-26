@@ -20,6 +20,10 @@ table, th, td {
 #removeuser{
   color: red;
 }
+#search-bar-patients{
+  width: 100%;
+  font-weight: lighter;
+}
 th {
   background-color: #7386D5;         /* Title box color */
   color: black;

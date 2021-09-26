@@ -118,7 +118,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
               try{ ?>
+
                 <table>    <!-- prints the table with the patients -->
+                  <tr>
+                    <td colspan="7"><input type="text" name="filter-patients" id="search-bar-patients" placeholder="Search..." oninput="filterPatients"></td>
+                  </tr>
                   <tr>
                     <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
                     <th>Add a Follow Up Visit</th><th>Remove Patient</th>
@@ -183,6 +187,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           return false;
         }
         // document.getElementById("removeuser").innerHTML = sql;
+      }
+
+      filterPatients{ //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
+        if (filter !== ) {
+          //to be continued...
+        }
       }
     </script>
 
