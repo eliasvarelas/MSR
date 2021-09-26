@@ -121,7 +121,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
                 <table>
                   <tr>
-                    <th><select class="selection" name="Attributes" id="Attributes">
+                    <th id="selectth"><select class="selection" name="Attributes" id="Attributes">
                       <option disabled>Options</option>
                       <option value="Name" id="p_Name">Name</option>
                       <option value="ID" id="p_Id">Patient ID</option>
@@ -141,8 +141,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
                     </select></th>
                   </tr>
-                  <tr>
-                    <td><input name="srchoption" id="srchoption" placeholder="Full Name"> <input name="optional" hidden> </td>
+                  <tr id="tablerow">
+                    <td><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
@@ -491,81 +491,126 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     </script>
 
     <script type="text/javascript">
+    function addradiobutton(type, text) {
+        var label = document.createElement("label");
+
+        var element = document.createElement("input");
+        //Assign different attributes to the element.
+        element.setAttribute("type", type);
+        element.setAttribute("value", type);
+        element.setAttribute("name", type);
+
+        label.appendChild(element);
+        label.innerHTML += text;
+
+        var append = document.getElementById("tablerow");
+        //Append the element in page (in span).
+        append.appendChild(label);
+
+    }
+
     function inputBoxChange() {
       var inputBox = document.getElementById('srchoption');
       var introParagraph = document.getElementById('intro');
-      var optional = document.createElement('input');
       if (this.value == 'ID') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Patient ID');
         introParagraph.innerHTML = "Enter the ID of the Patient You Are Looking for ";
+
       } else if (this.value == 'Sex') {
-        inputBox.type = 'text'; // print male-female
-        inputBox.setAttribute('placeholder','Male or Female');
         introParagraph.innerHTML = "Enter the Sex of the Patient You Are Looking for ";
-        // inputBox.setAttribute('type','radio');
-        // inputBox.setAttribute('name','Sex');
-        // inputBox.setAttribute('value','Male');
-        // optional.setAttribute('type','radio');
-        // optional.setAttribute('name','Sex');
-        // optional.setAttribute('value','Female');
+
+        // need to dynamicly add a 'td' for the second radio button,
+        // then append the addradiobutton function into that new table cell.
+        // after that is completed, modify it to the rest else if statements.
+
+        
+        // var table = document.getElementsByTagName('table');
+        // var tblrow = document.getElementsByTagName('tr');
+        // var newcell = document.createElement('td');
+        // var text = document.createTextNode("TExt");
+        //
+        // text.appendChild(newcell);
+        // newcell.appendChild(tblrow);
+        // tblrow.appendChild(table);
+
+        // inputBox.type = 'radio'; // print male-female
+        // document.getElementById('selectth').style.columnSpan = 2;
+        // var radio = addradiobutton("radio", "Male");
+        // var elementappend = document.getElementById('if');
+        // elementappend.appendChild(radio);
+
       }  else if (this.value == 'Smoker') {
         inputBox.type = 'text'; // want to make it output 2 radio buttons for Y/N
         // var input = createElement('input');
         inputBox.setAttribute('placeholder','Yes/No');
         introParagraph.innerHTML = "Enter if the Patient is a Smoker or Not";
+
       } else if (this.value == 'Name') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Full Name');
         introParagraph.innerHTML = "Enter the Name of the Patient You Are Looking For";
+
       } else if (this.value == 'Race') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Race');
         introParagraph.innerHTML = "Enter the Race of the Patient You Are Looking For";
+
       } else if (this.value == 'Comorbidities') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Comorbidities');
         introParagraph.innerHTML = "Enter Any Comorbidities the Patient You Are Looking For May Have";
+
       } else if (this.value == 'Pregnant') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Yes / No');
         introParagraph.innerHTML = "Enter if the Patient is Pregnant or Not";
+
       } else if (this.value == 'Onsetlocalisation') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Onset Localisation');
         introParagraph.innerHTML = "Enter The Onset Localisation of The Patient You Are Looking For";
+
       } else if (this.value == 'onsetsymptoms') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder',' Onset Symptoms');
         introParagraph.innerHTML = "Enter Any Onset Symptoms of The Patient You Are Looking For";
+
       } else if (this.value == 'MRIonsetlocalisation') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','MRI Localisation');
         introParagraph.innerHTML = "Enter The MRI Onset Localisation of the Patient You Are Looking For";
+
       } else if (this.value == 'MRInum') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','MRI Lesions');
         introParagraph.innerHTML = "Enter The Number of MRI Lesions That The Patient You Are Looking For Has";
+
       } else if (this.value == 'PhoneNumber') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Phone Number');
         introParagraph.innerHTML = "Enter The Phone Number of The Patient You Are Looking For";
+
       } else if (this.value == 'MRIenhancing') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Yes / No');
         introParagraph.innerHTML = "Enter If the Patient Had Enhancing Lesions in His MRI";
+
       } else if (this.value == 'Age') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Age > than');
         introParagraph.innerHTML = "Enter The Lower Age Threshold of The Patients You Are Looking For";
+
       } else if (this.value == 'EDSS') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','EDSS Score');
         introParagraph.innerHTML = "Enter The EDSS Score of The Patient You Are Looking For";
+
       } else if (this.value == 'Agesmaller') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Age < than');
         introParagraph.innerHTML = "Enter The Higher Age Threshold of The Patients You Are Looking For";
+
       }
     }
     document.getElementById('Attributes').addEventListener('change', inputBoxChange);
