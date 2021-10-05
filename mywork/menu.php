@@ -159,14 +159,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             				    </div>
             				    <div class="dialog" id="dialog">
             				        <h2 class="dialog-header"> Add New Event </h2>
-            				        <form class="form" id="form">
+            				        <form class="form" id="form" action="events_form_insert.php" method="post">
             				          <div class="form-container" align="center">
             				            <label class="form-label" id="valueFromMyButton" for="name">Event name</label>
-            				            <input class="input" type="text" id="name" maxlength="36">
+            				            <input class="input" type="text" id="name" name="event_name" maxlength="36">
             				            <label class="form-label" id="valueFromMyButton" for="count">Number of people to invite</label>
-            				            <input class="input" type="number" id="count" min="0" max="1000000" maxlength="7">
+            				            <input class="input" type="number" name="No_of_Persons" id="count" min="0" max="1000000" maxlength="7">
+                                <label class="form-label" id="valueFromMyButton" for="location">Location (Street/Address)</label>
+                                <input class="input" type="text" id="location" name="location">
             				            <input type="button" value="Cancel" class="button" id="cancel-button">
-            				            <input type="button" value="OK" class="button button-white" id="ok-button">
+            				            <input type="submit" value="OK" class="button button-white" id="ok_button" name="ok_button">
             				          </div>
             				        </form>
             				      </div>
@@ -179,6 +181,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
+              <?php
+
+
+                
+               ?>
             </footer>
 
         </div>

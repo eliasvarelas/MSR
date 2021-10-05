@@ -45,7 +45,7 @@ try {
     } else{
 
       $validPassword = password_verify($passwordAttempt, $user['password']);
-      if($validPassword && $user_name !== 'admin'){ 
+      if($validPassword && $user_name !== 'admin'){
           //Provide the user with a login session.
           $_SESSION['user_id'] = $user['id'];
           $_SESSION['logged_in'] = time();
@@ -63,6 +63,7 @@ try {
         //Redirect to the Menu page
         $script = file_get_contents('redirectmenu_admin.js');
         echo "<script>".$script."</script>";
+        
       } else{
           //Password error.
           $scriptpass = file_get_contents('redirect_errorlogin.js');
