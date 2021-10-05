@@ -28,15 +28,15 @@
       $stmt = $pdo->prepare($sql);
       $stmt->execute([$event_name,$persons_invited,$event_location,$submit,$user_id]);
       // echo "records inserted successfully!!!!!!!!";
-      echo $user_id;
+
     } else {
       echo "Sorry, Something Went Wrong. Please Try again";
     }
-    // if ($sql) {
-    //   //Redirect to the Doctors Menu
-    //   $script = file_get_contents('redirectMenu.js');
-    //   echo "<script>".$script."</script>";
-    // }
+    if ($sql) {
+      //Redirect to the Doctors Menu
+      $script = file_get_contents('redirectMenu.js');
+      echo "<script>".$script."</script>";
+    }
 
   } catch (\Exception $e) {
     echo $sql . "<br>" . $e->getMessage();
