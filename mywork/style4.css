@@ -83,6 +83,9 @@ i,
 span {
     display: inline-block;
 }
+#d3-searching {
+  padding: 0;
+}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

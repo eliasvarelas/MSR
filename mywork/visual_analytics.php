@@ -112,6 +112,80 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </div>
                 </div>
             </nav>
+            <div class="d3-wrapper">
+              <table class="table-bordered" id="d3-searching">
+                <tr id="type_of_chart_row">
+                  <th>Type of Chart</th>
+                  <td colspan="3"><select id="type_of_chart">
+                    <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
+                    <option value="donut_chart">Donut Chart</option> <!-- pie chart with a whole in the middle -->
+                    <option value="vert_bar">Vertical Bar Chart</option>  <!-- typical bar graph -->
+                    <option value="hor_bar">Horizontal Bar Chart</option> <!-- horizontal bar graph with Y axis as a base -->
+                    <option value="line_chart">Line Chart</option>  <!-- One line with multiple values -->
+                  </select></td>
+                </tr>
+                <tr id="attribute_row">
+                  <th>Select an Attribute</th>
+                  <td colspan="3"><select>
+                    <option value="Name" id="p_Name">Name</option>
+                    <!-- <option value="ID" id="p_Id">Patient ID</option> -->
+                    <option value="Sex" id="p_Sex">Sex</option>
+                    <option value="Age" id="p_Age">Age</option>
+                    <!-- <option value="Agesmaller">Age <</option> -->
+                    <option value="Race" id="p_Race">Race</option>
+                    <!-- <option value="PhoneNumber" id="p_Phonenum">Phone Number</option> -->
+                    <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
+                    <option value="EDSS" id="p_eddsscore">EDSS Score</option>
+                    <option value="">Past Medication</option> <!-- add value -->
+                    <option value="">Current Medication</option>  <!-- add value -->
+                    <option value="Pregnant" id="p_Pregnant">Is Pregnant</option>
+                    <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation</option>
+                    <option value="Smoker" id="p_Smoker">Is a Smoker</option>
+                    <option value="onsetsymptoms" id="p_onsetsymptoms">Onset Symptoms</option>
+                    <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions</option>
+                    <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
+                    <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
+                  </select></td>
+                </tr>
+                <tr id="y_axis_row" hidden>
+                  <th>Y Axis</th> <!-- depending on the type of chart, this could be either attributes or persons -->
+                  <td colspan="3" ><select id="y_axis_select">
+                    <option value="years">Years</option>
+                    <option value="No. Persons">Number of Persons</option>
+                    <option value="Attributes">Attributes</option>
+                    <option value="Medication">Medication</option>
+                    <option value=""></option>
+                  </select></td>
+                  <td id="Num_of_persons_on_y" hidden><input id="" name="" type="number"></td>
+                  <td id="attributes_on_y" hidden><input id="" name="Attribute" list="attributes" type="text">
+                    <datalist id="attributes_on_y_datalist">
+                      <option value="">Age</option>
+                      <option value="">Sex</option>
+                      <option value="">Comorbidities</option>
+                      <option value="">etc</option>
+                    </datalist>
+                  </td>
+                  <!-- <td id=""><input id="" name="" type=""></td> -->
+                </tr>
+                <tr id="x_axis_row" hidden>
+                  <th>X Axis</th>
+                  <td colspan="3"><select>
+                    <option value="patient_names">Names</option>
+                    <option value="patient_ids">IDs</option>
+                  </select></td>
+                </tr>
+                <tr id="attr_values_row">
+                  <th>No. of Ranges</th><td><input name="numofRanges" id="num_of_pie_ranges" type="number"></td>
+                  <th>Ranges</th>
+                  <td><select>
+                    <option value="">value1</option>
+                    <option value="">value2</option>
+                    <option value="">value3</option>
+                  </select></td>
+                </tr>
+              </table>
+            </div>
+            <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
@@ -125,14 +199,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
+    <script type="text/javascript"> //sidebarCollapse
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
         });
     </script>
-    <script type="text/javascript">
+    <script type="text/javascript"> // d3 chart script
       chart = {
         const svg = d3.create("svg")
             .attr("viewBox", [0, 0, width, height]);
@@ -192,37 +266,68 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       x = ƒ(i);
 
       x = d3.scaleBand()
-    .domain(d3.range(data.length))
-    .range([margin.left, width - margin.right])
-    .padding(0.1);
+      .domain(d3.range(data.length))
+      .range([margin.left, width - margin.right])
+      .padding(0.1);
 
-    y = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.value)]).nice()
-    .range([height - margin.bottom, margin.top]);
+      y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.value)]).nice()
+      .range([height - margin.bottom, margin.top]);
 
-    xAxis = g => g
-    .attr("transform", `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x).tickFormat(i => data[i].name).tickSizeOuter(0))
-
-
-    yAxis = g => g
-    .attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y).ticks(null, data.format))
-    .call(g => g.select(".domain").remove())
-    .call(g => g.append("text")
-        .attr("x", -margin.left)
-        .attr("y", 10)
-        .attr("fill", "currentColor")
-        .attr("text-anchor", "start")
-        .text(data.y));
+      xAxis = g => g
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(d3.axisBottom(x).tickFormat(i => data[i].name).tickSizeOuter(0))
 
 
-    color = "steelblue";
+      yAxis = g => g
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(d3.axisLeft(y).ticks(null, data.format))
+      .call(g => g.select(".domain").remove())
+      .call(g => g.append("text")
+          .attr("x", -margin.left)
+          .attr("y", 10)
+          .attr("fill", "currentColor")
+          .attr("text-anchor", "start")
+          .text(data.y));
 
-    height = 500;
 
-    margin = ({top: 30, right: 0, bottom: 30, left: 0});
+      color = "steelblue";
 
+      height = 500;
+
+      margin = ({top: 30, right: 0, bottom: 30, left: 0});
+
+    </script>
+
+    <script type="text/javascript">
+      document.getElementById('type_of_chart').onchange = function axisAppear() {
+        if (this.value == 'vert_bar' || this.value == 'hor_bar' || this.value == 'line_chart') {
+          var yAxis = document.getElementById('y_axis_row').hidden = false;
+          var xAxis = document.getElementById('x_axis_row').hidden = false;
+          var pievalues = document.getElementById('attr_values_row').hidden = true;
+
+        } else {
+          var yAxis = document.getElementById('y_axis_row').hidden = true;
+          var xAxis = document.getElementById('x_axis_row').hidden = true;
+          var pievalues = document.getElementById('attr_values_row').hidden = false;
+        }
+      }
+
+      document.getElementById('type_of_chart').onchange= function selectCharttype(){
+        if (this.value == 'hor_bar') {
+          var something = document.getElementById('attributes_on_y').hidden = false;
+        } // it doesnt work, need to see it with more time to kill
+      }
+
+
+      document.getElementById('y_axis_select').onchange = function setYattribute() {
+        if (this.value == "Attributes") { // if the value is attributes then let the td appear in the table
+          // else they remain hidden, until the user selects some type of data for the Y axis...
+          // do the same for the X axis, make sure to give the right type of data
+          // var something = document.getElementById('attributes_on_y').hidden = false;
+
+        }
+      }
     </script>
 </body>
 
