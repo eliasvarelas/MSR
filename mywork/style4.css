@@ -84,8 +84,11 @@ span {
     display: inline-block;
 }
 #d3-searching {
-  padding: 0;
+  padding: 1em;
+  min-width: 50%;
+  max-width: 80%;
 }
+
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

@@ -7,7 +7,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     echo "<script>".$scripttimedout."</script>";
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-
+// TODO: need to make a function that will invert the y and x axis based on the chart type... (hor_bar/vert_bar)
 ?>
 <!DOCTYPE html>
 <html>
@@ -112,9 +112,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </div>
                 </div>
             </nav>
+
             <div class="d3-wrapper">
               <table class="table-bordered" id="d3-searching">
-                <tr id="type_of_chart_row">
+                <tr id="type_of_chart_row"> <!-- select the type of chart you want -->
                   <th>Type of Chart</th>
                   <td colspan="3"><select id="type_of_chart">
                     <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
@@ -124,20 +125,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <option value="line_chart">Line Chart</option>  <!-- One line with multiple values -->
                   </select></td>
                 </tr>
-                <tr id="attribute_row">
+                <tr id="attribute_row"> <!-- select the attribute for which the chart will be printed -->
                   <th>Select an Attribute</th>
                   <td colspan="3"><select>
-                    <option value="Name" id="p_Name">Name</option>
-                    <!-- <option value="ID" id="p_Id">Patient ID</option> -->
+                    <option value="Name" id="p_Name">Patient Name</option>
                     <option value="Sex" id="p_Sex">Sex</option>
                     <option value="Age" id="p_Age">Age</option>
-                    <!-- <option value="Agesmaller">Age <</option> -->
                     <option value="Race" id="p_Race">Race</option>
-                    <!-- <option value="PhoneNumber" id="p_Phonenum">Phone Number</option> -->
                     <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
                     <option value="EDSS" id="p_eddsscore">EDSS Score</option>
-                    <option value="">Past Medication</option> <!-- add value -->
-                    <option value="">Current Medication</option>  <!-- add value -->
+                    <option value="Past_medication">Past Medication</option>
+                    <option value="Current_medication">Current Medication</option>
                     <option value="Pregnant" id="p_Pregnant">Is Pregnant</option>
                     <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation</option>
                     <option value="Smoker" id="p_Smoker">Is a Smoker</option>
@@ -146,28 +144,49 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
                     <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
                   </select></td>
+
+                  <th id="Num_Years_header" hidden>Enter the Number of Years</th>
+                  <th id="Num_Persons_header" hidden>Enter the Number of Persons</th>
+                  <th id="Attributes_header" hidden>Choose the Attributes</th>
+                  <th id="Medication_header" hidden>Choose the Medication</th>
                 </tr>
-                <tr id="y_axis_row" hidden>
-                  <th>Y Axis</th> <!-- depending on the type of chart, this could be either attributes or persons -->
+                <tr id="y_axis_row" hidden> <!-- the y axis for the horizontal bar chart -->
+                  <th>Y Axis</th>
                   <td colspan="3" ><select id="y_axis_select">
                     <option value="years">Years</option>
-                    <option value="No. Persons">Number of Persons</option>
+                    <option value="Num_Persons">Number of Persons</option>
                     <option value="Attributes">Attributes</option>
                     <option value="Medication">Medication</option>
                     <option value=""></option>
                   </select></td>
-                  <td id="Num_of_persons_on_y" hidden><input id="" name="" type="number"></td>
-                  <td id="attributes_on_y" hidden><input id="" name="Attribute" list="attributes" type="text">
-                    <datalist id="attributes_on_y_datalist">
-                      <option value="">Age</option>
-                      <option value="">Sex</option>
-                      <option value="">Comorbidities</option>
-                      <option value="">etc</option>
-                    </datalist>
+                  <td id="Num_of_persons_on_y" hidden><input id="Num_of_persons_on_y_input" name="Numofper" type="number"></td>
+                  <td id="Num_of_years_on_y" hidden><input id="Num_of_years_on_y_input" name="Numofyears" type="number"></td> <!-- not really practical, but ok fo now -->
+                  <td id="attributes_on_y" hidden>
+                    <select id="attributes_on_y_select" name="Attribute">
+                      <option value="Age">Age</option>
+                      <option value="Sex">Sex</option>
+                      <option value="Comorbidities">Comorbidities</option>
+                    </select>
                   </td>
-                  <!-- <td id=""><input id="" name="" type=""></td> -->
+                  <td id="medication_row" hidden> <!-- this will appear if the medication has been selected for the Y axis -->
+                    <select id="medication_row_select" name="Meds" > <!-- multiple doesnt fit well... ask waht to do -->
+                      <option value="Alemtuzumab">Alemtuzumab</option>
+                      <option value="Avonex">Avonex</option>
+                      <option value="Betaferon">Betaferon</option>
+                      <option value="Copaxone">Copaxone</option>
+                      <option value="Extavia">Extavia</option>
+                      <option value="Fingolimod">Fingolimod</option>
+                      <option value="Mitoxantrone">Mitoxantrone</option>
+                      <option value="Natalizumab">Natalizumab</option>
+                      <option value="Ocrelizumab">Ocrelizumab</option>
+                      <option value="Rebif">Rebif</option>
+                      <option value="Tecfidera">Tecfidera</option>
+                      <option value="Teriflunomide">Teriflunomide</option>
+                      <option value="None">None</option>
+                    </select>
+                  </td>
                 </tr>
-                <tr id="x_axis_row" hidden>
+                <tr id="x_axis_row" hidden> <!-- the x axis for the horizontal bar chart -->
                   <th>X Axis</th>
                   <td colspan="3"><select>
                     <option value="patient_names">Names</option>
@@ -183,6 +202,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <option value="">value3</option>
                   </select></td>
                 </tr>
+
               </table>
             </div>
             <div class="line"></div>
@@ -299,33 +319,76 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript"> //general scripts
       document.getElementById('type_of_chart').onchange = function axisAppear() {
-        if (this.value == 'vert_bar' || this.value == 'hor_bar' || this.value == 'line_chart') {
-          var yAxis = document.getElementById('y_axis_row').hidden = false;
-          var xAxis = document.getElementById('x_axis_row').hidden = false;
-          var pievalues = document.getElementById('attr_values_row').hidden = true;
+        if (this.value == 'vert_bar' ||  this.value == 'line_chart') {
+          var y_axis_row = document.getElementById('y_axis_row').hidden = false;
+          var x_axis_row = document.getElementById('x_axis_row').hidden = false;
+          // var x_axis_row_on_ver_bar = document.getElementById('x_axis_row_on_ver_bar').hidden = false;
+          // var y_axis_row_on_ver_bar = document.getElementById('y_axis_row_on_ver_bar').hidden = false;
+          var attr_values_row = document.getElementById('attr_values_row').hidden = true;
 
-        } else {
+
+        } else if (this.value == 'hor_bar') {
+
+          var y_axis_row = document.getElementById('y_axis_row').hidden = false;
+          // var x_axis_row_on_ver_bar = document.getElementById('x_axis_row_on_ver_bar').hidden = true;
+          // var y_axis_row_on_ver_bar = document.getElementById('y_axis_row_on_ver_bar').hidden = true;
+          var x_axis_row = document.getElementById('x_axis_row').hidden = false;
+          var attr_values_row = document.getElementById('attr_values_row').hidden = true;
+          var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = false;
+          var Num_Years_header = document.getElementById('Num_Years_header').hidden = false;
+
+          document.getElementById('y_axis_select').onchange = function getValue() { //gets value of the y axis inputs
+
+            if (y_axis_select.value == 'Num_Persons') {
+              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = false;
+              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = false;
+              var attributes_on_y_select = document.getElementById('attributes_on_y_select').hidden = true;
+              var Attributes_header = document.getElementById('Attributes_header').hidden = true;
+              var medication_row = document.getElementById('medication_row').hidden = true;
+              var Medication_header = document.getElementById('Medication_header').hidden = true;
+              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
+              var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
+
+            } else if (y_axis_select.value == 'Attributes') {
+              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
+              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
+              var attributes_on_y_select = document.getElementById('attributes_on_y').hidden = false;
+              var Attributes_header = document.getElementById('Attributes_header').hidden = false;
+              var medication_row = document.getElementById('medication_row').hidden = true;
+              var Medication_header = document.getElementById('Medication_header').hidden = true;
+              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
+              var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
+
+            } else if (y_axis_select.value == 'Medication') {
+              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
+              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
+              var attributes_on_y_select = document.getElementById('attributes_on_y_select').hidden = true;
+              var Attributes_header = document.getElementById('Attributes_header').hidden = true;
+              var medication_row = document.getElementById('medication_row').hidden = false;
+              var Medication_header = document.getElementById('Medication_header').hidden = false;
+              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
+              var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
+
+            } else if (y_axis_select.value == 'years') {
+              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
+              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
+              var attributes_on_y_select = document.getElementById('attributes_on_y_select').hidden = true;
+              var Attributes_header = document.getElementById('Attributes_header').hidden = true;
+              var medication_row = document.getElementById('medication_row').hidden = true;
+              var Medication_header = document.getElementById('Medication_header').hidden = true;
+              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = false;
+              var Num_Years_header = document.getElementById('Num_Years_header').hidden = false;
+            }
+          }
+
+        } else if (this.value == 'Pie_chart' || this.value == 'donut_chart') {
           var yAxis = document.getElementById('y_axis_row').hidden = true;
           var xAxis = document.getElementById('x_axis_row').hidden = true;
           var pievalues = document.getElementById('attr_values_row').hidden = false;
-        }
-      }
-
-      document.getElementById('type_of_chart').onchange= function selectCharttype(){
-        if (this.value == 'hor_bar') {
-          var something = document.getElementById('attributes_on_y').hidden = false;
-        } // it doesnt work, need to see it with more time to kill
-      }
-
-
-      document.getElementById('y_axis_select').onchange = function setYattribute() {
-        if (this.value == "Attributes") { // if the value is attributes then let the td appear in the table
-          // else they remain hidden, until the user selects some type of data for the Y axis...
-          // do the same for the X axis, make sure to give the right type of data
-          // var something = document.getElementById('attributes_on_y').hidden = false;
-
+          var somet = document.getElementById('Num_of_persons_on_y').hidden = true;
+          var header = document.getElementById('Num_Persons_header').hidden = true;
         }
       }
     </script>
