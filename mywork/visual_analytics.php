@@ -124,7 +124,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <option value="hor_bar">Horizontal Bar Chart</option> <!-- horizontal bar graph with Y axis as a base -->
                     <option value="line_chart">Line Chart</option>  <!-- One line with multiple values -->
                   </select></td>
+                  <th id="Num_Years_header" hidden>Enter the Time span in Years</th>
+                  <th id="Num_Persons_header" hidden>Enter the Number of Persons</th>
+                  <th id="Attributes_header" hidden>Choose the Attributes</th>
+                  <th id="Medication_header" hidden>Choose the Medication</th>
                 </tr>
+
                 <tr id="attribute_row"> <!-- select the attribute for which the chart will be printed -->
                   <th>Select an Attribute</th>
                   <td colspan="3"><select>
@@ -144,32 +149,48 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
                     <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
                   </select></td>
-
-                  <th id="Num_Years_header" hidden>Enter the Number of Years</th>
-                  <th id="Num_Persons_header" hidden>Enter the Number of Persons</th>
-                  <th id="Attributes_header" hidden>Choose the Attributes</th>
-                  <th id="Medication_header" hidden>Choose the Medication</th>
                 </tr>
+
+                <tr id="x_axis_row" hidden> <!-- the x axis for the horizontal bar chart -->
+                  <th>X Axis</th>
+                  <td colspan="3"><select>
+                    <option value="patient_names" hidden>Patient Names</option>
+                    <option value="patient_ids" hidden>Patient IDs</option>
+                    <option value="Values" selected>Values</option>
+                  </select></td>
+                </tr>
+
                 <tr id="y_axis_row" hidden> <!-- the y axis for the horizontal bar chart -->
                   <th>Y Axis</th>
                   <td colspan="3" ><select id="y_axis_select">
-                    <option value="years">Years</option>
+                    <option value="time">Time span</option>
                     <option value="Num_Persons">Number of Persons</option>
                     <option value="Attributes">Attributes</option>
                     <option value="Medication">Medication</option>
-                    <option value=""></option>
+                    <!-- <option value=""></option> -->
                   </select></td>
-                  <td id="Num_of_persons_on_y" hidden><input id="Num_of_persons_on_y_input" name="Numofper" type="number"></td>
-                  <td id="Num_of_years_on_y" hidden><input id="Num_of_years_on_y_input" name="Numofyears" type="number"></td> <!-- not really practical, but ok fo now -->
-                  <td id="attributes_on_y" hidden>
+                  <td id="Num_of_persons_on_y" hidden><input id="Num_of_persons_on_y_input" name="Numofper" type="number" placeholder="Enter No. of Persons"></td>
+                  <td id="Num_of_years_on_y" hidden><input id="Num_of_years_on_y_input" name="Numofyears" type="text" placeholder="ex. 2010-2021"></td> <!-- not really practical, but ok fo now -->
+                  <td id="Attributes_on_y" hidden>
                     <select id="attributes_on_y_select" name="Attribute">
                       <option value="Age">Age</option>
                       <option value="Sex">Sex</option>
+                      <option value="Race">Race</option>
                       <option value="Comorbidities">Comorbidities</option>
+                      <option value="EDSS">EDSS Score</option>
+                      <option value="Past_medication">Past Medication</option>
+                      <option value="Current_medication">Current Medication</option>
+                      <option value="Pregnant">Is Pregnant</option>
+                      <option value="Onsetlocalisation">Onset Localisation</option>
+                      <option value="Smoker">Is a Smoker</option>
+                      <option value="onsetsymptoms">Onset Symptoms</option>
+                      <option value="MRIenhancing">MRI Enhancing Lesions</option>
+                      <option value="MRInum">MRI Lesion No.</option>
+                      <option value="MRIonsetlocalisation">MRI Onset Localisation</option>
                     </select>
                   </td>
                   <td id="medication_row" hidden> <!-- this will appear if the medication has been selected for the Y axis -->
-                    <select id="medication_row_select" name="Meds" > <!-- multiple doesnt fit well... ask waht to do -->
+                    <select id="medication_row_select" name="Meds" multiple> <!-- multiple doesnt fit well... ask waht to do -->
                       <option value="Alemtuzumab">Alemtuzumab</option>
                       <option value="Avonex">Avonex</option>
                       <option value="Betaferon">Betaferon</option>
@@ -186,13 +207,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </select>
                   </td>
                 </tr>
-                <tr id="x_axis_row" hidden> <!-- the x axis for the horizontal bar chart -->
-                  <th>X Axis</th>
-                  <td colspan="3"><select>
-                    <option value="patient_names">Names</option>
-                    <option value="patient_ids">IDs</option>
-                  </select></td>
-                </tr>
+
                 <tr id="attr_values_row">
                   <th>No. of Ranges</th><td><input name="numofRanges" id="num_of_pie_ranges" type="number"></td>
                   <th>Ranges</th>
@@ -204,11 +219,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </tr>
 
               </table>
+
             </div>
+
             <div class="line"></div>
+
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
+
         </div>
     </div>
 
@@ -327,6 +346,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           // var x_axis_row_on_ver_bar = document.getElementById('x_axis_row_on_ver_bar').hidden = false;
           // var y_axis_row_on_ver_bar = document.getElementById('y_axis_row_on_ver_bar').hidden = false;
           var attr_values_row = document.getElementById('attr_values_row').hidden = true;
+          var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = false;
+          var Num_Years_header = document.getElementById('Num_Years_header').hidden = false;
 
 
         } else if (this.value == 'hor_bar') {
@@ -344,7 +365,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             if (y_axis_select.value == 'Num_Persons') {
               var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = false;
               var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = false;
-              var attributes_on_y_select = document.getElementById('attributes_on_y_select').hidden = true;
+              var attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
               var Attributes_header = document.getElementById('Attributes_header').hidden = true;
               var medication_row = document.getElementById('medication_row').hidden = true;
               var Medication_header = document.getElementById('Medication_header').hidden = true;
@@ -354,7 +375,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             } else if (y_axis_select.value == 'Attributes') {
               var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
               var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
-              var attributes_on_y_select = document.getElementById('attributes_on_y').hidden = false;
+              var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = false;
               var Attributes_header = document.getElementById('Attributes_header').hidden = false;
               var medication_row = document.getElementById('medication_row').hidden = true;
               var Medication_header = document.getElementById('Medication_header').hidden = true;
@@ -364,7 +385,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             } else if (y_axis_select.value == 'Medication') {
               var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
               var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
-              var attributes_on_y_select = document.getElementById('attributes_on_y_select').hidden = true;
+              var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
               var Attributes_header = document.getElementById('Attributes_header').hidden = true;
               var medication_row = document.getElementById('medication_row').hidden = false;
               var Medication_header = document.getElementById('Medication_header').hidden = false;
@@ -374,7 +395,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             } else if (y_axis_select.value == 'years') {
               var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
               var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
-              var attributes_on_y_select = document.getElementById('attributes_on_y_select').hidden = true;
+              var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
               var Attributes_header = document.getElementById('Attributes_header').hidden = true;
               var medication_row = document.getElementById('medication_row').hidden = true;
               var Medication_header = document.getElementById('Medication_header').hidden = true;
@@ -387,8 +408,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           var yAxis = document.getElementById('y_axis_row').hidden = true;
           var xAxis = document.getElementById('x_axis_row').hidden = true;
           var pievalues = document.getElementById('attr_values_row').hidden = false;
-          var somet = document.getElementById('Num_of_persons_on_y').hidden = true;
-          var header = document.getElementById('Num_Persons_header').hidden = true;
+          var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
+          var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
+          var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
+          var Attributes_header = document.getElementById('Attributes_header').hidden = true;
+          var medication_row = document.getElementById('medication_row').hidden = true;
+          var Medication_header = document.getElementById('Medication_header').hidden = true;
+          var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
+          var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
         }
       }
     </script>

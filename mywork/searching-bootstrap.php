@@ -142,7 +142,18 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </select></th>
                   </tr>
                   <tr id="tablerow">
-                    <td><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
+                    <td id="inputBox"><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
+                    <td id="Sex_td" hidden><input type="radio" name="Sex_td" value="Male">Male<br><input type="radio" name="Sex_td" value="Female">Female<br></td>
+                    <td id="Race_td" hidden>
+                      <select name="Race_td">
+                        <option value="American Indian">American Indian</option>
+                        <option value="Asian">Asian</option>
+                        <option value="Black">Black</option>
+                        <option value="Hispanic">Hispanic</option>
+                        <option value="Caucasian">Caucasian</option>
+                        <option value="Unknown">Unknown</option>
+                      </select>
+                    </td>
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
@@ -152,6 +163,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               <?php
               $option = $_POST['Attributes'];
               $entry = $_POST['srchoption'];
+              $sex_entry = $_POST['Sex_td'];
               if (isset($_POST['Searchbtn'])) {
                 if ($option == 'ID'){
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry";
@@ -426,7 +438,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 }
               }
                 if ($option == 'Sex'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount()>0) {
                   while($row = $result->fetch()){ ?>
@@ -491,23 +503,23 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     </script>
 
     <script type="text/javascript">
-    function addradiobutton(type, text) {
-        var label = document.createElement("label");
-
-        var element = document.createElement("input");
-        //Assign different attributes to the element.
-        element.setAttribute("type", type);
-        element.setAttribute("value", type);
-        element.setAttribute("name", type);
-
-        label.appendChild(element);
-        label.innerHTML += text;
-
-        var append = document.getElementById("tablerow");
-        //Append the element in page (in span).
-        append.appendChild(label);
-
-    }
+    // function addradiobutton(type, text) {
+    //     var label = document.createElement("label");
+    //
+    //     var element = document.createElement("input");
+    //     //Assign different attributes to the element.
+    //     element.setAttribute("type", type);
+    //     element.setAttribute("value", type);
+    //     element.setAttribute("name", type);
+    //
+    //     label.appendChild(element);
+    //     label.innerHTML += text;
+    //
+    //     var append = document.getElementById("tablerow");
+    //     //Append the element in page (in span).
+    //     append.appendChild(label);
+    //
+    // }
 
     function inputBoxChange() {
       var inputBox = document.getElementById('srchoption');
@@ -519,26 +531,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
       } else if (this.value == 'Sex') {
         introParagraph.innerHTML = "Enter the Sex of the Patient You Are Looking for ";
-
-        // need to dynamicly add a 'td' for the second radio button,
-        // then append the addradiobutton function into that new table cell.
-        // after that is completed, modify it to the rest else if statements.
-
-        
-        // var table = document.getElementsByTagName('table');
-        // var tblrow = document.getElementsByTagName('tr');
-        // var newcell = document.createElement('td');
-        // var text = document.createTextNode("TExt");
-        //
-        // text.appendChild(newcell);
-        // newcell.appendChild(tblrow);
-        // tblrow.appendChild(table);
-
-        // inputBox.type = 'radio'; // print male-female
-        // document.getElementById('selectth').style.columnSpan = 2;
-        // var radio = addradiobutton("radio", "Male");
-        // var elementappend = document.getElementById('if');
-        // elementappend.appendChild(radio);
+        var Sex_td = document.getElementById('Sex_td').hidden = false;
+        var inputBox = document.getElementById('srchoption').hidden = true;
 
       }  else if (this.value == 'Smoker') {
         inputBox.type = 'text'; // want to make it output 2 radio buttons for Y/N
@@ -550,6 +544,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Full Name');
         introParagraph.innerHTML = "Enter the Name of the Patient You Are Looking For";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = false;
 
       } else if (this.value == 'Race') {
         inputBox.type = 'text';

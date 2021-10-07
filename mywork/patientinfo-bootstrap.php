@@ -121,7 +121,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <table>    <!-- prints the table with the patients -->
                   <tr>
-                    <td colspan="7"><input type="text" name="filter-patients" id="search-bar-patients" placeholder="Search..." oninput="filterPatients"></td>
+                    <td colspan="7"><input type="text" name="filter-patients" id="search-bar-patients" placeholder="Search Patient Name..." oninput="filterPatients"></td>
                   </tr>
                   <tr>
                     <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
