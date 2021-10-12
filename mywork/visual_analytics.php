@@ -31,9 +31,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
-    const div = d3.selectAll("div");
+    // const div = d3.selectAll("div");
 
     </script>
+
 
 </head>
 
@@ -245,7 +246,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             });
         });
     </script>
-    <script type="text/javascript"> // d3 chart script
+    <!-- <script type="text/javascript"> // d3 chart script -->
       chart = {
         const svg = d3.create("svg")
             .attr("viewBox", [0, 0, width, height]);
@@ -337,6 +338,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       margin = ({top: 30, right: 0, bottom: 30, left: 0});
 
     </script>
+    <script src="visual_analytics.js" charset="utf-8"></script>
 
     <script type="text/javascript"> //general scripts
       document.getElementById('type_of_chart').onchange = function axisAppear() {

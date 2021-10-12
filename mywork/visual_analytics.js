@@ -1,5 +1,3 @@
-
-
       chart = {
         const svg = d3.create("svg")
             .attr("viewBox", [0, 0, width, height]);

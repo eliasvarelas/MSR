@@ -10,7 +10,7 @@ body {
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
-  padding:5px;
+  /* padding:5px; */
   text-align:center;
   font-family: arial;
 }
@@ -27,12 +27,12 @@ table, th, td {
 th {
   background-color: #7386D5;         /* Title box color */
   color: black;
-  margin: auto;
+  /* margin: auto; */
 }
 td {
   background-color: white;
   color: black;
-  margin: auto;
+  /* margin: auto; */
 }
 
 p {
@@ -87,6 +87,15 @@ span {
   padding: 1em;
   min-width: 50%;
   max-width: 80%;
+}
+#query_tool {
+  max-width: 80%;
+  min-width: 40%;
+
+}
+input[type=text] {
+  border: none;
+  border-bottom: 1px solid black;
 }
 
 

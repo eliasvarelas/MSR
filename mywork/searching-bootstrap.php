@@ -119,7 +119,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           try{ ?>
               <form class="form" action="searching-bootstrap.php" method="post">
                 <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
-                <table>
+                <table id="query_tool">
                   <tr>
                     <th id="selectth"><select class="selection" name="Attributes" id="Attributes">
                       <option disabled>Options</option>
@@ -139,10 +139,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions</option>
                       <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
                       <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
-                    </select></th>
-                  </tr>
-                  <tr id="tablerow">
-                    <td id="inputBox"><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
+                    </select></th> 
+
+                    <td id="inputBox" hidden><input type="text" name="srchoption" id="srchoption" placeholder="Full Name"></td>
                     <td id="Sex_td" hidden><input type="radio" name="Sex_td" value="Male">Male<br><input type="radio" name="Sex_td" value="Female">Female<br></td>
                     <td id="Race_td" hidden>
                       <select name="Race_td">
@@ -154,6 +153,20 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <option value="Unknown">Unknown</option>
                       </select>
                     </td>
+                  </tr>
+                  <tr id="tablerow">
+                    <!-- <td id="inputBox"><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
+                    <td id="Sex_td" hidden><input type="radio" name="Sex_td" value="Male">Male<br><input type="radio" name="Sex_td" value="Female">Female<br></td>
+                    <td id="Race_td" hidden>
+                      <select name="Race_td">
+                        <option value="American Indian">American Indian</option>
+                        <option value="Asian">Asian</option>
+                        <option value="Black">Black</option>
+                        <option value="Hispanic">Hispanic</option>
+                        <option value="Caucasian">Caucasian</option>
+                        <option value="Unknown">Unknown</option>
+                      </select>
+                    </td> -->
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
@@ -279,6 +292,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['Comorbidities']; ?></td>
                         </tr>
                       </table>
+                      <div class="line"></div>
                     <?php }
                   } else {
                     echo "No patient exists with this information. Comorbidities";
@@ -299,6 +313,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['eddsscore']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. EDSS";
@@ -318,6 +333,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['Pregnant']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. Pregnant";
@@ -337,6 +353,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['Onsetlocalisation']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. Comorbidities";
@@ -356,6 +373,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['smoker']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. Smoker";
@@ -375,6 +393,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIenhancing']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. MRI enhancing";
@@ -394,6 +413,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIonsetlocalisation']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. MRI enhancing";
@@ -413,6 +433,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['onsetsymptoms']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. MRI enhancing";
@@ -432,6 +453,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRInum']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. MRI enhancing";
@@ -451,6 +473,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['Sex']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. MRI enhancing";
@@ -470,6 +493,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <td><?php echo $row['Email']; ?></td><td><?php echo $row['Race']; ?></td>
                       </tr>
                     </table>
+                    <div class="line"></div>
                   <?php }
                 } else {
                   echo "No patient exists with this information. MRI enhancing";
@@ -521,13 +545,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     //
     // }
 
-    function inputBoxChange() {
-      var inputBox = document.getElementById('srchoption');
+    var sele = document.getElementById('selectth').onchange = function inputBoxChange() {
+      var inputBox = document.getElementById('srchoption').hidden = false;
       var introParagraph = document.getElementById('intro');
+
       if (this.value == 'ID') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Patient ID');
         introParagraph.innerHTML = "Enter the ID of the Patient You Are Looking for ";
+        var inputBox = document.getElementById('srchoption').hidden = true;
 
       } else if (this.value == 'Sex') {
         introParagraph.innerHTML = "Enter the Sex of the Patient You Are Looking for ";
@@ -539,6 +565,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         // var input = createElement('input');
         inputBox.setAttribute('placeholder','Yes/No');
         introParagraph.innerHTML = "Enter if the Patient is a Smoker or Not";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = true;
 
       } else if (this.value == 'Name') {
         inputBox.type = 'text';
@@ -551,61 +579,88 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Race');
         introParagraph.innerHTML = "Enter the Race of the Patient You Are Looking For";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = true;
+        var Race_td = document.getElementById('Race_td').hidden = false;
 
       } else if (this.value == 'Comorbidities') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Comorbidities');
         introParagraph.innerHTML = "Enter Any Comorbidities the Patient You Are Looking For May Have";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = true;
 
       } else if (this.value == 'Pregnant') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Yes / No');
         introParagraph.innerHTML = "Enter if the Patient is Pregnant or Not";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = true;
 
       } else if (this.value == 'Onsetlocalisation') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Onset Localisation');
         introParagraph.innerHTML = "Enter The Onset Localisation of The Patient You Are Looking For";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = false;
 
       } else if (this.value == 'onsetsymptoms') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder',' Onset Symptoms');
         introParagraph.innerHTML = "Enter Any Onset Symptoms of The Patient You Are Looking For";
+        var inputBox = document.getElementById('srchoption').hidden = false;
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
       } else if (this.value == 'MRIonsetlocalisation') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','MRI Localisation');
         introParagraph.innerHTML = "Enter The MRI Onset Localisation of the Patient You Are Looking For";
+        var inputBox = document.getElementById('srchoption').hidden = false;
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
       } else if (this.value == 'MRInum') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','MRI Lesions');
         introParagraph.innerHTML = "Enter The Number of MRI Lesions That The Patient You Are Looking For Has";
+        var inputBox = document.getElementById('srchoption').hidden = false;
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
       } else if (this.value == 'PhoneNumber') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Phone Number');
         introParagraph.innerHTML = "Enter The Phone Number of The Patient You Are Looking For";
+        var inputBox = document.getElementById('srchoption').hidden = false;
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
       } else if (this.value == 'MRIenhancing') {
         inputBox.type = 'text';
         inputBox.setAttribute('placeholder','Yes / No');
         introParagraph.innerHTML = "Enter If the Patient Had Enhancing Lesions in His MRI";
+        var inputBox = document.getElementById('srchoption').hidden = false;
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
       } else if (this.value == 'Age') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Age > than');
         introParagraph.innerHTML = "Enter The Lower Age Threshold of The Patients You Are Looking For";
+        var inputBox = document.getElementById('srchoption').hidden = false;
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
       } else if (this.value == 'EDSS') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','EDSS Score');
         introParagraph.innerHTML = "Enter The EDSS Score of The Patient You Are Looking For";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = false;
+
 
       } else if (this.value == 'Agesmaller') {
         inputBox.type = 'number';
         inputBox.setAttribute('placeholder','Age < than');
         introParagraph.innerHTML = "Enter The Higher Age Threshold of The Patients You Are Looking For";
+        var Sex_td = document.getElementById('Sex_td').hidden = true;
+        var inputBox = document.getElementById('srchoption').hidden = false;
+
 
       }
     }
