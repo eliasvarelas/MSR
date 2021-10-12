@@ -1,18 +1,18 @@
-<?php
-session_start();
-$patientID = $_GET["id"];   // used to pass the patient id directly in the form
-$patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
-$patientDOB = $_GET["DOB"]; // used to pass the pateints age directly in the form
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time
-    session_destroy();   // destroy session data in storage
-    $scripttimedout = file_get_contents('timeout.js');
-    echo "<script>".$scripttimedout."</script>";
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-
+<?php // session_start and timeout function
+  session_start();
+  $patientID = $_GET["id"];   // used to pass the patient id directly in the form
+  $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
+  $patientDOB = $_GET["DOB"]; // used to pass the pateints age directly in the form
+  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
+      // last request was more than 30 minutes ago
+      session_unset();     // unset $_SESSION variable for the run-time
+      session_destroy();   // destroy session data in storage
+      $scripttimedout = file_get_contents('timeout.js');
+      echo "<script>".$scripttimedout."</script>";
+  }
+  $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -470,13 +470,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <th colspan="3">Onset Symptoms</th>
               </tr>
               <tr>
-                <td>Vision<br><input type="checkbox" name="onsetsymptoms" value="Vision"></td><td>Motor<br><input type="checkbox" name="onsetsymptoms" value="Motor"></td><td>Sensory<br><input type="checkbox" name="onsetsymptoms" value="Sensory"></td>
+                <td>Vision<br><input type="checkbox" name="onsetsymptoms" value="Vision"></td>
+                <td>Motor<br><input type="checkbox" name="onsetsymptoms" value="Motor"></td>
+                <td>Sensory<br><input type="checkbox" name="onsetsymptoms" value="Sensory"></td>
               </tr>
               <tr>
-                <td>Coordination<br><input type="checkbox" name="onsetsymptoms" value="Coordination"></td><td>Bowel/Bladder<br><input type="checkbox" name="onsetsymptoms" value="Bowel/Bladder"></td><td>Fatigue<br><input type="checkbox" name="onsetsymptoms" value="Fatigue"></td>
+                <td>Coordination<br><input type="checkbox" name="onsetsymptoms" value="Coordination"></td>
+                <td>Bowel/Bladder<br><input type="checkbox" name="onsetsymptoms" value="Bowel/Bladder"></td>
+                <td>Fatigue<br><input type="checkbox" name="onsetsymptoms" value="Fatigue"></td>
               </tr>
               <tr>
-                <td>Cognitive<br><input type="checkbox" name="onsetsymptoms" value="Cognitive"></td><td>Encephalopathy<br><input type="checkbox" name="onsetsymptoms" value="Encephalopathy"></td><td>Other<br><input type="checkbox" name="onsetsymptoms" value="Other"></td>
+                <td>Cognitive<br><input type="checkbox" name="onsetsymptoms" value="Cognitive"></td>
+                <td>Encephalopathy<br><input type="checkbox" name="onsetsymptoms" value="Encephalopathy"></td>
+                <td>Other<br><input type="checkbox" name="onsetsymptoms" value="Other"></td>
               </tr>
             </table>
           </div>

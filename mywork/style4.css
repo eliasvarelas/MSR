@@ -89,13 +89,14 @@ span {
   max-width: 80%;
 }
 #query_tool {
-  max-width: 80%;
+  max-width: 90%;
   min-width: 40%;
 
 }
-input[type=text] {
+input[type=text], input[type=number] {
   border: none;
-  border-bottom: 1px solid black;
+  width: 100%;
+  /* border-bottom: 1px solid black; */
 }
 
 

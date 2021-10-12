@@ -118,10 +118,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
           try{ ?>
               <form class="form" action="searching-bootstrap.php" method="post">
+                <!-- Heading for explaining the following element to the user -->
                 <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
+
+                <!-- Advanced Searching API -->
                 <table id="query_tool">
-                  <tr>
-                    <th id="selectth"><select class="selection" name="Attributes" id="Attributes">
+                  <tr id="tablerow">
+                    <th id="selectth"><select class="selection" name="Attributes" id="Attributes"> <!-- List of all the available attributes for the user to select for the searching queries -->
                       <option disabled>Options</option>
                       <option value="Name" id="p_Name">Name</option>
                       <option value="ID" id="p_Id">Patient ID</option>
@@ -139,11 +142,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions</option>
                       <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
                       <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
-                    </select></th> 
+                    </select></th>
 
-                    <td id="inputBox" hidden><input type="text" name="srchoption" id="srchoption" placeholder="Full Name"></td>
-                    <td id="Sex_td" hidden><input type="radio" name="Sex_td" value="Male">Male<br><input type="radio" name="Sex_td" value="Female">Female<br></td>
-                    <td id="Race_td" hidden>
+                    <!-- using hidden table cells in order to create an advanced tool that only prints the neccesary input fields -->
+
+                    <td id="inputBox" hidden> <!-- inputBox with joker role for text and number inputs -->
+                      <input type="text" name="srchoption" id="srchoption" placeholder=" Full Name">
+                    </td>
+                    <td id="Sex_td" hidden> <!-- shows Male / Female radio buttons for Sex entry -->
+                      <input type="radio" name="Sex_td" value="Male">Male / <input type="radio" name="Sex_td" value="Female">Female <!-- outputs 2 radio buttons for the available Sex -->
+                    </td>
+                    <td id="Race_td" hidden> <!-- gives all the available races to the user to select one -->
                       <select name="Race_td">
                         <option value="American Indian">American Indian</option>
                         <option value="Asian">Asian</option>
@@ -153,20 +162,73 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <option value="Unknown">Unknown</option>
                       </select>
                     </td>
+                    <td id="Comorbidities_td" hidden> <!-- pritns the list with the comorbidities -->
+                      <input type="text" list="Comorbidities" name="Comorbidities" placeholder=" Ex. Obesity"/>
+                      <datalist id="Comorbidities">
+                        <option value="Diabetes">Diabetes</option>
+                        <option value="Obesity">Obesity</option>
+                        <option value="Heart Disease">Heart Disease</option>
+                        <option value="Renal Failure">Renal Failure</option>
+                        <option value="Hepatic Failure">Hepatic Failure</option>
+                        <option value="Dyslipidemia">Dyslipidemia</option>
+                        <option value="Autoimmune">Autoimmune</option>
+                      </datalist> <!-- a datalist with the available Comorbidities -->
+                    </td>
+                    <td id="Pregnant_Smoker_td" hidden> <!-- shows yes / no radio buttons for Pregnant and Smoker-->
+                      <input type="radio" name="Pregnant_Smoker" value="Yes">Yes<br>
+                      <input type="radio" name="Pregnant_Smoker" value="No">No <br>
+                    </td>
+                    <td id="onsetsymptoms_td" hidden> <!-- allows the user to select from a specific enum of available data -->
+                      <input type="text" name="Onsetsymptoms" list="Onsetsymptoms" placeholder=" Ex. Vision" />
+                      <datalist id="Onsetsymptoms">
+                        <option value="Vision">Vision</option>
+                        <option value="Motor">Motor</option>
+                        <option value="Sensory">Sensory</option>
+                        <option value="Coordination">Coordination</option>
+                        <option value="Bowel/Bladder">Bowel/Bladder</option>
+                        <option value="Fatigue">Fatigue</option>
+                        <option value="Cognitive">Cognitive</option>
+                        <option value="Encephalopathy">Encephalopathy</option>
+                        <option value="Other">Other</option>
+                      </datalist>
+                    </td>
+                    <td id="MRIonsetlocalisation_td" hidden> <!-- shows Specific values based on an enum -->
+                      <input type="text" name="MRIonsetlocalisation" list="MRIonsetlocalisation" placeholder=" Ex. Visual"/>
+                      <datalist id="MRIonsetlocalisation">
+                        <option value="Spinal">Spinal</option>
+                        <option value="Cortex">Cortex</option>
+                        <option value="Brainstem">Brainstem</option>
+                        <option value="Cerebellum">Cerebellum</option>
+                        <option value="Visual">Visual</option>
+                      </datalist>
+                    </td>
+                    <td id="Onsetlocalisation_td" hidden> <!-- allows the user to select from a specific enum of available data -->
+                      <input type="text" name="Onsetlocalisation" list="Onsetlocalisation" placeholder=" Ex. Visual"/>
+                      <datalist id="Onsetlocalisation">
+                        <option value="Spinal">Spinal</option>
+                        <option value="Cortex">Cortex</option>
+                        <option value="Brainstem">Brainstem</option>
+                        <option value="Cerebellum">Cerebellum</option>
+                        <option value="Visual">Visual</option>
+                      </datalist>
+                    </td>
+                    <td id="MRIenhancing_td" hidden>
+                      <input type="radio" name="MRIenhancing" value="Yes" id="MRIenhancing_radio">Yes
+                      <input type="radio" name="MRIenhancing" value="No" id="MRIenhancing_radio">No
+                    </td>
                   </tr>
-                  <tr id="tablerow">
-                    <!-- <td id="inputBox"><input name="srchoption" id="srchoption" placeholder="Full Name"></td>
-                    <td id="Sex_td" hidden><input type="radio" name="Sex_td" value="Male">Male<br><input type="radio" name="Sex_td" value="Female">Female<br></td>
-                    <td id="Race_td" hidden>
-                      <select name="Race_td">
-                        <option value="American Indian">American Indian</option>
-                        <option value="Asian">Asian</option>
-                        <option value="Black">Black</option>
-                        <option value="Hispanic">Hispanic</option>
-                        <option value="Caucasian">Caucasian</option>
-                        <option value="Unknown">Unknown</option>
-                      </select>
-                    </td> -->
+                  <tr id="MRIenhancing_tr" hidden>
+                    <td id="MRIenhancing_td_extented" hidden>
+                      <input type="number" name="MRIenhancing_num" placeholder=" Enter the No. of Lesions">
+                      <input type="text" name="MRIenhancing_list" id="MRIenhancing_list" list="MRIenhancing_list" hidden/>
+                      <datalist>
+                        <option value="Spinal">Spinal</option>
+                        <option value="Cortex">Cortex</option>
+                        <option value="Brainstem">Brainstem</option>
+                        <option value="Cerebellum">Cerebellum</option>
+                        <option value="Visual">Visual</option>
+                      </datalist>
+                  </td>
                   </tr>
                 </table>
                 <input type="submit" name="Searchbtn" value="Search">
@@ -177,7 +239,36 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               $option = $_POST['Attributes'];
               $entry = $_POST['srchoption'];
               $sex_entry = $_POST['Sex_td'];
+              $race_entry = $_POST['Race_td'];
+              $Pregnant_Smoker_entry = $_POST['Pregnant_Smoker'];
+              $Onsetsymptoms_entry = $_POST['Onsetsymptoms'];
+              $Onsetlocalisation_entry = $_POST['Onsetlocalisation'];
+              $MRIonsetlocalisation_entry = $_POST['MRIonsetlocalisation'];
+              $Comorbidities_entry = $_POST['Comorbidities'];
+
+              // check if the form has been submited, if yes, validate the info and continue
               if (isset($_POST['Searchbtn'])) {
+
+                if ($option == 'Name'){
+                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
+                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. Name";
+                  }
+                }
                 if ($option == 'ID'){
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry";
                   $result = $pdo->query($sql);
@@ -198,7 +289,27 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     echo "No patient exists with this information. ID";
                   }
                 }
-                if ($option == 'Age'){  // add the option about searching with an age limit ex. "Age > 50"
+                if ($option == 'Sex'){
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Sex</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['Sex']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. MRI enhancing";
+                  }
+                }
+                if ($option == 'Age'){
                   $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
@@ -213,12 +324,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         </tr>
                       </table>
                       <div class="line"></div>
-              <?php }
+                    <?php }
                   } else {
                     echo "No patient exists with this information. Age";
                   }
                 }
-                if ($option == 'Agesmaller'){  // add the option about searching with an age limit ex. "Age > 50"
+                if ($option == 'Agesmaller'){
                   $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' AND Doctor_ID = $usersid";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
@@ -233,29 +344,29 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         </tr>
                       </table>
                       <div class="line"></div>
-              <?php }
+                    <?php }
                   } else {
                     echo "No patient exists with this information. Age";
                   }
                 }
-                if ($option == 'Name'){
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%'";
+                if ($option == 'Race'){
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Race</th>
                         </tr>
                         <tr>
-                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
-                          <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['Race']; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
-                  <?php }
+                    <?php }
                   } else {
-                    echo "No patient exists with this information. Name";
+                    echo "No patient exists with this information. MRI enhancing";
                   }
                 }
                 if ($option == 'PhoneNumber'){
@@ -279,7 +390,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     // echo "No patient exists with this information. Phone";
                   }
                 if ($option == 'Comorbidities'){
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$entry'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
@@ -298,205 +409,165 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     echo "No patient exists with this information. Comorbidities";
                   }
                 }
-              }
                 if ($option == 'EDSS'){
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>EDSS Score 1-10</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['eddsscore']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. EDSS";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>EDSS Score 1-10</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['eddsscore']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. EDSS";
+                  }
                 }
-              }
                 if ($option == 'Pregnant'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is Pregnant? (Y/N)</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Pregnant']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. Pregnant";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is Pregnant? (Y/N)</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['Pregnant']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. Pregnant";
+                  }
                 }
-              }
-                if ($option == 'Onsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry%'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Localisation</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Onsetlocalisation']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. Comorbidities";
+                if ($option == 'Onsetlocalisation'){
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Localisation</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['Onsetlocalisation']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. Comorbidities";
+                  }
                 }
-              }
                 if ($option == 'Smoker'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is a Smoker? (Y/N)</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['smoker']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. Smoker";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is a Smoker? (Y/N)</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['smoker']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. Smoker";
+                  }
                 }
-              }
                 if ($option == 'MRIenhancing'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions (Yes/No)</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIenhancing']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. MRI enhancing";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions (Yes/No)</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIenhancing']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. MRI enhancing";
+                  }
                 }
-              }
-                if ($option == 'MRIonsetlocalisation'){ // work on the wildcard '%' and create the Enum for the user to pick the values through JS
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Onset Localisation</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIonsetlocalisation']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. MRI enhancing";
-                }
-              }
                 if ($option == 'onsetsymptoms'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Symptoms</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['onsetsymptoms']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. MRI enhancing";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Symptoms</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['onsetsymptoms']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. MRI enhancing";
+                  }
                 }
-              }
                 if ($option == 'MRInum'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions No.</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRInum']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. MRI enhancing";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions No.</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRInum']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. MRI enhancing";
+                  }
                 }
-              }
-                if ($option == 'Sex'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Sex</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Sex']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. MRI enhancing";
-                }
-              }
-                if ($option == 'Race'){
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$entry'";
-                $result = $pdo->query($sql);
-                if ($result->rowCount()>0) {
-                  while($row = $result->fetch()){ ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Race</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Email']; ?></td><td><?php echo $row['Race']; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                } else {
-                  echo "No patient exists with this information. MRI enhancing";
+                if ($option == 'MRIonsetlocalisation'){
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
+                  $result = $pdo->query($sql);
+                  if ($result->rowCount()>0) {
+                    while($row = $result->fetch()){ ?>
+                      <table id="standard">
+                        <tr>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Onset Localisation</th>
+                        </tr>
+                        <tr>
+                          <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
+                          <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIonsetlocalisation']; ?></td>
+                        </tr>
+                      </table>
+                      <div class="line"></div>
+                    <?php }
+                  } else {
+                    echo "No patient exists with this information. MRI enhancing";
+                  }
                 }
               }
 
@@ -504,10 +575,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
             }
             ?>
-            <!-- <div class="line"></div> -->
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
-            </footer>
+            </footer> <!-- basic footer -->
+
         </div>
     </div>
 
@@ -527,141 +598,258 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     </script>
 
     <script type="text/javascript">
-    // function addradiobutton(type, text) {
-    //     var label = document.createElement("label");
-    //
-    //     var element = document.createElement("input");
-    //     //Assign different attributes to the element.
-    //     element.setAttribute("type", type);
-    //     element.setAttribute("value", type);
-    //     element.setAttribute("name", type);
-    //
-    //     label.appendChild(element);
-    //     label.innerHTML += text;
-    //
-    //     var append = document.getElementById("tablerow");
-    //     //Append the element in page (in span).
-    //     append.appendChild(label);
-    //
-    // }
+
+    var inputBox = document.getElementById('inputBox').hidden = false;
 
     var sele = document.getElementById('selectth').onchange = function inputBoxChange() {
-      var inputBox = document.getElementById('srchoption').hidden = false;
+      
+      // get all the elements from the DOM
+      var srchoption = document.getElementById('srchoption');
       var introParagraph = document.getElementById('intro');
+      var attr = document.getElementById('Attributes');
+      var inputBox = document.getElementById('inputBox');
+      var Race_td = document.getElementById('Race_td');
+      var Sex_td = document.getElementById('Sex_td');
+      var Comorbidities_td = document.getElementById('Comorbidities_td');
+      var Pregnant_Smoker_td = document.getElementById('Pregnant_Smoker_td');
+      var onsetsymptoms_td = document.getElementById('onsetsymptoms_td');
+      var MRIonsetlocalisation_td = document.getElementById('MRIonsetlocalisation_td');
+      var Onsetlocalisation_td = document.getElementById('Onsetlocalisation_td');
+      var MRIenhancing_td = document.getElementById('MRIenhancing_td');
+      var mriRadio = document.getElementById('MRIenhancing_radio');
+      var MRIenhancing_tr = document.getElementById('MRIenhancing_tr');
+      var MRIenhancing_td_extented = document.getElementById('MRIenhancing_td_extented');
+      var MRIenhancing_num = document.getElementById('MRIenhancing_num');
+      var MRIenhancing_list = document.getElementById('MRIenhancing_list');
 
-      if (this.value == 'ID') {
-        inputBox.type = 'number';
-        inputBox.setAttribute('placeholder','Patient ID');
+      if (attr.value == 'ID') {
+        srchoption.type = 'number';
+        srchoption.setAttribute('placeholder'," Patient ID");
         introParagraph.innerHTML = "Enter the ID of the Patient You Are Looking for ";
-        var inputBox = document.getElementById('srchoption').hidden = true;
 
-      } else if (this.value == 'Sex') {
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+
+      } else if (attr.value == 'Sex') {
         introParagraph.innerHTML = "Enter the Sex of the Patient You Are Looking for ";
-        var Sex_td = document.getElementById('Sex_td').hidden = false;
-        var inputBox = document.getElementById('srchoption').hidden = true;
 
-      }  else if (this.value == 'Smoker') {
-        inputBox.type = 'text'; // want to make it output 2 radio buttons for Y/N
-        // var input = createElement('input');
-        inputBox.setAttribute('placeholder','Yes/No');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = false;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+      }  else if (attr.value == 'Smoker') {
         introParagraph.innerHTML = "Enter if the Patient is a Smoker or Not";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = true;
 
-      } else if (this.value == 'Name') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','Full Name');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = false;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+      } else if (attr.value == 'Name') {
+        srchoption.type = 'text';
+        srchoption.setAttribute('placeholder'," Full Name");
         introParagraph.innerHTML = "Enter the Name of the Patient You Are Looking For";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = false;
 
-      } else if (this.value == 'Race') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','Race');
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+      } else if (attr.value == 'Race') {
         introParagraph.innerHTML = "Enter the Race of the Patient You Are Looking For";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = true;
-        var Race_td = document.getElementById('Race_td').hidden = false;
 
-      } else if (this.value == 'Comorbidities') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','Comorbidities');
+        inputBox.hidden = true;
+        Race_td.hidden = false;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+      } else if (attr.value == 'Comorbidities') {
         introParagraph.innerHTML = "Enter Any Comorbidities the Patient You Are Looking For May Have";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = true;
 
-      } else if (this.value == 'Pregnant') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','Yes / No');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = false;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+      } else if (attr.value == 'Pregnant') {
         introParagraph.innerHTML = "Enter if the Patient is Pregnant or Not";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = true;
 
-      } else if (this.value == 'Onsetlocalisation') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','Onset Localisation');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = false;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+      } else if (attr.value == 'Onsetlocalisation') {
         introParagraph.innerHTML = "Enter The Onset Localisation of The Patient You Are Looking For";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = false;
 
-      } else if (this.value == 'onsetsymptoms') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder',' Onset Symptoms');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = false;
+
+      } else if (attr.value == 'onsetsymptoms') {
         introParagraph.innerHTML = "Enter Any Onset Symptoms of The Patient You Are Looking For";
-        var inputBox = document.getElementById('srchoption').hidden = false;
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
-      } else if (this.value == 'MRIonsetlocalisation') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','MRI Localisation');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = false;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+
+      } else if (attr.value == 'MRIonsetlocalisation') {
         introParagraph.innerHTML = "Enter The MRI Onset Localisation of the Patient You Are Looking For";
-        var inputBox = document.getElementById('srchoption').hidden = false;
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
-      } else if (this.value == 'MRInum') {
-        inputBox.type = 'number';
-        inputBox.setAttribute('placeholder','MRI Lesions');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = false;
+        Onsetlocalisation_td.hidden = true;
+
+
+      } else if (attr.value == 'MRInum') {
+        srchoption.type = 'number';
+        srchoption.setAttribute('placeholder',' MRI Lesions');
         introParagraph.innerHTML = "Enter The Number of MRI Lesions That The Patient You Are Looking For Has";
-        var inputBox = document.getElementById('srchoption').hidden = false;
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
-      } else if (this.value == 'PhoneNumber') {
-        inputBox.type = 'number';
-        inputBox.setAttribute('placeholder','Phone Number');
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+
+      } else if (attr.value == 'PhoneNumber') {
+        srchoption.type = 'number';
+        srchoption.setAttribute('placeholder',' Phone Number');
         introParagraph.innerHTML = "Enter The Phone Number of The Patient You Are Looking For";
-        var inputBox = document.getElementById('srchoption').hidden = false;
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
-      } else if (this.value == 'MRIenhancing') {
-        inputBox.type = 'text';
-        inputBox.setAttribute('placeholder','Yes / No');
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+
+      } else if (attr.value == 'MRIenhancing') {
         introParagraph.innerHTML = "Enter If the Patient Had Enhancing Lesions in His MRI";
-        var inputBox = document.getElementById('srchoption').hidden = false;
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
-      } else if (this.value == 'Age') {
-        inputBox.type = 'number';
-        inputBox.setAttribute('placeholder','Age > than');
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = false;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+
+      } else if (attr.value == 'Age') {
+        srchoption.type = 'number';
+        srchoption.setAttribute('placeholder',' Age > than');
         introParagraph.innerHTML = "Enter The Lower Age Threshold of The Patients You Are Looking For";
-        var inputBox = document.getElementById('srchoption').hidden = false;
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
 
-      } else if (this.value == 'EDSS') {
-        inputBox.type = 'number';
-        inputBox.setAttribute('placeholder','EDSS Score');
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+
+
+      } else if (attr.value == 'EDSS') {
+        srchoption.type = 'number';
+        srchoption.setAttribute('placeholder',' EDSS Score');
         introParagraph.innerHTML = "Enter The EDSS Score of The Patient You Are Looking For";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = false;
+
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
 
 
-      } else if (this.value == 'Agesmaller') {
-        inputBox.type = 'number';
-        inputBox.setAttribute('placeholder','Age < than');
+      } else if (attr.value == 'Agesmaller') {
+        srchoption.type = 'number';
+        srchoption.setAttribute('placeholder',' Age < than');
         introParagraph.innerHTML = "Enter The Higher Age Threshold of The Patients You Are Looking For";
-        var Sex_td = document.getElementById('Sex_td').hidden = true;
-        var inputBox = document.getElementById('srchoption').hidden = false;
 
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
 
+      } else if (attr.value == 'MRInum') {
+        srchoption.type = 'number';
+        srchoption.setAttribute('placeholder',' No. of Lesions');
+        introParagraph.innerHTML = "Enter the No. of Lesions the Patient You Are Looking For Had";
+
+        inputBox.hidden = false;
+        Race_td.hidden = true;
+        Sex_td.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+        MRIenhancing_td.hidden = true;
       }
     }
     document.getElementById('Attributes').addEventListener('change', inputBoxChange);
