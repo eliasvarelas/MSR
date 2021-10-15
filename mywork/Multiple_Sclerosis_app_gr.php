@@ -169,7 +169,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 </head>
 
 <body>
-  <input type="image" class="lang" id="eng" src="England.png">
+  <input type="image" class="lang" id="eng" src="English_flag.png">
   <script type="text/javascript">
     document.getElementById("eng").onclick = function () {
       location.href = "Multiple_Sclerosis_app.php";
@@ -178,7 +178,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
   <form target="_blank" action="MSRforminsert.php" method="post" class="header">        <!-- action="form.php"-->
 
-    <img src="MSregistryionian2.png" alt="Intro" style="float:left;">
+    <img src="MSregistry_ionian_new_logo.png" alt="MSR Logo" style="float:left;">
     <br>
     <p style="font-family: arial;">Όνομα & Διεύθυνση:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" autofocus></textarea> <br> </p>
     <div class="container">

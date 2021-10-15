@@ -170,7 +170,7 @@
 </head>
 
 <body>
-  <input type="image" class="lang" id="gr" src="gr.png">    <!-- redirects the user to the greek form -->
+  <input type="image" class="lang" id="gr" src="Greek_flag.png">    <!-- redirects the user to the greek form -->
   <script type="text/javascript">
     document.getElementById("gr").onclick = function() {
       location.href = "Multiple_Sclerosis_app_gr.php";
