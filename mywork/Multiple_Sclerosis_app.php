@@ -179,7 +179,7 @@
 
     <!-- Starting the form -->
    <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
-    <img src="MSregistryionian2.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
+    <img src="MSregistry_ionian_new_logo.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
     <br>
     <p> Name & Address:<br><textarea name="NDS" rows="5" cols="40" name="NDS"> <?php echo $patientNAME?> </textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
     <div class="container">

@@ -126,7 +126,7 @@ try {
       <div class="red-alert-error">
         <h5>Your Username Doesnt Exist in our Database, Please try Again!</h5>
       </div>
-      <img src="MSregistryionian2.png">
+      <img src="MSregistry_ionian_new_logo.png">
 
         <p>
           <h3>Please Login </h3>

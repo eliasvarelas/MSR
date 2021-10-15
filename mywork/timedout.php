@@ -126,7 +126,7 @@ try {
       <div class="red-alert-error">
         <h5>Your Session has Timed Out, Please Log In Again!</h5>
       </div>
-      <img src="MSregistryionian2.png">
+      <img src="MSregistry_ionian_new_logo.png">
 
         <p>
           <h3>Please Login </h3>

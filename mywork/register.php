@@ -99,7 +99,7 @@ if(isset($_POST['register'])){
   </head>
   <body>
     <div>
-      <img src="MSregistryionian2.png">
+      <img src="MSregistry_ionian_new_logo.png">
       <h3>Welcome Doctor, please create an account below:</h3>
       <form action="register.php" method="post" class="box">
           <!-- <label for="username">Username</label> -->
