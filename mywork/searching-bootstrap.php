@@ -94,7 +94,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="navbar-btn">
-                                <a class="nav-link" href="/logout.php" id="Logout">
+                                <a class="nav-link navbar-btn" href="/logout.php" id="Logout">
                                   <i class="fas fa-user"></i>
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
@@ -122,8 +122,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
 
                 <!-- Advanced Searching API -->
-                <table id="query_tool">
-                  <tr id="tablerow">
+                <table class="query_header">
+                  <tr id="tablerow" class="">
                     <th id="selectth"><select class="selection" name="Attributes" id="Attributes"> <!-- List of all the available attributes for the user to select for the searching queries -->
                       <option disabled>Options</option>
                       <option value="Name" id="p_Name">Name</option>
@@ -149,9 +149,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <td id="inputBox" hidden> <!-- inputBox with joker role for text and number inputs -->
                       <input type="text" name="srchoption" id="srchoption" placeholder=" Full Name">
                     </td>
-                    <td id="Sex_td" hidden> <!-- shows Male / Female radio buttons for Sex entry -->
-                      <input type="radio" name="Sex_td" value="Male">Male / <input type="radio" name="Sex_td" value="Female">Female <!-- outputs 2 radio buttons for the available Sex -->
+                    <td id="Sex_td_male" hidden> <!-- shows Male / Female radio buttons for Sex entry -->
+                      <input type="radio" name="Sex_td" value="Male">Male
                     </td>
+                    <td id="Sex_td_female">
+                      <input type="radio" name="Sex_td" value="Female">Female <!-- outputs 2 radio buttons for the available Sex -->
+                    </td>
+
                     <td id="Race_td" hidden> <!-- gives all the available races to the user to select one -->
                       <select name="Race_td">
                         <option value="American Indian">American Indian</option>
@@ -600,16 +604,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <script type="text/javascript">
 
     var inputBox = document.getElementById('inputBox').hidden = false;
+    Sex_td_male.hidden = true;
+    Sex_td_female.hidden = true;
 
     var sele = document.getElementById('selectth').onchange = function inputBoxChange() {
-      
+
       // get all the elements from the DOM
       var srchoption = document.getElementById('srchoption');
       var introParagraph = document.getElementById('intro');
       var attr = document.getElementById('Attributes');
       var inputBox = document.getElementById('inputBox');
       var Race_td = document.getElementById('Race_td');
-      var Sex_td = document.getElementById('Sex_td');
+      var Sex_td_male = document.getElementById('Sex_td_male');
+      var Sex_td_female = document.getElementById('Sex_td_female');
       var Comorbidities_td = document.getElementById('Comorbidities_td');
       var Pregnant_Smoker_td = document.getElementById('Pregnant_Smoker_td');
       var onsetsymptoms_td = document.getElementById('onsetsymptoms_td');
@@ -629,7 +636,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -642,7 +650,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = false;
+        Sex_td_male.hidden = false;
+        Sex_td_female.hidden = false;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -654,7 +663,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = false;
         onsetsymptoms_td.hidden = true;
@@ -668,7 +678,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -680,7 +691,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = false;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -692,7 +704,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = false;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -704,7 +717,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = false;
         onsetsymptoms_td.hidden = true;
@@ -716,7 +730,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -728,7 +743,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = false;
@@ -741,7 +757,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -756,7 +773,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -771,7 +789,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -784,7 +803,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = true;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = false;
         onsetsymptoms_td.hidden = true;
@@ -799,7 +819,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -814,7 +835,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -829,7 +851,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;
@@ -843,7 +866,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         inputBox.hidden = false;
         Race_td.hidden = true;
-        Sex_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
         Comorbidities_td.hidden = true;
         Pregnant_Smoker_td.hidden = true;
         onsetsymptoms_td.hidden = true;

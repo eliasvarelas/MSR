@@ -63,7 +63,7 @@ try {
         //Redirect to the Menu page
         $script = file_get_contents('redirectmenu_admin.js');
         echo "<script>".$script."</script>";
-        
+
       } else{
           //Password error.
           $scriptpass = file_get_contents('redirect_errorlogin.js');
@@ -121,7 +121,7 @@ try {
 <body>
   <div>
     <form action="login.php" method="post" class="box" style="text-align:center;"> <!-- basic login form -->
-      <img src="MSregistryionian2.png">
+      <img src="MSregistry_ionian_new_logo.png">
         <p>
           <h3>Please Login </h3>
           <label for="user_name">Username:</label>

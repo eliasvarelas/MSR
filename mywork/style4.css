@@ -70,6 +70,10 @@ a:focus {
     box-shadow: none;
     outline: none !important;
     border: none;
+    color: #fff;
+    background-color: #17a2b8;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5%;
 }
 
 .line {
@@ -88,10 +92,10 @@ span {
   min-width: 50%;
   max-width: 80%;
 }
-#query_tool {
+
+.query_header{
   max-width: 90%;
   min-width: 40%;
-
 }
 input[type=text], input[type=number] {
   border: none;
