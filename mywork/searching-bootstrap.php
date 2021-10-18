@@ -93,14 +93,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="navbar-btn">
-                                <a class="nav-link navbar-btn" href="/logout.php" id="Logout">
+                            <li class="navbar-nav">
+                                <a class="nav-link" id="">
                                   <i class="fas fa-user"></i>
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
                                 </a>
+                                <a href="logout.php" onclick="return confirm('Are you sure to logout?');">
+                                  <button type="button" id="logoutBtn" class="navbar-btn btn btn-info">
+                                    <!-- <i class="fa fa-sign-out"></i> -->
+                                    <span>Logout</span>
+                                  </button>
+                                </a>
                             </li>
-
                         </ul>
                     </div>
                 </div>

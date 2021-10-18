@@ -324,7 +324,10 @@ a.article:hover {
         display: none;
     }
 }
-/* calendar */
+/* ---------------------------------------------------
+    CALENDAR
+----------------------------------------------------- */
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -8567,17 +8570,18 @@ h1, h2, h3, h4, h5,
 .calendar-container {
   position: relative;
   margin: 0 auto;
-  height: 100%;
+  /* height: 100%; */
+  height: auto;
   width: 50%;
   background: #fff;
   font: 13px Helvetica, Arial, san-serif;
   display: inline-block;
-  padding: 20px;
+  padding: 2em;
   float: left; }
   @media (max-width: 991.98px) {
     .calendar-container {
       padding: 0; } }
-  @media (max-width: 767.98px) {
+  @media (max-width: 991.98px) {
     .calendar-container {
       padding: 0;
       width: 100%; } }
@@ -8587,7 +8591,20 @@ h1, h2, h3, h4, h5,
 
 .calendar {
   width: 100%;
-  padding: 0; }
+  padding: 0;
+  height: auto;
+  /* margin-bottom: 1em; */
+
+}
+.frame {
+  margin-bottom: -2em;
+}
+#add-button {
+  padding-right: 1em;
+  padding-left: 1em;
+  margin-right: 1em;
+  margin-top: 10px;
+}
 
 /* Calendar Header */
 .year-header {
@@ -8677,6 +8694,9 @@ h1, h2, h3, h4, h5,
 .days-table, .dates-table, .months-table {
   border-collapse: separate;
   text-align: center; }
+.dates-table{
+  margin-bottom: 1em;  
+}
 
 .day {
   height: 26px;

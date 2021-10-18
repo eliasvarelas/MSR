@@ -22,6 +22,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style4.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -92,11 +93,18 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="navbar-btn">
-                                <a class="nav-link" href="/logout.php" id="Logout">
+                            <li class="navbar-nav">
+                                <a class="nav-link" id="">
                                   <i class="fas fa-user"></i>
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
+                                </a>
+
+                                <a href="logout.php" onclick="return confirm('Are you sure to logout?');">
+                                  <button type="button" id="logoutBtn" class="navbar-btn btn btn-info">
+                                    <!-- <i class="fa fa-sign-out"></i> --> <!-- doesnt work yet -->
+                                    <span>Logout</span>
+                                  </button>
                                 </a>
                             </li>
                         </ul>
@@ -104,8 +112,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </div>
             </nav>
             <!-- main Content -->
-            <!-- space for callendar with real time data - probably json and js -->
-            <div class="callendar">
+
               <section class="ftco-section">
             		<div class="container">
             			<div class="row">
@@ -127,6 +134,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             				              <td class="month">Apr</td>
             				              <td class="month">May</td>
             				              <td class="month">Jun</td>
+            				            </tr>
+                                <tr class="months-row">
             				              <td class="month">Jul</td>
             				              <td class="month">Aug</td>
             				              <td class="month">Sep</td>
@@ -151,8 +160,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             			              <tbody class="tbody">
             			              </tbody>
             				          </table>
+                              <button class="button" id="add-button">Add Event</button>
             				        </div>
-            				        <button class="button" id="add-button">Add Event</button>
+
             				      </div>
             				    </div>
             				    <div class="events-container">
@@ -177,14 +187,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             			</div>
             		</div>
             	</section>
-            </div>
+
             <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
               <?php
 
 
-                
+
                ?>
             </footer>
 
