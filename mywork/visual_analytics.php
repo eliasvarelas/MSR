@@ -214,7 +214,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   </td>
                 </tr>
 
-                <tr id="attr_values_row">
+                <!-- <tr id="attr_values_row">
                   <th>No. of Ranges</th><td><input name="numofRanges" id="num_of_pie_ranges" type="number"></td>
                   <th>Ranges</th>
                   <td><select>
@@ -222,8 +222,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <option value="">value2</option>
                     <option value="">value3</option>
                   </select></td>
-                </tr>
-
+                </tr> -->
+                
               </table>
 
             </div>

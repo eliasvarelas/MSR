@@ -145,7 +145,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             <td><?php echo $row['Email']; ?></td>
                             <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                             <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']. "&dob=". $row['DOB']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                            <td><button id="removeuser" onclick="remove_user"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
+                            <!-- <td><a id="removeuser" href="/removeuser.php" onclick="return confirm('Are you sure to Remove this Patient?');"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient"; ?></a></td>  <!-- Removes only the patient with the particular id --> 
+                            <!-- <td><button id="removeuser" onclick="remove_user"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
+                            <td><button onclick='return confirm('Are you sure to Remove this Patient?');'><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
                           </tr>
 <?php
                     }

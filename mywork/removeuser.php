@@ -1,7 +1,8 @@
 <?php
 session_start();
 $patientID = $_GET["id"];
-$usersid = $_SESSION['user_id'] ;
+$usersid = $_SESSION['user_id'];
+
 $servername = "127.0.0.1";
 $username = "root";
 $password = "bioinformatics";

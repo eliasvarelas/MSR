@@ -22,203 +22,231 @@
   <meta charset="utf-8" />
   <!-- <script src="functions.js" charset="utf-8"></script> -->
   <style>
-    /*   make it responsive (the right way) without messing up the table possitioning   */
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-      }
+    :root{
+      --page-bg: #d9d9d9;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background-color: page-bg;
+      background-color: white;
+    }
+
+    /* Classes */
+
+    .split{
+      display: flex;
+      flex-direction: row;
+      margin: 0 auto;
+      width: 100%;
+      height: auto;
+    }
+    .split > * {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+    .split > * + * {      /* space between the side-side tables */
+      margin-left:1em;
+      margin-right:0;
+    }
+    .container{
+      position:relative;
+      margin: 0.5em  auto;
+      width: min(95%, 70rem);
+      padding: 1em 1em;
+      background-color: white;
+      -webkit-box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.84);
+      box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.84);
+      -webkit-border-radius: 19px;
+      -moz-border-radius: 19px;
+      border-radius: 19px;
+    }
+    .note-wrapper{
+      display: block;
+      margin-top: 1em;
+      padding-top: 2em;
+      padding-bottom: 2em;
+      text-align: center;
+      background-color: #ffff33;
+      border-radius: 24px;
+    }
+    .header-wrapper{
+      border: 1px solid red;
+      background-color: #2a7189;
+      padding-bottom: 1em;
+      padding-top: 0;
+    }
+    .header { /* table positioning */
+      background-color: #3691b0;
+      text-align: left;
+      margin: auto;
+      font-family: arial;
+    }
+    .w-auto{
+      max-width: 20em;
+    }
+    .lang {
+      position: right;
+      height:40px;
+      width:80px;
+      box-sizing:border-box;
+      /* padding: 2px; */
+      border: 2px solid black;
+      border-collapse: collapse;
+      margin: 1rem 1rem;
+    }
+
+    /* attributes */
+
+    section{
+      padding: 0.5em 0;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+      padding: 16px;
+      font-family: arial;
+      min-height:100%;
+      max-width: 100%;
+      word-break: break-all;
+
+    }
+    th, td {
+      padding: 16px;
+      height: auto;
+    }
+    th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding:5px;
+      text-align:center;
+      font-family: arial;
+      background-color: white;              /* table cell color */
+
+    }
+    th {
+      /* background-color: #7386D5;              /* Title box color */
+      background-color: #2a7189;
+      color: black;
+      margin: auto;
+    }
+    img {                   /*  image alignment for the MS image */
+      display: block;
+      margin-right: auto;
+      width: 30%;
+    }
+    input[type=date], input[type=number] {
+      padding: 5px 5px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      font-family: arial;
+    }
+    h3,h4 {
+      text-align: center;
+      font-family: Arial;
+    }
+    input[type=text] {
+      border: none;
+      border-bottom: 1px solid black;
+      font-family: arial;
+      padding: 5px 5px;
+      margin: 8px 0;
+    }
+    textarea {
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      resize: none;
+      font-family: arial;
+      width: auto;
+      /* background-color: #3691b0;
+      color: white; */
+    }
+
+    /* ids */
+
+    #purple{
+      background-color: #ce99ff;
+    }
+    #header_container{
+      background-color: #3691b0;
+    }
+
+    /* Media Queries */
+
+    @media (max-width: 600px){
       .split{
         display: flex;
-        flex-direction: row;
-        margin: 0 auto;
-        width: 100%;
-      }
-      .split > * {
+        flex-direction: column;
         flex-basis: 100%;
-        max-width: 100%;
+        margin: 0 auto;
       }
-      .split > * + * {      /* space between the side-side tables */
-        margin-left:1em;
+      .split > * + * {
+        margin-left:0;
         margin-right:0;
-      }
-      @media (max-width: 600px){
-        .split{
-          display: flex;
-          flex-direction: column;
-          flex-basis: 100%;
-          margin: 0 auto;
-        }
-        .split > * + * {
-          margin-left:0;
-          margin-right:0;
-          margin-top: 1em;
-          flex-basis: 100%;
-        }
-      }
-      .container{
-        position:relative;
-        margin: 0  auto;
-        width: min(95%, 70rem);
-      }
-      section{
-        padding: 0.5em 0;
-      }
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-        border: 1px solid #ddd;
-        padding: 16px;
-        font-family: arial;
-        min-height:100%;
-        max-width: 100%;
-        word-break: break-all;
-      }
-      th, td {
-        padding: 16px;
-        height: auto;
-      }
-      th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        padding:5px;
-        text-align:center;
-        font-family: arial;
-      }
-      th {
-        background-color: #7386D5;              /* Title box color */
-        color: black;
-        margin: auto;
-      }
-      /* table positioning */
-      .header {
-        background-color: #ffffff;
-        text-align: left;
-        padding-left: 10px;
-        padding-right: 10px;
-        width: 80%;
-        margin: auto;
-        font-family: arial;
-      }
-      img {                   /*  image alignment for the MS image */
-        display: block;
-        margin-right: auto;
-        width: 30%;
-      }
-      .lang {
-        position: right;
-        height:40px;
-        width:80px;
-        box-sizing:border-box;
-        padding: 2px;
-        border: 2px solid black;
-        border-collapse: collapse;
-        margin: 1rem 1rem;
-      }
-      input[type=date], input[type=number] {
-        padding: 5px 5px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        font-family: arial;
-      }
-      h3,h4 {
-        text-align: center;
-        font-family: Arial;
-      }
-
-      input[type=text] {
-        border: none;
-        border-bottom: 1px solid black;
-        font-family: arial;
-        padding: 5px 5px;
-        margin: 8px 0;
-      }
-      textarea {
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        resize: none;
-        font-family: arial;
-        width: auto;
-      }
-      tr:nth-child(even) {
-        background-color: white;
-        font-family: arial;
-      }
-      #purple{
-        background-color: #ce99ff;
-      }
-      .note-wrapper{
-        display: block;
         margin-top: 1em;
-        margin-left: 1em;
-        margin-right: 1em;
-        /* margin-bottom: 1em; */
-        padding-top: 2em;
-        padding-bottom: 2em;
-        text-align: center;
-        background-color: #ffff33;
-        border-radius: 24px;
+        flex-basis: 100%;
       }
-      .important{
-        font-weight: bold;
-        /* color: red; */
-      }
+    }
   </style>
 </head>
 
 <body>
-  <input type="image" class="lang" id="gr" src="Greek_flag.png">    <!-- redirects the user to the greek form -->
-  <script type="text/javascript">
-    document.getElementById("gr").onclick = function() {
-      location.href = "Multiple_Sclerosis_app_gr.php";
-    };
-  </script>
+
+
 
     <!-- Starting the form -->
-   <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
-    <img src="MSregistry_ionian_new_logo.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
-    <br>
-    <p> Name & Address:<br><textarea name="NDS" rows="5" cols="40" name="NDS"> <?php echo $patientNAME?> </textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
-    <div class="container">
-      <table>
-        <tr>
-          <th>Date: <input id="ndsdate" type="date" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
-        </tr>
-      </table>
-      <table> <!-- style width 100% -->
-        <tr>
-          <th colspan="2">Gender</th><th>Age</th><th>Race</th><th>Comorbidities</th>
-        </tr>
-        <tr>
-          <td> Male<br><input type="radio" name="Sex" value="Male" required></td><td>Female<br><input type="radio" name="Sex" value="Female" required></td>
-          <td> <input type="number" name="Age" min="1" max="150" id="Age"></td>
-          <td><select id="Race" name="Race" required>
-            <option value="American Indian">American Indian</option>
-            <option value="Asian">Asian</option>
-            <option value="Black">Black</option>
-            <option value="Hispanic">Hispanic</option>
-            <option value="Caucasian">Caucasian</option>
-            <option value="Unknown">Unknown</option>
-          </select>
-          </td>
-            <td>
-              <input type="text" list="Comorbidities" name="Comorbidities"/>
-              <datalist id="Comorbidities">
-                <option value="Diabetes">Diabetes</option>
-                <option value="Obesity">Obesity</option>
-                <option value="Heart Disease">Heart Disease</option>
-                <option value="Renal Failure">Renal Failure</option>
-                <option value="Hepatic Failure">Hepatic Failure</option>
-                <option value="Dyslipidemia">Dyslipidemia</option>
-                <option value="Autoimmune">Autoimmune</option>
-              </datalist>
+    <div class="header-wrapper">
+      <input type="image" class="lang" id="gr" src="Greek_flag.png">    <!-- redirects the user to the greek form -->
+      <div class="container" id="header_container">
+       <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
+        <img src="MSregistry_ionian_new_logo_nobg.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
+        <br>
+
+        <p> Name & Address:<br><textarea name="NDS" rows="5" cols="40" name="NDS"> <?php echo $patientNAME?> </textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
+
+        <table>
+          <tr>
+            <th>Date: <input id="ndsdate" type="date" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
+          </tr>
+        </table>
+        <table> <!-- style width 100% -->
+          <tr>
+            <th colspan="2">Gender</th><th>Age</th><th>Race</th><th>Comorbidities</th>
+          </tr>
+          <tr>
+            <td> Male<br><input type="radio" name="Sex" value="Male" required></td><td>Female<br><input type="radio" name="Sex" value="Female" required></td>
+            <td> <input type="number" name="Age" min="1" max="150" id="Age"></td>
+            <td><select id="Race" name="Race" required>
+              <option value="American Indian">American Indian</option>
+              <option value="Asian">Asian</option>
+              <option value="Black">Black</option>
+              <option value="Hispanic">Hispanic</option>
+              <option value="Caucasian">Caucasian</option>
+              <option value="Unknown">Unknown</option>
+            </select>
             </td>
-        </tr>
-      </table>
+              <td>
+                <input type="text" list="Comorbidities" name="Comorbidities"/>
+                <datalist id="Comorbidities">
+                  <option value="Diabetes">Diabetes</option>
+                  <option value="Obesity">Obesity</option>
+                  <option value="Heart Disease">Heart Disease</option>
+                  <option value="Renal Failure">Renal Failure</option>
+                  <option value="Hepatic Failure">Hepatic Failure</option>
+                  <option value="Dyslipidemia">Dyslipidemia</option>
+                  <option value="Autoimmune">Autoimmune</option>
+                </datalist>
+              </td>
+          </tr>
+        </table>
+      </div>
     </div>
+
 
     <br>
     <h3>TIER 1 All MUST BE FILLED IN</h3>
@@ -440,12 +468,13 @@
             </table>
           </div>
         </div>
-      </div>
-    </section>
+      <!-- </div> -->
+    <!-- </section> -->
+    <br>
 
 
-    <section>
-      <div class="container">
+    <!-- <section> -->
+      <!-- <div class="container"> -->
         <div class="split">
           <div>
             <table>           <!-- left hand side -->
@@ -490,16 +519,25 @@
       </div>
     </section>
   <br>
+  <div class="container w-auto">
+    <h3>Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
+  </div>
+  <!-- <br> -->
 
-  <h3>Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
 
-  <div class="note-wrapper">
+  <div class="note-wrapper container">
     <p><strong>By clicking the <i>Reset</i> button any input that you have entered in the form will be erased and will NOT be saved!</strong></p>
   </div>
-  <h3> Reset the form? <br><input type="reset" name="resetform" id="resetbutton" class="important"></h3>
+
+  <h3> Reset the form? <br><input type="reset" name="resetform" id="resetbutton"></h3>
   <input type="date" id="dob" value="<?php echo $patientDOB;?>" hidden>
   </form>
 
+  <script type="text/javascript"> // redirects to the greek form
+    document.getElementById("gr").onclick = function() {
+      location.href = "Multiple_Sclerosis_app_gr.php";
+    };
+  </script>
   <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
     document.getElementById('pastDate').addEventListener("change", function() {
       var inputpastdateStart = this.value;
@@ -539,7 +577,7 @@
       }
     }
   </script>
-  <script type="text/javascript">
+  <script type="text/javascript"> // resets the form
     document.getElementById('resetbutton').onclick = function resetForm() {
       var rsbtn = confirm("Are you sure you want to erase the form?");
       if (rsbtn == false) {
@@ -549,7 +587,7 @@
       }
     }
   </script>
-  <script type="text/javascript">
+  <script type="text/javascript"> //  not Done yet!! calculates the age of the person based on Date of Birth
     function calcAge() {
       var date = new Date();
       var day = date.getDate(),
