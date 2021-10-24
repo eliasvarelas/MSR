@@ -1,89 +1,120 @@
-      chart = {
-        const svg = d3.create("svg")
+// now it prints the standart chart based on the value of the html form... good progress
+
+var option = document.getElementById('type_of_chart').onchange = function somefun() {
+    if (this.value == "vert_bar") {
+        const data = [
+            { name: 'John', score: 80 },
+            { name: 'Simon', score: 76 },
+            { name: 'Samantha', score: 90 },
+            { name: 'Patrick', score: 82 },
+            { name: 'Mary', score: 90 },
+            { name: 'Christina', score: 75 },
+            { name: 'Michael', score: 86 },
+        ];
+        console.log(option.value);
+
+        const width = 900;
+        const height = 450;
+        const margin = { top: 50, bottom: 50, left: 50, right: 50 };
+
+        const svg = d3.select('#d3-container')
+            .append('svg')
+            .attr('width', width - margin.left - margin.right)
+            .attr('height', height - margin.top - margin.bottom)
             .attr("viewBox", [0, 0, width, height]);
 
-        svg.append("g")
-            .attr("fill", color)
-          .selectAll("rect")
-          .data(data)
-          .join("rect")
+        const x = d3.scaleBand()
+            .domain(d3.range(data.length))
+            .range([margin.left, width - margin.right])
+            .padding(0.1)
+
+        const y = d3.scaleLinear()
+            .domain([0, 100])
+            .range([height - margin.bottom, margin.top])
+
+        svg
+            .append("g")
+            .attr("fill", 'royalblue')
+            .selectAll("rect")
+            .data(data.sort((a, b) => d3.descending(a.score, b.score)))
+            .join("rect")
             .attr("x", (d, i) => x(i))
-            .attr("y", d => y(d.value))
-            .attr("height", d => y(0) - y(d.value))
+            .attr("y", d => y(d.score))
+            .attr('title', (d) => d.score)
+            .attr("class", "rect")
+            .attr("height", d => y(0) - y(d.score))
             .attr("width", x.bandwidth());
 
-        svg.append("g")
-            .call(xAxis);
-
-        svg.append("g")
-            .call(yAxis);
-
-        return svg.node();
+        function yAxis(g) {
+            g.attr("transform", `translate(${margin.left}, 0)`)
+                .call(d3.axisLeft(y).ticks(null, data.format))
+                .attr("font-size", '20px')
         }
 
-        data = Array(26) [
-          0: Object {name: "E", value: 0.12702}
-          1: Object {name: "T", value: 0.09056}
-          2: Object {name: "A", value: 0.08167}
-          3: Object {name: "O", value: 0.07507}
-          4: Object {name: "I", value: 0.06966}
-          5: Object {name: "N", value: 0.06749}
-          6: Object {name: "S", value: 0.06327}
-          7: Object {name: "H", value: 0.06094}
-          8: Object {name: "R", value: 0.05987}
-          9: Object {name: "D", value: 0.04253}
-          10: Object {name: "L", value: 0.04025}
-          11: Object {name: "C", value: 0.02782}
-          12: Object {name: "U", value: 0.02758}
-          13: Object {name: "M", value: 0.02406}
-          14: Object {name: "W", value: 0.0236}
-          15: Object {name: "F", value: 0.02288}
-          16: Object {name: "G", value: 0.02015}
-          17: Object {name: "Y", value: 0.01974}
-          18: Object {name: "P", value: 0.01929}
-          19: Object {name: "B", value: 0.01492}
-          20: Object {name: "V", value: 0.00978}
-          21: Object {name: "K", value: 0.00772}
-          22: Object {name: "J", value: 0.00153}
-          23: Object {name: "X", value: 0.0015}
-          24: Object {name: "Q", value: 0.00095}
-          25: Object {name: "Z", value: 0.00074}
-          format: "%"
-          y: "↑ Frequency"
-        ]
+        function xAxis(g) {
+            g.attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).tickFormat(i => data[i].name))
+                .attr("font-size", '20px')
+        }
 
-      data = Object.assign(d3.sort(await FileAttachment("alphabet.csv").csv({typed: true}), d => -d.frequency).map(({letter, frequency}) => ({name: letter, value: frequency})), {format: "%", y: "↑ Frequency"});
-
-      x = ƒ(i);
-
-      x = d3.scaleBand()
-    .domain(d3.range(data.length))
-    .range([margin.left, width - margin.right])
-    .padding(0.1);
-
-    y = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.value)]).nice()
-    .range([height - margin.bottom, margin.top]);
-
-    xAxis = g => g
-    .attr("transform", `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x).tickFormat(i => data[i].name).tickSizeOuter(0))
+        svg.append("g").call(xAxis);
+        svg.append("g").call(yAxis);
+        svg.node();
 
 
-    yAxis = g => g
-    .attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y).ticks(null, data.format))
-    .call(g => g.select(".domain").remove())
-    .call(g => g.append("text")
-        .attr("x", -margin.left)
-        .attr("y", 10)
-        .attr("fill", "currentColor")
-        .attr("text-anchor", "start")
-        .text(data.y));
+    } else {
+        console.log('Hidden');
+    }
+}
 
 
-    color = "steelblue";
 
-    height = 500;
 
-    margin = ({top: 30, right: 0, bottom: 30, left: 0});
+
+
+
+
+// var data = d3.csv("aplhabet.csv", function(data) {
+//     console.log(data)
+// });
+
+
+// // d3.csv("alphabet.csv", function(data) {
+// //     const minLetter = d3.min(data, (d) => { return d.date; });
+// //     const maxLetter = d3.max(data, (d) => { return d.date; });
+
+// // });
+
+
+// const width = 800;
+// const height = 400;
+// const margin = { top: 50, bottom: 50, left: 50, right: 50 };
+
+// const svg = d3.select('#d3-container')
+//     .append('svg')
+//     .attr('height', height - margin.top - margin.bottom)
+//     .attr('width', width - margin.left - margin.right)
+//     .attr('viewBox' [0, 0, width, height]);
+
+
+// const x = d3.scaleBand()
+//     .domain(d3.range(data.length))
+//     .range([margin.left, width - margin.right])
+//     .padding(0.1);
+
+// const y = d3.scaleLinear()
+//     .domain[minLetter, maxLetter]
+//     .range([height - margin.bottom, margin.top]);
+
+// svg
+//     .append('g')
+//     .attr('fill', 'royalblue')
+//     .selectAll('rect')
+//     .data(data.sort((a, b) => d3.ascenting(a.frequency, b.frequency)))
+//     .join('rect')
+//     .attr('x', (d, i) => x(i))
+//     .attr('y', (d) => y(d.frequency))
+//     .attr('height', d => y(0) - y(d.frequency))
+//     .attr('width', x.bandWidth());
+
+// svg.node;
