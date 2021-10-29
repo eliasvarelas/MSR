@@ -1,1 +1,1 @@
-window.location.replace("/menu.php");
+window.location.replace("/mywork/menu.php");

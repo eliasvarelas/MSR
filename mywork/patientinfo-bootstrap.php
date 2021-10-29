@@ -42,7 +42,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="menu.php">
+                    <a href="/mywork/menu.php">
                         <i class="fas fa-home"></i>
                         Home
                     </a>
@@ -57,19 +57,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 </li>
                 <li>
-                    <a href="/addpatient-bootstrap.php">
+                    <a href="/mywork/addpatient-bootstrap.php">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
                     </a>
                 </li>
                 <li>
-                    <a href="/searching-bootstrap.php">
+                    <a href="/mywork/searching-bootstrap.php">
                         <i class="fas fa-search"></i>
                         Advanced Search
                     </a>
                 </li>
                 <li>
-                    <a href="/visual_analytics.php">
+                    <a href="/mywork/visual_analytics.php">
                         <i class="fas fa-paper-plane"></i>
                         Visual Analytics Tool D3
                     </a>
@@ -196,8 +196,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         // document.getElementById("removeuser").innerHTML = sql;
       }
 
-      filterPatients{ //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
-        if (filter !== ) {
+      filterPatients(){ //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
+        if (filter !== 1) {
           //to be continued...
         }
       }

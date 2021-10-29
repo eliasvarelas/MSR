@@ -5,17 +5,17 @@ require 'lib/password.php';
 
 //database connection
 $servername = "127.0.0.1";
-$username = "root";
-$password = "bioinformatics";
-$dbname = "BIHElab";
+$username = "eliasPC";
+$password = "Bioinformatics";
+$dbname = "bihelab";
 
 //initiallizing the pdo argument
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
 try {
-  if(isset($_SESSION['use'])){
-    header("Location:menu.php");
-  }
+  // if(isset($_SESSION['use'])){
+  //   header("Location:menu.php");
+  // }
   //checking if the form has been submitted
   if(isset($_POST['Submit'])){
 
