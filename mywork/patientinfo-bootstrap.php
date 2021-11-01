@@ -126,7 +126,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <table>    <!-- prints the table with the patients -->
                   <tr> <!-- filter bar -->
-                    <td colspan="7"><input type="text" name="filter-patients" id="search-bar-patients" placeholder="Search Patient Name..." oninput="filterPatients"></td>
+                    <td colspan="7"><input type="text" name="filter-patients" id="search-bar-patients" placeholder="Search Patient Name..." onkeyup="filterPatients()"></td>
                   </tr>
                   <tr>
                     <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
@@ -199,7 +199,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <script> //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
     function filterPatients() {
       var input, filter, ul, li, a, i, txtValue;
-      input = document.getElementById("myInput");
+      input = document.getElementById("search-bar-patients");
       filter = input.value.toUpperCase();
       ul = document.getElementById("myUL");
       li = ul.getElementsByTagName("li");

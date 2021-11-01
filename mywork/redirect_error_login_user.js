@@ -1,1 +1,1 @@
-window.location.replace("/login_error_user.php");
+window.location.replace("/mywork/login_error_user.php");
