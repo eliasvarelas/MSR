@@ -124,12 +124,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
               try{ ?>
 
-                <table>    <!-- prints the table with the patients -->
-                  <tr> <!-- filter bar -->
-                    <td colspan="7"><input type="text" name="filter-patients" id="search-bar-patients" placeholder="Search Patient Name..." onkeyup="filterPatients()"></td>
-                  </tr>
+                <table id="Patients_table" class="w-100">    <!-- prints the table with the patients -->
+                  <input type="text" name="filter-patients" id="filter_Patients_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter">
                   <tr>
-                    <th>Patient Id</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
+                    <th>Patient ID</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
                     <th>Add a Follow Up Visit</th><th>Remove Patient</th>
                   </tr>
 <?php
@@ -140,15 +138,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
                           <tr>
                             <td><?php echo $row['Patient_id']; ?></td>
-                            <td><?php echo $row['Patient_name'] ; ?></td>
-                            <td><?php echo $row['Phonenum'] ; ?></td>
+                            <td><?php  echo $row['Patient_name']; ?></td>
+                            <td><?php echo $row['Phonenum']; ?></td>
                             <td><?php echo $row['Email']; ?></td>
                             <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                             <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']. "&dob=". $row['DOB']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                            <!-- <td><a id="removeuser" href="/removeuser.php" onclick="return confirm('Are you sure to Remove this Patient?');"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient"; ?></a></td>  <!-- Removes only the patient with the particular id -->
-                            <!-- <td><button id="removeuser" onclick="remove_user"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
-                            <td><button onclick='return confirm('Are you sure to Remove this Patient?');'><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
+                            <td><?php echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');' href='/removeuser.php?id=".$row['Patient_id'].">Title goes here</a>"?></td>  <!-- Removes only the patient with the particular id -->
+                            <!-- <td><button id="removeuser" onclick="remove_user"><?php //echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
+                            <!-- <td><button onclick='return confirm('Are you sure to Remove this Patient?');'><?php //echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
+
                           </tr>
+<!-- onclick="return confirm('Are you sure to logout?');" -->
 <?php
                     }
                       unset($result);
@@ -160,13 +160,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               }
 ?>
 
+            </table>
+            <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
 
 
 
-            <div class="line"></div>
+
         </div>
     </div>
 
@@ -198,19 +200,21 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     </script>
     <script> //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
     function filterPatients() {
-      var input, filter, ul, li, a, i, txtValue;
-      input = document.getElementById("search-bar-patients");
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("filter_Patients_table");
       filter = input.value.toUpperCase();
-      ul = document.getElementById("myUL");
-      li = ul.getElementsByTagName("li");
-      for (i = 0; i < li.length; i++) {
-          a = li[i].getElementsByTagName("a")[0];
-          txtValue = a.textContent || a.innerText;
+      table = document.getElementById("Patients_table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              li[i].style.display = "";
+            tr[i].style.display = "";
           } else {
-              li[i].style.display = "none";
+            tr[i].style.display = "none";
           }
+        }
       }
     }
 </script>

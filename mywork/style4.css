@@ -14,15 +14,10 @@ table, th, td {
   text-align:center;
   font-family: arial;
 }
-#standard{
-  min-width: 100%;
-}
-#removeuser{
-  color: red;
-}
-#search-bar-patients{
+
+
+.w-100{
   width: 100%;
-  font-weight: lighter;
 }
 th {
   background-color: #7386D5;         /* Title box color */
@@ -101,6 +96,11 @@ input[type=text], input[type=number] {
   border: none;
   width: 100%;
   /* border-bottom: 1px solid black; */
+}
+.filter{
+  max-width: 100%;
+  min-width: 50%;
+  border: 1px solid black;
 }
 
 
@@ -8695,7 +8695,7 @@ h1, h2, h3, h4, h5,
   border-collapse: separate;
   text-align: center; }
 .dates-table{
-  margin-bottom: 1em;  
+  margin-bottom: 1em;
 }
 
 .day {

@@ -5,9 +5,9 @@ require 'lib/password.php';
 
 //database connection
 $servername = "127.0.0.1";
-$username = "eliasPC";
-$password = "Bioinformatics";
-$dbname = "bihelab";
+$username = "root";
+$password = "bioinformatics";
+$dbname = "BIHElab";
 
 //initiallizing the pdo argument
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
