@@ -121,7 +121,22 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $doc = $_SESSION['user_id'];
+            $doc = $_SESSION['user_id'];?>
+
+            <form class="form" action="addpatient-bootstrap.php" method="post"> <!-- basic form to pass the data in the database for the creation of a new patient -->
+              <table>
+                <tr>
+                  <th>Assign a Patient ID</th><th>First and Last Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                </tr>
+                <tr>
+                  <td><input type="number" name="assignid"></td><td><input type="text" name="flname"></td><td><input type="date" name="dob" ></td>
+                  <td><input type="number" name="phone"></td><td><input type="email" name="email"></td>
+                </tr>
+              </table>
+              <label for="Submit"> <input type="submit" name="Submit"></label>
+            </form>
+
+            <?php
             //getting the POST data
             $pat_id = $_POST['assignid'];
             $flname = $_POST['flname'];
@@ -146,18 +161,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             }
             ?>
 
-            <form class="form" action="addpatient-bootstrap.php" method="post"> <!-- basic form to pass the data in the database for the creation of a new patient -->
-              <table>
-                <tr>
-                  <th>Assign a Patient ID</th><th>First and Last Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
-                </tr>
-                <tr>
-                  <td><input type="number" name="assignid"></td><td><input type="text" name="flname"></td><td><input type="date" name="dob" ></td>
-                  <td><input type="number" name="phone"></td><td><input type="email" name="email"></td>
-                </tr>
-              </table>
-              <label for="Submit"> <input type="submit" name="Submit"></label>
-            </form>
+
             <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>

@@ -125,7 +125,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               try{ ?>
 
                 <table>    <!-- prints the table with the patients -->
-                  <tr>
+                  <tr> <!-- filter bar -->
                     <td colspan="7"><input type="text" name="filter-patients" id="search-bar-patients" placeholder="Search Patient Name..." oninput="filterPatients"></td>
                   </tr>
                   <tr>
@@ -145,7 +145,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             <td><?php echo $row['Email']; ?></td>
                             <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                             <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']. "&dob=". $row['DOB']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                            <!-- <td><a id="removeuser" href="/removeuser.php" onclick="return confirm('Are you sure to Remove this Patient?');"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient"; ?></a></td>  <!-- Removes only the patient with the particular id --> 
+                            <!-- <td><a id="removeuser" href="/removeuser.php" onclick="return confirm('Are you sure to Remove this Patient?');"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient"; ?></a></td>  <!-- Removes only the patient with the particular id -->
                             <!-- <td><button id="removeuser" onclick="remove_user"><?php echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
                             <td><button onclick='return confirm('Are you sure to Remove this Patient?');'><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td>  <!-- Removes only the patient with the particular id -->
                           </tr>
@@ -177,7 +177,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <script type="text/javascript"> //bootstrap sidebar collaplse
+    <script type="text/javascript"> //bootstrap sidebar collapse
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
@@ -185,8 +185,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         });
     </script>
 
-    <script>
-      document.getElementById('removeuser').onclick = function remove_user() { //a simple function for confirming the removal of a patient
+    <script> //a simple function for confirming the removal of a patient
+      document.getElementById('removeuser').onclick = function remove_user() {
         var r = confirm('Are you Sure?');
         if (r == true) {
           file_get_contents('removeuser.php');
@@ -195,14 +195,25 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         }
         // document.getElementById("removeuser").innerHTML = sql;
       }
-
-      filterPatients{ //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
-        if (filter !== ) {
-          //to be continued...
-        }
-      }
     </script>
-
+    <script> //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
+    function filterPatients() {
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          txtValue = a.textContent || a.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+          }
+      }
+    }
+</script>
 
 </body>
 
