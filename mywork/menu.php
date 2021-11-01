@@ -114,7 +114,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             <!-- main Content -->
 
               <section class="ftco-section">
-            		<div class="container">
+
             			<div class="row">
             				<div class="col-md-12">
             					<div class="content w-100">
@@ -128,36 +128,36 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             				        <table class="months-table w-100">
             				          <tbody>
             				            <tr class="months-row">
-            				              <td class="month">Jan</td>
-            				              <td class="month">Feb</td>
-            				              <td class="month">Mar</td>
-            				              <td class="month">Apr</td>
-            				              <td class="month">May</td>
-            				              <td class="month">Jun</td>
+            				              <td class="month ">Jan</td>
+            				              <td class="month ">Feb</td>
+            				              <td class="month ">Mar</td>
+            				              <td class="month ">Apr</td>
+            				              <td class="month ">May</td>
+            				              <td class="month ">Jun</td>
             				            </tr>
                                 <tr class="months-row">
-            				              <td class="month">Jul</td>
-            				              <td class="month">Aug</td>
-            				              <td class="month">Sep</td>
-            				              <td class="month">Oct</td>
-            				              <td class="month">Nov</td>
-            				              <td class="month">Dec</td>
+            				              <td class="month ">Jul</td>
+            				              <td class="month ">Aug</td>
+            				              <td class="month ">Sep</td>
+            				              <td class="month ">Oct</td>
+            				              <td class="month ">Nov</td>
+            				              <td class="month ">Dec</td>
             				            </tr>
             				          </tbody>
             				        </table>
 
             				        <table class="days-table w-100">
-            				          <td class="day">Sun</td>
-            				          <td class="day">Mon</td>
-            				          <td class="day">Tue</td>
-            				          <td class="day">Wed</td>
-            				          <td class="day">Thu</td>
-            				          <td class="day">Fri</td>
-            				          <td class="day">Sat</td>
+            				          <td class="day ">Sun</td>
+            				          <td class="day ">Mon</td>
+            				          <td class="day ">Tue</td>
+            				          <td class="day ">Wed</td>
+            				          <td class="day ">Thu</td>
+            				          <td class="day ">Fri</td>
+            				          <td class="day ">Sat</td>
             				        </table>
             				        <div class="frame">
             				          <table class="dates-table w-100">
-            			              <tbody class="tbody">
+            			              <tbody class="tbody ">
             			              </tbody>
             				          </table>
                               <button class="button" id="add-button">Add Event</button>
@@ -185,7 +185,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             				  </div>
             				</div>
             			</div>
-            		</div>
             	</section>
 
             <div class="line"></div>

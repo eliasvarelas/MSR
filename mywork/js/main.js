@@ -34,7 +34,7 @@ function init_calendar(date) {
     // 35+firstDay is the number of date elements to be added to the dates table
     // 35 is from (7 days in a week) * (up to 5 rows of dates in a month)
     for(var i=0; i<35+first_day; i++) {
-        // Since some of the elements will be blank, 
+        // Since some of the elements will be blank,
         // need to calculate actual date from index
         var day = i-first_day+1;
         // If it is a sunday, make a new row
@@ -46,7 +46,7 @@ function init_calendar(date) {
         if(i < first_day || day > day_count) {
             var curr_date = $("<td class='table-date nil'>"+"</td>");
             row.append(curr_date);
-        }   
+        }
         else {
             var curr_date = $("<td class='table-date'>"+day+"</td>");
             var events = check_events(day, month+1, year);
@@ -72,7 +72,7 @@ function init_calendar(date) {
 function days_in_month(month, year) {
     var monthStart = new Date(year, month, 1);
     var monthEnd = new Date(year, month + 1, 1);
-    return (monthEnd - monthStart) / (1000 * 60 * 60 * 24);    
+    return (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
 }
 
 // Event handler for when a date is clicked
@@ -307,19 +307,19 @@ var event_data = {
     ]
 };
 
-const months = [ 
-    "January", 
-    "February", 
-    "March", 
-    "April", 
-    "May", 
-    "June", 
-    "July", 
-    "August", 
-    "September", 
-    "October", 
-    "November", 
-    "December" 
+const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
 ];
 
 })(jQuery);

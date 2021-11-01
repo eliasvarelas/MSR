@@ -41,7 +41,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
+                <li>
                     <a href="/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
@@ -110,104 +110,106 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </div>
                 </div>
             </nav>
+            <div class="container block">
 
-            <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
-            <?php
-            $servername = "127.0.0.1";
-            $username = "root";
-            $password = "bioinformatics";
-            $dbname = "BIHElab";
+              <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
+              <?php
+              $servername = "127.0.0.1";
+              $username = "root";
+              $password = "bioinformatics";
+              $dbname = "BIHElab";
 
-            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+              $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+              $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            try{
-              $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
-              $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
-                $result = $pdo->query($sql);
-                if($result->rowCount() > 0){
-                  while($row = $result->fetch()){ //make it with more html for responsiveness
-                    echo "<table>";  // the MSR table for the particular patient id
-                        echo "<tr>";
-                          echo "<th> Visit Number</th>";
-                          echo "<th>Name & Address</th>";
-                          echo "<th>Date</th>";
-                          echo "<th>Patient Id</th>";
-                          echo "<th>Gender</th>";
-                          echo "<th>Age</th>";
-                          echo "<th>Race</th>";
-                          echo "<th>Comorbidities</th>";
-                          echo "<th>MS Type NOW</th>";
-                          echo "<th>Conversion to SP</th>";
-                          echo "<th>Date of Diagnosis</th>";
+              try{
+                $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
+                $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
+                  $result = $pdo->query($sql);
+                  if($result->rowCount() > 0){
+                    while($row = $result->fetch()){ //make it with more html for responsiveness
+                      echo "<table>";  // the MSR table for the particular patient id
+                          echo "<tr>";
+                            echo "<th> Visit Number</th>";
+                            echo "<th>Name & Address</th>";
+                            echo "<th>Date</th>";
+                            echo "<th>Patient Id</th>";
+                            echo "<th>Gender</th>";
+                            echo "<th>Age</th>";
+                            echo "<th>Race</th>";
+                            echo "<th>Comorbidities</th>";
+                            echo "<th>MS Type NOW</th>";
+                            echo "<th>Conversion to SP</th>";
+                            echo "<th>Date of Diagnosis</th>";
+                          echo "</tr>";
+                          echo "<tr>";
+                            echo "<td>" . $row['id'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['NDS'] . "</td>";
+                            echo "<td>" . $row['NDSdate'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['NDSnum'] . "</td>";
+                            echo "<td>" . $row['Sex'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['Age'] . "</td>";
+                            echo "<td>" . $row['Race'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['Comorbidities'] . "</td>";
+                            echo "<td>" . $row['convsprad'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['convspnum'] . "</td>";
+                            echo "<td>" . $row['dateofdia'] . "</td>";
+                          echo "</tr>";
+                          echo "<tr>";
+                            echo "<th>MS Type at Diagnosis</th>";
+                            echo "<th>No. of Relapses (RR)</th>";
+                            echo "<th>Severity</th>";
+                            echo "<th>Date of Past treatment</th>";
+                            echo "<th>Past Medication</th>";
+                            echo "<th>End of past Medication</th>";
+                            echo "<th>Date of Present Treatment</th>";
+                            echo "<th>Present Medication</th>";
+                            echo "<th>Current EDSS Score</th>";
+                            echo "<th>7.5 meters Timed walk & 9-Hole PEG test</th>";
+                            echo "<th>Date of EDSS</th>"; //2 outputs
+                          echo "</tr>";
+                          echo "<tr>";
+                            echo "<td>" . $row['dateofdiarad'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['Noofrelapses'] . "</td>";
+                            echo "<td>" . $row['Noofrelapsesrad'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['pastTREATMENTdate'] . "</td>";
+                            echo "<td>" . $row['pastTREATMENT'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['pastTREATMENTcheck'] . "</td>";
+                            echo "<td>" . $row['TREATMENTdate'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['TREATMENT'] . "</td>";
+                            echo "<td>" . $row['eddsscore'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['edsstime7_5m'] .'<br>'. $row['edsstimePEG'] . "</td>";
+                            echo "<td>" . $row['EDSSdate'] . '<br>' .$row['EDSSdaterad'] . "</td>";
+                          echo "</tr>";
+                          echo "<tr>";
+                            echo "<th>Pregnant</th>";
+                            echo "<th>Date of Onset</th>";
+                            echo "<th>Onset Localisation</th>";
+                            echo "<th>Smoker<br>No.cigars/day<br>Smoked Since:</th>"; //3 outputs
+                            echo "<th>Onset Symptoms</th>";
+                            echo "<th>MRI Onset Localisation</th>";
+                            echo "<th>CNS MRI Lesions Y/N </th>";
+                            echo "<th>CNS MRI Lesions No.</th>";
+                            echo "<th>CNS MRI Location</th>";
+                            echo "<th>Person Signing the form</th>";
+                            echo "<th>Documented at</th>";
+                          echo "</tr>";
+                          echo "<tr>";
+                            echo "<td>" . $row['Pregnant'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['onsetdate'] . "</td>";
+                            echo "<td>" . $row['Onsetlocalisation'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['smoker'] . '<br>' . $row['cigars'] . '<br>' . $row['cigardate'] . "</td>";
+                            echo "<td>" . $row['onsetsymptoms'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['MRIonsetlocalisation'] . "</td>";
+                            echo "<td>" . $row['MRIenhancing'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['MRInum'] . "</td>";
+                            echo "<td>" . $row['MRIenhancinglocation'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['signer'] . "</td>";
+                            echo "<td>" . $row['reg_date'] . "</td>";
                         echo "</tr>";
-                        echo "<tr>";
-                          echo "<td>" . $row['id'] . "</td>";
-                          echo "<td>" . $row['NDS'] . "</td>";
-                          echo "<td>" . $row['NDSdate'] . "</td>";
-                          echo "<td>" . $row['NDSnum'] . "</td>";
-                          echo "<td>" . $row['Sex'] . "</td>";
-                          echo "<td>" . $row['Age'] . "</td>";
-                          echo "<td>" . $row['Race'] . "</td>";
-                          echo "<td>" . $row['Comorbidities'] . "</td>";
-                          echo "<td>" . $row['convsprad'] . "</td>";
-                          echo "<td>" . $row['convspnum'] . "</td>";
-                          echo "<td>" . $row['dateofdia'] . "</td>";
-                        echo "</tr>";
-                        echo "<tr>";
-                          echo "<th>MS Type at Diagnosis</th>";
-                          echo "<th>No. of Relapses (RR)</th>";
-                          echo "<th>Severity</th>";
-                          echo "<th>Date of Past treatment</th>";
-                          echo "<th>Past Medication</th>";
-                          echo "<th>End of past Medication</th>";
-                          echo "<th>Date of Present Treatment</th>";
-                          echo "<th>Present Medication</th>";
-                          echo "<th>Current EDSS Score</th>";
-                          echo "<th>7.5 meters Timed walk & 9-Hole PEG test</th>";
-                          echo "<th>Date of EDSS</th>"; //2 outputs
-                        echo "</tr>";
-                        echo "<tr>";
-                          echo "<td>" . $row['dateofdiarad'] . "</td>";
-                          echo "<td>" . $row['Noofrelapses'] . "</td>";
-                          echo "<td>" . $row['Noofrelapsesrad'] . "</td>";
-                          echo "<td>" . $row['pastTREATMENTdate'] . "</td>";
-                          echo "<td>" . $row['pastTREATMENT'] . "</td>";
-                          echo "<td>" . $row['pastTREATMENTcheck'] . "</td>";
-                          echo "<td>" . $row['TREATMENTdate'] . "</td>";
-                          echo "<td>" . $row['TREATMENT'] . "</td>";
-                          echo "<td>" . $row['eddsscore'] . "</td>";
-                          echo "<td>" . $row['edsstime7_5m'] .'<br>'. $row['edsstimePEG'] . "</td>";
-                          echo "<td>" . $row['EDSSdate'] . '<br>' .$row['EDSSdaterad'] . "</td>";
-                        echo "</tr>";
-                        echo "<tr>";
-                          echo "<th>Pregnant</th>";
-                          echo "<th>Date of Onset</th>";
-                          echo "<th>Onset Localisation</th>";
-                          echo "<th>Smoker<br>No.cigars/day<br>Smoked Since:</th>"; //3 outputs
-                          echo "<th>Onset Symptoms</th>";
-                          echo "<th>MRI Onset Localisation</th>";
-                          echo "<th>CNS MRI Lesions Y/N </th>";
-                          echo "<th>CNS MRI Lesions No.</th>";
-                          echo "<th>CNS MRI Location</th>";
-                          echo "<th>Person Signing the form</th>";
-                          echo "<th>Documented at</th>";
-                        echo "</tr>";
-                        echo "<tr>";
-                          echo "<td>" . $row['Pregnant'] . "</td>";
-                          echo "<td>" . $row['onsetdate'] . "</td>";
-                          echo "<td>" . $row['Onsetlocalisation'] . "</td>";
-                          echo "<td>" . $row['smoker'] . '<br>' . $row['cigars'] . '<br>' . $row['cigardate'] . "</td>";
-                          echo "<td>" . $row['onsetsymptoms'] . "</td>";
-                          echo "<td>" . $row['MRIonsetlocalisation'] . "</td>";
-                          echo "<td>" . $row['MRIenhancing'] . "</td>";
-                          echo "<td>" . $row['MRInum'] . "</td>";
-                          echo "<td>" . $row['MRIenhancinglocation'] . "</td>";
-                          echo "<td>" . $row['signer'] . "</td>";
-                          echo "<td>" . $row['reg_date'] . "</td>";
-                      echo "</tr>";
-                      echo "</table>";
-                      ?> <div class="line"></div>
+                        echo "</table>";
+                        ?> <div class="line"></div>
+
               <?php }
 
                     // Free result set
@@ -220,6 +222,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
             }
             ?>
+            </div>
             <!-- <div class="line"></div> -->
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>

@@ -123,44 +123,44 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
               try{ ?>
+                <div class="container block">
+                  <input type="text" name="filter-patients" id="filter_Patients_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-100">
+                  <table id="Patients_table" class="w-100 dual_bg">    <!-- prints the table with the patients -->
+                    <tr>
+                      <th>Patient ID</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
+                      <th>Add a Follow Up Visit</th><th>Remove Patient</th>
+                    </tr>
+  <?php
+                      $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
+                      $result = $pdo->query($sql);
+                      if($result->rowCount() > 0){
+                        while($row = $result->fetch()){
+  ?>
+                            <tr>
+                              <td><?php echo $row['Patient_id']; ?></td>
+                              <td class="tdclass exempt"><?php echo $row['Patient_name']; ?></td>
+                              <td><?php echo $row['Phonenum']; ?></td>
+                              <td class="tdclass exempt"><?php echo $row['Email']; ?></td>
+                              <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
+                              <td class="tdclass exempt"><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']. "&dob=". $row['DOB']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                              <!-- <td><?php //echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');'href='/removeuser.php?id=".$row['Patient_id'].">'Title goes here'</a>"?></td> -->  <!-- Removes only the patient with the particular id -->
+                              <!-- <td><button id="removeuser" onclick="remove_user"><?php //echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
+                              <td><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'onclick='return confirm('Are you sure you want to remove this patient?')'>Remove Patient</a>"; ?></td>  <!-- Removes only the patient with the particular id -->
+                            </tr>
 
-                <table id="Patients_table" class="w-100">    <!-- prints the table with the patients -->
-                  <input type="text" name="filter-patients" id="filter_Patients_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter">
-                  <tr>
-                    <th>Patient ID</th><th>Patient Name</th><th>Phone Number</th><th>Email</th><th>History</th>
-                    <th>Add a Follow Up Visit</th><th>Remove Patient</th>
-                  </tr>
-<?php
-                    $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
-                    $result = $pdo->query($sql);
-                    if($result->rowCount() > 0){
-                      while($row = $result->fetch()){
-?>
-                          <tr>
-                            <td><?php echo $row['Patient_id']; ?></td>
-                            <td><?php  echo $row['Patient_name']; ?></td>
-                            <td><?php echo $row['Phonenum']; ?></td>
-                            <td><?php echo $row['Email']; ?></td>
-                            <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                            <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']. "&dob=". $row['DOB']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                            <td><?php echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');' href='/removeuser.php?id=".$row['Patient_id'].">Title goes here</a>"?></td>  <!-- Removes only the patient with the particular id -->
-                            <!-- <td><button id="removeuser" onclick="remove_user"><?php //echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
-                            <!-- <td><button onclick='return confirm('Are you sure to Remove this Patient?');'><?php //echo "<a href='/removeuser.php?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
+  <?php
+                      }
+                        unset($result);
+                      } else{     // basic error checking
+                        echo "No records matching your query were found.";
+                      }
+                } catch(PDOException $e){
+                    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+                }
+  ?>
 
-                          </tr>
-<!-- onclick="return confirm('Are you sure to logout?');" -->
-<?php
-                    }
-                      unset($result);
-                    } else{     // basic error checking
-                      echo "No records matching your query were found.";
-                    }
-              } catch(PDOException $e){
-                  die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-              }
-?>
-
-            </table>
+              </table>
+            </div>
             <div class="line"></div>
             <footer>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
@@ -188,15 +188,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     </script>
 
     <script> //a simple function for confirming the removal of a patient
-      document.getElementById('removeuser').onclick = function remove_user() {
-        var r = confirm('Are you Sure?');
-        if (r == true) {
-          file_get_contents('removeuser.php');
-        } else {
-          return false;
-        }
-        // document.getElementById("removeuser").innerHTML = sql;
-      }
+      //  function removeuser() {
+      //   return confirm('Are you sure you want to remove this Patient?');
+      //    if (this.value == true){
+      //      file_get_contents(removeuser.php);
+      //    }
+      // }
     </script>
     <script> //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
     function filterPatients() {

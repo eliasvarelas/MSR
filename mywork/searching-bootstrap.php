@@ -1,4 +1,6 @@
-<?php session_start();
+<?php
+session_start();
+error_reporting(0);
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
     session_unset();     // unset $_SESSION variable for the run-time
@@ -127,7 +129,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
 
                 <!-- Advanced Searching API -->
-                <table class="query_header">
+                <table class="query_header" id="searching_query_table">
                   <tr id="tablerow" class="">
                     <th id="selectth"><select class="selection" name="Attributes" id="Attributes"> <!-- List of all the available attributes for the user to select for the searching queries -->
                       <option disabled>Options</option>
@@ -240,6 +242,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   </td>
                   </tr>
                 </table>
+                <button id="new_row_btn" onclick="addRow">Add an extra row</button><br>
                 <input type="submit" name="Searchbtn" value="Search">
               </form>
               <div class="line"></div>
@@ -882,6 +885,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       }
     }
     document.getElementById('Attributes').addEventListener('change', inputBoxChange);
+
+    function addRow(){
+      var table = document.getElementById('searching_query_table');
+      var newRow = document.getElementById('new_row_btn');
+      newRow.insertRow(1);
+      var cell1 = newRow.insertCell(0);
+      var cell2 = newRow.insertCell(1);
+    }
+
+
+
     </script>
 </body>
 

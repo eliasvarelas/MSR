@@ -123,7 +123,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               <table class="table-bordered" id="d3-searching">
                 <tr id="type_of_chart_row"> <!-- select the type of chart you want -->
                   <th>Type of Chart</th>
-                  <td colspan="3"><select id="type_of_chart">
+                  <td colspan="3" class="tdclass exempt"><select id="type_of_chart">
                     <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
                     <option value="donut_chart">Donut Chart</option> <!-- pie chart with a whole in the middle -->
                     <option value="vert_bar">Vertical Bar Chart</option>  <!-- typical bar graph -->
@@ -138,7 +138,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="attribute_row"> <!-- select the attribute for which the chart will be printed -->
                   <th>Select an Attribute</th>
-                  <td colspan="3"><select>
+                  <td colspan="3" class="tdclass exempt"><select>
                     <option value="Name" id="p_Name">Patient Name</option>
                     <option value="Sex" id="p_Sex">Sex</option>
                     <option value="Age" id="p_Age">Age</option>
@@ -159,7 +159,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="x_axis_row" hidden> <!-- the x axis for the horizontal bar chart -->
                   <th>X Axis</th>
-                  <td colspan="3"><select>
+                  <td colspan="3" class="tdclass exempt"><select>
                     <option value="patient_names" hidden>Patient Names</option>
                     <option value="patient_ids" hidden>Patient IDs</option>
                     <option value="Values" selected>Values</option>
@@ -168,7 +168,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="y_axis_row" hidden> <!-- the y axis for the horizontal bar chart -->
                   <th>Y Axis</th>
-                  <td colspan="3" ><select id="y_axis_select">
+                  <td colspan="3" class="tdclass exempt"><select id="y_axis_select">
                     <option value="time">Time span</option>
                     <option value="Num_Persons">Number of Persons</option>
                     <option value="Attributes">Attributes</option>
@@ -223,7 +223,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <option value="">value3</option>
                   </select></td>
                 </tr> -->
-                
+
               </table>
 
             </div>
@@ -251,7 +251,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             });
         });
     </script>
-    
+
     <script src="visual_analytics.js" charset="utf-8"></script>
 
     <script type="text/javascript"> //general scripts
