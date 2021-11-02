@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+header('Content-Type: text/html; charset=utf-8');
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
     session_unset();     // unset $_SESSION variable for the run-time

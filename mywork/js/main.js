@@ -160,7 +160,7 @@ function new_event(event) {
     });
 }
 
-// Adds a json event to event_data
+// Adds a json event to event_data here add the rest inputs
 function new_event_json(name, count, date, day) {
     var event = {
         "occasion": name,
@@ -224,15 +224,15 @@ var event_data = {
     {
         "occasion": " Repeated Test Event ",
         "invited_count": 120,
-        "year": 2020,
-        "month": 5,
-        "day": 10,
+        "year": 2021,
+        "month": 11,
+        "day": 3,
         "cancelled": true
     },
     {
         "occasion": " Repeated Test Event ",
         "invited_count": 120,
-        "year": 2020,
+        "year": 2021,
         "month": 5,
         "day": 10,
         "cancelled": true
@@ -240,7 +240,7 @@ var event_data = {
         {
         "occasion": " Repeated Test Event ",
         "invited_count": 120,
-        "year": 2020,
+        "year": 2021,
         "month": 5,
         "day": 10,
         "cancelled": true
@@ -248,7 +248,7 @@ var event_data = {
     {
         "occasion": " Repeated Test Event ",
         "invited_count": 120,
-        "year": 2020,
+        "year": 2021,
         "month": 5,
         "day": 10
     },

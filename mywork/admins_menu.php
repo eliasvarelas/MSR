@@ -55,11 +55,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <li class="active">
                     <a href="" >
                         <i class="fas fa-home"></i>
-                        Home
+                        Admins Page
                     </a>
 
                 </li>
-                <li>
+                <!-- <li>
                     <a href="">
                         <i class="fas fa-folder"></i>
                         Existing Patients
@@ -84,7 +84,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <i class="fas fa-paper-plane"></i>
                         Visual Analytics Tool D3
                     </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
 
@@ -107,7 +107,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             <li class="navbar-nav">
                                 <a class="nav-link" id="">
                                   <i class="fas fa-user"></i>
-                                  Doctor: <u><?php $user_name = $_SESSION['user'];
+                                  Admin: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
                                 </a>
                                 <a href="logout.php" onclick="return confirm('Are you sure to logout?');">
@@ -123,9 +123,29 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </nav>
             <!-- main Content -->
             <!-- Loop throught all the users in table users and echo their patients -->
+
+            <!-- <table class=" text-center">
+              <tr>
+                <th>Filter by:</th>
+                <td><select name="Doctor_IDs">
+                  <option value="Doctor Names">Doctor Names</option>
+                  <option value="Patient Names">Patient Names</option>
+              </tr>
+            </table> -->
+            <div class="split">
+              <div class="left">
+                <input type="text" name="filter-patients" id="filter_Doctors_table" onkeyup="filterDoctors()" placeholder="Search Doctors Name..." class="filter w-50">
+              </div>
+              <div class="right">
+                <input type="text" name="filter-patients" id="filter_Pat_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-50">
+              </div>
+            </div>
+
+
+
             <div class="split">
               <div>
-                <table>
+                <table id="Doctors_table">
                   <tr>
                     <th>Doctors</th>
                   </tr>
@@ -149,7 +169,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
               <!-- <div class="line"></div> -->
               <div>
-                <table>
+                <table id="Patients_table">
                   <tr>
                     <th colspan="5">Total Patients</th>
                   </tr>
@@ -201,6 +221,44 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 $('#sidebar').toggleClass('active');
             });
         });
+    </script>
+    <script type="text/javascript">
+    function filterPatients() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("filter_Pat_table");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("Patients_table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function filterDoctors() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("filter_Doctors_table");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("Doctors_table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
     </script>
 </body>
 

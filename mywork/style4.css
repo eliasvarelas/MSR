@@ -503,7 +503,7 @@ a.article:hover {
 .split{
   display: flex;
   flex-direction: row;
-  margin: 0 auto;
+  margin: 1em auto;
   /* width: 100%; */
 }
 .split > * {
@@ -8757,7 +8757,9 @@ h1, h2, h3, h4, h5,
   height: 500px;
   position: relative;
   margin: 20px auto;
-  background: #7e0cf5; }
+  /* background: #7e0cf5;  */
+  background: var(--cyan); }
+
 
 /*  Events display */
 .events-container {
@@ -8908,7 +8910,10 @@ h1, h2, h3, h4, h5,
   transition: .2s ease all;
   color: white;
   border: none;
-  background: #7e0cf5; }
+  background: var(--blue);
+  /* background: #7e0cf5; */
+
+ }
   .button.button-white {
     background: #fff;
     color: #000; }

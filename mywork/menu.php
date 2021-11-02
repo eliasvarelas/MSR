@@ -99,6 +99,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
                                 </a>
+                                
 
                                 <a href="logout.php" onclick="return confirm('Are you sure to logout?');">
                                   <button type="button" id="logoutBtn" class="navbar-btn btn btn-info">

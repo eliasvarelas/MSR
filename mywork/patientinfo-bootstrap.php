@@ -131,7 +131,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       <th>Add a Follow Up Visit</th><th>Remove Patient</th>
                     </tr>
   <?php
-                      $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid"; //filters the patients for the active user/doctor
+                      $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid ORDER BY Patient_id"; //filters the patients for the active user/doctor
                       $result = $pdo->query($sql);
                       if($result->rowCount() > 0){
                         while($row = $result->fetch()){

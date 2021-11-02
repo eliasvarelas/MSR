@@ -262,7 +262,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               if (isset($_POST['Searchbtn'])) {
 
                 if ($option == 'Name'){
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
@@ -282,7 +282,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   }
                 }
                 if ($option == 'ID'){
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry";
+                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
@@ -302,7 +302,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   }
                 }
                 if ($option == 'Sex'){
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
@@ -322,7 +322,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   }
                 }
                 if ($option == 'Age'){
-                  $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid";
+                  $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
@@ -342,7 +342,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   }
                 }
                 if ($option == 'Agesmaller'){
-                  $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' AND Doctor_ID = $usersid";
+                  $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
@@ -362,7 +362,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   }
                 }
                 if ($option == 'Race'){
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount()>0) {
                     while($row = $result->fetch()){ ?>
