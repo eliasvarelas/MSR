@@ -1,5 +1,6 @@
 <?php // session_start and timeout function
   session_start();
+  error_reporting(0);
   $patientID = $_GET["id"];   // used to pass the patient id directly in the form
   $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
   $patientDOB = $_GET["DOB"]; // used to pass the pateints age directly in the form
@@ -15,595 +16,736 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Multiple Sclerosis Registry</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <html lang="en-us">
-  <meta charset="utf-8" />
-  <!-- <script src="functions.js" charset="utf-8"></script> -->
-  <style>
-    :root{
-      --page-bg: #d9d9d9;
-    }
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      background-color: page-bg;
-      background-color: white;
-    }
+    <title>Multiple Sclerosis Registry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <html lang="en-us">
+    <meta charset="utf-8" />
+    <!-- <script src="functions.js" charset="utf-8"></script> -->
+    <style>
+         :root {
+            --page-bg: #d9d9d9;
+        }
 
-    /* Classes */
+        * {
+            box-sizing: border-box;
+        }
 
-    .split{
-      display: flex;
-      flex-direction: row;
-      margin: 0 auto;
-      width: 100%;
-      height: auto;
-    }
-    .split > * {
-      flex-basis: 100%;
-      max-width: 100%;
-    }
-    .split > * + * {      /* space between the side-side tables */
-      margin-left:1em;
-      margin-right:0;
-    }
-    .container{
-      position:relative;
-      margin: 0.5em  auto;
-      width: min(95%, 70rem);
-      padding: 1em 1em;
-      background-color: white;
-      -webkit-box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.84);
-      box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.84);
-      -webkit-border-radius: 19px;
-      -moz-border-radius: 19px;
-      border-radius: 19px;
-    }
-    .note-wrapper{
-      display: block;
-      margin-top: 1em;
-      padding-top: 2em;
-      padding-bottom: 2em;
-      text-align: center;
-      background-color: #ffff33;
-      border-radius: 24px;
-    }
-    .header-wrapper{
-      border: 1px solid red;
-      background-color: #2a7189;
-      padding-bottom: 1em;
-      padding-top: 0;
-    }
-    .header { /* table positioning */
-      background-color: #3691b0;
-      text-align: left;
-      margin: auto;
-      font-family: arial;
-    }
-    .w-auto{
-      max-width: 20em;
-    }
-    .lang {
-      position: right;
-      height:40px;
-      width:80px;
-      box-sizing:border-box;
-      /* padding: 2px; */
-      border: 2px solid black;
-      border-collapse: collapse;
-      margin: 1rem 1rem;
-    }
+        body {
+            margin: 0;
+            background-color: var(--page-bg);
+            /* background-color: rgb(145, 143, 143); */
+            background-color: white;
+        }
+        /* Classes */
 
-    /* attributes */
+        .split {
+            display: flex;
+            flex-direction: row;
+            margin: 0 auto;
+            width: 100%;
+            /* height: auto; */
+        }
 
-    section{
-      padding: 0.5em 0;
-    }
-    table {
-      border-collapse: collapse;
-      border-spacing: 0;
-      width: 100%;
-      border: 1px solid #ddd;
-      padding: 16px;
-      font-family: arial;
-      min-height:100%;
-      max-width: 100%;
-      word-break: break-all;
+        .split>.left,
+        .split>.right {
+            flex-basis: 100%;
+            max-width: 50%;
+            width: 0 auto;
+            /* height: auto; */
+        }
 
-    }
-    th, td {
-      padding: 16px;
-      height: auto;
-    }
-    th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      padding:5px;
-      text-align:center;
-      font-family: arial;
-      background-color: white;              /* table cell color */
+        .split>.left+.right {
+            /* space between the side-side tables */
+            /* margin-left: 1em; */
+            margin-right: 1em;
+            flex-basis: 100%;
+            max-width: 50%;
+            min-height: 100%;
+        }
 
-    }
-    th {
-      /* background-color: #7386D5;              /* Title box color */
-      background-color: #2a7189;
-      color: black;
-      margin: auto;
-    }
-    img {                   /*  image alignment for the MS image */
-      display: block;
-      margin-right: auto;
-      width: 30%;
-    }
-    input[type=date], input[type=number] {
-      padding: 5px 5px;
-      margin: 8px 0;
-      box-sizing: border-box;
-      font-family: arial;
-    }
-    h3,h4 {
-      text-align: center;
-      font-family: Arial;
-    }
-    input[type=text] {
-      border: none;
-      border-bottom: 1px solid black;
-      font-family: arial;
-      padding: 5px 5px;
-      margin: 8px 0;
-    }
-    textarea {
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      resize: none;
-      font-family: arial;
-      width: auto;
-      /* background-color: #3691b0;
-      color: white; */
-    }
+        .right-border {
+            margin: 0;
+            border-right: 1px solid black;
+        }
 
-    /* ids */
+        .container {
+            position: relative;
+            margin: 0.5em auto;
+            width: min(95%, 70rem);
+            padding: 0.5em 1em;
+            background-color: white;
+            -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.84);
+            box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.84);
+            -webkit-border-radius: 19px;
+            -moz-border-radius: 19px;
+            border-radius: 19px;
+        }
 
-    #purple{
-      background-color: #ce99ff;
-    }
-    #header_container{
-      background-color: #3691b0;
-    }
+        .note-wrapper {
+            display: block;
+            margin-top: 1em;
+            padding-top: 2em;
+            padding-bottom: 2em;
+            text-align: center;
+            background-color: #ffff33;
+            border-radius: 24px;
+        }
 
-    /* Media Queries */
+        .header-wrapper {
+            background-color: #2a7189;
+            padding-bottom: 1em;
+            padding-top: 0;
+            margin-top: 0;
+        }
 
-    @media (max-width: 600px){
-      .split{
-        display: flex;
-        flex-direction: column;
-        flex-basis: 100%;
-        margin: 0 auto;
-      }
-      .split > * + * {
-        margin-left:0;
-        margin-right:0;
-        margin-top: 1em;
-        flex-basis: 100%;
-      }
-    }
-  </style>
+        .header {
+            /* table positioning */
+            background-color: #3691b0;
+            text-align: left;
+            margin: auto;
+            font-family: arial;
+        }
+
+        .w-20 {
+            max-width: 20%;
+        }
+
+        .w-100 {
+            max-width: 100%;
+        }
+
+        .lang {
+            position: right;
+            height: 40px;
+            width: 80px;
+            box-sizing: border-box;
+            padding: 2px;
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin: 1rem 1rem;
+        }
+
+        .block {
+            padding: 0.5em auto;
+            text-align: center;
+            margin: 1em;
+            background-color: #2a7189;
+            border-radius: 19px;
+            -webkit-box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
+            box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
+        }
+
+        .block>.borderless {
+            border: none;
+            border-bottom: 1px black;
+        }
+
+        .alligner {
+            margin: 2em 1em;
+            padding: 0;
+            text-align: right;
+            min-width: 50%;
+            max-width: 90%;
+        }
+
+        .text-right {
+            padding: 0.5em 0.5em;
+            margin-right: 0;
+            text-align: right;
+        }
+
+        .text-center {
+            padding: 0.5em 0.5em;
+            text-align: center;
+        }
+
+        .text-left {
+            text-align: left;
+            padding: 0.5em 0.5em;
+        }
+
+        .label-header {
+            border: 1px solid black;
+        }
+        /* attributes */
+
+        form {
+            display: table;
+        }
+
+        p {
+            display: table-row;
+        }
+
+        label,
+        input {
+            display: table-cell;
+        }
+
+        section {
+            padding: 0.5em 0;
+        }
+
+        img {
+            /*  image alignment for the MS image */
+            display: block;
+            width: 25em;
+            height: 15em;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            text-align: center;
+            font-family: Arial;
+            text-emphasis: bold;
+        }
+
+        input[type=text],
+        select {
+            border: none;
+            box-sizing: border-box;
+            border-bottom: 1px solid black;
+            font-family: arial;
+            padding: 5px 5px;
+            margin: 8px 0;
+        }
+
+        input[type=date],
+        input[type=number],
+        input[type=time] {
+            padding: 5px 5px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            font-family: arial;
+            width: auto;
+        }
+
+        textarea {
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            resize: none;
+            font-family: arial;
+            width: auto;
+        }
+
+        label {
+            /* padding: 0.4em; */
+            text-align: left;
+            /* margin-top: min(1em, 10em); */
+            margin-top: max(50%, 5em);
+            padding: 5px 5px;
+            margin: 8px 0;
+            text-align: left;
+            min-width: 90%;
+            /* border-bottom: 1px solid black; */
+        }
+        /* ids */
+
+        #purple {
+            background-color: #ce99ff;
+        }
+
+        #header_container {
+            background-color: #3691b0;
+        }
+        /* Media Queries */
+
+        @media (max-width: 600px) {
+            .split {
+                display: flex;
+                flex-direction: column;
+                flex-basis: 100%;
+                margin: 0 auto;
+            }
+            .split>*+* {
+                margin-left: 0;
+                margin-right: 0;
+                margin-top: 1em;
+                flex-basis: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 
-
     <!-- Starting the form -->
     <div class="header-wrapper">
-      <input type="image" class="lang" id="gr" src="Greek_flag.png">    <!-- redirects the user to the greek form -->
-      <div class="container" id="header_container">
-       <form target="_blank" action="MSRforminsert.php" method="post" class="header"> <!-- currently the form gets only the patients ID passed directly -->
-        <img src="MSregistry_ionian_new_logo_nobg.png" alt="MSR ionian university" style="float:left;">    <!--picture with the logo of the laboratory and the university  -->
-        <br>
+        <form target="_blank" action="MSRforminsert.php" method="post"></form>
 
-        <p> Name & Address:<br><textarea name="NDS" rows="5" cols="40" name="NDS"> <?php echo $patientNAME?> </textarea>  <!-- gets the info, but doesnt print them in the boxes --> <br> </p>
+        <input type="image" class="lang" id="gr" src="Greek_flag.png">
+        <!-- redirects the user to the greek form -->
 
-        <table>
-          <tr>
-            <th>Date: <input id="ndsdate" type="date" name="NDSdate"></th><th>Study ID: <input type="number" min=0 name="NDSnum" value="<?php echo $patientID?>"></th>
-          </tr>
-        </table>
-        <table> <!-- style width 100% -->
-          <tr>
-            <th colspan="2">Gender</th><th>Age</th><th>Race</th><th>Comorbidities</th>
-          </tr>
-          <tr>
-            <td> Male<br><input type="radio" name="Sex" value="Male" required></td><td>Female<br><input type="radio" name="Sex" value="Female" required></td>
-            <td> <input type="number" name="Age" min="1" max="150" id="Age"></td>
-            <td><select id="Race" name="Race" required>
-              <option value="American Indian">American Indian</option>
-              <option value="Asian">Asian</option>
-              <option value="Black">Black</option>
-              <option value="Hispanic">Hispanic</option>
-              <option value="Caucasian">Caucasian</option>
-              <option value="Unknown">Unknown</option>
-            </select>
-            </td>
-              <td>
-                <input type="text" list="Comorbidities" name="Comorbidities"/>
-                <datalist id="Comorbidities">
-                  <option value="Diabetes">Diabetes</option>
-                  <option value="Obesity">Obesity</option>
-                  <option value="Heart Disease">Heart Disease</option>
-                  <option value="Renal Failure">Renal Failure</option>
-                  <option value="Hepatic Failure">Hepatic Failure</option>
-                  <option value="Dyslipidemia">Dyslipidemia</option>
-                  <option value="Autoimmune">Autoimmune</option>
-                </datalist>
-              </td>
-          </tr>
-        </table>
-      </div>
+        <div class="container">
+
+            <div class="split ">
+                <div class="left img right-border ">
+
+                    <img src="MSregistry_ionian_new_logo_nobg.png" alt="MSR Ionian University Logo">
+
+                </div>
+                <div class="right block text-left">
+
+                    <p>
+                        <label for="name">Patients Name:</label> <input type="text" name="patientName" placeholder="E.x John Doe">
+                    </p>
+
+                    <p>
+                        <label for="address">Patients Address</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12">
+                    </p>
+
+                    <p>
+                        <label for="date">Current Date</label> <input type="date" name="NDSdate" id="">
+                    </p>
+
+                    <p>
+                        <label for="PatientID">Patient ID</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID">
+                    </p>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>TIER 1 - GENERAL INFO</h2>
+
+        <div class="split container block">
+            <div class="left right-border text-right ">
+                <p>
+                    <label for="onsetdate">Date of Onset:</label>
+                    <input type="date" name="onsetdate" id="onsetdate">
+                </p>
+                <p>
+                    <label for="">MS TYPE NOW:</label>
+                    <input type="text" name="convsprad" list="msType_now" placeholder="MS Type now">
+                    <datalist id="msType_now" name="convsprad">
+                        <option value="RR">RR</option>
+                        <option value="SP">SP</option>
+                        <option value="PP">PP</option>
+                        <option value="Other">Other</option>
+                    </datalist>
+                </p>
+
+
+                <p>
+                    <label for="convsp">Conversion to SP if possible:</label>
+                    <input type="text" name="convspnum" placeholder="E.x Possible">
+                </p>
+
+                <p>
+                    <label for="Noofrelapses" style="text-align: center;">Number of Relapses (RR only) Since last visit/year</label>
+                    <input type="number" min="0" name="Noofrelapses" required>
+                </p>
+
+
+
+                <p>
+                    <label for="pastDate">PAST Disease Modifying Treatment: Date started:</label>
+                    <input type="date" name="pastTREATMENT" id="pastDate">
+                </p>
+
+
+
+                <p>
+                    <label for="pastDate">PRESENT Disease Modifying Treatment Date</label>
+                    <input type="date" name="TREATMENTdate" id="presentdate">
+                </p>
+
+
+
+
+                <p>
+                    <!-- change the eddsscore to the correct term -->
+                    <label for="timedWalk">7.5 meters Timed Walk</label>
+                    <input type="time" name="edsstime">
+                </p>
+
+
+            </div>
+
+            <div class="right text-right ">
+                <p>
+                    <label for="dateofdia">Date of Diagnosis</label>
+                    <input type="date" name="dateofdia">
+                </p>
+
+                <p>
+                    <label for="dateofdiarads">MS Type at Diagnosis</label>
+                    <input type="text" name="dateofdiarad" list="dateofdiarad" placeholder="E.x. RR">
+                    <datalist id="dateofdiarad">
+                        <option value="RR">RR</option>
+                        <option value="SP">SP</option>
+                        <option value="PP">PP</option>
+                        <option value="Other">Other</option>
+                    </datalist>
+                </p>
+
+
+
+                <p>
+                    <label for="Severity">Severity</label>
+                    <select name="Noofrelapsesrad" id="">
+                    <option value="Mild">Mild</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Severe">Severe</option>
+                </select>
+                </p>
+
+
+                <p>
+                    <label for="meds">Past Medication:</label>
+                    <input type="text" name="meds" list="meds" placeholder="Past Medicin">
+                    <datalist id="meds">
+                        <option value="Alemtuzumab">Alemtuzumab</option>
+                        <option value="Avonex">Avonex</option>
+                        <option value="Betaferon">Betaferon</option>
+                        <option value="Copaxone">Copaxone</option>
+                        <option value="Extavia">Extavia</option>
+                        <option value="Fingolimod">Fingolimod</option>
+                        <option value="Mitoxantrone">Mitoxantrone</option>
+                        <option value="Natalizumab">Natalizumab</option>
+                        <option value="Ocrelizumab">Ocrelizumab</option>
+                        <option value="Rebif">Rebif</option>
+                        <option value="Tecfidera">Tecfidera</option>
+                        <option value="Teriflunomide">Teriflunomide</option>
+                        <option value="None">None</option>
+                    </datalist>
+                </p>
+
+                <p>
+                    <label for="meds">Present Medication:</label>
+                    <input type="text" name="meds" list="meds" placeholder="Present Medicin">
+                    <datalist id="meds">
+                        <option value="Alemtuzumab">Alemtuzumab</option>
+                        <option value="Avonex">Avonex</option>
+                        <option value="Betaferon">Betaferon</option>
+                        <option value="Copaxone">Copaxone</option>
+                        <option value="Extavia">Extavia</option>
+                        <option value="Fingolimod">Fingolimod</option>
+                        <option value="Mitoxantrone">Mitoxantrone</option>
+                        <option value="Natalizumab">Natalizumab</option>
+                        <option value="Ocrelizumab">Ocrelizumab</option>
+                        <option value="Rebif">Rebif</option>
+                        <option value="Tecfidera">Tecfidera</option>
+                        <option value="Teriflunomide">Teriflunomide</option>
+                        <option value="None">None</option>
+                    </datalist>
+                </p>
+
+
+
+                <p>
+                    <label for="dateEDSS">Date Current EDSS was Taken</label>
+                    <input type="date" name="EDSSdate" id="">
+                </p>
+                <p>
+                    <label for="EDSS" class="w-100">Current EDSS Score:</label>
+                    <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10">
+                </p>
+
+                <p>
+                    <label for="PEGtest">Nine-Hole PEG Test</label>
+                    <input type="time" name="edsstimePEG" id="">
+                </p>
+
+
+            </div>
+        </div>
+
+        <h2>TIER 2 - Central Nervous System MRI</h2>
+
+        <!-- <div class="split"> -->
+        <div class="block split container text-left">
+            <div class="left right-border text-left">
+                <p>
+                    <label for="MRIonset">CNS MRI Onset Localisation:</label>
+                    <!-- <input type="text" name="MRIonsetlocalisation" list="MRIonsetlocalisation" placeholder="E.x. Visual">
+                        <datalist id="MRIonsetlocalisation">
+                                <option value="Visual">Visual</option>
+                                <option value="Spinal">Spinal</option>
+                                <option value="Cortex">Cortex</option>
+                                <option value="Brainstem">Brainstem</option>
+                                <option value="Cerebellum">Cerebellum</option>
+                            </datalist> -->
+                </p>
+                <!-- <label for="" hidden></label> -->
+                <p>
+                    <label for="Visual">Visual</label>
+                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2">
+                </p>
+
+                <p>
+                    <label for="Spinal">Spinal</label>
+                    <input type="checkbox" name="Onselocalisation" value="Spinal" id="MRIonsetloc">
+                </p>
+
+                <p>
+                    <label for="Cortex">Cortex</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cortex" id="MRIonsetloc1">
+                </p>
+
+
+
+                <p>
+                    <label for="Cerebellar">Cerebellar</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cerebellar" id="MRIonsetloc3">
+                </p>
+
+                <p>
+                    <label for="Brainstem">Brainstem</label>
+                    <input type="checkbox" name="Onselocalisation" value="Brainstem" id="MRIonsetloc4">
+                </p>
+                <p>
+
+
+                    <label for="None">None</label>
+                    <input type="checkbox" name="Onselocalisation" value="None" id="MRIonsetloc5">
+                </p>
+
+            </div>
+
+            <div class="right">
+                <legend>
+                    <p>
+                        <label for="MRIenchancing Lesions">CNS MRI Enhancing Lesions last 12 months:</label>
+                        <select name="MRIenhancing" id="MRIenhancing">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        <!-- <label for="">Number of Lesions:</label> <input name="MRInum" type="number" id="MRInum"> -->
+                    </p>
+                    <p>
+                        <label for="MRIenchancing Lesions Loc">MRI Enchancing Lesions Location:</label>
+                    </p>
+
+                    <p>
+                        <label for="Visual">Visual</label>
+                        <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIloc2">
+                    </p>
+
+                    <p>
+                        <label for="Spinal">Spinal</label>
+                        <input type="checkbox" name="Onselocalisation" value="Spinal" id="MRIloc">
+                    </p>
+
+                    <p>
+                        <label for="Cortex">Cortex</label>
+                        <input type="checkbox" name="Onselocalisation" value="Cortex" id="MRIloc1">
+                    </p>
+
+
+
+                    <p>
+                        <label for="Cerebellar">Cerebellar</label>
+                        <input type="checkbox" name="Onselocalisation" value="Cerebellar" id="MRIloc3">
+                    </p>
+
+                    <p>
+                        <label for="Brainstem">Brainstem</label>
+                        <input type="checkbox" name="Onselocalisation" value="Brainstem" id="MRIloc4">
+                    </p>
+                </legend>
+
+            </div>
+
+        </div>
+
+        <h2>TIER 3 </h2>
+
+        <div class="split container block">
+            <div class="left right-border text-right">
+
+                <p>
+                    <label for="Pregnant">Is Patient Pregnant?</label>
+                    <select name="Pregnant" id="">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="Smoker">Smoker</label>
+                    <select name="smoker" id="">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="numofCigs">Number of Cigars</label>
+                    <input type="number" name="numofcig" id="" placeholder="Cigars per day">
+                </p>
+                <p>
+                    <label for="lastcig">Smoked Last:</label>
+                    <input type="date" name="dateofcig" id="">
+                </p>
+
+
+            </div>
+
+            <div class="right  text-right">
+
+                <p>
+                    <label for="onsetLocalisation">CNS Onset Localisation</label>
+                </p>
+
+                <p>
+                    <label for="Spinal">Spinal</label>
+                    <input type="checkbox" name="Onselocalisation" value="Spinal">
+                </p>
+
+                <p>
+                    <label for="Cortex">Cortex</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cortex">
+                </p>
+
+                <p>
+                    <label for="Visual">Visual</label>
+                    <input type="checkbox" name="Onselocalisation" value="Visual">
+                </p>
+
+                <p>
+                    <label for="Cerebellar">Cerebellar</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cerebellar">
+                </p>
+
+                <p>
+                    <label for="Brainstem">Brainstem</label>
+                    <input type="checkbox" name="Onselocalisation" value="Brainstem">
+                </p>
+                <p>
+                    <label for="onsetsymptoms">CNS Onset Symptoms</label>
+                    <input type="text" name="onsetsymptoms" id="onsetsymptoms" list="onsetsymptoms" placeholder="E.x. Vision">
+                    <datalist id="onsetsymptoms">
+                        <option value="Vision">Vision</option>
+                        <option value="Motor">Motor</option>
+                        <option value="Sensory">Sensory</option>
+                        <option value="Coordination">Coordination</option>
+                        <option value="Bowel">Bowel</option>
+                        <option value="Bladder">Bladder</option>
+                        <option value="Fatigue">Fatigue</option>
+                        <option value="Cognitive">Cognitive</option>
+                        <option value="Encephalopathy">Encephalopathy</option>
+                        <option value="Other">Other</option>
+                    </datalist>
+                </p>
+
+            </div>
+        </div>
+
+
+
+
+        <!-- </div> -->
+        <div class="block container">
+
+            <h3>Person Completing this form:
+                <input type="text" name="signer" required>
+                <input type="submit" name="Submit" value="Submit" id="subm" required>
+            </h3>
+        </div>
     </div>
 
 
-    <br>
-    <h3>TIER 1 All MUST BE FILLED IN</h3>
-    <!-- all the tables organized to fit in to a single page -->
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th colspan="4">MS TYPE NOW</th>
-              </tr>
-              <tr>
-                <td><label for="RR">RR</label><br><input type="radio" id="RR" name="convsprad" value="RR" required></td>
-                <td><label for="SP">SP</label><br><input type="radio" id="SP" name="convsprad" value="SP" required></td>
-                <td><label for="PP">PP</label><br><input type="radio" id="PP" name="convsprad" value="PP" required></td>
-                <td><label for="Other">Other</label><br><input type="radio" id="Other" name="convsprad" value="Other" required></td>
-              </tr>
-              <tr>
-                <th colspan="4">CONVERSION TO SP (if possible)<input type="number" name="convspnum" ></th>
-              </tr>
-            </table>
-          </div>
-
-          <div>
-            <table>       <!-- right hand side -->
-              <tr>
-                <th>Date of Diagnosis</th><th colspan="4">MS Type at Diagnosis</th>
-              </tr>
-              <tr>
-                <td><input type="date" name="dateofdia" id="dateofdia" required></td>
-                <td><label for="RR">RR</label><br><input type="radio" id="RR" name="dateofdiarad" value="RR" required></td>
-                <td><label for="SP">SP</label><br><input type="radio" id="SP" name="dateofdiarad" value="SP" required></td>
-                <td><label for="PP">PP</label><br><input type="radio" id="PP" name="dateofdiarad" value="PP" required></td>
-                <td><label for="Other">Other</label><br><input type="radio" id="Other" name="dateofdiarad" value="Other" required></td>
-              </tr>
-              <tr>
-                <th >Date of Onset:</th><td colspan="4"><input type="date" name="onsetdate" id="dateonset"></td>
-             </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-    <br>
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>  <!-- center -->
-              <tr>
-                <th>No. of Relapses(RR only)<br>(since last visit/year)</th>
-              </tr>
-              <tr>
-                <td><input type="number" min="0" name="Noofrelapses" required></td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>
-              <tr>
-                <th colspan="3">Severity</th>
-              </tr>
-              <tr>
-                <td><label for="Mild">Mild</label><br><input type="radio" id="Mild" name="Noofrelapsesrad" value="Mild" required></td>
-                <td><label for="Moderate">Moderate</label><br><input type="radio" id="Moderate" name="Noofrelapsesrad" value="Moderate" required></td>
-                <td><label for="Severe">Severe</label><br><input type="radio" id="Severe" name="Noofrelapsesrad" value="Severe" required></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <br>
-          <table>   <!-- center -->
-            <tr>
-              <th colspan="7">PAST Disease modifying treatment:(tick) Date Started: <input type="date" name="pastTREATMENT" id="pastDate" required></th>    <!-- whole width -->
-            </tr>
-            <tr>
-              <td>Alemtuzumab<br><input type="checkbox" name="pastTREATMENT" value="Alemtuzumab" ></td><td>Avonex<br><input type="checkbox" name="pastTREATMENT" value="Avonex"></td>
-              <td>Betaferon<br><input type="checkbox" name="pastTREATMENT" value="Betaferon"></td><td>Copaxone<br><input type="checkbox" name="pastTREATMENT" value="Copaxone"></td>
-              <td>Extavia<br><input type="checkbox" name="pastTREATMENT" value="Extavia"></td><td>Fingolimod<br><input type="checkbox" name="pastTREATMENT" value="Fingolimod"></td>
-              <td>Mitoxantrone<br><input type="checkbox" name="pastTREATMENT" value="Mitoxantrone"></td>
-            </tr>
-            <tr>
-              <td>Natalizumab<br><input type="checkbox" name="pastTREATMENT" value="Natalizumab"></td><td>Ocrelizumab<br><input type="checkbox" name="pastTREATMENT" value="Ocrelizumab"></td>
-              <td>Rebif<br><input type="checkbox" name="pastTREATMENT" value="Rebif"></td><td>Tecfidera<br><input type="checkbox" name="pastTREATMENT" value="Tecfidera"></td>
-              <td>Teriflunomide<br><input type="checkbox" name="pastTREATMENT" value="Teriflunomide"></td><td colspan="2">None<br><input type="checkbox" name="pastTREATMENT" value="None"></td>
-            </tr>
-            <tr>
-              <th>Date stopped:</th><td><input type="date" name="pastTREATMENTdate" id="datestoped"></td><th>Reason</th>
-              <td colspan="2"><label for="Lack of efficasy">Lack of efficasy</label><br><input type="checkbox" id="Lack of efficasy" name="pastTREATMENTcheck" value="Lack of efficasy"></td>
-              <td><label for="Side effects">Side effects</label><br><input type="checkbox" id="Side effects" name="pastTREATMENTcheck" value="Side effects"></td>
-              <td><label for="Other">Other</label><br><input type="checkbox" id="Other" name="pastTREATMENTcheck" value="Other"></td>
-            </tr>
-          </table>
 
 
-        <br>
+    <div class="note-wrapper container">
+        <strong>By clicking the <i>Reset</i> button any input that you have entered in the form will be erased and will NOT be saved!</strong>
+    </div>
+    <p>
+        <h3>
+            Reset the form?
+            <input type="reset" name="resetform" id="resetbutton">
+        </h3>
 
-          <table>   <!-- center -->
-            <tr>
-              <th colspan="7">PRESENT Disease modifying treatment:(tick)  Date Started: <input type="date" name="TREATMENTdate" id="presentdate" required></th>    <!-- whole width -->
-            </tr>
-            <tr>
-              <td>Alemtuzumab<br><input type="checkbox" name="TREATMENT" value="Alemtuzumab"></td><td>Avonex<br><input type="checkbox" name="TREATMENT" value="Avonex" ></td>
-              <td>Betaferon<br><input type="checkbox" name="TREATMENT" value="Betaferon" ></td><td>Copaxone<br><input type="checkbox" name="TREATMENT" value="Copaxone"></td>
-              <td>Extavia<br><input type="checkbox" name="TREATMENT" value="Extavia" ></td><td>Fingolimod<br><input type="checkbox" name="TREATMENT" value="Fingolimod"></td>
-              <td>Mitoxantrone<br><input type="checkbox" name="TREATMENT"value="Mitoxantrone" ></td>
-            </tr>
-            <tr>
-              <td>Natalizumab<br><input type="checkbox" name="TREATMENT" value="Natalizumab"></td><td>Ocrelizumab<br><input type="checkbox" name="TREATMENT" value="Ocrelizumab"></td>
-              <td>Rebif<br><input type="checkbox" name="TREATMENT" value="Rebif"></td><td>Tecfidera<br><input type="checkbox" name="TREATMENT" value="Tecfidera"></td>
-              <td>Teriflunomide<br><input type="checkbox" name="TREATMENT" value="Teriflunomide"></td><td colspan="2">None<br><input type="checkbox" name="TREATMENT" value="None"></td>
-            </tr>
-          </table>
-      </div>
-    </section>
-        <br>
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table> <!-- left hand side, right next to the following table -->
-              <tr>
-                <th colspan="2">Current EDSS Score (1-10): <input type="number" min="1" max="10" name="eddsscore"required></th>
-              </tr>
-              <tr>
-                <td id="purple">7,5 meters Timed Walk</td>
-                <td id="purple">Time: <input type="time" name="edsstime"><br>
-              </tr>
-              <tr>
-                <td id="purple">Nine-Hole PEG Test</td><td id="purple">Time: <input type="time" name="edsstimePEG"></td>
-              </tr>
-            </table>
-          </div>
-            <br>
-          <div>
-            <table> <!-- right hand side -->
-              <tr>
-                <th colspan="3"> Date EDSS was taken: <input type="date" name="EDSSdate" required></th>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
+    </p>
 
-    <section>
-      <h3>TIER 2 MRI ALL MUST BE COMPLETED</h3>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th colspan="5">CNS MRI Onset Localisation</th>
-              </tr>
-              <tr>
-                <td>Spinal<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
-                <td>Cortex<br><input type="checkbox" name="MRIonsetlocalisation" value="Cortex"></td>
-                <td>Brainstem<br><input type="checkbox" name="MRIonsetlocalisation" value="Brainstem"></td>
-                <td>Cerebellum<br><input type="checkbox" name="MRIonsetlocalisation" value="Cerebellum"></td>
-                <td>Visual<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>
-              <tr>
-                <th colspan="5">CNS MRI enhancing lesions last 12 months</th>
-              </tr>
-              <tr>
-                <!-- <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing" id="MRIenhancing" checked><br>No<input type="radio" value="No" name="MRIenhancing"></td> -->
-                <td colspan="2"><select id="MRIenhancing" name="MRIenhancing"><option value="Yes">Yes</option><option value="No">No</option> </select></td>
-                <td colspan="3">Number: <input name="MRInum" type="number" id="MRInum"></td>
-              </tr>
-              <tr>
-                <th colspan="5">Location</th>
-              </tr>
-              <tr>
-                <td>Spinal<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal" id="MRIloc"></td>
-                <td>Cortex<br><input type="checkbox" name="MRIenhancinglocation" value="Cortex" id="MRIloc1"></td>
-                <td>Brainstem<br><input type="checkbox" name="MRIenhancinglocation" value="Brainstem" id="MRIloc2"></td>
-                <td>Cerebellum<br><input type="checkbox" name="MRIenhancinglocation" value="Cerebellum" id="MRIloc3"></td>
-                <td>Visual<br><input type="checkbox" name="MRIenhancinglocation" value="Visual" id="MRIloc4"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
+    </form>
 
-    </section>
-
-  <h3>TIER 3 <br> </h3>
-
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>           <!-- left hand side -->
-              <tr>
-                <th colspan="2">Patient is pregnant</th>
-              </tr>
-              <tr>
-                <td>Yes<br><input type="radio" name="Pregnant" value="Yes"></td><td>No<br><input type="radio" name="Pregnant" value="No"></td>
-              </tr>
-            </table>
-          </div>
-          <br>
-          <div>
-            <table>           <!-- right hand side -->
-              <tr>
-                <th colspan="2"> CNS Onset Localisation<br></th>
-              </tr>
-              <tr>
-                <td>Spinal<br><input type="checkbox" name="Onsetlocalisation" value="Spinal"></td><td>Cortex<br><input type="checkbox" name="Onsetlocalisation" value="Cortex"></td>
-              </tr>
-              <tr>
-                <td>Visual<br><input type="checkbox" name="Onsetlocalisation" value="Visual"></td><td>Cerebellar/Brainstem<br><input type="checkbox" name="Onsetlocalisation" value="Cerebellar/Brainstem"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      <!-- </div> -->
-    <!-- </section> -->
-    <br>
-
-
-    <!-- <section> -->
-      <!-- <div class="container"> -->
-        <div class="split">
-          <div>
-            <table>           <!-- left hand side -->
-              <tr>
-                <th>Smoker</th><!--<td>Yes<br><input type="radio" name="smoker" value="Yes" id="smokeryes" ></td><td>No<br><input type="radio" name="smoker" value="No" id="smokern" checked></td>-->
-                <td><select name="smoker" id="smoker"><option value="Yes">Yes</option><option value="No">No</option></td>
-              </tr>
-              <tr>
-                <td>No. per day:</td><td colspan="2"><input type="number" min="0" name="cigars" value="0" id="numofcig" ></td>
-              </tr>
-              <tr>
-                <td>Smoked since:</td><td colspan="2"><input type="date" name="cigardate" id="dateofcig" ></td>
-              </tr>
-            </table>
-          </div>
-
-          <br>
-
-          <div>
-            <table>                 <!-- right hand side -->
-              <tr>
-                <th colspan="3">Onset Symptoms</th>
-              </tr>
-              <tr>
-                <td>Vision<br><input type="checkbox" name="onsetsymptoms" value="Vision"></td>
-                <td>Motor<br><input type="checkbox" name="onsetsymptoms" value="Motor"></td>
-                <td>Sensory<br><input type="checkbox" name="onsetsymptoms" value="Sensory"></td>
-              </tr>
-              <tr>
-                <td>Coordination<br><input type="checkbox" name="onsetsymptoms" value="Coordination"></td>
-                <td>Bowel/Bladder<br><input type="checkbox" name="onsetsymptoms" value="Bowel/Bladder"></td>
-                <td>Fatigue<br><input type="checkbox" name="onsetsymptoms" value="Fatigue"></td>
-              </tr>
-              <tr>
-                <td>Cognitive<br><input type="checkbox" name="onsetsymptoms" value="Cognitive"></td>
-                <td>Encephalopathy<br><input type="checkbox" name="onsetsymptoms" value="Encephalopathy"></td>
-                <td>Other<br><input type="checkbox" name="onsetsymptoms" value="Other"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  <br>
-  <div class="container w-auto">
-    <h3>Person Completing this form:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
-  </div>
-  <!-- <br> -->
-
-
-  <div class="note-wrapper container">
-    <p><strong>By clicking the <i>Reset</i> button any input that you have entered in the form will be erased and will NOT be saved!</strong></p>
-  </div>
-
-  <h3> Reset the form? <br><input type="reset" name="resetform" id="resetbutton"></h3>
-  <input type="date" id="dob" value="<?php echo $patientDOB;?>" hidden>
-  </form>
-
-  <script type="text/javascript"> // redirects to the greek form
-    document.getElementById("gr").onclick = function() {
-      location.href = "Multiple_Sclerosis_app_gr.php";
-    };
-  </script>
-  <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
-    document.getElementById('pastDate').addEventListener("change", function() {
-      var inputpastdateStart = this.value;
-      var pastdatestart = new Date(inputpastdateStart);
-      document.getElementById('datestoped').setAttribute("min",inputpastdateStart);
-    });
-  </script>
-  <script type="text/javascript"> // dynamicly disabling certain input boxes in the MRI tier
-    document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
-      if (this.value === 'Yes') {
-        document.getElementById('MRInum').disabled = false;
-        document.getElementById('MRIloc').disabled = false;
-        document.getElementById("MRIloc1").disabled = false;
-        document.getElementById("MRIloc2").disabled = false;
-        document.getElementById("MRIloc3").disabled = false;
-        document.getElementById("MRIloc4").disabled = false;
-      }
-      else if (this.value === 'No') {
-        document.getElementById("MRInum").disabled = true;
-        document.getElementById("MRIloc").disabled = true;
-        document.getElementById("MRIloc1").disabled = true;
-        document.getElementById("MRIloc2").disabled = true;
-        document.getElementById("MRIloc3").disabled = true;
-        document.getElementById("MRIloc4").disabled = true;
-      }
-    }
+    <script type="text/javascript">
+        // redirects to the greek form
+        document.getElementById("gr").onclick = function() {
+            location.href = "Multiple_Sclerosis_app_gr.php";
+        };
     </script>
-  <script type="text/javascript">// dynamicly disabling certain input boxes in the Smoker tier
-    document.getElementById('smoker').onchange = function disableInpsmok() {
-      if (this.value === 'Yes') {
-        document.getElementById('numofcig').disabled = false;
-        document.getElementById('dateofcig').disabled = false;
-      }
-      else if (this.value === 'No') {
-        document.getElementById('numofcig').disabled = true;
-        document.getElementById('dateofcig').disabled = true;
-      }
-    }
-  </script>
-  <script type="text/javascript"> // resets the form
-    document.getElementById('resetbutton').onclick = function resetForm() {
-      var rsbtn = confirm("Are you sure you want to erase the form?");
-      if (rsbtn == false) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  </script>
-  <script type="text/javascript"> //  not Done yet!! calculates the age of the person based on Date of Birth
-    function calcAge() {
-      var date = new Date();
-      var day = date.getDate(),
-          month = date.getMonth() + 1,
-          year = date.getFullYear();
+    <script type="text/javascript">
+        // date validating client-side for pastStarted-pastEnded treatment
+        document.getElementById('pastDate').addEventListener("change", function() {
+            var inputpastdateStart = this.value;
+            var pastdatestart = new Date(inputpastdateStart);
+            document.getElementById('datestoped').setAttribute("min", inputpastdateStart);
+        });
+    </script>
+    <script type="text/javascript">
+        // dynamicly disabling certain input boxes in the MRI tier
+        document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
+            if (this.value === 'Yes') {
+                document.getElementById('MRInum').disabled = false;
+                document.getElementById('MRIloc').disabled = false;
+                document.getElementById("MRIloc1").disabled = false;
+                document.getElementById("MRIloc2").disabled = false;
+                document.getElementById("MRIloc3").disabled = false;
+                document.getElementById("MRIloc4").disabled = false;
+            } else if (this.value === 'No') {
+                document.getElementById("MRInum").disabled = true;
+                document.getElementById("MRIloc").disabled = true;
+                document.getElementById("MRIloc1").disabled = true;
+                document.getElementById("MRIloc2").disabled = true;
+                document.getElementById("MRIloc3").disabled = true;
+                document.getElementById("MRIloc4").disabled = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        // dynamicly disabling certain input boxes in the Smoker tier
+        document.getElementById('smoker').onchange = function disableInpsmok() {
+            if (this.value === 'Yes') {
+                document.getElementById('numofcig').disabled = false;
+                document.getElementById('dateofcig').disabled = false;
+            } else if (this.value === 'No') {
+                document.getElementById('numofcig').disabled = true;
+                document.getElementById('dateofcig').disabled = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        // resets the form
+        document.getElementById('resetbutton').onclick = function resetForm() {
+            var rsbtn = confirm("Are you sure you want to erase the form?");
+            if (rsbtn == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        //  not Done yet!! calculates the age of the person based on Date of Birth
+        function calcAge() {
+            var date = new Date();
+            var day = date.getDate(),
+                month = date.getMonth() + 1,
+                year = date.getFullYear();
 
-      month = (month < 10 ? "0" : "") + month;
-      day = (day < 10 ? "0" : "") + day;
+            month = (month < 10 ? "0" : "") + month;
+            day = (day < 10 ? "0" : "") + day;
 
-      var today = year + "/" + month + "/" + day;
-      var dateOfBirth = document.getElementById('dob');
-      var Age = today - dateOfBirth;
+            var today = year + "/" + month + "/" + day;
+            var dateOfBirth = document.getElementById('dob');
+            var Age = today - dateOfBirth;
 
-      var ageinputbox = document.getElementById('Age').innerHTML = Age;  // make it print the calculated Age on page load
-    }
-  </script>
+            var ageinputbox = document.getElementById('Age').innerHTML = Age; // make it print the calculated Age on page load
+        }
+    </script>
 
 </body>
+
 </html>

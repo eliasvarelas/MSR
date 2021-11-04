@@ -27,15 +27,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <script type="module">
-
-    import * as d3 from "https://cdn.skypack.dev/d3@7";
-
-    // const div = d3.selectAll("div");
-
-    </script>
-
-
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body>
@@ -138,7 +130,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="attribute_row"> <!-- select the attribute for which the chart will be printed -->
                   <th>Select an Attribute</th>
-                  <td colspan="3" class=""><select>
+                  <td colspan="3" class=""><select id="attributes">
                     <option value="Name" id="p_Name">Patient Name</option>
                     <option value="Sex" id="p_Sex">Sex</option>
                     <option value="Age" id="p_Age">Age</option>
@@ -225,6 +217,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </tr> -->
 
               </table>
+              <div id="d3-container">
+
+              </div>
 
             </div>
 
@@ -253,88 +248,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     </script>
 
     <script src="visual_analytics.js" charset="utf-8"></script>
-
-    <script type="text/javascript"> //general scripts
-      document.getElementById('type_of_chart').onchange = function axisAppear() {
-        if (this.value == 'vert_bar' ||  this.value == 'line_chart') {
-          var y_axis_row = document.getElementById('y_axis_row').hidden = false;
-          var x_axis_row = document.getElementById('x_axis_row').hidden = false;
-          // var x_axis_row_on_ver_bar = document.getElementById('x_axis_row_on_ver_bar').hidden = false;
-          // var y_axis_row_on_ver_bar = document.getElementById('y_axis_row_on_ver_bar').hidden = false;
-          var attr_values_row = document.getElementById('attr_values_row').hidden = true;
-          var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = false;
-          var Num_Years_header = document.getElementById('Num_Years_header').hidden = false;
-
-
-        } else if (this.value == 'hor_bar') {
-
-          var y_axis_row = document.getElementById('y_axis_row').hidden = false;
-          // var x_axis_row_on_ver_bar = document.getElementById('x_axis_row_on_ver_bar').hidden = true;
-          // var y_axis_row_on_ver_bar = document.getElementById('y_axis_row_on_ver_bar').hidden = true;
-          var x_axis_row = document.getElementById('x_axis_row').hidden = false;
-          var attr_values_row = document.getElementById('attr_values_row').hidden = true;
-          var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = false;
-          var Num_Years_header = document.getElementById('Num_Years_header').hidden = false;
-
-          document.getElementById('y_axis_select').onchange = function getValue() { //gets value of the y axis inputs
-
-            if (y_axis_select.value == 'Num_Persons') {
-              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = false;
-              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = false;
-              var attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
-              var Attributes_header = document.getElementById('Attributes_header').hidden = true;
-              var medication_row = document.getElementById('medication_row').hidden = true;
-              var Medication_header = document.getElementById('Medication_header').hidden = true;
-              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
-              var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
-
-            } else if (y_axis_select.value == 'Attributes') {
-              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
-              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
-              var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = false;
-              var Attributes_header = document.getElementById('Attributes_header').hidden = false;
-              var medication_row = document.getElementById('medication_row').hidden = true;
-              var Medication_header = document.getElementById('Medication_header').hidden = true;
-              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
-              var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
-
-            } else if (y_axis_select.value == 'Medication') {
-              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
-              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
-              var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
-              var Attributes_header = document.getElementById('Attributes_header').hidden = true;
-              var medication_row = document.getElementById('medication_row').hidden = false;
-              var Medication_header = document.getElementById('Medication_header').hidden = false;
-              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
-              var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
-
-            } else if (y_axis_select.value == 'years') {
-              var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
-              var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
-              var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
-              var Attributes_header = document.getElementById('Attributes_header').hidden = true;
-              var medication_row = document.getElementById('medication_row').hidden = true;
-              var Medication_header = document.getElementById('Medication_header').hidden = true;
-              var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = false;
-              var Num_Years_header = document.getElementById('Num_Years_header').hidden = false;
-            }
-          }
-
-        } else if (this.value == 'Pie_chart' || this.value == 'donut_chart') {
-          var yAxis = document.getElementById('y_axis_row').hidden = true;
-          var xAxis = document.getElementById('x_axis_row').hidden = true;
-          var pievalues = document.getElementById('attr_values_row').hidden = false;
-          var Num_Persons_header = document.getElementById('Num_Persons_header').hidden = true;
-          var Num_of_persons_on_y = document.getElementById('Num_of_persons_on_y').hidden = true;
-          var Attributes_on_y = document.getElementById('Attributes_on_y').hidden = true;
-          var Attributes_header = document.getElementById('Attributes_header').hidden = true;
-          var medication_row = document.getElementById('medication_row').hidden = true;
-          var Medication_header = document.getElementById('Medication_header').hidden = true;
-          var Num_of_years_on_y = document.getElementById('Num_of_years_on_y').hidden = true;
-          var Num_Years_header = document.getElementById('Num_Years_header').hidden = true;
-        }
-      }
-    </script>
 </body>
 
 </html>

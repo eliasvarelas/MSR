@@ -183,11 +183,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     ?>
 
                   <tr>
-                    <td><?php echo $row['username']; ?></td>
+                    <td class="tdclass exempt"><?php echo $row['username']; ?></td>
                     <td><?php echo $row['Patient_id'] ?></td>
-                    <td><?php echo $row['Patient_name']; ?></td>
+                    <td class="tdclass exempt"><?php echo $row['Patient_name']; ?></td>
                     <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
+                    <td class="tdclass exempt"><?php echo $row['Email']; ?></td>
                   </tr>
     <?php
                 }

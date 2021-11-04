@@ -123,6 +123,16 @@
     text-align: left;
     padding: 0.5em 0.5em;
 }
+.centered{
+  position: relative;
+  float: left;
+  margin: 0 50%;
+  transform: translate(-50%, 0%);
+}
+.right-border {
+    margin: 0;
+    border-right: 1px solid black;
+}
 /* attributes */
 
 form {
@@ -133,7 +143,9 @@ p {
     display: table-row;
 }
 
-label,
+label{
+  display: table-header-group;
+}
 input {
     display: table-cell;
 }
@@ -163,15 +175,8 @@ h4 {
     text-emphasis: bold;
 }
 
-input[type=text] {
-    border: none;
-    box-sizing: border-box;
-    border-bottom: 1px solid black;
-    font-family: arial;
-    /* padding: 5px 5px; */
-    /* margin: 8px 0; */
-}
-
+input[type=text],
+input[type=email],
 input[type=date],
 input[type=number],
 input[type=time] {
@@ -180,6 +185,7 @@ input[type=time] {
     box-sizing: border-box;
     font-family: arial;
     width: auto;
+    border-bottom: 1px solid black;
 }
 
 textarea {
@@ -198,6 +204,11 @@ label {
     margin-top: max(50%, 5em);
     padding: 5px 5px;
     margin: 8px 0;
+
+}
+td:hover{
+  opacity: 50%;
+  color: green;
 }
 /* ids */
 
@@ -332,11 +343,11 @@ span {
   max-width: 90%;
   min-width: 40%;
 }
-input[type=text], input[type=number] {
+/* input[type=text], input[type=number] {
   border: none;
   width: 100%;
-  /* border-bottom: 1px solid black; */
-}
+  border-bottom: 1px solid black;
+} */
 .filter{
   max-width: 100%;
   min-width: 50%;

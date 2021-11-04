@@ -127,16 +127,49 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             $doc = $_SESSION['user_id'];?>
 
             <form class="form" action="addpatient-bootstrap.php" method="post"> <!-- basic form to pass the data in the database for the creation of a new patient -->
-              <table>
+              <!-- <table>
                 <tr>
                   <th>Assign a Patient ID</th><th>First and Last Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
                 </tr>
                 <tr>
-                  <td><input type="number" name="assignid"></td><td><input type="text" name="flname"></td><td><input type="date" name="dob" ></td>
-                  <td><input type="number" name="phone"></td><td><input type="email" name="email"></td>
+                  <td></td><td></td><td></td>
+                  <td><input type="number" name="phone"></td><td></td>
                 </tr>
-              </table>
-              <label for="Submit"> <input type="submit" name="Submit"></label>
+              </table> -->
+              <div class="container block">
+                <div class="split">
+                  <div class="left text-left ">
+                    <p>
+                      <b><label for="assignid">Enter Patient ID:</label></b>
+                      <input type="number" name="assignid" placeholder="Patiend ID">
+                    </p>
+
+                    <p>
+                      <b><label for="flname">Enter Patient Name and Last Name:</label></b>
+                      <input type="text" name="flname" placeholder="First and Last Name">
+                    </p>
+                  </div>
+                  <div class="right text-left">
+                    <p>
+                      <b><label for="email">Enter patients E-mail:</label></b>
+                      <input type="email" name="email" placeholder="JohnDoe@email.com">
+                    </p>
+                    <p>
+                      <b><label for="dob">Enter Patients Date of Birth:</label></b>
+                      <input type="date" name="dob" placeholder="">
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="centered">
+                <p>
+                  <label for="Submit"> <input type="submit" name="Submit"></label>
+                </p>
+              </div>
+
+
+
+
             </form>
 
             <?php
@@ -163,6 +196,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               die("ERROR: Could not able to execute $sql. " . $e->getMessage());
             }
             ?>
+
 
 
             <div class="line"></div>
