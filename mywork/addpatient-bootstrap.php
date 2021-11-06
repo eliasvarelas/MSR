@@ -138,24 +138,31 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               </table> -->
               <div class="container block">
                 <div class="split">
-                  <div class="left text-left ">
+                  <div class="left text-left">
                     <p>
                       <b><label for="assignid">Enter Patient ID:</label></b>
+                    </p>
+                    <p>
                       <input type="number" name="assignid" placeholder="Patiend ID">
                     </p>
-
                     <p>
-                      <b><label for="flname">Enter Patient Name and Last Name:</label></b>
+                      <b><label for="flname">Enter Patient Name:</label></b>
+                    </p>
+                    <p>
                       <input type="text" name="flname" placeholder="First and Last Name">
                     </p>
                   </div>
                   <div class="right text-left">
                     <p>
-                      <b><label for="email">Enter patients E-mail:</label></b>
+                      <b><label for="email">Enter E-mail:</label></b>
+                    </p>
+                    <p>
                       <input type="email" name="email" placeholder="JohnDoe@email.com">
                     </p>
                     <p>
-                      <b><label for="dob">Enter Patients Date of Birth:</label></b>
+                      <b><label for="dob">Enter Date of Birth:</label></b>
+                    </p>
+                    <p>
                       <input type="date" name="dob" placeholder="">
                     </p>
                   </div>

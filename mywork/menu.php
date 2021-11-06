@@ -21,7 +21,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="style4.css">
+    <link rel="stylesheet" href="mainmenu.css">
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <!-- Font Awesome JS -->
@@ -99,7 +99,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                   Doctor: <u><?php $user_name = $_SESSION['user'];
                                   echo $user_name; ?></u>
                                 </a>
-                                
+
 
                                 <a href="logout.php" onclick="return confirm('Are you sure to logout?');">
                                   <button type="button" id="logoutBtn" class="navbar-btn btn btn-info">
@@ -176,9 +176,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             				            <input class="input" type="text" id="name" name="event_name" maxlength="36">
             				            <label class="form-label" id="valueFromMyButton" for="count">Number of people to invite</label>
             				            <input class="input" type="number" name="No_of_Persons" id="count" min="0" max="1000000" maxlength="7">
-                                <label class="form-label" id="valueFromMyButton" for="location">Location (Street/Address)</label>
-                                <input class="input" type="text" id="location" name="location">
-            				            <input type="button" value="Cancel" class="button" id="cancel-button">
+                                <label class="form-label" id="valueFromButton" for="location">Location (Street/Address)</label>
+                                <input class="input" type="text" id="street" name="location">
+                                <label class="form-label" id="valueFromTheButton" for="name">Emails</label>
+            				            <input class="input" type="email" id="email" name="email_invites" >
+                                <input type="button" value="Cancel" class="button" id="cancel-button">
             				            <input type="submit" value="OK" class="button button-white" id="ok_button" name="ok_button">
             				          </div>
             				        </form>

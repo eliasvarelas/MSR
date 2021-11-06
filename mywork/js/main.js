@@ -143,6 +143,8 @@ function new_event(event) {
         var name = $("#name").val().trim();
         var count = parseInt($("#count").val().trim());
         var day = parseInt($(".active-date").html());
+				var street = $("#street").val().trim(); //add the option for street to be added
+				var street = $("#email").val().trim(); //add the option for email to be added
         // Basic form validation
         if(name.length === 0) {
             $("#name").addClass("error-input");
@@ -161,7 +163,7 @@ function new_event(event) {
 }
 
 // Adds a json event to event_data here add the rest inputs
-function new_event_json(name, count, date, day) {
+function new_event_json(name, count, date, day) { //add the street and email elements
     var event = {
         "occasion": name,
         "invited_count": count,
