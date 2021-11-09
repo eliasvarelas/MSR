@@ -36,5 +36,5 @@ if ($conn==null) {
 else {
   echo" still active";
 }
-
+// $sqlnew = "alter table patients add column Patient_address varchar(150) after Email"; //added the patient address
 ?>

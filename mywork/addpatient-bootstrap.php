@@ -133,7 +133,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </tr>
                 <tr>
                   <td></td><td></td><td></td>
-                  <td><input type="number" name="phone"></td><td></td>
+                  <td></td><td></td>
                 </tr>
               </table> -->
               <div class="container block">
@@ -143,13 +143,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       <b><label for="assignid">Enter Patient ID:</label></b>
                     </p>
                     <p>
-                      <input type="number" name="assignid" placeholder="Patiend ID">
+                      <input type="number" name="assignid" placeholder="Patiend ID" required>
                     </p>
                     <p>
                       <b><label for="flname">Enter Patient Name:</label></b>
                     </p>
                     <p>
-                      <input type="text" name="flname" placeholder="First and Last Name">
+                      <input type="text" name="flname" placeholder="First and Last Name" required>
+                    </p>
+                    <p>
+                      <b><label for="address">Patients Adress</label></b>
+                    </p>
+                    <p>
+                      <input type="text" name="pat_address" placeholder="Patient Address">
                     </p>
                   </div>
                   <div class="right text-left">
@@ -157,13 +163,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       <b><label for="email">Enter E-mail:</label></b>
                     </p>
                     <p>
-                      <input type="email" name="email" placeholder="JohnDoe@email.com">
+                      <input type="email" name="email" placeholder="JohnDoe@email.com" required>
                     </p>
                     <p>
                       <b><label for="dob">Enter Date of Birth:</label></b>
                     </p>
                     <p>
-                      <input type="date" name="dob" placeholder="">
+                      <input type="date" name="dob" placeholder="" required>
+                    </p>
+                    <p>
+                      <label for="">Phone Number</label>
+                    </p>
+                    <p>
+                      <input type="number" name="phone" placeholder="Phone Number" required>
                     </p>
                   </div>
                 </div>
@@ -186,17 +198,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             $dob = $_POST['dob'];
             $phonenum = $_POST['phone'];
             $email = $_POST['email'];
+            $address = $_POST['pat_address'];
             $Submit = $_POST['Submit'];
 
             try{  //using MySQL PDOAttribute for the Exceptions
-              $sql = "INSERT INTO patients (Doctor_ID,Patient_id,Patient_name,DOB,Phonenum,Email,Submit) VALUES (?,?,?,?,?,?,?)";
+              $sql = "INSERT INTO patients (Doctor_ID,Patient_id,Patient_name,DOB,Phonenum,Email,Patient_address,Submit) VALUES (?,?,?,?,?,?,?,?)";
 
               if(isset($_POST['Submit'])){
                 $stmt = $pdo->prepare($sql);
-                $stmt->execute([$doc,$pat_id,$flname,$dob,$phonenum,$email,$Submit]);
-
-              } else{
-                echo "Something went wrong.";
+                $stmt->execute([$doc,$pat_id,$flname,$dob,$phonenum,$email,$address,$Submit]);
               }
 
             } catch(PDOException $e){

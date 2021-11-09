@@ -29,7 +29,7 @@
 
 .container {
     position: relative;
-    margin: 0.5em 4em;
+    margin: 0.5em auto;
     /* width: min(95%, 70rem); */
     min-width: 50%;
     max-width: 100%;

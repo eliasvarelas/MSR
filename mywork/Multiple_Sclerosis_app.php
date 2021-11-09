@@ -3,7 +3,7 @@
   error_reporting(0);
   $patientID = $_GET["id"];   // used to pass the patient id directly in the form
   $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
-  $patientDOB = $_GET["DOB"]; // used to pass the pateints age directly in the form
+  $patientADR = $_GET["adr"]; // used to pass the pateints age directly in the form
   if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
       // last request was more than 30 minutes ago
       session_unset();     // unset $_SESSION variable for the run-time
@@ -293,19 +293,19 @@
                 <div class="right block text-left">
 
                     <p>
-                        <label for="name">Patients Name:</label> <input type="text" name="patientName" placeholder="E.x John Doe">
+                        <label for="name">Patients Name:</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME?>" required>
                     </p>
 
                     <p>
-                        <label for="address">Patients Address</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12">
+                        <label for="address">Patients Address</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12" value="<?php echo $patientADR; ?>" required>
                     </p>
 
                     <p>
-                        <label for="date">Current Date</label> <input type="date" name="NDSdate" id="">
+                        <label for="date">Current Date</label> <input type="date" name="NDSdate" id="" required>
                     </p>
 
                     <p>
-                        <label for="PatientID">Patient ID</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID">
+                        <label for="PatientID">Patient ID</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID?>" required>
                     </p>
 
                 </div>
@@ -322,11 +322,11 @@
             <div class="left right-border text-right ">
                 <p>
                     <label for="onsetdate">Date of Onset:</label>
-                    <input type="date" name="onsetdate" id="onsetdate">
+                    <input type="date" name="onsetdate" id="onsetdate" required>
                 </p>
                 <p>
-                    <label for="">MS TYPE NOW:</label>
-                    <input type="text" name="convsprad" list="msType_now" placeholder="MS Type now">
+                    <label for="">MS Type Now:</label>
+                    <input type="text" name="convsprad" list="msType_now" placeholder="MS Type now" required>
                     <datalist id="msType_now" name="convsprad">
                         <option value="RR">RR</option>
                         <option value="SP">SP</option>
@@ -349,25 +349,36 @@
 
 
                 <p>
-                    <label for="pastDate">PAST Disease Modifying Treatment: Date started:</label>
-                    <input type="date" name="pastTREATMENT" id="pastDate">
+                    <label for="pastdatestart">PAST Disease Modifying Treatment: Date started:</label>
+                    <input type="date" name="pastTREATMENT" id="pastDate" required>
+                </p>
+
+                <p>
+                    <label for="pastdatestop">PAST Disease Modifying Treatment: Date stopped:</label>
+                    <input type="date" name="pastTREATMENT" id="pastDateStopped" required>
+                </p>
+
+                <p>
+                    <label for="pastTREATMENTreason">Reason:</label>
+                    <input type="text" name="pastTREATMENTcheck" id="pastDateReason" list="pastDateReason" required>
+                    <datalist class="">
+                      <option value="Lack of efficasy" id="Lack of efficasy">Lack of efficasy</option>
+                      <option value="Side effects" id="Side effects">Side effects</option>
+                      <option value="Other" id="Other">Other</option>
+                    </datalist>
                 </p>
 
 
 
                 <p>
                     <label for="pastDate">PRESENT Disease Modifying Treatment Date</label>
-                    <input type="date" name="TREATMENTdate" id="presentdate">
+                    <input type="date" name="TREATMENTdate" id="presentdate" required>
                 </p>
 
 
 
 
-                <p>
-                    <!-- change the eddsscore to the correct term -->
-                    <label for="timedWalk">7.5 meters Timed Walk</label>
-                    <input type="time" name="edsstime">
-                </p>
+
 
 
             </div>
@@ -375,12 +386,12 @@
             <div class="right text-right ">
                 <p>
                     <label for="dateofdia">Date of Diagnosis</label>
-                    <input type="date" name="dateofdia">
+                    <input type="date" name="dateofdia" required>
                 </p>
 
                 <p>
                     <label for="dateofdiarads">MS Type at Diagnosis</label>
-                    <input type="text" name="dateofdiarad" list="dateofdiarad" placeholder="E.x. RR">
+                    <input type="text" name="dateofdiarad" list="dateofdiarad" placeholder="E.x. RR" required>
                     <datalist id="dateofdiarad">
                         <option value="RR">RR</option>
                         <option value="SP">SP</option>
@@ -403,7 +414,7 @@
 
                 <p>
                     <label for="meds">Past Medication:</label>
-                    <input type="text" name="meds" list="meds" placeholder="Past Medicin">
+                    <input type="text" name="meds" list="meds" placeholder="Past Medicin" required>
                     <datalist id="meds">
                         <option value="Alemtuzumab">Alemtuzumab</option>
                         <option value="Avonex">Avonex</option>
@@ -423,7 +434,7 @@
 
                 <p>
                     <label for="meds">Present Medication:</label>
-                    <input type="text" name="meds" list="meds" placeholder="Present Medicin">
+                    <input type="text" name="meds" list="meds" placeholder="Present Medicin" required>
                     <datalist id="meds">
                         <option value="Alemtuzumab">Alemtuzumab</option>
                         <option value="Avonex">Avonex</option>
@@ -445,16 +456,21 @@
 
                 <p>
                     <label for="dateEDSS">Date Current EDSS was Taken</label>
-                    <input type="date" name="EDSSdate" id="">
+                    <input type="date" name="EDSSdate" id="" required>
                 </p>
                 <p>
                     <label for="EDSS" class="w-100">Current EDSS Score:</label>
-                    <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10">
+                    <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10" required>
                 </p>
 
                 <p>
                     <label for="PEGtest">Nine-Hole PEG Test</label>
-                    <input type="time" name="edsstimePEG" id="">
+                    <input type="time" name="edsstimePEG" id="" required>
+                </p>
+                <p>
+                    <!-- change the eddsscore to the correct term -->
+                    <label for="timedWalk">7.5 meters Timed Walk</label>
+                    <input type="time" name="edsstime" required>
                 </p>
 
 
@@ -480,7 +496,7 @@
                 <!-- <label for="" hidden></label> -->
                 <p>
                     <label for="Visual">Visual</label>
-                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2">
+                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
                 </p>
 
                 <p>
@@ -517,7 +533,7 @@
                 <legend>
                     <p>
                         <label for="MRIenchancing Lesions">CNS MRI Enhancing Lesions last 12 months:</label>
-                        <select name="MRIenhancing" id="MRIenhancing">
+                        <select name="MRIenhancing" id="MRIenhancing" required>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
@@ -594,7 +610,7 @@
             <div class="right  text-right">
 
                 <p>
-                    <label for="onsetLocalisation">CNS Onset Localisation</label>
+                    <label for="onsetLocalisation">Onset Localisation</label>
                 </p>
 
                 <p>

@@ -123,7 +123,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
               try{ ?>
-                <div class="container block">
+                <div class="container">
                   <input type="text" name="filter-patients" id="filter_Patients_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-100">
                   <table id="Patients_table" class="w-100 dual_bg">    <!-- prints the table with the patients -->
                     <tr>
@@ -142,10 +142,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                               <td><?php echo $row['Phonenum']; ?></td>
                               <td class="tdclass exempt"><?php echo $row['Email']; ?></td>
                               <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                              <td class="tdclass exempt"><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']. "&dob=". $row['DOB']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                              <td class="tdclass exempt"><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']."&adr=". $row['Patient_address']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
                               <!-- <td><?php //echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');'href='/removeuser.php?id=".$row['Patient_id'].">'Title goes here'</a>"?></td> -->  <!-- Removes only the patient with the particular id -->
                               <!-- <td><button id="removeuser" onclick="remove_user"><?php //echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
-                              <td><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'onclick='return confirm('Are you sure you want to remove this patient?')'>Remove Patient</a>"; ?></td>  <!-- Removes only the patient with the particular id -->
+                              <td><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'onclick='removeuser()'>Remove Patient</a>"; ?></td>  <!-- Removes only the patient with the particular id -->
+
                             </tr>
 
   <?php
@@ -188,12 +189,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     </script>
 
     <script> //a simple function for confirming the removal of a patient
-      //  function removeuser() {
-      //   return confirm('Are you sure you want to remove this Patient?');
-      //    if (this.value == true){
-      //      file_get_contents(removeuser.php);
-      //    }
-      // }
+       function removeuser() {
+        return confirm('Are you sure you want to remove this Patient?');
+        if (this.value == true) {
+          return true;
+        }
+      }
     </script>
     <script> //create an array with the names of the patients, and use the filter to look through the array and hide the rest of the names.
     function filterPatients() {
