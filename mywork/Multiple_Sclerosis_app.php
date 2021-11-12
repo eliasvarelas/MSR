@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <html lang="en-us">
     <meta charset="utf-8" />
-    <!-- <script src="functions.js" charset="utf-8"></script> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> -->
     <style>
          :root {
             --page-bg: #d9d9d9;
@@ -35,9 +35,8 @@
         body {
             margin: 0;
             background-color: var(--page-bg);
-            /* background-color: rgb(145, 143, 143); */
             background-color: white;
-            font-family: roboto;
+            font-family: 'Roboto', sans-serif;
             font-size: 18px;
         }
         /* Classes */
@@ -47,7 +46,6 @@
             flex-direction: row;
             margin: 0 auto;
             width: 100%;
-            /* height: auto; */
         }
 
         .split>.left,
@@ -55,12 +53,10 @@
             flex-basis: 100%;
             max-width: 50%;
             width: 0 auto;
-            /* height: auto; */
         }
 
         .split>.left+.right {
             /* space between the side-side tables */
-            /* margin-left: 1em; */
             margin-right: 1em;
             flex-basis: 100%;
             max-width: 50%;
@@ -79,7 +75,6 @@
             padding: 0.5em 1em;
             background-color: white;
             border-radius: 19px;
-            border: 1px solid black;
         }
 
         .note-wrapper {
@@ -197,7 +192,7 @@
         h3,
         h4 {
             text-align: center;
-            /* font-family: Arial; */
+            font-family: 'Roboto', sans-serif;
             text-emphasis: bold;
         }
 
@@ -221,25 +216,13 @@
             width: auto;
         }
 
-        textarea {
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            resize: none;
-            font-family: arial;
-            width: auto;
-        }
-
         label {
-            /* padding: 0.4em; */
             text-align: left;
-            /* margin-top: min(1em, 10em); */
             margin-top: max(50%, 5em);
             padding: 5px 5px;
             margin: 8px 0;
             text-align: left;
             min-width: 90%;
-            /* border-bottom: 1px solid black; */
         }
         /* ids */
 
@@ -259,7 +242,7 @@
                 flex-basis: 100%;
                 margin: 0 auto;
             }
-            .split>*+* {
+            .split>.left+.right {
                 margin-left: 0;
                 margin-right: 0;
                 margin-top: 1em;

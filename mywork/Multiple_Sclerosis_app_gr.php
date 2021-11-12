@@ -1,539 +1,724 @@
-<?php
-session_start();
-$patientID = $_GET["id"];   // used to pass the patient id directly in the form
-$patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
-$patientDOB = $_GET["DOB"]; // used to pass the pateints age directly in the form
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time
-    session_destroy();   // destroy session data in storage
-    $scripttimedout = file_get_contents('timeout.js');
-    echo "<script>".$scripttimedout."</script>";
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-
+<?php // session_start and timeout function
+  session_start();
+  error_reporting(0);
+  $patientID = $_GET["id"];   // used to pass the patient id directly in the form
+  $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
+  $patientADR = $_GET["adr"]; // used to pass the pateints age directly in the form
+  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
+      // last request was more than 30 minutes ago
+      session_unset();     // unset $_SESSION variable for the run-time
+      session_destroy();   // destroy session data in storage
+      $scripttimedout = file_get_contents('timeout.js');
+      echo "<script>".$scripttimedout."</script>";
+  }
+  $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
+
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Multiple Sclerosis Registry</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <html lang="en-us">
-  <meta charset="utf-8" />
-  <style>
-    /*   make it responsive (the right way) without messing up the table possitioning   */
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-      }
-      .split{
-        display: flex;
-        flex-direction: row;
-        margin: 0 auto;
-        width: 100%;
-      }
-      .split > * {
-        flex-basis: 100%;
-        max-width: 100%;
-      }
-      .split > * + * {      /* space between the side-side tables */
-        margin-left:1em;
-        margin-right:0;
-      }
-      @media (max-width: 600px){
-        .split{
-          display: flex;
-          flex-direction: column;
-          flex-basis: 100%;
-          margin: 0 auto;
-        }
-        .split > * + * {
-          margin-left:0;
-          margin-right:0;
-          margin-top: 1em;
-          flex-basis: 100%;
-        }
-      }
-      .container{
-        position:relative;
-        margin: 0  auto;
-        width: min(95%, 70rem);
-      }
-      section{
-        padding: 0.5em 0;
-      }
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-        border: 1px solid #ddd;
-        padding: 16px;
-        font-family: arial;
-        min-height:100%;      /* kinda helps, but not the ideal solution, maybe use ids */
-        max-width: 100%;
-        word-break: break-all;
-      }
-      th, td {
-        padding: 16px;
-        height: auto;
-      }
-      th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        padding:5px;
-        text-align:center;
-        font-family: arial;
-      }
-      th {
-        background-color: #7386D5;              /* Title box color */
-        color: black;
-        margin: auto;
-      }
-      /* table positioning... in development */
-      .header {
-        background-color: #ffffff;
-        text-align: left;
-        padding-left: 10px;
-        padding-right: 10px;
-        width: 80%;
-        margin: auto;
-        font-family: arial;
-      }
-      img {                   /*  image alignment for the MS image */
-        display: block;
-        margin-right: auto;
-        width: 30%;
-      }
-      .lang {
-        position: right;
-        height:40px;
-        width:80px;
-        box-sizing:border-box;
-        padding: 2px;
-        border: 2px solid black;
-        border-collapse: collapse;
-        margin: 1rem 1rem;
-      }
-      input[type=date], input[type=number] {
-        padding: 5px 5px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        font-family: arial;
-      }
-      h3,h4 {
-        text-align: center;
-        font-family: Arial;
-      }
 
-      input[type=text] {
-        border: none;
-        border-bottom: 1px solid black;
-        font-family: arial;
-        padding: 5px 5px;
-        margin: 8px 0;
-      }
-      textarea {
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        resize: none;
-        font-family: arial;
-        width: auto;
-      }
-      tr:nth-child(even) {
-        background-color: white;
-        font-family: arial;
-      }
-      #purple{
-        background-color: #b366ff;
-      }
-      .note-wrapper{
-        display: block;
-        margin-top: 1em;
-        margin-left: 1em;
-        margin-right: 1em;
-        /* margin-bottom: 1em; */
-        padding-top: 2em;
-        padding-bottom: 2em;
-        text-align: center;
-        background-color: #ffff33;
-        border-radius: 24px;
-      }
-      .important{
-        font-weight: bold;
-        /* color: red; */
-      }
-  </style>
+<head>
+    <title>Multiple Sclerosis Registry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <html lang="en-us">
+    <meta charset="utf-8" />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> -->
+    <style>
+         :root {
+            --page-bg: #d9d9d9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--page-bg);
+            background-color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+        }
+        /* Classes */
+
+        .split {
+            display: flex;
+            flex-direction: row;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .split>.left,
+        .split>.right {
+            flex-basis: 100%;
+            max-width: 50%;
+            width: 0 auto;
+        }
+
+        .split>.left+.right {
+            /* space between the side-side tables */
+            margin-right: 1em;
+            flex-basis: 100%;
+            max-width: 50%;
+            min-height: 100%;
+        }
+
+        .right-border {
+            margin: 0;
+            border-right: 1px solid black;
+        }
+
+        .container {
+            position: relative;
+            margin: 0.5em auto;
+            width: min(95%, 70rem);
+            padding: 0.5em 1em;
+            background-color: white;
+            border-radius: 19px;
+        }
+
+        .note-wrapper {
+            display: block;
+            margin-top: 1em;
+            padding-top: 2em;
+            padding-bottom: 2em;
+            text-align: center;
+            background-color: #ffff33;
+            border-radius: 24px;
+        }
+
+        .header-wrapper {
+            background-color: #2a7189;
+            padding-bottom: 1em;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .header {
+            /* table positioning */
+            background-color: #3691b0;
+            text-align: left;
+            margin: auto;
+            font-family: arial;
+        }
+
+        .w-20 {
+            max-width: 20%;
+        }
+
+        .w-100 {
+            max-width: 100%;
+        }
+
+        .lang {
+            position: right;
+            height: 40px;
+            width: 80px;
+            box-sizing: border-box;
+            padding: 2px;
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin: 1rem 1rem;
+        }
+
+        .block {
+            padding: 0.5em auto;
+            text-align: center;
+            margin: 1em;
+            background-color: #2a7189;
+            border-radius: 19px;
+        }
+
+        .block>.borderless {
+            border: none;
+            border-bottom: 1px black;
+        }
+
+        .alligner {
+            margin: 2em 1em;
+            padding: 0;
+            text-align: right;
+            min-width: 50%;
+            max-width: 90%;
+        }
+
+        .text-right {
+            padding: 0.5em 0.5em;
+            margin-right: 0;
+            text-align: right;
+        }
+
+        .text-center {
+            padding: 0.5em 0.5em;
+            text-align: center;
+        }
+
+        .text-left {
+            text-align: left;
+            padding: 0.5em 0.5em;
+        }
+
+        .label-header {
+            border: 1px solid black;
+        }
+        /* attributes */
+
+        form {
+            display: table;
+        }
+
+        p {
+            display: table-row;
+        }
+
+        label,
+        input {
+            display: table-cell;
+        }
+
+        section {
+            padding: 0.5em 0;
+        }
+
+        img {
+            /*  image alignment for the MS image */
+            display: block;
+            width: 25em;
+            height: 15em;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            text-emphasis: bold;
+        }
+
+        input[type=text],
+        select {
+            border: none;
+            box-sizing: border-box;
+            border-bottom: 1px solid black;
+            font-family: arial;
+            padding: 5px 5px;
+            margin: 8px 0;
+        }
+
+        input[type=date],
+        input[type=number],
+        input[type=time] {
+            padding: 5px 5px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            font-family: arial;
+            width: auto;
+        }
+
+        label {
+            text-align: left;
+            margin-top: max(50%, 5em);
+            padding: 5px 5px;
+            margin: 8px 0;
+            text-align: left;
+            min-width: 90%;
+        }
+        /* ids */
+
+        #purple {
+            background-color: #ce99ff;
+        }
+
+        #header_container {
+            background-color: #3691b0;
+        }
+        /* Media Queries */
+
+        @media (max-width: 600px) {
+            .split {
+                display: flex;
+                flex-direction: column;
+                flex-basis: 100%;
+                margin: 0 auto;
+            }
+            .split>.left+.right {
+                margin-left: 0;
+                margin-right: 0;
+                margin-top: 1em;
+                flex-basis: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <input type="image" class="lang" id="eng" src="English_flag.png">
-  <script type="text/javascript">
-    document.getElementById("eng").onclick = function () {
-      location.href = "Multiple_Sclerosis_app.php";
-    };
-  </script>
 
-  <form target="_blank" action="MSRforminsert.php" method="post" class="header">        <!-- action="form.php"-->
 
-    <img src="MSregistry_ionian_new_logo.png" alt="MSR Logo" style="float:left;">
-    <br>
-    <p style="font-family: arial;">Όνομα & Διεύθυνση:<br> <textarea name="NDS" rows="5" cols="40" name="NDS" autofocus></textarea> <br> </p>
-    <div class="container">
-      <table style="width:100%;">
-        <tr>
-          <th>Ημερομηνία: <input type="date" name="NDSdate"></th><th>ΑΜΚΑ: <input type="number" min=0 name="NDSnum"></th>
-        </tr>
-      </table>
-      <table style="width:100%;">
-        <tr>
-          <th colspan="2">Φύλο</th><th>Ηλικία</th><th>Φυλή</th><th>Συννοσηρότητες</th>
-        </tr>
-        <tr>
-          <td> Αρσενικό<br><input type="radio" name="Sex" value="Male"></td><td>Θηλυκό<br><input type="radio" name="Sex" value="Female"></td>
-          <td> <input type="number" name="Age" min="1" max="150"></td>  <td><select id="Race" name="Race" required>
-              <option value="American Indian">American Indian</option>
-              <option value="Asian">Asian</option>
-              <option value="Black">Black</option>
-              <option value="Hispanic">Hispanic</option>
-              <option value="Caucasian" selected>Caucasian</option>
-              <option value="Unknown">Unknown</option>
-            </select>
-            </td>
-            <td><input type="text" list="Comorbidities" name="Comorbidities"/>
-            <datalist id="Comorbidities">
-              <option value="Diabetes">Διαβήτης</option>
-              <option value="Obesity">Παχυσαρκία</option>
-              <option value="Heart Disease">Καρδιακή Πάθηση</option>
-              <option value="Renal Failure">Νεφρική Ανεπάρκεια</option>
-              <option value="Hepatic Failure">Ηπατική Ανεπάρκεια</option>
-              <option value="Dyslipidemia">Δυσλιπιδαιμία</option>
-              <option value="Autoimmune">Αυτοάνοσα</option>
-            </datalist></td>
-        </tr>
-      </table>
+    <!-- Starting the form -->
+    <div class="header-wrapper">
+        <form target="_blank" action="MSRforminsert.php" method="post"></form>
+
+        <input type="image" class="lang" id="eng" src="English_flag.png">
+        <!-- redirects the user to the greek form -->
+
+        <div class="container">
+
+            <div class="split ">
+                <div class="left img right-border ">
+
+                    <img src="MSregistry_ionian_new_logo_nobg.png" alt="MSR Ionian University Logo">
+
+                </div>
+                <div class="right block text-left">
+
+                    <p>
+                        <label for="name">Όνομα Ασθενή:</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME?>" required>
+                    </p>
+
+                    <p>
+                        <label for="address">Διεύθηνση Ασθενή</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12" value="<?php echo $patientADR; ?>" required>
+                    </p>
+
+                    <p>
+                        <label for="date">Ημερομηνία</label> <input type="date" name="NDSdate" id="" required>
+                    </p>
+
+                    <p>
+                        <label for="PatientID">Αριθμός Ταυτότητας/ΑΜΚΑ</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID?>" required>
+                    </p>
+
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
-    <br>
+    <div class="container">
+        <h2>Κατηγορία 1 - Γενικές Πληροφορίες</h2>
 
-    <h3>ΚΑΤΗΓΟΡΙΑ 1 ΟΛΑ ΠΡΕΠΕΙ ΝΑ ΣΥΜΠΛΗΡΩΘΟΥΝ</h3>
+        <div class="split container block">
+            <div class="left right-border text-right ">
+                <p>
+                    <label for="onsetdate">Ημερομηνία Έναρξης:</label>
+                    <input type="date" name="onsetdate" id="onsetdate" required>
+                </p>
+                <p>
+                    <label for="">τύπος MS τώρα:</label>
+                    <input type="text" name="convsprad" list="msType_now" placeholder="MS Type now" required>
+                    <datalist id="msType_now" name="convsprad">
+                        <option value="RR">RR</option>
+                        <option value="SP">SP</option>
+                        <option value="PP">PP</option>
+                        <option value="Other">Άλλος</option>
+                    </datalist>
+                </p>
+                <p>
+                    <label for="convsp">Μετατροπή σε SP αν είναι πιθανό:</label>
+                    <input type="text" name="convspnum" placeholder="E.x Possible">
+                </p>
 
-                      <!-- all the tables, not yet organized to fit in to a single page,prob css -->
-    <section id="mstype">
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th colspan="4">ΤΥΠΟΣ MS ΤΩΡΑ</th>
-              </tr>
-              <tr>
-                <td><label for="RR">RR</label><br><input type="radio" id="RR" name="convsprad" value="RR" required></td>
-                <td><label for="SP">SP</label><br><input type="radio" id="SP" name="convsprad" value="SP" required></td>
-                <td><label for="PP">PP</label><br><input type="radio" id="PP" name="convsprad" value="PP" required></td>
-                <td><label for="Other">Άλλο</label><br><input type="radio" id="Other" name="convsprad" value="Other" required></td>
-              </tr>
-              <tr>
-                <th colspan="4">ΜΕΤΑΤΡΟΠΗ ΣΕ SP (αν είναι δυνατόν)<input type="text" name="convspnum" ></th>  <!-- check about the convsp data type -->
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>     <!-- right hand side -->
-              <tr>
-                <th>Ημερομηνία Διάγνωσης</th><th colspan="4">Τύπος MS στην Διάγνωση</th>
-              </tr>
-              <tr>
-                <td><input type="date" name="dateofdia" required></td>
-                <td><label for="RR">RR</label><br><input type="radio" id="RR" name="dateofdiarad" value="RR" required></td>
-                <td><label for="SP">SP</label><br><input type="radio" id="SP" name="dateofdiarad" value="SP" required></td>
-                <td><label for="PP">PP</label><br><input type="radio" id="PP" name="dateofdiarad" value="PP" required></td>
-                <td><label for="Other">Άλλο</label><br><input type="radio" id="Other" name="dateofdiarad" value="Other" required></td>
-              </tr>
-              <tr>
-                <th >Ημερομηνία της έναρξης:</th><td colspan="4"><input type="date" name="onsetdate"></td>
-             </tr>
-            </table>
-          </div>
+                <p>
+                    <label for="Noofrelapses">Αριθμός υποτροπών (RR μόνο) απο την τελευταία επίσκεψη</label>
+                    <input type="number" min="0" name="Noofrelapses" required>
+                </p>
+                <p>
+                    <label for="pastdatestart">Προηγούμενη Φαρμακευτική Αγωγή: Ημερομηνία Έναρξης:</label>
+                    <input type="date" name="pastTREATMENT" id="pastDate" required>
+
+                </p>
+                <p>
+                    <label for="pastdatestop">Προηγούμενη Φαρμακευτική Αγωγή: Ημερομηνίας Λήξης:</label>
+                    <input type="date" name="pastTREATMENT" id="pastDateStopped" required>
+                </p>
+                <p>
+                    <label for="pastTREATMENTreason">Λόγος Διακοπής:</label>
+                    <input type="text" name="pastTREATMENTcheck" id="pastDateReason" list="pastDateReason" required>
+                    <datalist class="">
+                      <option value="Lack of efficasy" id="Lack of efficasy">Έλλειψη Αποτελεσματικότητας</option>
+                      <option value="Side effects" id="Side effects">Παρενέργειες</option>
+                      <option value="Other" id="Other">Άλλος</option>
+                    </datalist>
+                </p>
+                <p>
+                    <label for="pastDate">Παρούσα Ημερομηνία Θεραπείας</label>
+                    <input type="date" name="TREATMENTdate" id="presentdate" required>
+                </p>
+            </div>
+
+            <div class="right text-right ">
+                <p>
+                    <label for="dateofdia">Ημερομηνία Διάγνωσης</label>
+                    <input type="date" name="dateofdia" required>
+                </p>
+
+                <p>
+                    <label for="dateofdiarads">Τύπος MS Κατα την Διάγνωση</label>
+                    <input type="text" name="dateofdiarad" list="dateofdiarad" placeholder="E.x. RR" required>
+                    <datalist id="dateofdiarad">
+                        <option value="RR">RR</option>
+                        <option value="SP">SP</option>
+                        <option value="PP">PP</option>
+                        <option value="Other">Άλλος</option>
+                    </datalist>
+                </p>
+                <p>
+                    <label for="Severity">Σοβαρότητα</label>
+                    <select name="Noofrelapsesrad" id="">
+                    <option value="Mild">Ήπια</option>
+                    <option value="Moderate">Μέτρια</option>
+                    <option value="Severe">Σοβαρά</option>
+                </select>
+                </p>
+
+
+                <p>
+                    <label for="meds">Προηγούμενη Φαρμακευτική Αγωγή:</label>
+                    <input type="text" name="meds" list="meds" placeholder="Past Medicin" required>
+                    <datalist id="meds">
+                        <option value="Alemtuzumab">Alemtuzumab</option>
+                        <option value="Avonex">Avonex</option>
+                        <option value="Betaferon">Betaferon</option>
+                        <option value="Copaxone">Copaxone</option>
+                        <option value="Extavia">Extavia</option>
+                        <option value="Fingolimod">Fingolimod</option>
+                        <option value="Mitoxantrone">Mitoxantrone</option>
+                        <option value="Natalizumab">Natalizumab</option>
+                        <option value="Ocrelizumab">Ocrelizumab</option>
+                        <option value="Rebif">Rebif</option>
+                        <option value="Tecfidera">Tecfidera</option>
+                        <option value="Teriflunomide">Teriflunomide</option>
+                        <option value="None">Καμία</option>
+                    </datalist>
+                </p>
+
+                <p>
+                    <label for="meds">Παρούσα Φαρμακευτική Αγωγή:</label>
+                    <input type="text" name="meds" list="meds" placeholder="Present Medicin" required>
+                    <datalist id="meds">
+                        <option value="Alemtuzumab">Alemtuzumab</option>
+                        <option value="Avonex">Avonex</option>
+                        <option value="Betaferon">Betaferon</option>
+                        <option value="Copaxone">Copaxone</option>
+                        <option value="Extavia">Extavia</option>
+                        <option value="Fingolimod">Fingolimod</option>
+                        <option value="Mitoxantrone">Mitoxantrone</option>
+                        <option value="Natalizumab">Natalizumab</option>
+                        <option value="Ocrelizumab">Ocrelizumab</option>
+                        <option value="Rebif">Rebif</option>
+                        <option value="Tecfidera">Tecfidera</option>
+                        <option value="Teriflunomide">Teriflunomide</option>
+                        <option value="None">Καμία</option>
+                    </datalist>
+                </p>
+
+
+
+                <p>
+                    <label for="dateEDSS">Ημερομηνία Τωρινού βαθμού EDSS</label>
+                    <input type="date" name="EDSSdate" id="" required>
+                </p>
+                <p>
+                    <label for="EDSS" class="w-100">Προσωρινός βαθμός EDSS:</label>
+                    <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10" required>
+                </p>
+
+                <p>
+                    <label for="PEGtest">Nine-Hole PEG Test</label>
+                    <input type="time" name="edsstimePEG" id="" required>
+                </p>
+                <p>
+                    <!-- change the eddsscore to the correct term -->
+                    <label for="timedWalk">7.5 meters Timed Walk</label>
+                    <input type="time" name="edsstime" required>
+                </p>
+
+
+            </div>
         </div>
-      </div>
-    </section>
-         <br>
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th>Αριθμός Υποτροπιάσεων (ΜΟΝΟ RR απο την τελευταία επίσκεψη/χρόνο)</th>
-              </tr>
-              <tr>
-                <td><input type="number" min="0" name="Noofrelapses" required></td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>
-              <tr>
-                <th colspan="3">Σοβαρότητα</th>
-              </tr>
-              <tr>
-                <td><label for="Mild">Ήπια</label><br><input type="radio" id="Mild" name="Noofrelapsesrad" value="Mild" required></td>
-                <td><label for="Moderate">Μέτρια</label><br><input type="radio" id="Moderate" name="Noofrelapsesrad" value="Moderate" required></td>
-                <td><label for="Severe">Σοβαρή</label><br><input type="radio" id="Severe" name="Noofrelapsesrad" value="Severe" required></td>
-              </tr>
-            </table>
-          </div>
+
+        <h2>Κατηγορία 2 - Κεντρικό Νευρικό Σύστημα - MRI</h2>
+
+        <!-- <div class="split"> -->
+        <div class="block split container text-left">
+            <div class="left right-border text-left">
+                <p>
+                    <label for="MRIonset">ΚΝΣ MRI Εντοπισμός Έναρξης:</label>
+                    <!-- <input type="text" name="MRIonsetlocalisation" list="MRIonsetlocalisation" placeholder="E.x. Visual">
+                        <datalist id="MRIonsetlocalisation">
+                                <option value="Visual">Visual</option>
+                                <option value="Spinal">Spinal</option>
+                                <option value="Cortex">Cortex</option>
+                                <option value="Brainstem">Brainstem</option>
+                                <option value="Cerebellum">Cerebellum</option>
+                            </datalist> -->
+                </p>
+                <!-- <label for="" hidden></label> -->
+                <p>
+                    <label for="Visual">Οπτικό</label>
+                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
+                </p>
+
+                <p>
+                    <label for="Spinal">Νωτιαίος</label>
+                    <input type="checkbox" name="Onselocalisation" value="Spinal" id="MRIonsetloc">
+                </p>
+
+                <p>
+                    <label for="Cortex">Φλοιός</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cortex" id="MRIonsetloc1">
+                </p>
+
+
+
+                <p>
+                    <label for="Cerebellar">Παρεγκεφαλικός</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cerebellar" id="MRIonsetloc3">
+                </p>
+
+                <p>
+                    <label for="Brainstem">Εγκεφαλικό</label>
+                    <input type="checkbox" name="Onselocalisation" value="Brainstem" id="MRIonsetloc4">
+                </p>
+                <p>
+
+
+                    <label for="None">Κανένα</label>
+                    <input type="checkbox" name="Onselocalisation" value="None" id="MRIonsetloc5">
+                </p>
+
+            </div>
+
+            <div class="right">
+                <!-- <legend> -->
+                <p>
+                  <label for="MRIenchancing Lesions">ΚΝΣ MRI Ενισχυτικές Περιοχές τους Τελευταίους 12 Μήνες:</label>
+                  <select name="MRIenhancing" id="MRIenhancing" required>
+                    <option value="Yes">Ναι</option>
+                    <option value="No">Όχι</option>
+                  </select>
+                </p>
+                <p><label for="">Αριθμός MRI Περιοχών:</label> <input name="MRInum" type="number" id="MRInum" placeholder="Αριθμός Περιοχών"></p>
+                <p>
+                    <label for="MRIenchancing Lesions Loc">Τοποθεσία MRI Ενισχυτικών Περιοχών:</label>
+                </p>
+
+                <p>
+                  <label for="Visual">Οπτικό</label>
+                  <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
+                </p>
+
+                <p>
+                    <label for="Spinal">Νωτιαίος</label>
+                    <input type="checkbox" name="Onselocalisation" value="Spinal" id="MRIonsetloc">
+                </p>
+
+                <p>
+                    <label for="Cortex">Φλοιός</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cortex" id="MRIonsetloc1">
+                </p>
+
+                <p>
+                    <label for="Cerebellar">Παρεγκεφαλικός</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cerebellar" id="MRIonsetloc3">
+                </p>
+
+                <p>
+                    <label for="Brainstem">Εγκεφαλικό</label>
+                    <input type="checkbox" name="Onselocalisation" value="Brainstem" id="MRIonsetloc4">
+                </p>
+
+            </div>
+
         </div>
-      <br>
-        <table>
-          <tr>
-            <th colspan="7">ΠΑΡΕΛΘΟΝΤΙΚΗ Θεραπεία τροποποίησης ασθένειας :(tick) Ημερομηνία έναρξης: <input type="date" name="pastTREATMENT" id="pastDate" required></th>    <!-- whole width -->
-          </tr>
-          <tr>
-            <td>Alemtuzumab<br><input type="checkbox" name="pastTREATMENT" value="Alemtuzumab" ></td><td>Avonex<br><input type="checkbox" name="pastTREATMENT" value="Avonex"></td>
-            <td>Betaferon<br><input type="checkbox" name="pastTREATMENT" value="Betaferon"></td><td>Copaxone<br><input type="checkbox" name="pastTREATMENT" value="Copaxone"></td>
-            <td>Extavia<br><input type="checkbox" name="pastTREATMENT" value="Extavia"></td><td>Fingolimod<br><input type="checkbox" name="pastTREATMENT" value="Fingolimod"></td>
-            <td>Mitoxantrone<br><input type="checkbox" name="pastTREATMENT" value="Mitoxantrone"></td>
-          </tr>
-          <tr>
-            <td>Natalizumab<br><input type="checkbox" name="pastTREATMENT" value="Natalizumab"></td><td>Ocrelizumab<br><input type="checkbox" name="pastTREATMENT" value="Ocrelizumab"></td>
-            <td>Rebif<br><input type="checkbox" name="pastTREATMENT" value="Rebif"></td><td>Tecfidera<br><input type="checkbox" name="pastTREATMENT" value="Tecfidera"></td>
-            <td>Teriflunomide<br><input type="checkbox" name="pastTREATMENT" value="Teriflunomide"></td><td colspan="2">Καμία<br><input type="checkbox" name="pastTREATMENT" value="None"></td>
-          </tr>
-          <tr>
-            <th>Ημερομηνία τερματισμού:</th><td><input type="date" name="pastTREATMENTdate" id="datestoped"></td><th>Λόγος</th>
-            <td colspan="2"><label for="Lack of efficasy">Έλλειψη Αποτελεσματικότητας</label><br><input type="checkbox" id="Lack of efficasy" name="pastTREATMENTcheck" value="Lack of efficasy"></td>
-            <td><label for="Side effects">Παρενέργειες</label><br><input type="checkbox" id="Side effects" name="pastTREATMENTcheck" value="Side effects"></td>
-            <td><label for="Other">Άλλο</label><br><input type="checkbox" id="Other" name="pastTREATMENTcheck" value="Other"></td>
-          </tr>
-        </table>
-      <br>
-        <table>
-          <tr>
-            <th colspan="7">Παρούσα Θεραπεία τροποποίησης ασθένειας:(tick)  Ημερομηνία έναρξης: <input type="date" name="TREATMENTdate" id="presentdate" required></th>    <!-- whole width -->
-          </tr>
-          <tr>
-            <td>Alemtuzumab<br><input type="checkbox" name="TREATMENT" value="Alemtuzumab"></td><td>Avonex<br><input type="checkbox" name="TREATMENT" value="Avonex" ></td>
-            <td>Betaferon<br><input type="checkbox" name="TREATMENT" value="Betaferon" ></td><td>Copaxone<br><input type="checkbox" name="TREATMENT" value="Copaxone"></td>
-            <td>Extavia<br><input type="checkbox" name="TREATMENT" value="Extavia" ></td><td>Fingolimod<br><input type="checkbox" name="TREATMENT" value="Fingolimod"></td>
-            <td>Mitoxantrone<br><input type="checkbox" name="TREATMENT"value="Mitoxantrone" ></td>
-          </tr>
-          <tr>
-            <td>Natalizumab<br><input type="checkbox" name="TREATMENT" value="Natalizumab"></td><td>Ocrelizumab<br><input type="checkbox" name="TREATMENT" value="Ocrelizumab"></td>
-            <td>Rebif<br><input type="checkbox" name="TREATMENT" value="Rebif"></td><td>Tecfidera<br><input type="checkbox" name="TREATMENT" value="Tecfidera"></td>
-            <td>Teriflunomide<br><input type="checkbox" name="TREATMENT" value="Teriflunomide"></td><td colspan="2">Καμία<br><input type="checkbox" name="TREATMENT" value="None"></td>
-          </tr>
-        </table>
-      </div>
-    </section>
-      <br>
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th colspan="2">Τρέχων βαθμός EDSS (1-10): <input type="number" min="1" max="10" name="eddsscore"required></th>    <!-- left hand side, right next to the following table -->
-              </tr>
-              <tr>
-                <td>7,5 Μέτρα Χρονομετρημένο Περπάτημα</td>
-                <td>Χρόνος: <input type="time" name="edsstime" required></td>
-              </tr>
-              <tr>
-                <td id="purple">Nine-Hole PEG Test</td><td>Χρόνος: <input type="time"></td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>
-              <tr>
-                <td id="purple" colspan="3"> Ημερομηνία που λήφθηκε το EDSS : <input type="date" name="EDSSdate" required></td>
-              </tr>
-              <!-- <tr>
-                <td><label for="Self Estimated">Αυτοεκτιμώμενος</label><br><input type="radio" id="Self Estimated" name="EDSSdaterad" value="Self Estimated" required></td>
-                <td><label for="Trundle wheel">Εξέταση Κυλιόμενου Τροχού</label><br><input type="radio" id="Trundle wheel" name="EDSSdaterad" value="Trundle wheel" required></td>
-                <td><label for="Treadmill">Ηλεκτρικός Διάδρομος</label><br><input type="radio" id="Treadmill" name="EDSSdaterad" value="Treadmill" required></td>
-              </tr> -->
-            </table>
-          </div>
+
+        <h2>TIER 3 </h2>
+
+        <div class="split container block">
+            <div class="left right-border text-right">
+
+                <p>
+                    <label for="Pregnant">Είναι η Ασθενής Έγγυος΄</label>
+                    <select name="Pregnant" id="">
+                        <option value="Yes">Ναι</option>
+                        <option value="No">Όχι</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="Smoker">Καπνιστής</label>
+                    <select name="smoker" id="">
+                        <option value="Yes">Ναι</option>
+                        <option value="No">Όχι</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="numofCigs">Αριθμός Τσιγάρων</label>
+                    <input type="number" name="numofcig" id="" placeholder="Αριθμός Τσιγάρων / Μέρα">
+                </p>
+                <p>
+                    <label for="lastcig">Τελευταίο Τσιγάρο:</label>
+                    <input type="date" name="dateofcig" id="">
+                </p>
+
+
+            </div>
+
+            <div class="right  text-right">
+
+                <p>
+                    <label for="onsetLocalisation">Onset Localisation</label>
+                </p>
+                <p>
+                  <label for="Visual">Οπτικό</label>
+                  <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
+                </p>
+
+                <p>
+                    <label for="Spinal">Νωτιαίος</label>
+                    <input type="checkbox" name="Onselocalisation" value="Spinal" id="MRIonsetloc">
+                </p>
+
+                <p>
+                    <label for="Cortex">Φλοιός</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cortex" id="MRIonsetloc1">
+                </p>
+
+                <p>
+                    <label for="Cerebellar">Παρεγκεφαλικός</label>
+                    <input type="checkbox" name="Onselocalisation" value="Cerebellar" id="MRIonsetloc3">
+                </p>
+
+                <p>
+                    <label for="Brainstem">Εγκεφαλικό</label>
+                    <input type="checkbox" name="Onselocalisation" value="Brainstem" id="MRIonsetloc4">
+                </p>
+                <p>
+                    <label for="onsetsymptoms">Συμπτόματα Έναρξης</label>
+                    <input type="text" name="onsetsymptoms" id="onsetsymptoms" list="onsetsymptoms" placeholder="E.x. Vision">
+                    <datalist id="onsetsymptoms">
+                        <option value="Vision">Οπτικά</option>
+                        <option value="Motor">Κινητικά</option>
+                        <option value="Sensory">Αισθητικά</option>
+                        <option value="Coordination">Συντονιστικά</option>
+                        <option value="Bowel">Εντερικά</option>
+                        <option value="Bladder">Κυστικά</option>
+                        <option value="Fatigue">Κούραση</option>
+                        <option value="Cognitive">Γνωστικά</option>
+                        <option value="Encephalopathy">Εγκεφαλοπαθικά</option>
+                        <option value="Other">Άλλα</option>
+                    </datalist>
+                </p>
+
+            </div>
         </div>
-      </div>
-    </section>
 
-    <section>
-      <h3 style="text-align:center;">ΚΑΤΗΓΟΡΙΑ 2</h3>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th colspan="5">CNS MRI Onset Localisation/ΚΝΣ Τοποθεσία αρχικής MRI</th>
-              </tr>
-              <tr>
-                <td>Spinal<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
-                <td>Cortex<br><input type="checkbox" name="MRIonsetlocalisation" value="Cortex"></td>
-                <td>Brainstem<br><input type="checkbox" name="MRIonsetlocalisation" value="Brainstem"></td>
-                <td>Cerebellum<br><input type="checkbox" name="MRIonsetlocalisation" value="Cerebellum"></td>
-                <td>Visual<br><input type="checkbox" name="MRIonsetlocalisation" value="Spinal"></td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>
-              <tr>
-                <th colspan="5">Οι βλάβες που ενισχύουν τη μαγνητική τομογραφία του ΚΝΣ τους τελευταίους 12 μήνες</th>
-              </tr>
-              <tr>
-                <!-- <td colspan="2">Yes <input type="radio" value="Yes" name="MRIenhancing" id="MRIenhancing" checked><br>No<input type="radio" value="No" name="MRIenhancing"></td> -->
-                <td colspan="2"><select id="MRIenhancing" name="MRIenhancing"><option value="Yes">Ναι</option><option value="No">Όχι</option> </select></td>
-                <td colspan="3">Αριθμός: <input name="MRInum" type="number" id="MRInum"></td>
-              </tr>
-              <tr>
-                <th colspan="5">Τοποθεσία</th>
-              </tr>
-              <tr>
-                <td>Νωτιαίος<br><input type="checkbox" name="MRIenhancinglocation" value="Spinal" id="MRIloc"></td>
-                <td>Φλοιός<br><input type="checkbox" name="MRIenhancinglocation" value="Cortex" id="MRIloc1"></td>
-                <td>Εγκεφαλικό<br><input type="checkbox" name="MRIenhancinglocation" value="Brainstem" id="MRIloc2"></td>
-                <td>Παρεγκεφαλικό<br><input type="checkbox" name="MRIenhancinglocation" value="Cerebellum" id="MRIloc3"></td>
-                <td>Οπτικό<br><input type="checkbox" name="MRIenhancinglocation" value="Visual" id="MRIloc4"></td>
-              </tr>
-            </table>
-          </div>
+
+
+
+        <!-- </div> -->
+        <div class="block container">
+
+            <h3>Υπογράφων/Υπογράφουσα:
+                <input type="text" name="signer" required>
+                <input type="submit" name="Submit" value="Submit" id="subm" required>
+            </h3>
         </div>
-      </div>
+    </div>
 
-    </section>
 
-  <h4 style="text-align:center; font-family: arial;">ΚΑΤΗΓΟΡΙΑ 3 <br> </h4>
 
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th colspan="2">Είναι ο ασθενής έγγυος;</th>
-              </tr>
-              <tr>
-                <td>Ναι<br><input type="radio" name="Pregnant"></td><td>Όχι<br><input type="radio" name="Pregnant" value="Pregnant"></td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>
-              <tr>
-                <th colspan="2">Εντοπισμός Έναρξης στο ΚΝΣ<br></th>
-              </tr>
-              <tr>
-                <td>Νωτιαίος <br><input type="checkbox" name="Onsetlocalisation" value="Spinal"></td><td>Φλοιός<br><input type="checkbox" name="Onsetlocalisation" value="Cortex"></td>
-              </tr>
-              <tr>
-                <td>Οπτικός<br><input type="checkbox" name="Onsetlocalisation" value="Visual"></td><td>Παρεγκεφαλικός/Εγκεφαλικό<br><input type="checkbox" name="Onsetlocalisation" value="Cerebellar/Brainstem"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section>
-      <div class="container">
-        <div class="split">
-          <div>
-            <table>
-              <tr>
-                <th>Καπνιστής</th>
-                <td><select name="smoker" id="smoker"><option value="Yes">Ναι</option><option value="No">Όχι</option></td>
-              </tr>
-              <tr>
-                <td>Αριθμός τσιγάρων ανα μέρα:</td><td colspan="2"><input type="number" min="0" name="cigars" id="numofcig" value="0"></td>
-              </tr>
-              <tr>
-                <td>Κάπνισε τελευταία φορά:</td><td colspan="2"><input type="date" name="cigardate" id="dateofcig"></td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <table>
-              <tr>
-                <th colspan="3">Συμπτώματα έναρξης </th>
-              </tr>
-              <tr>
-                <td>Όραση<br><input type="checkbox" name="onsetsymptoms" value="Vision"></td><td>Κινητικό<br><input type="checkbox" name="onsetsymptoms" value="Motor"></td><td>Αισθητήριος<br><input type="checkbox" name="onsetsymptoms" value="Sensory"></td>
-              </tr>
-              <tr>
-                <td>Συντονισμός<br><input type="checkbox" name="onsetsymptoms" value="Coordination"></td><td>Έντερο/Κύστη<br><input type="checkbox" name="onsetsymptoms" value="Bowel/Bladder"></td><td>Κόποση<br><input type="checkbox" name="onsetsymptoms" value="Fatigue"></td>
-              </tr>
-              <tr>
-                <td>Γνωστική<br><input type="checkbox" name="onsetsymptoms" value="Cognitive"></td><td>Εγκεφαλοπάθεια<br><input type="checkbox" name="onsetsymptoms" value="Encephalopathy"></td><td>Άλλο<br><input type="checkbox" name="onsetsymptoms" value="Other"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="note-wrapper container">
+        <strong>Πατώντας το κουμπί <i>Reset</i> κάθε πληροφορία που έχετε εισάγει στην φόρμα θα διαγραφτεί και δεν θα αποθυκευτεί!</strong>
+    </div>
+    <p>
+        <h3>
+            Επαναφορά φόρμας;
+            <input type="reset" name="resetform" id="resetbutton">
+        </h3>
 
-  <h3>Άτομο που συμπληρώνει την φόρμα:<input type="text" name="signer" required> <input type="submit" name="Submit" value="Submit" id="subm"required> </h3>
-  <div class="note-wrapper">
-    <p><strong>Κάνοντας κλίκ επάνω στο κουμπί <i>Reset</i> οτιδήποτε πληροφορία έχετε περάσει στην φόρμα θα διαγραφεί και ΔΕΝ θα αποθηκευτεί!</strong></p>
-  </div>
-  <h3> Επαναφορά Φόρμας; <br><input type="reset" value="Επαναφορά" name="resetform" id="resetbutton" class="important"></h3>
+    </p>
 
-  </form>
+    </form>
 
-  <script type="text/javascript"> // date validating client-side for pastStarted-pastEnded treatment
-    document.getElementById('pastDate').addEventListener("change", function() {
-      var inputpastdateStart = this.value;
-      var pastdatestart = new Date(inputpastdateStart);
-      document.getElementById('datestoped').setAttribute("min",inputpastdateStart);
-    });
-  </script>
-  </script>
-  <script type="text/javascript"> // dynamicly disabling certain input boxes in the MRI tier
-    document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
-      if (this.value === 'Yes') {
-        document.getElementById('MRInum').disabled = false;
-        document.getElementById('MRIloc').disabled = false;
-        document.getElementById("MRIloc1").disabled = false;
-        document.getElementById("MRIloc2").disabled = false;
-        document.getElementById("MRIloc3").disabled = false;
-        document.getElementById("MRIloc4").disabled = false;
-      }
-      else if (this.value === 'No') {
-        document.getElementById("MRInum").disabled = true;
-        document.getElementById("MRIloc").disabled = true;
-        document.getElementById("MRIloc1").disabled = true;
-        document.getElementById("MRIloc2").disabled = true;
-        document.getElementById("MRIloc3").disabled = true;
-        document.getElementById("MRIloc4").disabled = true;
-      }
-    }
+    <script type="text/javascript">
+        // redirects to the greek form
+        document.getElementById("eng").onclick = function() {
+            location.href = "Multiple_Sclerosis_app.php";
+        };
     </script>
-  <script type="text/javascript">// dynamicly disabling certain input boxes in the Smoker tier
-    document.getElementById('smoker').onchange = function disableInpsmok() {
-      if (this.value === 'Yes') {
-        document.getElementById('numofcig').disabled = false;
-        document.getElementById('dateofcig').disabled = false;
-      }
-      else if (this.value === 'No') {
-        document.getElementById('numofcig').disabled = true;
-        document.getElementById('dateofcig').disabled = true;
-      }
-    }
-  </script>
-  <script type="text/javascript">
-    document.getElementById('resetbutton').onclick = function resetForm() {
-      var rsbtn = confirm("Είστε σίγουρος οτι θέλετε να επαναφέρετε την φόρμα;");
-      if (rsbtn == false) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  </script>
+    <script type="text/javascript">
+        // date validating client-side for pastStarted-pastEnded treatment
+        document.getElementById('pastDate').addEventListener("change", function() {
+            var inputpastdateStart = this.value;
+            var pastdatestart = new Date(inputpastdateStart);
+            document.getElementById('datestoped').setAttribute("min", inputpastdateStart);
+        });
+    </script>
+    <script type="text/javascript">
+        // dynamicly disabling certain input boxes in the MRI tier
+        document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
+            if (this.value === 'Yes') {
+                document.getElementById('MRInum').disabled = false;
+                document.getElementById('MRIloc').disabled = false;
+                document.getElementById("MRIloc1").disabled = false;
+                document.getElementById("MRIloc2").disabled = false;
+                document.getElementById("MRIloc3").disabled = false;
+                document.getElementById("MRIloc4").disabled = false;
+            } else if (this.value === 'No') {
+                document.getElementById("MRInum").disabled = true;
+                document.getElementById("MRIloc").disabled = true;
+                document.getElementById("MRIloc1").disabled = true;
+                document.getElementById("MRIloc2").disabled = true;
+                document.getElementById("MRIloc3").disabled = true;
+                document.getElementById("MRIloc4").disabled = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        // dynamicly disabling certain input boxes in the Smoker tier
+        document.getElementById('smoker').onchange = function disableInpsmok() {
+            if (this.value === 'Yes') {
+                document.getElementById('numofcig').disabled = false;
+                document.getElementById('dateofcig').disabled = false;
+            } else if (this.value === 'No') {
+                document.getElementById('numofcig').disabled = true;
+                document.getElementById('dateofcig').disabled = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        // resets the form
+        document.getElementById('resetbutton').onclick = function resetForm() {
+            var rsbtn = confirm("Are you sure you want to erase the form?");
+            if (rsbtn == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        //  not Done yet!! calculates the age of the person based on Date of Birth
+        function calcAge() {
+            var date = new Date();
+            var day = date.getDate(),
+                month = date.getMonth() + 1,
+                year = date.getFullYear();
+
+            month = (month < 10 ? "0" : "") + month;
+            day = (day < 10 ? "0" : "") + day;
+
+            var today = year + "/" + month + "/" + day;
+            var dateOfBirth = document.getElementById('dob');
+            var Age = today - dateOfBirth;
+
+            var ageinputbox = document.getElementById('Age').innerHTML = Age; // make it print the calculated Age on page load
+        }
+    </script>
+
 </body>
+
 </html>

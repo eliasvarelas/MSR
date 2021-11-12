@@ -1,6 +1,8 @@
 /* --------------------------------------------------------
           CSS from Form
 ---------------------------------------------------------*/
+
+
 /* Classes */
 
 .split {
@@ -83,14 +85,14 @@
 }
 
 .block {
-  width: min(95%, 70rem);
-  padding: 0.5em auto;
-  text-align: center;
-  margin: 1em;
-  background-color: #2a7189;
-  border-radius: 19px;
-  -webkit-box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
-  box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
+    width: min(95%, 70rem);
+    padding: 0.5em auto;
+    text-align: center;
+    margin: 1em;
+    background-color: #2a7189;
+    border-radius: 19px;
+    -webkit-box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
+    box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
 }
 
 .block>.borderless {
@@ -121,23 +123,27 @@
     text-align: left;
     padding: 0.5em 0.5em;
 }
-.centered{
-  position: relative;
-  float: left;
-  margin: 0 50%;
-  transform: translate(-50%, 0%);
-}
-.right-border {
-  position: relative;
-  float: right;
-  margin-right: 0;
-  border-right: 1px solid black;
-}
-.left-border {
-  margin-left: 0;
-  border-left: 1px solid black;
 
+.centered {
+    position: relative;
+    float: left;
+    margin: 0 50%;
+    transform: translate(-50%, 0%);
 }
+
+.right-border {
+    position: relative;
+    float: right;
+    margin-right: 0;
+    border-right: 1px solid black;
+}
+
+.left-border {
+    margin-left: 0;
+    border-left: 1px solid black;
+}
+
+
 /* attributes */
 
 form {
@@ -145,15 +151,17 @@ form {
 }
 
 p {
-  display: table-row;
+    display: table-row;
 }
 
-label{
-  display: table-cell;
+label {
+    display: table-cell;
 }
+
 input {
     display: table-cell;
 }
+
 
 /* label {
     text-align: left;
@@ -207,12 +215,14 @@ label {
     margin-top: max(50%, 5em);
     padding: 5px 5px;
     margin: 8px 0;
+}
 
+td:hover {
+    opacity: 50%;
+    color: green;
 }
-td:hover{
-  opacity: 50%;
-  color: green;
-}
+
+
 /* ids */
 
 #purple {
@@ -222,6 +232,7 @@ td:hover{
 #header_container {
     background-color: #3691b0;
 }
+
 
 /* Media Queries */
 
@@ -250,29 +261,33 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
 }
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  /* padding:5px; */
-  text-align:center;
-  font-family: arial;
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    /* padding:5px; */
+    text-align: center;
+    font-family: arial;
 }
 
-
-.w-100{
-  width: 100%;
+.w-100 {
+    width: 100%;
 }
 
 th {
-  /* background-color: #7386D5; */         /* Title box color */
-  background-color: #1e5162;
-  color: black;
-  /* margin: auto; */
+    /* background-color: #7386D5; */
+    /* Title box color */
+    background-color: #3691b0;
+    color: black;
+    /* margin: auto; */
 }
+
 td {
-  background-color: white;
-  color: black;
-  /* margin: auto; */
+    background-color: white;
+    color: black;
+    /* margin: auto; */
 }
 
 p {
@@ -284,13 +299,12 @@ p {
 }
 
 td:nth-child(even) {
-  background-color: white;
+    background-color: white;
 }
+
 table td.tdclass.exempt {
     background-color: lightgrey;
 }
-
-
 
 a,
 a:hover,
@@ -298,6 +312,7 @@ a:focus {
     color: inherit;
     transition: all 0.3s;
 }
+
 a:hover,
 a:focus {
     color: inherit;
@@ -335,27 +350,29 @@ i,
 span {
     display: inline-block;
 }
+
 #d3-searching {
-  padding: 1em;
-  min-width: 50%;
-  max-width: 80%;
+    padding: 1em;
+    min-width: 50%;
+    max-width: 80%;
 }
 
-.query_header{
-  max-width: 90%;
-  min-width: 40%;
+.query_header {
+    max-width: 90%;
+    min-width: 40%;
 }
+
+
 /* input[type=text], input[type=number] {
   border: none;
   width: 100%;
   border-bottom: 1px solid black;
 } */
-.filter{
-  max-width: 100%;
-  min-width: 50%;
-  border: 1px solid black;
 
-
+.filter {
+    max-width: 100%;
+    min-width: 50%;
+    border: 1px solid black;
 }
 
 
@@ -503,6 +520,7 @@ a.article:hover {
     color: #fff !important;
 }
 
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -513,23 +531,28 @@ a.article:hover {
     min-height: 100vh;
     transition: all 0.3s;
 }
-.split{
-  display: flex;
-  flex-direction: row;
-  margin: 1em auto;
-  /* width: 100%; */
+
+.split {
+    display: flex;
+    flex-direction: row;
+    margin: 1em auto;
+    /* width: 100%; */
 }
-.split > * {
-  /* flex-basis: 100%; */
-  max-width: 70%;
-  margin-left: 5em;
-  /* border: 1px solid red; */
-  margin-right: 1em;
+
+.split>* {
+    /* flex-basis: 100%; */
+    max-width: 70%;
+    margin-left: 5em;
+    /* border: 1px solid red; */
+    margin-right: 1em;
 }
-.split > * + * {      /* space between the side-side tables */
-  margin-left:10em;
-  margin-right: 5em;
+
+.split>*+* {
+    /* space between the side-side tables */
+    margin-left: 10em;
+    margin-right: 5em;
 }
+
 
 /* ---------------------------------------------------
     MEDIAQUERIES
