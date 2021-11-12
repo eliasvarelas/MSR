@@ -194,6 +194,7 @@ function show_events(events, month, day) {
             var event_card = $("<div class='event-card'></div>");
             var event_name = $("<div class='event-name'>"+events[i]["occasion"]+":</div>");
             var event_count = $("<div class='event-count'>"+events[i]["invited_count"]+" Invited</div>");
+						// add more info about the event as street names/emails etc
             if(events[i]["cancelled"]===true) {
                 $(event_card).css({
                     "border-left": "10px solid #FF1744"
@@ -229,15 +230,15 @@ var event_data = {
         "year": 2021,
         "month": 11,
         "day": 3,
-        "cancelled": true
+        "cancelled": false
     },
     {
         "occasion": " Repeated Test Event ",
         "invited_count": 120,
         "year": 2021,
-        "month": 5,
+        "month": 11,
         "day": 10,
-        "cancelled": true
+        "cancelled": false
     },
         {
         "occasion": " Repeated Test Event ",

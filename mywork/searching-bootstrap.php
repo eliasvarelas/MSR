@@ -268,11 +268,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -288,13 +289,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td> <?php echo $row['Patient_id']; ?> </td><td><?php echo $row['Patient_name']; ?></td>
                           <td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
+                      <div class="line">
+
+                      </div>
 
                     <?php }
                   } else {
@@ -308,11 +313,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Sex</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Sex</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['Sex']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -328,11 +334,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -348,11 +355,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -368,11 +376,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Race</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Race</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['Race']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -388,11 +397,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
+                          <th>Patient Id</th><th>Patient Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td><td><?php echo $row['Phonenum']; ?></td><td><?php echo $row['Email']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -408,11 +418,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Comorbidities</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Comorbidities</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['Comorbidities']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -428,11 +439,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>EDSS Score 1-10</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>EDSS Score 1-10</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['eddsscore']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -448,11 +460,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is Pregnant? (Y/N)</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is Pregnant? (Y/N)</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['Pregnant']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -468,11 +481,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Localisation</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Localisation</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['Onsetlocalisation']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -488,11 +502,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is a Smoker? (Y/N)</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Is a Smoker? (Y/N)</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['smoker']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -508,11 +523,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions (Yes/No)</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions (Yes/No)</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIenhancing']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -528,11 +544,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Symptoms</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>Onset Symptoms</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['onsetsymptoms']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -548,11 +565,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions No.</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Enhancing Lesions No.</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRInum']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>
@@ -568,11 +586,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     while($row = $result->fetch()){ ?>
                       <table id="standard">
                         <tr>
-                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Onset Localisation</th>
+                          <th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th><th>MRI Onset Localisation</th><th>Previous Visits</th>
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td><td> <?php echo $row['Patient_name']; ?> </td><td><?php echo $row['DOB']; ?></td><td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td><td><?php echo $row['MRIonsetlocalisation']; ?></td>
+                          <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
                         </tr>
                       </table>
                       <div class="line"></div>

@@ -37,6 +37,8 @@
             background-color: var(--page-bg);
             /* background-color: rgb(145, 143, 143); */
             background-color: white;
+            font-family: roboto;
+            font-size: 18px;
         }
         /* Classes */
 
@@ -76,11 +78,8 @@
             width: min(95%, 70rem);
             padding: 0.5em 1em;
             background-color: white;
-            -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.84);
-            box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.84);
-            -webkit-border-radius: 19px;
-            -moz-border-radius: 19px;
             border-radius: 19px;
+            border: 1px solid black;
         }
 
         .note-wrapper {
@@ -133,8 +132,6 @@
             margin: 1em;
             background-color: #2a7189;
             border-radius: 19px;
-            -webkit-box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
-            box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
         }
 
         .block>.borderless {
@@ -200,7 +197,7 @@
         h3,
         h4 {
             text-align: center;
-            font-family: Arial;
+            /* font-family: Arial; */
             text-emphasis: bold;
         }
 
@@ -334,20 +331,15 @@
                         <option value="Other">Other</option>
                     </datalist>
                 </p>
-
-
                 <p>
                     <label for="convsp">Conversion to SP if possible:</label>
                     <input type="text" name="convspnum" placeholder="E.x Possible">
                 </p>
 
                 <p>
-                    <label for="Noofrelapses" style="text-align: center;">Number of Relapses (RR only) Since last visit/year</label>
+                    <label for="Noofrelapses">Number of Relapses (RR only) Since last visit/year</label>
                     <input type="number" min="0" name="Noofrelapses" required>
                 </p>
-
-
-
                 <p>
                     <label for="pastdatestart">PAST Disease Modifying Treatment: Date started:</label>
                     <input type="date" name="pastTREATMENT" id="pastDate" required>
@@ -357,7 +349,6 @@
                     <label for="pastdatestop">PAST Disease Modifying Treatment: Date stopped:</label>
                     <input type="date" name="pastTREATMENT" id="pastDateStopped" required>
                 </p>
-
                 <p>
                     <label for="pastTREATMENTreason">Reason:</label>
                     <input type="text" name="pastTREATMENTcheck" id="pastDateReason" list="pastDateReason" required>
@@ -367,20 +358,10 @@
                       <option value="Other" id="Other">Other</option>
                     </datalist>
                 </p>
-
-
-
                 <p>
                     <label for="pastDate">PRESENT Disease Modifying Treatment Date</label>
                     <input type="date" name="TREATMENTdate" id="presentdate" required>
                 </p>
-
-
-
-
-
-
-
             </div>
 
             <div class="right text-right ">

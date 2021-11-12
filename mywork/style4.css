@@ -35,10 +35,6 @@
     max-width: 100%;
     padding: 0.5em 1em;
     background-color: white;
-    -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.84);
-    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.84);
-    -webkit-border-radius: 19px;
-    -moz-border-radius: 19px;
     border-radius: 19px;
 }
 

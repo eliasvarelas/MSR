@@ -84,7 +84,7 @@ try {
   <title>Login : MS Registry</title>
   <style>
     body{
-      background-color: #7386D5;
+      background-color: #3691b0;
       display: block;
     }
     div{
@@ -116,7 +116,7 @@ try {
       cursor: pointer;
       margin-top: 0.3em;
     }
-    
+
   </style>
 </head>
 <body>

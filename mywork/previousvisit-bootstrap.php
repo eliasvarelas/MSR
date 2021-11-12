@@ -133,7 +133,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       echo "<table>";  // the MSR table for the particular patient id
                           echo "<tr>";
                             echo "<th> Visit Number</th>";
-                            echo "<th>Name & Address</th>";
+                            echo "<th>Name</th>";
                             echo "<th>Date</th>";
                             echo "<th>Patient Id</th>";
                             echo "<th>Gender</th>";
@@ -197,15 +197,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<th>Documented at</th>";
                           echo "</tr>";
                           echo "<tr>";
-                            echo "<td>" . $row['Pregnant'] . "</td>";
+                            echo "<td>" . ($row['Pregnant'] ?? "N/A") . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['onsetdate'] . "</td>";
-                            echo "<td>" . $row['Onsetlocalisation'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['smoker'] . '<br>' . $row['cigars'] . '<br>' . $row['cigardate'] . "</td>";
+                            echo "<td>" . ($row['Onsetlocalisation'] ?? "N/A") . "</td>";
+                            echo "<td class='tdclass exempt'>" . ($row['smoker'] ?? "N/A") . '<br>' . ($row['cigars'] ?? "N/A") . '<br>' . ($row['cigardate'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['onsetsymptoms'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['MRIonsetlocalisation'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['MRIenhancing'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['MRInum'] . "</td>";
-                            echo "<td>" . $row['MRIenhancinglocation'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . ($row['MRInum'] ?? "N/A") . "</td>";
+                            echo "<td>" . ($row['MRIenhancinglocation'] ?? "N/A") . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['signer'] . "</td>";
                             echo "<td>" . $row['reg_date'] . "</td>";
                         echo "</tr>";
