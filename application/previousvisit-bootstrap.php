@@ -112,7 +112,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </div>
                 </div>
             </nav>
-            <div class="container block">
+            <div class="">
 
               <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
               <?php
@@ -130,12 +130,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   $result = $pdo->query($sql);
                   if($result->rowCount() > 0){
                     while($row = $result->fetch()){ //make it with more html for responsiveness
-                      echo "<table>";  // the MSR table for the particular patient id
+                      echo "<table class='container block'>";  // the MSR table for the particular patient id
                           echo "<tr>";
                             echo "<th> Visit Number</th>";
                             echo "<th>Name</th>";
                             echo "<th>Date</th>";
                             echo "<th>Patient Id</th>";
+                            echo "<th>Patient Address</th>";
                             echo "<th>Gender</th>";
                             echo "<th>Age</th>";
                             echo "<th>Race</th>";
@@ -149,8 +150,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<td class='tdclass exempt'>" . $row['NDS'] . "</td>";
                             echo "<td>" . $row['NDSdate'] . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['NDSnum'] . "</td>";
-                            echo "<td>" . $row['Sex'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['Age'] . "</td>";
+                            echo "<td>" . ($row['Patient_address'] ?? "N/A") . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['Sex'] . "</td>";
+                            echo "<td>" . $row['Age'] . "</td>";
                             echo "<td>" . $row['Race'] . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['Comorbidities'] . "</td>";
                             echo "<td>" . $row['convsprad'] . "</td>";
@@ -167,7 +169,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<th>Date of Present Treatment</th>";
                             echo "<th>Present Medication</th>";
                             echo "<th>Current EDSS Score</th>";
-                            echo "<th>7.5 meters Timed walk & 9-Hole PEG test</th>";
+                            echo "<th>7.5 meters Timed walk </th>";
+                            echo "<th>9-Hole PEG test</th>";
                             echo "<th>Date of EDSS</th>"; //2 outputs
                           echo "</tr>";
                           echo "<tr>";
@@ -180,55 +183,67 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<td>" . $row['TREATMENTdate'] . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['TREATMENT'] . "</td>";
                             echo "<td>" . $row['eddsscore'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['edsstime7_5m'] .'<br>'. $row['edsstimePEG'] . "</td>";
+                            echo "<td class='tdclass exempt'>" . $row['edsstime7_5m']  . "</td>";
+                            echo "<td>" . ( $row['edsstimePEG']?? "N/A") . "</td>";
                             echo "<td>" . $row['EDSSdate'] . '<br>' .$row['EDSSdaterad'] . "</td>";
                           echo "</tr>";
                           echo "<tr>";
                             echo "<th>Pregnant</th>";
                             echo "<th>Date of Onset</th>";
                             echo "<th>Onset Localisation</th>";
-                            echo "<th>Smoker<br>No.cigars/day<br>Smoked Since:</th>"; //3 outputs
+                            echo "<th>Smoker</th>"; //3 outputs
+                            echo "<th>Number of Cigars</th>";
+                            echo "<th>Smoked Since</th>";
                             echo "<th>Onset Symptoms</th>";
                             echo "<th>MRI Onset Localisation</th>";
                             echo "<th>CNS MRI Lesions Y/N </th>";
                             echo "<th>CNS MRI Lesions No.</th>";
                             echo "<th>CNS MRI Location</th>";
                             echo "<th>Person Signing the form</th>";
-                            echo "<th>Documented at</th>";
                           echo "</tr>";
                           echo "<tr>";
                             echo "<td>" . ($row['Pregnant'] ?? "N/A") . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['onsetdate'] . "</td>";
                             echo "<td>" . ($row['Onsetlocalisation'] ?? "N/A") . "</td>";
-                            echo "<td class='tdclass exempt'>" . ($row['smoker'] ?? "N/A") . '<br>' . ($row['cigars'] ?? "N/A") . '<br>' . ($row['cigardate'] ?? "N/A") . "</td>";
+                            echo "<td class='tdclass exempt'>" . ($row['smoker'] ?? "N/A") . "</td>";
+                            echo "<td>".($row['cigars'] ?? "N/A")."</td>";
+                            echo "<td>". ($row['cigardate'] ?? "N/A"). "</td>";
                             echo "<td>" . $row['onsetsymptoms'] . "</td>";
                             echo "<td class='tdclass exempt'>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['MRIenhancing'] . "</td>";
                             echo "<td class='tdclass exempt'>" . ($row['MRInum'] ?? "N/A") . "</td>";
                             echo "<td>" . ($row['MRIenhancinglocation'] ?? "N/A") . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['signer'] . "</td>";
-                            echo "<td>" . $row['reg_date'] . "</td>";
+
+                        echo "</tr>";
+                        echo "<tr>";
+                          echo "<th>Documented at</th>";
+                          echo "<td>". $row['reg_date'] . "</td>";
                         echo "</tr>";
                         echo "</table>";
-                        ?> <div class="line"></div>
-
-              <?php }
-
-                    // Free result set
-                    unset($result);
-                } else{   // basic error checking
-                    echo "No records matching your query were found."; ?>
-                    <div class="line"></div> <?php
-                }
-            } catch(PDOException $e){
-                die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-            }
-            ?>
+                        ?>
             </div>
-            <!-- <div class="line"></div> -->
-            <footer>
-              <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
-            </footer>
+            <div class="line"></div>
+
+<?php           }
+
+                  // Free result set
+                  unset($result);
+              } else{   // basic error checking
+                  echo "No records matching your query were found.";
+?>
+                  <div class="line"></div>
+<?php
+              }
+          } catch(PDOException $e){
+              die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+          }
+          ?>
+
+          <!-- <div class="line"></div> -->
+          <footer>
+            <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
+          </footer>
         </div>
     </div>
 

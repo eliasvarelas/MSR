@@ -82,42 +82,7 @@ try {
 <head>
   <meta charset="UTF-8">
   <title>Login : MS Registry</title>
-  <style>
-    body{
-      background-color: #3691b0;
-      display: block;
-    }
-    div{
-      display: block;
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 1em 1.5em;
-      text-align: center;
-      font-family: arial;
-      background-color: white;
-      border-style: solid;
-      border-radius: 14%;
-    }
-    .box input[type = "text"], .box input[type = "password"]{
-
-      text-align: center;
-      background-color: #fafafa;
-    }
-    .box input[type = "submit"]{
-      cursor: pointer;
-    }
-    .button{
-      cursor: pointer;
-    }
-    button{
-      cursor: pointer;
-      margin-top: 0.3em;
-    }
-
-  </style>
+  <link rel="stylesheet" href="/login.css">
 </head>
 <body>
   <div>
