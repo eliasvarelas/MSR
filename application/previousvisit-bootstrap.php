@@ -6,7 +6,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     session_unset();     // unset $_SESSION variable for the run-time
     session_destroy();   // destroy session data in storage
     $scripttimedout = file_get_contents('timeout.js');
-    echo "<script>".$scripttimedout."</script>";
+    echo "<script>" . $scripttimedout . "</script>";
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
@@ -44,7 +44,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="/menu.php" >
+                    <a href="/menu.php">
                         <i class="fas fa-home"></i>
                         Home
                     </a>
@@ -97,15 +97,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         <ul class="nav navbar-nav ml-auto">
                             <li class="navbar-nav">
                                 <a class="nav-link" id="">
-                                  <i class="fas fa-user"></i>
-                                  Doctor: <u><?php $user_name = $_SESSION['user'];
-                                  echo $user_name; ?></u>
+                                    <i class="fas fa-user"></i>
+                                    Doctor: <u><?php $user_name = $_SESSION['user'];
+                                                echo $user_name; ?></u>
                                 </a>
                                 <a href="logout.php" onclick="return confirm('Are you sure to logout?');">
-                                  <button type="button" id="logoutBtn" class="navbar-btn btn btn-info">
-                                    <!-- <i class="fa fa-sign-out"></i> -->
-                                    <span>Logout</span>
-                                  </button>
+                                    <button type="button" id="logoutBtn" class="navbar-btn btn btn-info">
+                                        <!-- <i class="fa fa-sign-out"></i> -->
+                                        <span>Logout</span>
+                                    </button>
                                 </a>
                             </li>
                         </ul>
@@ -114,24 +114,23 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </nav>
             <div class="">
 
-              <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2> -->
-              <?php
-              $servername = "127.0.0.1";
-              $username = "root";
-              $password = "bioinformatics";
-              $dbname = "BIHElab";
+                <?php
+                $servername = "127.0.0.1";
+                $username = "root";
+                $password = "bioinformatics";
+                $dbname = "BIHElab";
 
-              $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-              $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-              try{
-                $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
-                $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
-                  $result = $pdo->query($sql);
-                  if($result->rowCount() > 0){
-                    while($row = $result->fetch()){ //make it with more html for responsiveness
-                      echo "<table class='container block'>";  // the MSR table for the particular patient id
-                          echo "<tr>";
+                try {
+                    $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
+                    $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
+                    $result = $pdo->query($sql);
+                    if ($result->rowCount() > 0) {
+                        while ($row = $result->fetch()) { //make it with more html for responsiveness
+                            echo "<table class='container block'>";  // the MSR table for the particular patient id
+                            echo "<tr>";
                             echo "<th> Visit Number</th>";
                             echo "<th>Name</th>";
                             echo "<th>Date</th>";
@@ -144,8 +143,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<th>MS Type NOW</th>";
                             echo "<th>Conversion to SP</th>";
                             echo "<th>Date of Diagnosis</th>";
-                          echo "</tr>";
-                          echo "<tr>";
+                            echo "</tr>";
+                            echo "<tr>";
                             echo "<td>" . $row['id'] . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['NDS'] . "</td>";
                             echo "<td>" . $row['NDSdate'] . "</td>";
@@ -158,8 +157,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<td>" . $row['convsprad'] . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['convspnum'] . "</td>";
                             echo "<td>" . $row['dateofdia'] . "</td>";
-                          echo "</tr>";
-                          echo "<tr>";
+                            echo "</tr>";
+                            echo "<tr>";
                             echo "<th>MS Type at Diagnosis</th>";
                             echo "<th>No. of Relapses (RR)</th>";
                             echo "<th>Severity</th>";
@@ -172,8 +171,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<th>7.5 meters Timed walk </th>";
                             echo "<th>9-Hole PEG test</th>";
                             echo "<th>Date of EDSS</th>"; //2 outputs
-                          echo "</tr>";
-                          echo "<tr>";
+                            echo "</tr>";
+                            echo "<tr>";
                             echo "<td>" . $row['dateofdiarad'] . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['Noofrelapses'] . "</td>";
                             echo "<td>" . $row['Noofrelapsesrad'] . "</td>";
@@ -184,10 +183,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<td class='tdclass exempt'>" . $row['TREATMENT'] . "</td>";
                             echo "<td>" . $row['eddsscore'] . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['edsstime7_5m']  . "</td>";
-                            echo "<td>" . ( $row['edsstimePEG']?? "N/A") . "</td>";
-                            echo "<td>" . $row['EDSSdate'] . '<br>' .$row['EDSSdaterad'] . "</td>";
-                          echo "</tr>";
-                          echo "<tr>";
+                            echo "<td>" . ($row['edsstimePEG'] ?? "N/A") . "</td>";
+                            echo "<td>" . $row['EDSSdate'] . '<br>' . $row['EDSSdaterad'] . "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
                             echo "<th>Pregnant</th>";
                             echo "<th>Date of Onset</th>";
                             echo "<th>Onset Localisation</th>";
@@ -200,14 +199,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<th>CNS MRI Lesions No.</th>";
                             echo "<th>CNS MRI Location</th>";
                             echo "<th>Person Signing the form</th>";
-                          echo "</tr>";
-                          echo "<tr>";
+                            echo "</tr>";
+                            echo "<tr>";
                             echo "<td>" . ($row['Pregnant'] ?? "N/A") . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['onsetdate'] . "</td>";
                             echo "<td>" . ($row['Onsetlocalisation'] ?? "N/A") . "</td>";
                             echo "<td class='tdclass exempt'>" . ($row['smoker'] ?? "N/A") . "</td>";
-                            echo "<td>".($row['cigars'] ?? "N/A")."</td>";
-                            echo "<td>". ($row['cigardate'] ?? "N/A"). "</td>";
+                            echo "<td>" . ($row['cigars'] ?? "N/A") . "</td>";
+                            echo "<td>" . ($row['cigardate'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['onsetsymptoms'] . "</td>";
                             echo "<td class='tdclass exempt'>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['MRIenhancing'] . "</td>";
@@ -215,35 +214,35 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "<td>" . ($row['MRIenhancinglocation'] ?? "N/A") . "</td>";
                             echo "<td class='tdclass exempt'>" . $row['signer'] . "</td>";
 
-                        echo "</tr>";
-                        echo "<tr>";
-                          echo "<th>Documented at</th>";
-                          echo "<td>". $row['reg_date'] . "</td>";
-                        echo "</tr>";
-                        echo "</table>";
-                        ?>
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<th>Documented at</th>";
+                            echo "<td>" . $row['reg_date'] . "</td>";
+                            echo "</tr>";
+                            echo "</table>";
+                ?>
             </div>
             <div class="line"></div>
 
-<?php           }
+        <?php           }
 
-                  // Free result set
-                  unset($result);
-              } else{   // basic error checking
-                  echo "No records matching your query were found.";
-?>
-                  <div class="line"></div>
+                        // Free result set
+                        unset($result);
+                    } else {   // basic error checking
+                        echo "No records matching your query were found.";
+        ?>
+        <div class="line"></div>
 <?php
-              }
-          } catch(PDOException $e){
-              die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-          }
-          ?>
+                    }
+                } catch (PDOException $e) {
+                    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+                }
+?>
 
-          <!-- <div class="line"></div> -->
-          <footer>
-            <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
-          </footer>
+<!-- <div class="line"></div> -->
+<footer>
+    <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
+</footer>
         </div>
     </div>
 
@@ -255,8 +254,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
+        $(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
             });
         });
