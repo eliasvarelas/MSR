@@ -22,7 +22,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="style4.css">
+    <link rel="stylesheet" href="basicapp.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -115,7 +115,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               <table class="table-bordered" id="d3-searching">
                 <tr id="type_of_chart_row"> <!-- select the type of chart you want -->
                   <th>Type of Chart</th>
-                  <td colspan="3" class=""><select id="type_of_chart">
+                  <td colspan="3" class="tdclass exempt"><select id="type_of_chart">
                     <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
                     <option value="donut_chart">Donut Chart</option> <!-- pie chart with a whole in the middle -->
                     <option value="vert_bar">Vertical Bar Chart</option>  <!-- typical bar graph -->
@@ -130,7 +130,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="attribute_row"> <!-- select the attribute for which the chart will be printed -->
                   <th>Select an Attribute</th>
-                  <td colspan="3" class=""><select id="attributes">
+                  <td colspan="3" class="tdclass exempt"><select id="attributes">
                     <option value="Name" id="p_Name">Patient Name</option>
                     <option value="Sex" id="p_Sex">Sex</option>
                     <option value="Age" id="p_Age">Age</option>
@@ -151,7 +151,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="x_axis_row" hidden> <!-- the x axis for the horizontal bar chart -->
                   <th>X Axis</th>
-                  <td colspan="3" class=""><select>
+                  <td colspan="3" class="tdclass exempt"><select>
                     <option value="patient_names" hidden>Patient Names</option>
                     <option value="patient_ids" hidden>Patient IDs</option>
                     <option value="Values" selected>Values</option>
@@ -160,16 +160,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="y_axis_row" hidden> <!-- the y axis for the horizontal bar chart -->
                   <th>Y Axis</th>
-                  <td colspan="3" class=""><select id="y_axis_select">
+                  <td colspan="3" class="tdclass exempt"><select id="y_axis_select">
                     <option value="time">Time span</option>
                     <option value="Num_Persons">Number of Persons</option>
                     <option value="Attributes">Attributes</option>
                     <option value="Medication">Medication</option>
                     <!-- <option value=""></option> -->
                   </select></td>
-                  <td id="Num_of_persons_on_y" hidden><input id="Num_of_persons_on_y_input" name="Numofper" type="number" placeholder="Enter No. of Persons"></td>
-                  <td id="Num_of_years_on_y" hidden><input id="Num_of_years_on_y_input" name="Numofyears" type="text" placeholder="ex. 2010-2021"></td> <!-- not really practical, but ok fo now -->
-                  <td id="Attributes_on_y" hidden>
+                  <td id="Num_of_persons_on_y" class="tdclass exempt" hidden><input id="Num_of_persons_on_y_input" name="Numofper" type="number" placeholder="Enter No. of Persons"></td>
+                  <td id="Num_of_years_on_y" class="tdclass exempt" hidden><input id="Num_of_years_on_y_input" name="Numofyears" type="text" placeholder="ex. 2010-2021"></td> <!-- not really practical, but ok fo now -->
+                  <td id="Attributes_on_y" class="tdclass exempt" hidden>
                     <select id="attributes_on_y_select" name="Attribute">
                       <option value="Age">Age</option>
                       <option value="Sex">Sex</option>
@@ -187,7 +187,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                       <option value="MRIonsetlocalisation">MRI Onset Localisation</option>
                     </select>
                   </td>
-                  <td id="medication_row" hidden> <!-- this will appear if the medication has been selected for the Y axis -->
+                  <td id="medication_row" class="tdclass exempt" hidden> <!-- this will appear if the medication has been selected for the Y axis -->
                     <select id="medication_row_select" name="Meds" multiple> <!-- multiple doesnt fit well... ask waht to do -->
                       <option value="Alemtuzumab">Alemtuzumab</option>
                       <option value="Avonex">Avonex</option>

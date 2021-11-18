@@ -1,8 +1,6 @@
 /* --------------------------------------------------------
           CSS from Form
 ---------------------------------------------------------*/
-
-
 /* Classes */
 
 .split {
@@ -152,10 +150,12 @@ form {
 
 p {
     display: table-row;
+    font-family: 'Roboto', sans-serif;
 }
 
 label {
     display: table-cell;
+    font-family: 'Roboto', sans-serif;
 }
 
 input {
@@ -183,9 +183,11 @@ h1,
 h2,
 h3,
 h4 {
-    text-align: center;
-    font-family: Arial;
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
     text-emphasis: bold;
+    color: #000;
+    /* font-weight: 400; */
 }
 
 input[type=text],
@@ -193,21 +195,10 @@ input[type=email],
 input[type=date],
 input[type=number],
 input[type=time] {
-    /* padding: 5px 5px; */
-    /* margin: 8px 0; */
     box-sizing: border-box;
-    font-family: arial;
+    font-family: 'Roboto', sans-serif;
     width: auto;
     border-bottom: 1px solid black;
-}
-
-textarea {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    resize: none;
-    font-family: arial;
-    width: auto;
 }
 
 label {
@@ -258,7 +249,7 @@ td:hover {
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     background: #fafafa;
 }
 
@@ -269,7 +260,8 @@ td {
     border-collapse: collapse;
     /* padding:5px; */
     text-align: center;
-    font-family: arial;
+    font-family: 'Roboto', sans-serif;
+    text-emphasis: bold;
 }
 
 .w-100 {
@@ -291,7 +283,7 @@ td {
 }
 
 p {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
@@ -299,11 +291,11 @@ p {
 }
 
 td:nth-child(even) {
-    background-color: white;
+    background-color: lightgrey;
 }
 
 table td.tdclass.exempt {
-    background-color: lightgrey;
+    background-color: white;
 }
 
 a,
@@ -362,19 +354,11 @@ span {
     min-width: 40%;
 }
 
-
-/* input[type=text], input[type=number] {
-  border: none;
-  width: 100%;
-  border-bottom: 1px solid black;
-} */
-
 .filter {
     max-width: 100%;
     min-width: 50%;
     border: 1px solid black;
 }
-
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -388,7 +372,6 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    /* background: #7386D5; */
     background: #2a7189;
     color: #fff;
     transition: all 0.3s;
@@ -413,6 +396,7 @@ span {
     text-align: left;
     color: #fff;
 }
+
 
 #sidebar.active ul li a {
     padding: 20px 10px;
@@ -442,7 +426,6 @@ span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    /* background: #6d7fcc; */
     background: #2a7189;
 }
 
@@ -466,6 +449,7 @@ span {
     color: black;
     /* background: #fff; */
     background: #3ca1c3;
+    text-decoration: none;
 }
 
 #sidebar ul li a i {
@@ -475,7 +459,6 @@ span {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    /* background: #6d7fcc; */
     background: #3ca1c3;
 }
 
@@ -536,19 +519,15 @@ a.article:hover {
     display: flex;
     flex-direction: row;
     margin: 1em auto;
-    /* width: 100%; */
 }
 
 .split>* {
-    /* flex-basis: 100%; */
     max-width: 70%;
     margin-left: 5em;
-    /* border: 1px solid red; */
     margin-right: 1em;
 }
 
 .split>*+* {
-    /* space between the side-side tables */
     margin-left: 10em;
     margin-right: 5em;
 }
@@ -605,4 +584,23 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+@media (max-width: 1200px) {
+  #sidebar ul li a i {
+      font-size: 2em;
+  }
+  #sidebar {
+      min-width: 80px;
+      max-width: 150px;
+      text-align: center;
+      margin-left: -80px !important;
+  }
+
+  #sidebar ul li a span {
+      font-size: 1em;
+  }
+  #content table th td{
+    font-size: 0.8em;
+  }
 }

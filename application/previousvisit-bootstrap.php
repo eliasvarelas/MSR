@@ -24,7 +24,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="style4.css">
+    <link rel="stylesheet" href="basicapp.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -112,7 +112,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </div>
                 </div>
             </nav>
-            <div class="">
+            <div class="content">
 
                 <?php
                 $servername = "127.0.0.1";
@@ -146,16 +146,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "</tr>";
                             echo "<tr>";
                             echo "<td>" . $row['id'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['NDS'] . "</td>";
+                            echo "<td class='  '>" . $row['NDS'] . "</td>";
                             echo "<td>" . $row['NDSdate'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['NDSnum'] . "</td>";
+                            echo "<td class='  '>" . $row['NDSnum'] . "</td>";
                             echo "<td>" . ($row['Patient_address'] ?? "N/A") . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['Sex'] . "</td>";
+                            echo "<td class='  '>" . $row['Sex'] . "</td>";
                             echo "<td>" . $row['Age'] . "</td>";
                             echo "<td>" . $row['Race'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['Comorbidities'] . "</td>";
+                            echo "<td class='  '>" . $row['Comorbidities'] . "</td>";
                             echo "<td>" . $row['convsprad'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['convspnum'] . "</td>";
+                            echo "<td class='  '>" . $row['convspnum'] . "</td>";
                             echo "<td>" . $row['dateofdia'] . "</td>";
                             echo "</tr>";
                             echo "<tr>";
@@ -174,15 +174,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "</tr>";
                             echo "<tr>";
                             echo "<td>" . $row['dateofdiarad'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['Noofrelapses'] . "</td>";
+                            echo "<td class='  '>" . $row['Noofrelapses'] . "</td>";
                             echo "<td>" . $row['Noofrelapsesrad'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['pastTREATMENTdate'] . "</td>";
+                            echo "<td class='  '>" . $row['pastTREATMENTdate'] . "</td>";
                             echo "<td>" . $row['pastTREATMENT'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['pastTREATMENTcheck'] . "</td>";
+                            echo "<td class='  '>" . $row['pastTREATMENTcheck'] . "</td>";
                             echo "<td>" . $row['TREATMENTdate'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['TREATMENT'] . "</td>";
+                            echo "<td class='  '>" . $row['TREATMENT'] . "</td>";
                             echo "<td>" . $row['eddsscore'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['edsstime7_5m']  . "</td>";
+                            echo "<td class='  '>" . $row['edsstime7_5m']  . "</td>";
                             echo "<td>" . ($row['edsstimePEG'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['EDSSdate'] . '<br>' . $row['EDSSdaterad'] . "</td>";
                             echo "</tr>";
@@ -202,17 +202,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             echo "</tr>";
                             echo "<tr>";
                             echo "<td>" . ($row['Pregnant'] ?? "N/A") . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['onsetdate'] . "</td>";
+                            echo "<td class='  '>" . $row['onsetdate'] . "</td>";
                             echo "<td>" . ($row['Onsetlocalisation'] ?? "N/A") . "</td>";
-                            echo "<td class='tdclass exempt'>" . ($row['smoker'] ?? "N/A") . "</td>";
+                            echo "<td class='  '>" . ($row['smoker'] ?? "N/A") . "</td>";
                             echo "<td>" . ($row['cigars'] ?? "N/A") . "</td>";
                             echo "<td>" . ($row['cigardate'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['onsetsymptoms'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
+                            echo "<td class='  '>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
                             echo "<td>" . $row['MRIenhancing'] . "</td>";
-                            echo "<td class='tdclass exempt'>" . ($row['MRInum'] ?? "N/A") . "</td>";
+                            echo "<td class='  '>" . ($row['MRInum'] ?? "N/A") . "</td>";
                             echo "<td>" . ($row['MRIenhancinglocation'] ?? "N/A") . "</td>";
-                            echo "<td class='tdclass exempt'>" . $row['signer'] . "</td>";
+                            echo "<td class='  '>" . $row['signer'] . "</td>";
 
                             echo "</tr>";
                             echo "<tr>";
@@ -231,7 +231,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     } else {   // basic error checking
                         echo "No records matching your query were found.";
         ?>
-        <div class="line"></div>
+            <div class="line"></div>
 <?php
                     }
                 } catch (PDOException $e) {
@@ -240,9 +240,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
 
 <!-- <div class="line"></div> -->
-<footer>
-    <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
-</footer>
+          <footer>
+              Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
+          </footer>
         </div>
     </div>
 

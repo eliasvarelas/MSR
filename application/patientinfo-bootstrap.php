@@ -1,4 +1,5 @@
-<?php session_start();
+<?php
+session_start();
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
     session_unset();     // unset $_SESSION variable for the run-time
@@ -22,7 +23,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="style4.css">
+    <link rel="stylesheet" href="basicapp.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -138,11 +139,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   ?>
                             <tr>
                               <td><?php echo $row['Patient_id']; ?></td>
-                              <td class="tdclass exempt"><?php echo $row['Patient_name']; ?></td>
+                              <td><?php echo $row['Patient_name']; ?></td>
                               <td><?php echo $row['Phonenum']; ?></td>
-                              <td class="tdclass exempt"><?php echo $row['Email']; ?></td>
+                              <td><?php echo $row['Email']; ?></td>
                               <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                              <td class="tdclass exempt"><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']."&adr=". $row['Patient_address']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                              <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']."&adr=". $row['Patient_address']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
                               <!-- <td><?php //echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');'href='/removeuser.php?id=".$row['Patient_id'].">'Title goes here'</a>"?></td> -->  <!-- Removes only the patient with the particular id -->
                               <!-- <td><button id="removeuser" onclick="remove_user"><?php //echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
                               <td><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'onclick='removeuser()'>Remove Patient</a>"; ?></td>  <!-- Removes only the patient with the particular id -->

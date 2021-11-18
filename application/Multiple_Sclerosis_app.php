@@ -235,19 +235,27 @@
         }
         /* Media Queries */
 
-        @media (max-width: 600px) {
+        @media (max-width: 992px) {
             .split {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 flex-basis: 100%;
                 margin: 0 auto;
+                border: none;
             }
             .split>.left+.right {
                 margin-left: 0;
                 margin-right: 0;
                 margin-top: 1em;
                 flex-basis: 100%;
+                border: 0px;
             }
+        }
+        @@media (max-width: 1200px) {
+          .container {
+            max-width: 90%;
+            min-width: 70%;
+          }
         }
     </style>
 </head>
