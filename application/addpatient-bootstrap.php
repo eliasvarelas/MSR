@@ -45,14 +45,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="/menu.php" >
+                    <a href="/application/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
                     </a>
 
                 </li>
                 <li>
-                    <a href="/patientinfo-bootstrap.php">
+                    <a href="/application/patientinfo-bootstrap.php">
                         <i class="fas fa-folder"></i>
                         Existing Patients
                     </a>
@@ -66,13 +66,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </a>
                 </li>
                 <li>
-                    <a href="/searching-bootstrap.php">
+                    <a href="/application/searching-bootstrap.php">
                         <i class="fas fa-search"></i>
                         Advanced Search
                     </a>
                 </li>
                 <li>
-                    <a href="/visual_analytics.php">
+                    <a href="/application/visual_analytics.php">
                         <i class="fas fa-paper-plane"></i>
                         Visual Analytics Tool D3
                     </a>
@@ -127,15 +127,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             $doc = $_SESSION['user_id'];?>
 
             <form class="form" action="addpatient-bootstrap.php" method="post"> <!-- basic form to pass the data in the database for the creation of a new patient -->
-              <!-- <table>
-                <tr>
-                  <th>Assign a Patient ID</th><th>First and Last Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>
-                </tr>
-                <tr>
-                  <td></td><td></td><td></td>
-                  <td></td><td></td>
-                </tr>
-              </table> -->
               <div class="container block">
                 <div class="split">
                   <div class="left text-left">

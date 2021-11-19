@@ -58,19 +58,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 </li>
                 <li>
-                    <a href="/addpatient-bootstrap.php">
+                    <a href="/application/addpatient-bootstrap.php">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
                     </a>
                 </li>
                 <li>
-                    <a href="/searching-bootstrap.php">
+                    <a href="/application/searching-bootstrap.php">
                         <i class="fas fa-search"></i>
                         Advanced Search
                     </a>
                 </li>
                 <li>
-                    <a href="/visual_analytics.php">
+                    <a href="/application/visual_analytics.php">
                         <i class="fas fa-paper-plane"></i>
                         Visual Analytics Tool D3
                     </a>
@@ -142,11 +142,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                               <td><?php echo $row['Patient_name']; ?></td>
                               <td><?php echo $row['Phonenum']; ?></td>
                               <td><?php echo $row['Email']; ?></td>
-                              <td><?php echo "<a href='/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
-                              <td><?php echo "<a href='/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']."&adr=". $row['Patient_address']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                              <!-- <td><?php //echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');'href='/removeuser.php?id=".$row['Patient_id'].">'Title goes here'</a>"?></td> -->  <!-- Removes only the patient with the particular id -->
+                              <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=".$row['Patient_id']."'>Previous Visits</a>"; ?></td>
+                              <td><?php echo "<a href='/application/Multiple_Sclerosis_app.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']."&adr=". $row['Patient_address']."'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                              <!-- <td><?php //echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');'href='/application/removeuser.php?id=".$row['Patient_id'].">'Title goes here'</a>"?></td> -->  <!-- Removes only the patient with the particular id -->
                               <!-- <td><button id="removeuser" onclick="remove_user"><?php //echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; ?></button></td> -->  <!-- Removes only the patient with the particular id -->
-                              <td><?php echo "<a href='/removeuser.php?id=".$row['Patient_id']."'onclick='removeuser()'>Remove Patient</a>"; ?></td>  <!-- Removes only the patient with the particular id -->
+                              <td><?php echo "<a href='/application/removeuser.php?id=".$row['Patient_id']."'onclick='removeuser()'>Remove Patient</a>"; ?></td>  <!-- Removes only the patient with the particular id -->
 
                             </tr>
 

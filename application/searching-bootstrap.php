@@ -44,14 +44,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="/menu.php" >
+                    <a href="/application/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
                     </a>
 
                 </li>
                 <li>
-                    <a href="/patientinfo-bootstrap.php">
+                    <a href="/application/patientinfo-bootstrap.php">
                         <i class="fas fa-folder"></i>
                         Existing Patients
                     </a>
@@ -59,7 +59,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 </li>
                 <li>
-                    <a href="/addpatient-bootstrap.php">
+                    <a href="/application/addpatient-bootstrap.php">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
                     </a>
@@ -71,7 +71,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     </a>
                 </li>
                 <li>
-                    <a href="/visual_analytics.php">
+                    <a href="/application/visual_analytics.php">
                         <i class="fas fa-paper-plane"></i>
                         Visual Analytics Tool D3
                     </a>

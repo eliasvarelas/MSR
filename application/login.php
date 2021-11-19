@@ -82,7 +82,7 @@ try {
 <head>
   <meta charset="UTF-8">
   <title>Login : MS Registry</title>
-  <link rel="stylesheet" href="/login.css">
+  <link rel="stylesheet" href="/application/login.css">
 </head>
 <body>
   <div>
@@ -101,13 +101,13 @@ try {
         <input type="submit" value="Login" name="Submit" class="button">
     </form>
     <p> Don't have an Account? <br> <button type="button" id="register" name="Sign up" >Sign up</button> <!-- redirecting to the register page -->
-      <script type="text/javascript">
+    </p>
+  </div>
+
+  <script type="text/javascript">
         document.getElementById("register").onclick = function () {
           location.href = "/register.php";
         };
       </script>
-    </p>
-  </div>
-
 </body>
 </html>

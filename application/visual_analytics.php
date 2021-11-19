@@ -42,14 +42,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="/menu.php" >
+                    <a href="/application/menu.php" >
                         <i class="fas fa-home"></i>
                         Home
                     </a>
 
                 </li>
                 <li>
-                    <a href="/patientinfo-bootstrap.php">
+                    <a href="/application/patientinfo-bootstrap.php">
                         <i class="fas fa-folder"></i>
                         Existing Patients
                     </a>
@@ -57,13 +57,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 </li>
                 <li>
-                    <a href="/addpatient-bootstrap.php">
+                    <a href="/application/addpatient-bootstrap.php">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
                     </a>
                 </li>
                 <li>
-                    <a href="/searching-bootstrap.php">
+                    <a href="/application/searching-bootstrap.php">
                         <i class="fas fa-search"></i>
                         Advanced Search
                     </a>
@@ -112,16 +112,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </nav>
 
             <div class="d3-wrapper">
+              
               <table class="table-bordered" id="d3-searching">
                 <tr id="type_of_chart_row"> <!-- select the type of chart you want -->
                   <th>Type of Chart</th>
-                  <td colspan="3" class="tdclass exempt"><select id="type_of_chart">
-                    <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
-                    <option value="donut_chart">Donut Chart</option> <!-- pie chart with a whole in the middle -->
-                    <option value="vert_bar">Vertical Bar Chart</option>  <!-- typical bar graph -->
-                    <option value="hor_bar">Horizontal Bar Chart</option> <!-- horizontal bar graph with Y axis as a base -->
-                    <option value="line_chart">Line Chart</option>  <!-- One line with multiple values -->
-                  </select></td>
+                  <td colspan="3" class="tdclass exempt">
+                    <select id="type_of_chart">
+                      <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
+                      <option value="donut_chart">Donut Chart</option> <!-- pie chart with a whole in the middle -->
+                      <option value="vert_bar">Vertical Bar Chart</option>  <!-- typical bar graph -->
+                      <option value="hor_bar">Horizontal Bar Chart</option> <!-- horizontal bar graph with Y axis as a base -->
+                      <option value="line_chart">Line Chart</option>  <!-- One line with multiple values -->
+                    </select>
+                  </td>
                   <th id="Num_Years_header" hidden>Enter the Time span in Years</th>
                   <th id="Num_Persons_header" hidden>Enter the Number of Persons</th>
                   <th id="Attributes_header" hidden>Choose the Attributes</th>
@@ -130,43 +133,48 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 <tr id="attribute_row"> <!-- select the attribute for which the chart will be printed -->
                   <th>Select an Attribute</th>
-                  <td colspan="3" class="tdclass exempt"><select id="attributes">
+                  <td colspan="3" class="tdclass exempt">
+                    <select id="attributes">
                     <option value="Name" id="p_Name">Patient Name</option>
                     <option value="Sex" id="p_Sex">Sex</option>
-                    <option value="Age" id="p_Age">Age</option>
-                    <option value="Race" id="p_Race">Race</option>
-                    <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
-                    <option value="EDSS" id="p_eddsscore">EDSS Score</option>
-                    <option value="Past_medication">Past Medication</option>
-                    <option value="Current_medication">Current Medication</option>
-                    <option value="Pregnant" id="p_Pregnant">Is Pregnant</option>
-                    <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation</option>
-                    <option value="Smoker" id="p_Smoker">Is a Smoker</option>
-                    <option value="onsetsymptoms" id="p_onsetsymptoms">Onset Symptoms</option>
-                    <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions</option>
-                    <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
-                    <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
-                  </select></td>
+                      <option value="Age" id="p_Age">Age</option>
+                      <option value="Race" id="p_Race">Race</option>
+                      <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
+                      <option value="EDSS" id="p_eddsscore">EDSS Score</option>
+                      <option value="Past_medication">Past Medication</option>
+                      <option value="Current_medication">Current Medication</option>
+                      <option value="Pregnant" id="p_Pregnant">Is Pregnant</option>
+                      <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation</option>
+                      <option value="Smoker" id="p_Smoker">Is a Smoker</option>
+                      <option value="onsetsymptoms" id="p_onsetsymptoms">Onset Symptoms</option>
+                      <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions</option>
+                      <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
+                      <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
+                    </select>
+                  </td>
                 </tr>
 
                 <tr id="x_axis_row" hidden> <!-- the x axis for the horizontal bar chart -->
                   <th>X Axis</th>
-                  <td colspan="3" class="tdclass exempt"><select>
-                    <option value="patient_names" hidden>Patient Names</option>
-                    <option value="patient_ids" hidden>Patient IDs</option>
-                    <option value="Values" selected>Values</option>
-                  </select></td>
+                  <td colspan="3" class="tdclass exempt">
+                    <select>
+                      <option value="patient_names" hidden>Patient Names</option>
+                      <option value="patient_ids" hidden>Patient IDs</option>
+                      <option value="Values" selected>Values</option>
+                    </select>
+                  </td>
                 </tr>
 
                 <tr id="y_axis_row" hidden> <!-- the y axis for the horizontal bar chart -->
                   <th>Y Axis</th>
-                  <td colspan="3" class="tdclass exempt"><select id="y_axis_select">
-                    <option value="time">Time span</option>
-                    <option value="Num_Persons">Number of Persons</option>
-                    <option value="Attributes">Attributes</option>
-                    <option value="Medication">Medication</option>
-                    <!-- <option value=""></option> -->
-                  </select></td>
+                  <td colspan="3" class="tdclass exempt">
+                    <select id="y_axis_select">
+                      <option value="time">Time span</option>
+                      <option value="Num_Persons">Number of Persons</option>
+                      <option value="Attributes">Attributes</option>
+                      <option value="Medication">Medication</option>
+                    </select>
+                  </td>
                   <td id="Num_of_persons_on_y" class="tdclass exempt" hidden><input id="Num_of_persons_on_y_input" name="Numofper" type="number" placeholder="Enter No. of Persons"></td>
                   <td id="Num_of_years_on_y" class="tdclass exempt" hidden><input id="Num_of_years_on_y_input" name="Numofyears" type="text" placeholder="ex. 2010-2021"></td> <!-- not really practical, but ok fo now -->
                   <td id="Attributes_on_y" class="tdclass exempt" hidden>
@@ -206,20 +214,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   </td>
                 </tr>
 
-                <!-- <tr id="attr_values_row">
-                  <th>No. of Ranges</th><td><input name="numofRanges" id="num_of_pie_ranges" type="number"></td>
-                  <th>Ranges</th>
-                  <td><select>
-                    <option value="">value1</option>
-                    <option value="">value2</option>
-                    <option value="">value3</option>
-                  </select></td>
-                </tr> -->
-
               </table>
-              <div id="d3-container">
-
-              </div>
+              <div id="d3-container"/>
 
             </div>
 

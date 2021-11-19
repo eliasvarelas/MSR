@@ -1,1 +1,1 @@
-window.location.replace("/admins_menu.php");
+window.location.replace("/application/admins_menu.php");

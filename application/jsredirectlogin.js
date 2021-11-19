@@ -1,1 +1,1 @@
-window.location.replace("/login.php");
+window.location.replace("/application/login.php");

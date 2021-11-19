@@ -1,1 +1,1 @@
-window.location.replace("/timedout.php");
+window.location.replace("/application/timedout.php");
