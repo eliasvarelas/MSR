@@ -1,4 +1,6 @@
-<?php session_start();
+<?php 
+session_start();
+error_reporting(0);
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
     session_unset();     // unset $_SESSION variable for the run-time
@@ -215,6 +217,55 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </tr>
 
               </table>
+
+              <p>want to download the info?</p>
+              <form action="visual_analytics.php" method="POST">
+                <button name="pdf_file" id="pdf_value" value=".pdf" >.pdf</button>
+              </form>
+              
+              <?php 
+
+                $usersid = $_SESSION['user_id'];
+                $servername = "127.0.0.1";
+                $username = "root";
+                $password = "bioinformatics";
+                $dbname = "BIHElab";
+                // add info to get the values to create a query for a pdf file. or a csv  
+                $pdf = $_POST['pdf_file'];
+
+                if (isset($_POST['pdf_file'])) {
+                  try {
+                    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                    // set the PDO error mode to exception
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+                    $sql = "SELECT Patient_name FROM patients where Doctor_ID = '1'";
+
+                    $someArray = array();
+
+                    $result = $pdo->query($sql);
+                      if($result->rowCount() > 0){
+                        while($row = $result->fetch()){
+                          $someArray[] = $row;
+                        }
+                      }
+                      json_encode($someArray); //transforms the php array in json format
+
+
+                      $fp = fopen('empdata.json', 'w');
+                      fwrite($fp, json_encode($someArray));
+                      fclose($fp);
+
+                      
+                  } catch(PDOException $e) {
+                    echo $sql . "<br>" . $e->getMessage();
+                    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+                  }
+                }
+
+
+              ?>
               <div id="d3-container"/>
 
             </div>
