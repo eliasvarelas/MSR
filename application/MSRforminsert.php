@@ -7,7 +7,7 @@
   $table = "MSR";
 
   // get the $_POST info
-  $NDS = $_POST['NDS'];
+  $NDS = $_POST['patientName'];
   $NDSdate = $_POST['NDSdate'];
   $NDSnum = $_POST['NDSnum'];
   $Sex = $_POST['Sex'];
@@ -71,7 +71,7 @@
     pastTREATMENT,pastTREATMENTdate,pastTREATMENTcheck,TREATMENTdate, TREATMENT, eddsscore,edsstime7_5m,edsstimePEG,
     EDSSdate,Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,MRIonsetlocalisation,MRIenhancing,MRInum,MRIenhancinglocation,
     signer,Submit)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";        //using prepared statements for security towards sql injections
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";     //using prepared statements for security towards sql injections
 
     //Execute
   if (isset($_POST["Submit"])) {

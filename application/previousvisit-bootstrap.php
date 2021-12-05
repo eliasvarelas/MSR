@@ -224,25 +224,26 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </div>
             <div class="line"></div>
 
-        <?php           }
+    <?php           }
 
                         // Free result set
                         unset($result);
                     } else {   // basic error checking
                         echo "No records matching your query were found.";
-        ?>
-            <div class="line"></div>
-<?php
                     }
+    ?>
+    <!-- <div class="line"></div> -->
+<?php
+
                 } catch (PDOException $e) {
                     die("ERROR: Could not able to execute $sql. " . $e->getMessage());
                 }
 ?>
 
 <!-- <div class="line"></div> -->
-          <footer>
-              Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
-          </footer>
+            <footer>
+                Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
+            </footer>
         </div>
     </div>
 

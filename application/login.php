@@ -55,6 +55,10 @@ try {
           $script = file_get_contents('redirectMenu.js');
           echo "<script>".$script."</script>";
 
+          // if (condition) {   // if the user is still active, dont allow entry without terminating the previous connection
+          //   # code...
+          // }
+
       } elseif ($validPassword && $user_name === 'admin') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['logged_in'] = time();

@@ -1,1 +1,19 @@
-[{"Patient_name":"Athanasia Moutlia","0":"Athanasia Moutlia"},{"Patient_name":"Sakis Varelas","0":"Sakis Varelas"},{"Patient_name":"Eui Galliota","0":"Eui Galliota"},{"Patient_name":"Gogo Mant","0":"Gogo Mant"},{"Patient_name":"Single Input_user","0":"Single Input_user"},{"Patient_name":"John Snow","0":"John Snow"},{"Patient_name":"Iakovos Born","0":"Iakovos Born"},{"Patient_name":"Melvyn Hallie","0":"Melvyn Hallie"},{"Patient_name":"Dirk Pernel","0":"Dirk Pernel"},{"Patient_name":"asomea","0":"asomea"}]
+[
+    { "NDS": "athanasia moutla", "score": "80" },
+    { "NDS": "athanasia moutla", "score": "12" },
+    { "NDS": "elias", "score": "34" },
+    { "NDS": "kostas", "score": "94" },
+    {
+        "NDS": "kostas koudounas kaualaki papandreou 69",
+        "score": "69"
+    },
+    { "NDS": "  Elias vasileios", "score": "98" },
+    { "NDS": "  Sakis Varelas", "score": " 21" },
+    { "NDS": "  Gogo Mant", "score": "12" },
+    {
+        "NDS": "  Eui Galliota El. Filippidi 18",
+        "score": "18"
+    },
+    { "NDS": "  Gogo Mant", "score": "87" },
+    { "NDS": "Sakis Varelas", "score": "56" }
+]

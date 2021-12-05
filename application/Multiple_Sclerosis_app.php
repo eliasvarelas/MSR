@@ -163,9 +163,9 @@
         }
         /* attributes */
 
-        form {
-            display: table;
-        }
+        /* form {
+            /* display: table; 
+        } */
 
         p {
             display: table-row;
@@ -207,10 +207,16 @@
         }
 
         input[type=date],
-        input[type=number],
         input[type=time] {
             padding: 5px 5px;
             margin: 8px 0;
+            box-sizing: border-box;
+            font-family: arial;
+            width: auto;
+        }
+        input[type=number] {
+            padding: 5px;
+            margin: 5px 0;
             box-sizing: border-box;
             font-family: arial;
             width: auto;
@@ -251,7 +257,7 @@
                 border: 0px;
             }
         }
-        @@media (max-width: 1200px) {
+        @media (max-width: 1200px) {
           .container {
             max-width: 90%;
             min-width: 70%;
@@ -265,7 +271,7 @@
 
     <!-- Starting the form -->
     <div class="header-wrapper">
-        <form target="_blank" action="MSRforminsert.php" method="post"></form>
+        <form action="MSRforminsert.php" method="post">
 
         <input type="image" class="lang" id="gr" src="Greek_flag.png">
         <!-- redirects the user to the greek form -->
@@ -279,7 +285,12 @@
 
                 </div>
                 <div class="right block text-left">
+                    
+                    <p>
+                        <!-- <label for="date">Current Date</label> <input type="text" name="NDSdate" id="currDate" value="" required> -->
+                        <label for="date">Current Date:</label> <label id="currDate"></label>
 
+                    </p>
                     <p>
                         <label for="name">Patients Name:</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME?>" required>
                     </p>
@@ -288,12 +299,40 @@
                         <label for="address">Patients Address</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12" value="<?php echo $patientADR; ?>" required>
                     </p>
 
-                    <p>
-                        <label for="date">Current Date</label> <input type="date" name="NDSdate" id="" required>
-                    </p>
 
                     <p>
                         <label for="PatientID">Patient ID</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID?>" required>
+                    </p>
+                    <p>
+                        <label for="PatientSex">Sex</label> <input type="radio" name="Sex" id="Sex" value="Male"> Male <br>
+                        <input type="radio" name="Sex" id="" value="Female"> Female
+                    </p>
+                    <p>
+                        <label for="Age">Age</label> <input type="number" name="Age" min="1" max="150" id="Age" placeholder="Age">
+                    </p>
+                    <p>
+                        <label for="Race">Race</label>
+                        <select id="Race" name="Race" required>
+                            <option value="American Indian">American Indian</option>
+                            <option value="Asian">Asian</option>
+                            <option value="Black">Black</option>
+                            <option value="Hispanic">Hispanic</option>
+                            <option value="Caucasian">Caucasian</option>
+                            <option value="Unknown">Unknown</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="Comorbidities">Comorbidities</label>
+                        <input type="text" list="Comorbidities" name="Comorbidities"/>
+                        <datalist id="Comorbidities">
+                            <option value="Diabetes">Diabetes</option>
+                            <option value="Obesity">Obesity</option>
+                            <option value="Heart Disease">Heart Disease</option>
+                            <option value="Renal Failure">Renal Failure</option>
+                            <option value="Hepatic Failure">Hepatic Failure</option>
+                            <option value="Dyslipidemia">Dyslipidemia</option>
+                            <option value="Autoimmune">Autoimmune</option>
+                        </datalist>
                     </p>
 
                 </div>
@@ -338,15 +377,15 @@
 
                 <p>
                     <label for="pastdatestop">PAST Disease Modifying Treatment: Date stopped:</label>
-                    <input type="date" name="pastTREATMENT" id="pastDateStopped" required>
+                    <input type="date" name="pastTREATMENTdate" id="pastDateStopped" required>
                 </p>
                 <p>
                     <label for="pastTREATMENTreason">Reason:</label>
-                    <input type="text" name="pastTREATMENTcheck" id="pastDateReason" list="pastDateReason" required>
-                    <datalist class="">
-                      <option value="Lack of efficasy" id="Lack of efficasy">Lack of efficasy</option>
-                      <option value="Side effects" id="Side effects">Side effects</option>
-                      <option value="Other" id="Other">Other</option>
+                    <input type="text" name="pastTREATMENTcheck" id="pastTREATMENTcheck" list="pastTREATMENTcheck" placeholder="Reason" required>
+                    <datalist id="pastTREATMENTcheck">
+                      <option value="Lack of efficasy">Lack of efficasy</option>
+                      <option value="Side effects">Side effects</option>
+                      <option value="Other">Other</option>
                     </datalist>
                 </p>
                 <p>
@@ -386,7 +425,7 @@
 
                 <p>
                     <label for="meds">Past Medication:</label>
-                    <input type="text" name="meds" list="meds" placeholder="Past Medicin" required>
+                    <input type="text" name="pastTREATMENT" list="meds" placeholder="Past Medicin" required>
                     <datalist id="meds">
                         <option value="Alemtuzumab">Alemtuzumab</option>
                         <option value="Avonex">Avonex</option>
@@ -406,7 +445,7 @@
 
                 <p>
                     <label for="meds">Present Medication:</label>
-                    <input type="text" name="meds" list="meds" placeholder="Present Medicin" required>
+                    <input type="text" name="TREATMENT" list="meds" placeholder="Present Medicin" required>
                     <datalist id="meds">
                         <option value="Alemtuzumab">Alemtuzumab</option>
                         <option value="Avonex">Avonex</option>
@@ -432,7 +471,7 @@
                 </p>
                 <p>
                     <label for="EDSS" class="w-100">Current EDSS Score:</label>
-                    <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10" required>
+                    <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10 " required>
                 </p>
 
                 <p>
@@ -509,28 +548,31 @@
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
-                        <!-- <label for="">Number of Lesions:</label> <input name="MRInum" type="number" id="MRInum"> -->
+                        
+                    </p>
+                    <p>
+                    <label for="">Number of Lesions:</label> <input name="MRInum" type="number" id="MRInum" placeholder="Number of Lesions">
                     </p>
                     <p>
                         <label for="MRIenchancing Lesions Loc">MRI Enchancing Lesions Location:</label>
                     </p>
 
-                    <p>
-                        <label for="Visual">Visual</label>
-                        <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIloc2">
-                    </p>
-
+                    
                     <p>
                         <label for="Spinal">Spinal</label>
                         <input type="checkbox" name="Onselocalisation" value="Spinal" id="MRIloc">
                     </p>
-
+                    
                     <p>
                         <label for="Cortex">Cortex</label>
                         <input type="checkbox" name="Onselocalisation" value="Cortex" id="MRIloc1">
                     </p>
-
-
+                    
+                    <p>
+                        <label for="Visual">Visual</label>
+                        <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIloc2">
+                    </p>
+                    
 
                     <p>
                         <label for="Cerebellar">Cerebellar</label>
@@ -562,18 +604,18 @@
 
                 <p>
                     <label for="Smoker">Smoker</label>
-                    <select name="smoker" id="">
+                    <select name="smoker" id="smoker">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </p>
                 <p>
                     <label for="numofCigs">Number of Cigars</label>
-                    <input type="number" name="numofcig" id="" placeholder="Cigars per day">
+                    <input type="number" name="numofcig" id="numofcig" placeholder="Cigars per day">
                 </p>
                 <p>
                     <label for="lastcig">Smoked Last:</label>
-                    <input type="date" name="dateofcig" id="">
+                    <input type="date" name="dateofcig" id="dateofcig">
                 </p>
 
 
@@ -639,6 +681,9 @@
                 <input type="text" name="signer" required>
                 <input type="submit" name="Submit" value="Submit" id="subm" required>
             </h3>
+            <p id="some">
+
+            </p>
         </div>
     </div>
 
@@ -664,14 +709,14 @@
             location.href = "Multiple_Sclerosis_app_gr.php";
         };
     </script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         // date validating client-side for pastStarted-pastEnded treatment
         document.getElementById('pastDate').addEventListener("change", function() {
             var inputpastdateStart = this.value;
             var pastdatestart = new Date(inputpastdateStart);
             document.getElementById('datestoped').setAttribute("min", inputpastdateStart);
         });
-    </script>
+    </script>  -->
     <script type="text/javascript">
         // dynamicly disabling certain input boxes in the MRI tier
         document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
@@ -717,21 +762,28 @@
     </script>
     <script type="text/javascript">
         //  not Done yet!! calculates the age of the person based on Date of Birth
-        function calcAge() {
-            var date = new Date();
-            var day = date.getDate(),
-                month = date.getMonth() + 1,
-                year = date.getFullYear();
+        // function calcAge() {
+        //     var date = new Date();
+        //     var day = date.getDate(),
+        //         month = date.getMonth() + 1,
+        //         year = date.getFullYear();
 
-            month = (month < 10 ? "0" : "") + month;
-            day = (day < 10 ? "0" : "") + day;
+        //     month = (month < 10 ? "0" : "") + month;
+        //     day = (day < 10 ? "0" : "") + day;
 
-            var today = year + "/" + month + "/" + day;
-            var dateOfBirth = document.getElementById('dob');
-            var Age = today - dateOfBirth;
+        //     var today = year + "/" + month + "/" + day;
+        //     var dateOfBirth = document.getElementById('dob');
+        //     var Age = today - dateOfBirth;
 
-            var ageinputbox = document.getElementById('Age').innerHTML = Age; // make it print the calculated Age on page load
-        }
+        //     var ageinputbox = document.getElementById('Age').innerHTML = Age; // make it print the calculated Age on page load
+        // }
+    </script>
+    <script>
+        var today = new Date();
+        var dateNow = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+
+        var currDate = document.getElementById('currDate');
+        currDate.innerHTML = dateNow;
     </script>
 
 </body>

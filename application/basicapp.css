@@ -1,6 +1,8 @@
 /* --------------------------------------------------------
           CSS from Form
 ---------------------------------------------------------*/
+
+
 /* Classes */
 
 .split {
@@ -80,6 +82,12 @@
     border: 1px solid black;
     border-collapse: collapse;
     margin: 1rem 1rem;
+}
+
+.errorBox {
+    background-color: red;
+    font-size: large;
+    margin: 1em;
 }
 
 .block {
@@ -360,6 +368,7 @@ span {
     border: 1px solid black;
 }
 
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -396,7 +405,6 @@ span {
     text-align: left;
     color: #fff;
 }
-
 
 #sidebar.active ul li a {
     padding: 20px 10px;
@@ -587,20 +595,19 @@ a.article:hover {
 }
 
 @media (max-width: 1200px) {
-  #sidebar ul li a i {
-      font-size: 2em;
-  }
-  #sidebar {
-      min-width: 80px;
-      max-width: 150px;
-      text-align: center;
-      margin-left: -80px !important;
-  }
-
-  #sidebar ul li a span {
-      font-size: 1em;
-  }
-  #content table th td{
-    font-size: 0.8em;
-  }
+    #sidebar ul li a i {
+        font-size: 2em;
+    }
+    #sidebar {
+        min-width: 80px;
+        max-width: 150px;
+        text-align: center;
+        margin-left: -80px !important;
+    }
+    #sidebar ul li a span {
+        font-size: 1em;
+    }
+    #content table th td {
+        font-size: 0.8em;
+    }
 }
