@@ -77,7 +77,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </li>
                 <li>
                     <a href="/application/visual_analytics.php">
-                        <i class="fas fa-paper-plane"></i>
+                        <i class="fas fa-chart-bar"></i>
                         Visual Analytics Tool D3
                     </a>
                 </li>
