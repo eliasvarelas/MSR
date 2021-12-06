@@ -59,6 +59,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 </li>
                 <li>
+                    <a href="/application/editPatientInfo.php">
+                        <i class="fas fa-edit"></i>
+                        Edit Patient Info
+                    </a>
+                </li>
+                <li>
                     <a href="/application/addpatient-bootstrap.php">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
@@ -241,9 +247,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
 
 <!-- <div class="line"></div> -->
-            <footer>
-                Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
-            </footer>
+<footer>
+    Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
+</footer>
         </div>
     </div>
 

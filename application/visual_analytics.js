@@ -1,157 +1,16 @@
-// document.getElementById('form').addEventListener;
-
-// var option = document.getElementById('type_of_chart').onchange = function names() {
-
-//     // var attribute = document.getElementById('attributes').value;
-
-//     if (option.value == "vert_bar") {
-//         // const data = [
-//         //     { name: 'John', Patient_id: 1 },
-//         //     { name: 'Simon', Patient_id: 2 },
-//         //     { name: 'Samantha', Patient_id: 3 },
-//         //     { name: 'Patrick', Patient_id: 4 },
-//         //     { name: 'Mary', Patient_id: 5 },
-//         //     { name: 'Christina', Patient_id: 6 },
-//         //     { name: 'Michael', Patient_id: 7 },
-//         // ];
-//         var data = d3.json("/empdata.json", function(data) {
-//             console.log(data);
-
-//         });
-
-//         const width = 900;
-//         const height = 450;
-//         const margin = { top: 50, bottom: 50, left: 50, right: 50 };
-
-//         const svg = d3.select('#d3-container')
-//             .append('svg')
-//             .attr('width', width - margin.left - margin.right)
-//             .attr('height', height - margin.top - margin.bottom)
-//             .attr("viewBox", [0, 0, width, height]);
-
-//         const x = d3.scaleBand()
-//             .domain(d3.range(data.length))
-//             .range([margin.left, width - margin.right])
-//             .padding(0.1)
-
-//         const y = d3.scaleLinear()
-//             .domain([0, 310])
-//             .range([height - margin.bottom, margin.top])
-
-//         // function setColor() {    //create a function that gets the colorInput and processes it as a graph
-//         //     var fillColor = document.getElementById('colorInput');
-//         //     fillColor.value = "#9933ff";
-//         // }
-
-//         svg
-//             .append("g")
-//             .attr("fill", 'blue')
-//             .selectAll("rect")
-//             .data(data.sort((a, b) => d3.descending(a.Patient_id, b.Patient_id)))
-//             .join("rect")
-//             .attr("x", (d, i) => x(i))
-//             .attr("y", d => y(d.Patient_id))
-//             .attr('title', (d) => d.Patient_id)
-//             .attr("class", "rect")
-//             .attr("height", d => y(0) - y(d.Patient_id))
-//             .attr("width", x.bandwidth());
-
-//         function yAxis(g) {
-//             g.attr("transform", `translate(${margin.left}, 0)`)
-//                 .call(d3.axisLeft(y).ticks(null, data.format))
-//                 .attr("font-size", '20px')
-//         }
-
-//         function xAxis(g) {
-//             g.attr("transform", `translate(0,${height - margin.bottom})`)
-//                 .call(d3.axisBottom(x).tickFormat(i => data[i].Patient_name))
-//                 .attr("font-size", '20px')
-//         }
-
-//         svg.append("g").call(xAxis);
-//         svg.append("g").call(yAxis);
-//         svg.node();
-
-
-//         // }
-//         // if (option.value = "Pie_chart") {
-//         //     const dataPie = [{ name: "Alex", share: 20.70 },
-//         //         { name: "Shelly", share: 30.92 },
-//         //         { name: "Clark", share: 15.42 },
-//         //         { name: "Matt", share: 13.65 },
-//         //         { name: "Jolene", share: 19.31 }
-//         //     ];
-
-//         //     const width = 900;
-//         //     const height = 450;
-//         //     const margin = { top: 50, bottom: 50, left: 50, right: 50 };
-
-//         //     const svg2 = d3.select('#d3-container')
-//         //         .append('svg')
-//         //         .attr('width', width - margin.left - margin.right)
-//         //         .attr('height', height - margin.top - margin.bottom)
-//         //         .attr("viewBox", [0, 0, width, height]);
-
-//         //     var g = svg2.append("g")
-//         //         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-//         //     var ordScale = d3.scaleOrdinal()
-//         //         .domain(dataPie)
-//         //         .range(['#ffd384', '#94ebcd', '#fbaccc', '#d3e0ea', '#fa7f72']);
-
-//         //     var pie = d3.pie().value(function(d) {
-//         //         return d.share;
-//         //     });
-
-//         //     var arc = g.selectAll("arc")
-//         //         .data(pie(dataPie))
-//         //         .enter();
-
-//         //     var path = d3.arc()
-//         //         .outerRadius(radius)
-//         //         .innerRadius(0);
-
-//         //     arc.append("path")
-//         //         .attr("d", path)
-//         //         .attr("fill", function(d) { return ordScale(d.dataPie.name); });
-
-//         //     var label = d3.arc()
-//         //         .outerRadius(radius)
-//         //         .innerRadius(0);
-
-//         //     arc.append("text")
-//         //         .attr("transform", function(d) {
-//         //             return "translate(" + label.centroid(d) + ")";
-//         //         })
-//         //         .text(function(d) { return d.dataPie.name; })
-//         //         .style("font-family", "arial")
-//         //         .style("font-size", 15);
-
-//     } else {
-//         console.log('Hidden');
-
-//     }
-// }
-
-
-// -------------------- Scripts from the testing Repo!!!! --------------------
-
-
 var option = document.getElementById('type_of_chart').onchange = function somefun() {
     if (this.value == "vert_bar") {
-        // const data = [
-        //     { name: 'John', score: 80 },
-        //     { name: 'Simon', score: 76 },
-        //     { name: 'Samantha', score: 90 },
-        //     { name: 'Patrick', score: 82 },
-        //     { name: 'Mary', score: 90 },
-        //     { name: 'Christina', score: 75 },
-        //     { name: 'Michael', score: 86 },
-        // ];
+        const data = [
+            { name: 'John', score: 80 },
+            { name: 'Simon', score: 76 },
+            { name: 'Samantha', score: 90 },
+            { name: 'Patrick', score: 82 },
+            { name: 'Mary', score: 90 },
+            { name: 'Christina', score: 75 },
+            { name: 'Michael', score: 86 },
+        ];
 
-        var data = d3.json("/application/empdata.json", function(data) {
-            console.log(data);
-        });
+
         let sort = function(data) {
             console.log(`Passed in value is: ${data}`);
             player_data.then(function(data) {
@@ -184,7 +43,7 @@ var option = document.getElementById('type_of_chart').onchange = function somefu
             .append("g")
             .attr("fill", 'royalblue')
             .selectAll("rect")
-            // .data(data.sort((a, b) => d3.descending(a.score, b.score)))
+            .data(data.sort((a, b) => d3.descending(a.score, b.score)))
             .join("rect")
             .attr("x", (d, i) => x(i))
             .attr("y", d => y(d.score))

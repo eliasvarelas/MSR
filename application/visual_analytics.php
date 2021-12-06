@@ -59,6 +59,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         </li>
         <li>
+          <a href="/application/editPatientInfo.php">
+            <i class="fas fa-edit"></i>
+            Edit Patient Info
+          </a>
+        </li>
+        <li>
           <a href="/application/addpatient-bootstrap.php">
             <i class="fas fa-user-plus"></i>
             Add a new Patient
@@ -157,7 +163,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </tr>
 
           </table>
-          <button type="submit" name="makeGraph" value="Create Graph" >Create Graph</button>
+          <button type="submit" name="makeGraph" value="Create Graph">Create Graph</button>
 
           <!-- <p>want to download the info?</p> -->
 
@@ -185,46 +191,61 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             if ($attribute == "Name") {
               $queryparam = "NDS";
-            } if ($attribute == "Sex") {
+            }
+            if ($attribute == "Sex") {
               $queryparam = "Sex";
-            }if ($attribute == "Age") {
+            }
+            if ($attribute == "Age") {
               $queryparam = "Age";
-            }if ($attribute == "Race") {
+              // $sqlqu = "SELECT Patient_name FROM patients WHERE Doctor_id = $usersid";
+            }
+            if ($attribute == "Race") {
               $queryparam = "Race";
-            }if ($attribute == "Comorbidities") {
+            }
+            if ($attribute == "Comorbidities") {
               $queryparam = "Comorbidities";
-              $sql2 = "SELECT Patient_name FROM patients WHERE Doctor_id = $usersid";
-            }if ($attribute == "EDSS") {
+              // $sql2 = "SELECT Patient_name FROM patients WHERE Doctor_id = $usersid";
+            }
+            if ($attribute == "EDSS") {
               $queryparam = "eddsscore";
-            }if ($attribute == "Past_medication") {
+            }
+            if ($attribute == "Past_medication") {
               $queryparam = "pastTREATMENT";
-            }if ($attribute == "Current_medication") {
+            }
+            if ($attribute == "Current_medication") {
               $queryparam = "TREATMENT";
-            }if ($attribute == "Pregnant") {
+            }
+            if ($attribute == "Pregnant") {
               $queryparam = "Pregnant";
-            }if ($attribute == "Onsetlocalisation") {
+            }
+            if ($attribute == "Onsetlocalisation") {
               $queryparam = "Onsetlocalisation";
-            }if ($attribute == "Smoker") {
+            }
+            if ($attribute == "Smoker") {
               $queryparam = "smoker";
-            }if ($attribute == "onsetsymptoms") {
+            }
+            if ($attribute == "onsetsymptoms") {
               $queryparam = "onsetsymptoms";
-            }if ($attribute == "MRIenhancing") {
+            }
+            if ($attribute == "MRIenhancing") {
               $queryparam = "MRIenhancing";
-            }if ($attribute == "MRInum") {
+            }
+            if ($attribute == "MRInum") {
               $queryparam = "MRInum";
-            }if ($attribute == "MRIonsetlocalisation") {
+            }
+            if ($attribute == "MRIonsetlocalisation") {
               $queryparam = "MRIonsetlocalisation";
             }
 
             $sql = "SELECT $queryparam FROM MSR";
-            
+
 
             $var1 = array();
-            
+
 
             $result = $pdo->query($sql);
-            // $result2 = $pdo->query($sql2);
-            if ($result->rowCount() > 1 ) {
+
+            if ($result->rowCount() > 1) {
               while ($row = $result->fetch()) {
                 $var1[] = $row;
               }
@@ -233,7 +254,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
 
             $fp = fopen('empdata.json', 'w');
-            fwrite($fp, json_encode($var1,1));
+            fwrite($fp, json_encode($var1));
             fclose($fp);
           } catch (PDOException $e) {
             echo $sql . "<br>" . $e->getMessage();
@@ -243,7 +264,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
 
         ?>
-        <div id="d3-container"> 
+        <div id="d3-container">
           <svg width="500" height="400" id="pie"></svg>
           <svg width="500" height="400" id="linechart"></svg>
         </div>

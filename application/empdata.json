@@ -1,19 +1,13 @@
 [
-    { "NDS": "athanasia moutla", "score": "80" },
-    { "NDS": "athanasia moutla", "score": "12" },
-    { "NDS": "elias", "score": "34" },
-    { "NDS": "kostas", "score": "94" },
-    {
-        "NDS": "kostas koudounas kaualaki papandreou 69",
-        "score": "69"
-    },
-    { "NDS": "  Elias vasileios", "score": "98" },
-    { "NDS": "  Sakis Varelas", "score": " 21" },
-    { "NDS": "  Gogo Mant", "score": "12" },
-    {
-        "NDS": "  Eui Galliota El. Filippidi 18",
-        "score": "18"
-    },
-    { "NDS": "  Gogo Mant", "score": "87" },
-    { "NDS": "Sakis Varelas", "score": "56" }
+    { "TREATMENT": "Teriflunomide", "0": "Teriflunomide" },
+    { "TREATMENT": "Rebif", "0": "Rebif" },
+    { "TREATMENT": "Extavia", "0": "Extavia" },
+    { "TREATMENT": "Betaferon", "0": "Betaferon" },
+    { "TREATMENT": "Tecfidera", "0": "Tecfidera" },
+    { "TREATMENT": "Tecfidera", "0": "Tecfidera" },
+    { "TREATMENT": "Teriflunomide", "0": "Teriflunomide" },
+    { "TREATMENT": "Teriflunomide", "0": "Teriflunomide" },
+    { "TREATMENT": "Rebif", "0": "Rebif" },
+    { "TREATMENT": "Teriflunomide", "0": "Teriflunomide" },
+    { "TREATMENT": "Ocrelizumab", "0": "Ocrelizumab" }
 ]

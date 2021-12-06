@@ -106,6 +106,13 @@
     border-bottom: 1px black;
 }
 
+.editForm {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .alligner {
     margin: 2em 1em;
     padding: 0;

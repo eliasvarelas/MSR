@@ -59,6 +59,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         </li>
         <li>
+          <a href="/application/editPatientInfo.php">
+            <i class="fas fa-edit"></i>
+            Edit Patient Info
+          </a>
+        </li>
+        <li>
           <a href="/application/addpatient-bootstrap.php">
             <i class="fas fa-user-plus"></i>
             Add a new Patient
@@ -140,7 +146,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   <option value="ID" id="p_Id">Patient ID</option>
                   <option value="Sex" id="p_Sex">Sex</option>
                   <option value="Age" id="p_Age">Age ></option>
-                  <option value="Agesmaller">Age <</option>
+                  <option value="Agesmaller">Age << /option>
                   <option value="Race" id="p_Race">Race</option>
                   <option value="PhoneNumber" id="p_Phonenum">Phone Number</option>
                   <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
@@ -156,7 +162,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               </th>
 
               <!-- using hidden table cells in order to create an advanced tool that only prints the neccesary input fields -->
-            <tbody>
+              <tbody>
                 <td id="inputBox" hidden>
                   <!-- inputBox with joker role for text and number inputs -->
                   <input type="text" name="srchoption" id="srchoption" placeholder=" Full Name">
@@ -240,23 +246,23 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   <input type="radio" name="MRIenhancing" value="Yes" id="MRIenhancing_radio">Yes
                   <input type="radio" name="MRIenhancing" value="No" id="MRIenhancing_radio">No
                 </td>
-              </tr>
-              <tr id="MRIenhancing_tr" hidden>
-                <td id="MRIenhancing_td_extented" hidden>
-                  <input type="number" name="MRIenhancing_num" placeholder=" Enter the No. of Lesions">
-                  <input type="text" name="MRIenhancing_list" id="MRIenhancing_list" list="MRIenhancing_list" hidden />
-                  <datalist>
-                    <option value="Spinal">Spinal</option>
-                    <option value="Cortex">Cortex</option>
-                    <option value="Brainstem">Brainstem</option>
-                    <option value="Cerebellum">Cerebellum</option>
-                    <option value="Visual">Visual</option>
-                  </datalist>
-                </td>
-              </tr>
+            </tr>
+            <tr id="MRIenhancing_tr" hidden>
+              <td id="MRIenhancing_td_extented" hidden>
+                <input type="number" name="MRIenhancing_num" placeholder=" Enter the No. of Lesions">
+                <input type="text" name="MRIenhancing_list" id="MRIenhancing_list" list="MRIenhancing_list" hidden />
+                <datalist>
+                  <option value="Spinal">Spinal</option>
+                  <option value="Cortex">Cortex</option>
+                  <option value="Brainstem">Brainstem</option>
+                  <option value="Cerebellum">Cerebellum</option>
+                  <option value="Visual">Visual</option>
+                </datalist>
+              </td>
+            </tr>
             </tbody>
           </table>
-          
+
           <input type="submit" name="Searchbtn" value="Search">
         </form>
         <button id="new_row_btn" onclick="addRow">Add an extra row</button>
@@ -1068,7 +1074,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       }
     }
 
-    document.getElementById('new_row_btn').onchange = function addRow(){
+    document.getElementById('new_row_btn').onchange = function addRow() {
       // var table = document.getElementById('searching_query_table');
       // var newRow = document.getElementById('new_row_btn');
       // newRow.insertRow(1);
