@@ -44,14 +44,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
       <ul class="list-unstyled components">
         <li>
-          <a href="/application/menu.php">
+          <a href="/MSR/application/menu.php">
             <i class="fas fa-home"></i>
             Home
           </a>
 
         </li>
         <li>
-          <a href="/application/patientinfo-bootstrap.php">
+          <a href="/MSR/application/patientinfo-bootstrap.php">
             <i class="fas fa-folder"></i>
             Existing Patients
           </a>
@@ -59,19 +59,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         </li>
         <li>
-          <a href="/application/editPatientInfo.php">
+          <a href="/MSR/application/editPatientInfo.php">
             <i class="fas fa-edit"></i>
             Edit Patient Info
           </a>
         </li>
         <li>
-          <a href="/application/addpatient-bootstrap.php">
+          <a href="/MSR/application/addpatient-bootstrap.php">
             <i class="fas fa-user-plus"></i>
             Add a new Patient
           </a>
         </li>
         <li>
-          <a href="/application/searching-bootstrap.php">
+          <a href="/MSR/application/searching-bootstrap.php">
             <i class="fas fa-search"></i>
             Advanced Search
           </a>
@@ -237,25 +237,42 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               $queryparam = "MRIonsetlocalisation";
             }
 
-            $sql = "SELECT $queryparam FROM MSR";
+            $sql = "SELECT $queryparam,NDS FROM MSR";
 
+            // $stmt = $dbh->prepare($sql);
+            // $stmt->execute();
 
-            $var1 = array();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $values = array();
 
-
-            $result = $pdo->query($sql);
-
-            if ($result->rowCount() > 1) {
-              while ($row = $result->fetch()) {
-                $var1[] = $row;
-              }
+            for($row = 0; $row < count($result); $row++) {
+                $values[] = array('label' => $result[$row]['Label'], 'value' => $result[$row]['Value']);
             }
-            json_encode($someArray); //transforms the php array in json format
+
+            $to_encode = array(
+                                array('key' => 'NDS', 
+                                      'values' => $values
+                                      )
+                                );
+            echo json_encode($to_encode);
+
+            // $var1 = array();
 
 
-            $fp = fopen('empdata.json', 'w');
-            fwrite($fp, json_encode($var1));
-            fclose($fp);
+            // $result = $pdo->query($sql);
+
+            // if ($result->rowCount() > 1) {
+            //   while ($row = $result->fetch()) {
+            //     $var1[] = $row;
+            //   }
+            // }
+            // // json_encode($someArray); //transforms the php array in json format
+            // $out = array_values($var1);
+
+
+            // $fp = fopen('empdata.json', 'w');
+            // fwrite($fp, json_encode($out,JSON_FORCE_OBJECT));
+            // fclose($fp);
           } catch (PDOException $e) {
             echo $sql . "<br>" . $e->getMessage();
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());

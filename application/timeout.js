@@ -1,1 +1,1 @@
-window.location.replace("/application/timedout.php");
+window.location.replace("/MSR/application/timedout.php");

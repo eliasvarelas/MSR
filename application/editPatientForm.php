@@ -4,7 +4,7 @@ error_reporting(0);
 $patientID = $_GET["id"];   // used to pass the patient id directly in the form
 $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
 $patientEmail = $_GET["em"]; // used to pass the pateints age directly in the form
-$patientPhonenum = $_GET["patnum"];
+$patientPhonenum = $_GET["phone"];
 $patientAdr = $_GET['adr'];
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago

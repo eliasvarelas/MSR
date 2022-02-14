@@ -43,14 +43,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="/application/menu.php">
+                    <a href="/MSR/application/menu.php">
                         <i class="fas fa-home"></i>
                         Home
                     </a>
 
                 </li>
                 <li>
-                    <a href="/application/patientinfo-bootstrap.php">
+                    <a href="/MSR/application/patientinfo-bootstrap.php">
                         <i class="fas fa-folder"></i>
                         Existing Patients
                     </a>
@@ -58,25 +58,25 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 </li>
                 <li class="active">
-                    <a href="/application/editPatientInfo.php">
+                    <a href="/MSR/application/editPatientInfo.php">
                         <i class="fas fa-edit"></i>
                         Edit Patient Info
                     </a>
                 </li>
                 <li>
-                    <a href="/application/addpatient-bootstrap.php">
+                    <a href="/MSR/application/addpatient-bootstrap.php">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
                     </a>
                 </li>
                 <li>
-                    <a href="/application/searching-bootstrap.php">
+                    <a href="/MSR/application/searching-bootstrap.php">
                         <i class="fas fa-search"></i>
                         Advanced Search
                     </a>
                 </li>
                 <li>
-                    <a href="/application/visual_analytics.php">
+                    <a href="/MSR/application/visual_analytics.php">
                         <i class="fas fa-chart-bar"></i>
                         Visual Analytics Tool D3
                     </a>
@@ -159,7 +159,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                     <td><?php echo ($row['Patient_address'] ?? "N/A"); ?></td>
                                     <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                                     <td><?php echo "<a href='/application/removeuser.php?id=" . $row['Patient_id'] . "'onclick='removeuser()'>Remove Patient</a>"; ?></td> <!-- Removes only the patient with the particular id -->
-                                    <td><?php echo "<a href='/application/editPatientForm.php?id=".$row['Patient_id']. "&nm=". $row['Patient_name']."&adr=". $row['Patient_address']."&em=".$row['Email']."'>Edit</a>"; ?></td>
+                                    <td><?php echo "<a href='/application/editPatientForm.php?id=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']."'>Edit</a>"; ?></td>
                                 </tr>
 
                     <?php

@@ -1,1 +1,1 @@
-window.location.replace("/application/register_error_username.php");
+window.location.replace("/MSR/application/register_error_username.php");
