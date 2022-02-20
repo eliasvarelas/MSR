@@ -36,8 +36,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-        <h3>Multiple Sclerosis Registry</h3>
-        <strong>MSR</strong>
+      <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a/></h3>
+        <strong><a href="menu.php" id="logo">MSR</a></strong>
       </div>
 
       <ul class="list-unstyled components">
@@ -56,12 +56,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
 
         </li>
-        <li>
+        <!-- <li>
           <a href="/MSR/application/editPatientInfo.php">
             <i class="fas fa-edit"></i>
             Edit Patient Info
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="/MSR/application/addpatient-bootstrap.php">
             <i class="fas fa-user-plus"></i>
@@ -197,14 +197,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         </div>
       </section>
 
-      <div class="line"></div>
       <footer>
+        <div class="line"></div>
         <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
-        <?php
-
-
-
-        ?>
+        
       </footer>
 
     </div>

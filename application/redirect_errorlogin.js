@@ -1,1 +1,1 @@
-window.location.replace("/MSR/application/login_error_pass.php");
+window.location.replace("login_error_pass.php");

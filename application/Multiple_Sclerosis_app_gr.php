@@ -1,17 +1,17 @@
 <?php // session_start and timeout function
-  session_start();
-  error_reporting(0);
-  $patientID = $_GET["id"];   // used to pass the patient id directly in the form
-  $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
-  $patientADR = $_GET["adr"]; // used to pass the pateints age directly in the form
-  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
-      // last request was more than 30 minutes ago
-      session_unset();     // unset $_SESSION variable for the run-time
-      session_destroy();   // destroy session data in storage
-      $scripttimedout = file_get_contents('timeout.js');
-      echo "<script>".$scripttimedout."</script>";
-  }
-  $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+session_start();
+error_reporting(0);
+$patientID = $_GET["id"];   // used to pass the patient id directly in the form
+$patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
+$patientADR = $_GET["adr"]; // used to pass the pateints age directly in the form
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+    $scripttimedout = file_get_contents('timeout.js');
+    echo "<script>" . $scripttimedout . "</script>";
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
     <meta charset="utf-8" />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> -->
     <style>
-         :root {
+        :root {
             --page-bg: #d9d9d9;
         }
 
@@ -34,11 +34,11 @@
 
         body {
             margin: 0;
-            background-color: var(--page-bg);
             background-color: white;
             font-family: 'Roboto', sans-serif;
             font-size: 18px;
         }
+
         /* Classes */
 
         .split {
@@ -161,6 +161,7 @@
         .label-header {
             border: 1px solid black;
         }
+
         /* attributes */
 
         form {
@@ -224,6 +225,7 @@
             text-align: left;
             min-width: 90%;
         }
+
         /* ids */
 
         #purple {
@@ -233,6 +235,7 @@
         #header_container {
             background-color: #3691b0;
         }
+
         /* Media Queries */
 
         @media (max-width: 600px) {
@@ -242,6 +245,7 @@
                 flex-basis: 100%;
                 margin: 0 auto;
             }
+
             .split>.left+.right {
                 margin-left: 0;
                 margin-right: 0;
@@ -273,7 +277,7 @@
                 <div class="right block text-left">
 
                     <p>
-                        <label for="name">Όνομα Ασθενή:</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME?>" required>
+                        <label for="name">Όνομα Ασθενή:</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME ?>" required>
                     </p>
 
                     <p>
@@ -285,13 +289,41 @@
                     </p>
 
                     <p>
-                        <label for="PatientID">Αριθμός Ταυτότητας/ΑΜΚΑ</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID?>" required>
+                        <label for="PatientID">Αριθμός Ταυτότητας/ΑΜΚΑ</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID ?>" required>
                     </p>
-
+                    <p>
+                        <label for="PatientSex">Sex</label> <input type="radio" name="Sex" id="Sex" value="Male"> Male <br>
+                        <input type="radio" name="Sex" id="" value="Female"> Female
+                    </p>
+                    <p>
+                        <label for="Age">Φύλο</label> <input type="number" name="Age" min="1" max="150" id="Age" placeholder="Age">
+                    </p>
+                    <p>
+                        <label for="Race">Εθνικότητα</label>
+                        <select id="Race" name="Race" required>
+                            <option value="American Indian">Ιθαγενός Αμερικανός</option>
+                            <option value="Asian">Ασιάτης</option>
+                            <option value="Black">Μαύρος</option>
+                            <option value="Hispanic">Ισπανόφωνος</option>
+                            <option value="Caucasian">Καυκάσιος</option>
+                            <option value="Unknown">Άγνωστο</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="Comorbidities">Συννοσηρτητες</label>
+                        <input type="text" list="Comorbidities" name="Comorbidities" />
+                        <datalist id="Comorbidities">
+                            <option value="Diabetes">Diabetes</option>
+                            <option value="Obesity">Obesity</option>
+                            <option value="Heart Disease">Heart Disease</option>
+                            <option value="Renal Failure">Renal Failure</option>
+                            <option value="Hepatic Failure">Hepatic Failure</option>
+                            <option value="Dyslipidemia">Dyslipidemia</option>
+                            <option value="Autoimmune">Autoimmune</option>
+                        </datalist>
+                    </p>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -336,9 +368,9 @@
                     <label for="pastTREATMENTreason">Λόγος Διακοπής:</label>
                     <input type="text" name="pastTREATMENTcheck" id="pastDateReason" list="pastDateReason" required>
                     <datalist class="">
-                      <option value="Lack of efficasy" id="Lack of efficasy">Έλλειψη Αποτελεσματικότητας</option>
-                      <option value="Side effects" id="Side effects">Παρενέργειες</option>
-                      <option value="Other" id="Other">Άλλος</option>
+                        <option value="Lack of efficasy" id="Lack of efficasy">Έλλειψη Αποτελεσματικότητας</option>
+                        <option value="Side effects" id="Side effects">Παρενέργειες</option>
+                        <option value="Other" id="Other">Άλλος</option>
                     </datalist>
                 </p>
                 <p>
@@ -366,10 +398,10 @@
                 <p>
                     <label for="Severity">Σοβαρότητα</label>
                     <select name="Noofrelapsesrad" id="">
-                    <option value="Mild">Ήπια</option>
-                    <option value="Moderate">Μέτρια</option>
-                    <option value="Severe">Σοβαρά</option>
-                </select>
+                        <option value="Mild">Ήπια</option>
+                        <option value="Moderate">Μέτρια</option>
+                        <option value="Severe">Σοβαρά</option>
+                    </select>
                 </p>
 
 
@@ -457,7 +489,7 @@
                 <!-- <label for="" hidden></label> -->
                 <p>
                     <label for="Visual">Οπτικό</label>
-                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
+                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2">
                 </p>
 
                 <p>
@@ -493,11 +525,11 @@
             <div class="right">
                 <!-- <legend> -->
                 <p>
-                  <label for="MRIenchancing Lesions">ΚΝΣ MRI Ενισχυτικές Περιοχές τους Τελευταίους 12 Μήνες:</label>
-                  <select name="MRIenhancing" id="MRIenhancing" required>
-                    <option value="Yes">Ναι</option>
-                    <option value="No">Όχι</option>
-                  </select>
+                    <label for="MRIenchancing Lesions">ΚΝΣ MRI Ενισχυτικές Περιοχές τους Τελευταίους 12 Μήνες:</label>
+                    <select name="MRIenhancing" id="MRIenhancing" required>
+                        <option value="Yes">Ναι</option>
+                        <option value="No">Όχι</option>
+                    </select>
                 </p>
                 <p><label for="">Αριθμός MRI Περιοχών:</label> <input name="MRInum" type="number" id="MRInum" placeholder="Αριθμός Περιοχών"></p>
                 <p>
@@ -505,8 +537,8 @@
                 </p>
 
                 <p>
-                  <label for="Visual">Οπτικό</label>
-                  <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
+                    <label for="Visual">Οπτικό</label>
+                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2">
                 </p>
 
                 <p>
@@ -571,8 +603,8 @@
                     <label for="onsetLocalisation">Onset Localisation</label>
                 </p>
                 <p>
-                  <label for="Visual">Οπτικό</label>
-                  <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
+                    <label for="Visual">Οπτικό</label>
+                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2">
                 </p>
 
                 <p>
@@ -634,10 +666,10 @@
         <strong>Πατώντας το κουμπί <i>Reset</i> κάθε πληροφορία που έχετε εισάγει στην φόρμα θα διαγραφτεί και δεν θα αποθυκευτεί!</strong>
     </div>
     <p>
-        <h3>
-            Επαναφορά φόρμας;
-            <input type="reset" name="resetform" id="resetbutton">
-        </h3>
+    <h3>
+        Επαναφορά φόρμας;
+        <input type="reset" name="resetform" id="resetbutton">
+    </h3>
 
     </p>
 

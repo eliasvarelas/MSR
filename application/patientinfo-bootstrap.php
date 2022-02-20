@@ -37,7 +37,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-        <h3>Multiple Sclerosis Registry</h3>
+        <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry</a></h3>
         <strong>MSR</strong>
       </div>
 
@@ -55,12 +55,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             Existing Patients
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="/MSR/application/editPatientInfo.php">
             <i class="fas fa-edit"></i>
             Edit Patient Info
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="/MSR/application/addpatient-bootstrap.php">
             <i class="fas fa-user-plus"></i>
@@ -139,6 +139,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               <th>Email</th>
               <th>History</th>
               <th>Add a Follow Up Visit</th>
+              <th>Edit Patient Info</th>
               <th>Remove Patient</th>
             </tr>
             <?php
@@ -152,19 +153,20 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   <td><?php echo $row['Patient_name']; ?></td>
                   <td><?php echo $row['Phonenum']; ?></td>
                   <td><?php echo $row['Email']; ?></td>
-                  <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  <td><?php echo "<a href='/application/Multiple_Sclerosis_app.php?id=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                  <td><?php echo "<a href='/MSR/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                  <td><?php echo "<a href='/MSR/application/Multiple_Sclerosis_app.php?id=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
+                  <td><?php echo "<a href='/MSR/application/editPatientForm.php?id=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']."'>Edit</a>"; ?></td>
                   <!-- <td><?php //echo "<a  onclick='return confirm('Are you sure to Remove this Patient?');'href='/application/removeuser.php?id=".$row['Patient_id'].">'Title goes here'</a>"
                             ?></td> -->
                   <!-- Removes only the patient with the particular id -->
                   <!-- <td><button id="removeuser" onclick="remove_user"><?php //echo "<?id=".$row['Patient_id']."'>Remove Patient</a>"; 
                                                                           ?></button></td> -->
                   <!-- Removes only the patient with the particular id -->
-                  <td><?php echo "<a href='/application/removeuser.php?id=" . $row['Patient_id'] . "'onclick='removeuser()'>Remove Patient</a>"; ?></td> <!-- Removes only the patient with the particular id -->
+                  <td><?php echo "<a href='/MSR/application/removeuser.php?id=" . $row['Patient_id'] . "'onclick='removeuser()'>Remove Patient</a>"; ?></td> <!-- Removes only the patient with the particular id -->
 
                 </tr>
-
-          <?php
+                
+                <?php
               }
               unset($result);
             } else {     // basic error checking
@@ -174,16 +176,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
           }
           ?>
-
           </table>
+
         </div>
-        <div class="line"></div>
         <footer>
+          <div class="line"></div>
           <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
         </footer>
-
-
-
 
     </div>
   </div>

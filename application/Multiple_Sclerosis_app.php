@@ -1,17 +1,17 @@
 <?php // session_start and timeout function
-  session_start();
-  error_reporting(0);
-  $patientID = $_GET["id"];   // used to pass the patient id directly in the form
-  $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
-  $patientADR = $_GET["adr"]; // used to pass the pateints age directly in the form
-  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
-      // last request was more than 30 minutes ago
-      session_unset();     // unset $_SESSION variable for the run-time
-      session_destroy();   // destroy session data in storage
-      $scripttimedout = file_get_contents('timeout.js');
-      echo "<script>".$scripttimedout."</script>";
-  }
-  $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+session_start();
+error_reporting(0);
+$patientID = $_GET["id"];   // used to pass the patient id directly in the form
+$patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
+$patientADR = $_GET["adr"]; // used to pass the pateints age directly in the form
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+    $scripttimedout = file_get_contents('timeout.js');
+    echo "<script>" . $scripttimedout . "</script>";
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
     <meta charset="utf-8" />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> -->
     <style>
-         :root {
+        :root {
             --page-bg: #d9d9d9;
         }
 
@@ -34,11 +34,11 @@
 
         body {
             margin: 0;
-            background-color: var(--page-bg);
             background-color: white;
             font-family: 'Roboto', sans-serif;
             font-size: 18px;
         }
+
         /* Classes */
 
         .split {
@@ -161,6 +161,7 @@
         .label-header {
             border: 1px solid black;
         }
+
         /* attributes */
 
         /* form {
@@ -214,6 +215,7 @@
             font-family: arial;
             width: auto;
         }
+
         input[type=number] {
             padding: 5px;
             margin: 5px 0;
@@ -230,6 +232,7 @@
             text-align: left;
             min-width: 90%;
         }
+
         /* ids */
 
         #purple {
@@ -239,6 +242,7 @@
         #header_container {
             background-color: #3691b0;
         }
+
         /* Media Queries */
 
         @media (max-width: 992px) {
@@ -249,6 +253,7 @@
                 margin: 0 auto;
                 border: none;
             }
+
             .split>.left+.right {
                 margin-left: 0;
                 margin-right: 0;
@@ -257,11 +262,12 @@
                 border: 0px;
             }
         }
+
         @media (max-width: 1200px) {
-          .container {
-            max-width: 90%;
-            min-width: 70%;
-          }
+            .container {
+                max-width: 90%;
+                min-width: 70%;
+            }
         }
     </style>
 </head>
@@ -271,75 +277,70 @@
 
     <!-- Starting the form -->
     <div class="header-wrapper">
-        <form action="MSRforminsert.php" method="post">
+        <form target="_blank" action="MSRforminsert.php" method="post">
 
-        <input type="image" class="lang" id="gr" src="Greek_flag.png">
-        <!-- redirects the user to the greek form -->
+            <input type="image" class="lang" id="gr" src="Greek_flag.png">
+            <!-- redirects the user to the greek form -->
 
-        <div class="container">
+            <div class="container">
 
-            <div class="split ">
-                <div class="left img right-border ">
+                <div class="split ">
+                    <div class="left img right-border ">
 
-                    <img src="MSregistry_ionian_new_logo_nobg.png" alt="MSR Ionian University Logo">
+                        <img src="MSregistry_ionian_new_logo_nobg.png" alt="MSR Ionian University Logo">
 
-                </div>
-                <div class="right block text-left">
-                    
-                    <p>
-                        <!-- <label for="date">Current Date</label> <input type="text" name="NDSdate" id="currDate" value="" required> -->
-                        <label for="date">Current Date:</label> <label id="currDate"></label>
+                    </div>
+                    <div class="right block text-left">
 
-                    </p>
-                    <p>
-                        <label for="name">Patients Name:</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME?>" required>
-                    </p>
+                        <p>
+                            <label for="name">Όνομα Ασθενή:</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME ?>" required>
+                        </p>
 
-                    <p>
-                        <label for="address">Patients Address</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12" value="<?php echo $patientADR; ?>" required>
-                    </p>
+                        <p>
+                            <label for="address">Διεύθηνση Ασθενή</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12" value="<?php echo $patientADR; ?>" required>
+                        </p>
 
+                        <p>
+                            <label for="date">Ημερομηνία</label> <input type="date" name="NDSdate" id="" required>
+                        </p>
 
-                    <p>
-                        <label for="PatientID">Patient ID</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID?>" required>
-                    </p>
-                    <p>
-                        <label for="PatientSex">Sex</label> <input type="radio" name="Sex" id="Sex" value="Male"> Male <br>
-                        <input type="radio" name="Sex" id="" value="Female"> Female
-                    </p>
-                    <p>
-                        <label for="Age">Age</label> <input type="number" name="Age" min="1" max="150" id="Age" placeholder="Age">
-                    </p>
-                    <p>
-                        <label for="Race">Race</label>
-                        <select id="Race" name="Race" required>
-                            <option value="American Indian">American Indian</option>
-                            <option value="Asian">Asian</option>
-                            <option value="Black">Black</option>
-                            <option value="Hispanic">Hispanic</option>
-                            <option value="Caucasian">Caucasian</option>
-                            <option value="Unknown">Unknown</option>
-                        </select>
-                    </p>
-                    <p>
-                        <label for="Comorbidities">Comorbidities</label>
-                        <input type="text" list="Comorbidities" name="Comorbidities"/>
-                        <datalist id="Comorbidities">
-                            <option value="Diabetes">Diabetes</option>
-                            <option value="Obesity">Obesity</option>
-                            <option value="Heart Disease">Heart Disease</option>
-                            <option value="Renal Failure">Renal Failure</option>
-                            <option value="Hepatic Failure">Hepatic Failure</option>
-                            <option value="Dyslipidemia">Dyslipidemia</option>
-                            <option value="Autoimmune">Autoimmune</option>
-                        </datalist>
-                    </p>
-
+                        <p>
+                            <label for="PatientID">Αριθμός Ταυτότητας/ΑΜΚΑ</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID ?>" required>
+                        </p>
+                        <p>
+                            <label for="PatientSex">Sex</label> <input type="radio" name="Sex" id="Sex" value="Male"> Male <br>
+                            <input type="radio" name="Sex" id="" value="Female"> Female
+                        </p>
+                        <p>
+                            <label for="Age">Age</label> <input type="number" name="Age" min="1" max="150" id="Age" placeholder="Age">
+                        </p>
+                        <p>
+                            <label for="Race">Race</label>
+                            <select id="Race" name="Race" required>
+                                <option value="American Indian">American Indian</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Black">Black</option>
+                                <option value="Hispanic">Hispanic</option>
+                                <option value="Caucasian">Caucasian</option>
+                                <option value="Unknown">Unknown</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label for="Comorbidities">Comorbidities</label>
+                            <input type="text" list="Comorbidities" name="Comorbidities" />
+                            <datalist id="Comorbidities">
+                                <option value="Diabetes">Diabetes</option>
+                                <option value="Obesity">Obesity</option>
+                                <option value="Heart Disease">Heart Disease</option>
+                                <option value="Renal Failure">Renal Failure</option>
+                                <option value="Hepatic Failure">Hepatic Failure</option>
+                                <option value="Dyslipidemia">Dyslipidemia</option>
+                                <option value="Autoimmune">Autoimmune</option>
+                            </datalist>
+                        </p>
+                    </div>
                 </div>
             </div>
-
-
-        </div>
     </div>
 
     <div class="container">
@@ -383,9 +384,9 @@
                     <label for="pastTREATMENTreason">Reason:</label>
                     <input type="text" name="pastTREATMENTcheck" id="pastTREATMENTcheck" list="pastTREATMENTcheck" placeholder="Reason" required>
                     <datalist id="pastTREATMENTcheck">
-                      <option value="Lack of efficasy">Lack of efficasy</option>
-                      <option value="Side effects">Side effects</option>
-                      <option value="Other">Other</option>
+                        <option value="Lack of efficasy">Lack of efficasy</option>
+                        <option value="Side effects">Side effects</option>
+                        <option value="Other">Other</option>
                     </datalist>
                 </p>
                 <p>
@@ -416,10 +417,10 @@
                 <p>
                     <label for="Severity">Severity</label>
                     <select name="Noofrelapsesrad" id="">
-                    <option value="Mild">Mild</option>
-                    <option value="Moderate">Moderate</option>
-                    <option value="Severe">Severe</option>
-                </select>
+                        <option value="Mild">Mild</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="Severe">Severe</option>
+                    </select>
                 </p>
 
 
@@ -507,7 +508,7 @@
                 <!-- <label for="" hidden></label> -->
                 <p>
                     <label for="Visual">Visual</label>
-                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2" >
+                    <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIonsetloc2">
                 </p>
 
                 <p>
@@ -545,34 +546,34 @@
                     <p>
                         <label for="MRIenchancing Lesions">CNS MRI Enhancing Lesions last 12 months:</label>
                         <select name="MRIenhancing" id="MRIenhancing" required>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+
                     </p>
                     <p>
-                    <label for="">Number of Lesions:</label> <input name="MRInum" type="number" id="MRInum" placeholder="Number of Lesions">
+                        <label for="">Number of Lesions:</label> <input name="MRInum" type="number" id="MRInum" placeholder="Number of Lesions">
                     </p>
                     <p>
                         <label for="MRIenchancing Lesions Loc">MRI Enchancing Lesions Location:</label>
                     </p>
 
-                    
+
                     <p>
                         <label for="Spinal">Spinal</label>
                         <input type="checkbox" name="Onselocalisation" value="Spinal" id="MRIloc">
                     </p>
-                    
+
                     <p>
                         <label for="Cortex">Cortex</label>
                         <input type="checkbox" name="Onselocalisation" value="Cortex" id="MRIloc1">
                     </p>
-                    
+
                     <p>
                         <label for="Visual">Visual</label>
                         <input type="checkbox" name="Onselocalisation" value="Visual" id="MRIloc2">
                     </p>
-                    
+
 
                     <p>
                         <label for="Cerebellar">Cerebellar</label>
@@ -694,10 +695,10 @@
         <strong>By clicking the <i>Reset</i> button any input that you have entered in the form will be erased and will NOT be saved!</strong>
     </div>
     <p>
-        <h3>
-            Reset the form?
-            <input type="reset" name="resetform" id="resetbutton">
-        </h3>
+    <h3>
+        Reset the form?
+        <input type="reset" name="resetform" id="resetbutton">
+    </h3>
 
     </p>
 
@@ -780,7 +781,7 @@
     </script>
     <script>
         var today = new Date();
-        var dateNow = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+        var dateNow = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
 
         var currDate = document.getElementById('currDate');
         currDate.innerHTML = dateNow;

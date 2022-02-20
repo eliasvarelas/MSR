@@ -94,12 +94,12 @@ try {
       <img src="MSregistry_ionian_new_logo.png">
         <p>
           <h3>Please Login </h3>
-          <label for="user_name">Username:</label>
-          <input type="text" name="user_name" id="user_name" required>
+          <!-- <label for="user_name">Username:</label> -->
+          <input type="text" name="user_name" id="user_name" placeholder="Username" required>
         </p>
         <p>
-          <label for="password">Password:</label>
-          <input type="password" name="password" id="pass" required>
+          <!-- <label for="password">Password:</label> -->
+          <input type="password" name="password" id="pass" placeholder="Password" required>
         </p>
 
         <input type="submit" value="Login" name="Submit" class="button">
@@ -110,7 +110,7 @@ try {
 
   <script type="text/javascript">
         document.getElementById("register").onclick = function () {
-          location.href = "/register.php";
+          location.href = "register.php";
         };
       </script>
 </body>

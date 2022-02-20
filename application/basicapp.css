@@ -31,13 +31,12 @@
 
 .container {
     position: relative;
-    margin: 0.5em auto;
-    /* width: min(95%, 70rem); */
-    min-width: 50%;
+    margin: 0.5em 0.5em;
+    width: min(95%, 70rem);
     max-width: 100%;
-    padding: 0.5em 1em;
+    padding: .5em .5em;
     background-color: white;
-    border-radius: 19px;
+    border-radius: 15px;
 }
 
 .note-wrapper {
@@ -60,9 +59,10 @@
 .header {
     /* table positioning */
     background-color: #3691b0;
-    text-align: left;
+    text-align: center;
     margin: auto;
-    font-family: arial;
+    font-family: 'Roboto', sans-serif;
+    padding: 0.5em;
 }
 
 .w-20 {
@@ -111,6 +111,10 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    padding: 1.5em 1.5em;
+    background-color: #2a7189;
+    border-radius: 25px;
+    margin: 0;
 }
 
 .alligner {
@@ -119,6 +123,11 @@
     text-align: right;
     min-width: 50%;
     max-width: 90%;
+}
+
+.padded {
+    padding: 1em 1em;
+    margin: 0;
 }
 
 .text-right {
@@ -156,6 +165,29 @@
     border-left: 1px solid black;
 }
 
+.bttn {
+    border: none;
+    padding: 5px 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.editForm>p {
+    border-bottom: #000;
+    background-color: #000;
+}
+
 
 /* attributes */
 
@@ -171,6 +203,7 @@ p {
 label {
     display: table-cell;
     font-family: 'Roboto', sans-serif;
+    font-weight: 700;
 }
 
 input {
@@ -198,7 +231,7 @@ h1,
 h2,
 h3,
 h4 {
-    text-align: left;
+    text-align: center;
     font-family: 'Roboto', sans-serif;
     text-emphasis: bold;
     color: #000;
@@ -224,8 +257,14 @@ label {
 }
 
 td:hover {
-    opacity: 50%;
-    color: green;
+    opacity: 110%;
+    font-weight: 800;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 
@@ -237,6 +276,17 @@ td:hover {
 
 #header_container {
     background-color: #3691b0;
+}
+
+#some {
+    position: relative;
+}
+
+#logo,
+a:focus {
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 

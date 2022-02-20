@@ -63,7 +63,7 @@ if(isset($_POST['register'])){
   <head>
     <meta charset="UTF-8">
     <title>Doctor Registration</title>
-    <link rel="stylesheet" href="/login.css">
+    <link rel="stylesheet" href="login.css">
   </head>
   <body>
     <div>
@@ -81,7 +81,7 @@ if(isset($_POST['register'])){
       <p> Already have an Account? <br><button type="button" id="login" name="Sign in" >Sign in</button>
         <script type="text/javascript">
           document.getElementById("login").onclick = function () {
-              location.href = "/login.php";
+              location.href = "login.php";
           };
         </script>
       </p>

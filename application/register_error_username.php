@@ -72,7 +72,7 @@ try {
 <head>
   <meta charset="UTF-8">
   <title>Login : MS Registry</title>
-  <link rel="stylesheet" href="/login.css">
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
   <div>
