@@ -24,6 +24,7 @@
 .split>.left+.right {
     /* space between the side-side tables */
     margin-right: 1em;
+    margin-left: 1em;
     flex-basis: 100%;
     max-width: 50%;
     min-height: 100%;
@@ -130,6 +131,13 @@
     margin: 0;
 }
 
+.bordered {
+    border-collapse: collapse;
+    border: 1px solid black;
+    /* padding: 2px;
+    margin-bottom: 0.1em; */
+}
+
 .text-right {
     padding: 0.5em 0.5em;
     margin-right: 0;
@@ -181,6 +189,8 @@
 
 .bg-white {
     background-color: white;
+    padding: 1em 1em;
+    border-radius: 19px;
 }
 
 .editForm>p {
@@ -245,8 +255,10 @@ input[type=number],
 input[type=time] {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    width: auto;
-    border-bottom: 1px solid black;
+    width: 10em;
+    /* border-bottom: 1px solid black; */
+    border-radius: 5px;
+    /* background-color: ; */
 }
 
 label {
@@ -254,6 +266,7 @@ label {
     margin-top: max(50%, 5em);
     padding: 5px 5px;
     margin: 8px 0;
+    color: #000;
 }
 
 td:hover {

@@ -143,7 +143,7 @@ try {
     <p> Don't have an Account? <br> <button type="button" id="register" name="Sign up" >Sign up</button> <!-- redirecting to the register page -->
       <script type="text/javascript">
         document.getElementById("register").onclick = function () {
-          location.href = "/register.php";
+          location.href = "register.php";
         };
       </script>
     </p>

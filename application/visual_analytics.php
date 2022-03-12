@@ -9,8 +9,8 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
   echo "<script>" . $scripttimedout . "</script>";
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-// TODO: need to make a function that will invert the y and x axis based on the chart type... (hor_bar/vert_bar)
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -38,7 +38,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-      <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a/></h3>
+        <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
         <strong><a href="menu.php" id="logo">MSR</a></strong>
       </div>
 
@@ -119,177 +119,50 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         </div>
       </nav>
 
+
+      <form action="visual_analytics.php" method="POST" id="form">
+
+
+        <table class="" id="d3-searching">
+
+          <tr id="type_of_chart_row">
+            <!-- select the type of chart you want -->
+            <th>Type of Chart</th>
+            <td colspan="3" class="">
+              <select id="type_of_chart" name="charts">
+                <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
+              </select>
+            </td>
+          </tr>
+
+          <tr id="attribute_row">
+            <!-- select the attribute for which the chart will be printed -->
+            <th>Select an Attribute</th>
+
+            <td colspan="3" class="">
+              <select id="attributes" name="attributes">
+                <option value="Sex" id="p_Sex">Sex</option>
+              </select>
+            </td>
+
+          </tr>
+        </table>
+
+        <button type="submit" name="makeGraph" value="Create Graph" id="test">Create Graph</button>
+      
+      </form>
+      
+      <!-- this is supposed to be the spase where the graphs appear -->
       <div class="d3-wrapper">
 
-        <form action="visual_analytics.php" method="POST" id="form">
-          <table class="table-bordered" id="d3-searching">
-
-            <tr id="type_of_chart_row">
-              <!-- select the type of chart you want -->
-              <th>Type of Chart</th>
-              <td colspan="3" class="tdclass exempt">
-                <select id="type_of_chart" name="charts">
-                  <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
-                  <option value="donut_chart">Donut Chart</option> <!-- pie chart with a whole in the middle -->
-                  <option value="vert_bar">Vertical Bar Chart</option> <!-- typical bar graph -->
-                  <option value="hor_bar">Horizontal Bar Chart</option> <!-- horizontal bar graph with Y axis as a base -->
-                  <option value="line_chart">Line Chart</option> <!-- One line with multiple values -->
-                </select>
-              </td>
-            </tr>
-
-            <tr id="attribute_row">
-              <!-- select the attribute for which the chart will be printed -->
-              <th>Select an Attribute</th>
-              <td colspan="3" class="tdclass exempt">
-                <select id="attributes" name="attributes">
-                  <option value="Name" id="p_Name">Patient Name</option>
-                  <option value="Sex" id="p_Sex">Sex</option>
-                  <option value="Age" id="p_Age">Age</option>
-                  <option value="Race" id="p_Race">Race</option>
-                  <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
-                  <option value="EDSS" id="p_eddsscore">EDSS Score</option>
-                  <option value="Past_medication">Past Medication</option>
-                  <option value="Current_medication">Current Medication</option>
-                  <option value="Pregnant" id="p_Pregnant">Is Pregnant</option>
-                  <option value="Onsetlocalisation" id="p_Onsetlocalisation">Onset Localisation</option>
-                  <option value="Smoker" id="p_Smoker">Is a Smoker</option>
-                  <option value="onsetsymptoms" id="p_onsetsymptoms">Onset Symptoms</option>
-                  <option value="MRIenhancing" id="p_MRIenhancing">MRI Enhancing Lesions</option>
-                  <option value="MRInum" id="p_MRInum">MRI Lesion No.</option>
-                  <option value="MRIonsetlocalisation" id="p_MRIonsetlocalisation">MRI Onset Localisation</option>
-                </select>
-              </td>
-            </tr>
-
-          </table>
-          <button type="submit" name="makeGraph" value="Create Graph">Create Graph</button>
-
-          <!-- <p>want to download the info?</p> -->
-
-          <!-- <button name="json_file" id="json_value" value="json">json</button> -->
-        </form>
-
-        <?php
-
-        $usersid = $_SESSION['user_id'];
-        $servername = "127.0.0.1";
-        $username = "root";
-        $password = "bioinformatics";
-        $dbname = "BIHElab";
-        // get data from the form
-        $pdf = $_POST['json_file'];
-        $chartType = $_POST['charts'];
-        $attribute = $_POST['attributes'];
-        $createGraph = $_POST['makeGraph'];
-
-        if (isset($_POST['makeGraph'])) {
-          try {
-            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            // set the PDO error mode to exception
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            if ($attribute == "Name") {
-              $queryparam = "NDS";
-            }
-            if ($attribute == "Sex") {
-              $queryparam = "Sex";
-            }
-            if ($attribute == "Age") {
-              $queryparam = "Age";
-              // $sqlqu = "SELECT Patient_name FROM patients WHERE Doctor_id = $usersid";
-            }
-            if ($attribute == "Race") {
-              $queryparam = "Race";
-            }
-            if ($attribute == "Comorbidities") {
-              $queryparam = "Comorbidities";
-              // $sql2 = "SELECT Patient_name FROM patients WHERE Doctor_id = $usersid";
-            }
-            if ($attribute == "EDSS") {
-              $queryparam = "eddsscore";
-            }
-            if ($attribute == "Past_medication") {
-              $queryparam = "pastTREATMENT";
-            }
-            if ($attribute == "Current_medication") {
-              $queryparam = "TREATMENT";
-            }
-            if ($attribute == "Pregnant") {
-              $queryparam = "Pregnant";
-            }
-            if ($attribute == "Onsetlocalisation") {
-              $queryparam = "Onsetlocalisation";
-            }
-            if ($attribute == "Smoker") {
-              $queryparam = "smoker";
-            }
-            if ($attribute == "onsetsymptoms") {
-              $queryparam = "onsetsymptoms";
-            }
-            if ($attribute == "MRIenhancing") {
-              $queryparam = "MRIenhancing";
-            }
-            if ($attribute == "MRInum") {
-              $queryparam = "MRInum";
-            }
-            if ($attribute == "MRIonsetlocalisation") {
-              $queryparam = "MRIonsetlocalisation";
-            }
-
-            $sql = "SELECT $queryparam,NDS FROM MSR";
-
-            // $stmt = $dbh->prepare($sql);
-            // $stmt->execute();
-
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $values = array();
-
-            for($row = 0; $row < count($result); $row++) {
-                $values[] = array('label' => $result[$row]['Label'], 'value' => $result[$row]['Value']);
-            }
-
-            $to_encode = array(
-                                array('key' => 'NDS', 
-                                      'values' => $values
-                                      )
-                                );
-            echo json_encode($to_encode);
-
-            // $var1 = array();
-
-
-            // $result = $pdo->query($sql);
-
-            // if ($result->rowCount() > 1) {
-            //   while ($row = $result->fetch()) {
-            //     $var1[] = $row;
-            //   }
-            // }
-            // // json_encode($someArray); //transforms the php array in json format
-            // $out = array_values($var1);
-
-
-            // $fp = fopen('empdata.json', 'w');
-            // fwrite($fp, json_encode($out,JSON_FORCE_OBJECT));
-            // fclose($fp);
-          } catch (PDOException $e) {
-            echo $sql . "<br>" . $e->getMessage();
-            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-          }
-        }
-
-
-        ?>
-        <div id="d3-container">
-          <svg width="500" height="400" id="pie"></svg>
-          <svg width="500" height="400" id="linechart"></svg>
+        
+        <div class="border" id="d3-container">
+          <p>here</p>
         </div>
 
-      </div>
+      </div>      
 
-      <div class="line" />
-
+      <!-- <div class="line" /> -->
       <footer>
         <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
       </footer>
@@ -304,8 +177,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   <!-- Bootstrap JS -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-  <script type="text/javascript">
-    //sidebarCollapse
+  
+  <script type="text/javascript">//sidebarCollapse
     $(document).ready(function() {
       $('#sidebarCollapse').on('click', function() {
         $('#sidebar').toggleClass('active');
@@ -313,7 +186,109 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     });
   </script>
 
-  <script src="visual_analytics.js" charset="utf-8"></script>
+  <!-- <script src="visual_analytics.js" charset="utf-8"></script> -->
+  <script>
+
+var width = 960,
+    height = 500,
+    radius = Math.min(width, height) / 2;
+var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+
+// defines wedge size
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function (d) { return d.ratio; });
+
+var svg = d3.select("#d3-container").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+d3.json("JSON_File.json", function(error, data) {
+  node = data.data[0].ap[0].floorratio;  // <------ here
+
+  var g = svg.selectAll(".arc")
+      .data(pie(node))
+      .enter().append("g")
+      .attr("class", "arc");
+
+  g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return color(d.data.floor); });
+
+  g.append("text")
+      .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function (d) { return d.data.floor; });
+});
+</script>
 </body>
 
 </html>
+
+<?php
+
+        $usersid = $_SESSION['user_id'];
+        $servername = "127.0.0.1";
+        $username = "root";
+        $password = "bioinformatics";
+        $dbname = "BIHElab";
+        // get data from the form
+        $createGraph = $_POST['makeGraph'];
+
+        if (isset($_POST['makeGraph'])) {
+          try {
+            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            // set the PDO error mode to exception
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // making this file a test file, GOAL IS just 1 fully working graph!
+            // $sql = "SELECT NDS,Sex FROM MSR";
+
+            // $stmt = $dbh->prepare($sql);
+            // $stmt->execute();
+
+            // $result = $pdo->query($sql);
+
+            // if ($result->rowCount() > 0) {
+            //   echo "while shoold work";
+            //   while ($row = $result->fetch()) {
+            //     $var1 = array (
+            //       'Patient Name' => $row['NDS'],
+            //       'Sex' => $row['Sex']
+            //     );
+            //   }
+            // }
+            // $jsonformat = json_encode($var1); //transforms the php array in json format
+            // // $out = array_values($var1);
+            // echo $jsonformat;
+
+            
+            
+            $statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
+            $statement->execute();
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $json = json_encode($results);
+            // echo $json;
+            
+            $fp = fopen('JSON_File.json', 'w');
+            fwrite($fp, $json);
+            fclose($fp);
+
+
+
+
+          } catch (PDOException $e) {
+            echo $statement . "<br>" . $e->getMessage();
+            die("ERROR: Could not able to execute $statement. " . $e->getMessage());
+          }
+        }
+
+
+        ?>

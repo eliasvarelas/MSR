@@ -145,8 +145,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   <option value="Name" id="p_Name">Name</option>
                   <option value="ID" id="p_Id">Patient ID</option>
                   <option value="Sex" id="p_Sex">Sex</option>
+                  <option value="Email" id="p_Email">Patient Email</option>
                   <option value="Age" id="p_Age">Age ></option>
-                  <option value="Agesmaller">Age << /option>
+                  <option value="Agesmaller">Age < </option>
                   <option value="Race" id="p_Race">Race</option>
                   <option value="PhoneNumber" id="p_Phonenum">Phone Number</option>
                   <option value="Comorbidities" id="p_Comorbidities">Comorbidities</option>
@@ -260,6 +261,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </datalist>
               </td>
             </tr>
+            <tr id="Email_tr" hidden>
+              <td id="Email_td" hidden>
+                <input type="email" name="searchemail" id="searchingEmail">
+              </td>
+            </tr>
             </tbody>
           </table>
 
@@ -278,6 +284,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         $Onsetlocalisation_entry = $_POST['Onsetlocalisation'];
         $MRIonsetlocalisation_entry = $_POST['MRIonsetlocalisation'];
         $Comorbidities_entry = $_POST['Comorbidities'];
+        $email_entry = $_POST['searchemail'];
 
         // check if the form has been submited, if yes, validate the info and continue
         if (isset($_POST['Searchbtn'])) {
@@ -766,8 +773,38 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   </tr>
                 </table>
                 <?php }
+                
             } else {
               echo "No patient exists with this information. MRI enhancing";
+            }
+          }
+          if ($option == 'Email') { //BUG!!! Prints only 4 outputs when there are more available
+            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
+            $result = $pdo->query($sql);
+            if ($result->rowCount() > 0) {
+              while ($row = $result->fetch()) { ?>
+                <table id="standard">
+                  <tr>
+                    <th>Patient ID</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th>
+                    <th>Previous Visits</th>
+                  </tr>
+                  <tr>
+                    <td><?php echo $row['Patient_id']; ?></td>
+                    <td><?php echo $row['Email']; ?></td>
+                    <td> <?php echo $row['Patient_name']; ?> </td>
+                    <td><?php echo $row['DOB']; ?></td>
+                    <td><?php echo $row['Phonenum']; ?></td>
+                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                  </tr>
+                </table>
+                <?php }
+                
+            } else {
+              echo "No patient exists with this information. Email";
             }
           }
         }
@@ -824,6 +861,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       var MRIenhancing_td_extented = document.getElementById('MRIenhancing_td_extented');
       var MRIenhancing_num = document.getElementById('MRIenhancing_num');
       var MRIenhancing_list = document.getElementById('MRIenhancing_list');
+      var email_tr = document.getElementById('Email_tr');
+      var email_td = document.getElementById('Email_td');
 
       if (attr.value == 'ID') {
         srchoption.type = 'number';
@@ -1071,6 +1110,23 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         MRIonsetlocalisation_td.hidden = true;
         Onsetlocalisation_td.hidden = true;
         MRIenhancing_td.hidden = true;
+      } else if (attr.value == 'Email') {
+        srchoption.type = 'email';
+        srchoption.setAttribute('placeholder', ' Email');
+        introParagraph.innerHTML = "Enter the Email of the Patient You Are Looking for";
+
+        inputBox.hidden = true;
+        Race_td.hidden = true;
+        Sex_td_male.hidden = true;
+        Sex_td_female.hidden = true;
+        Comorbidities_td.hidden = true;
+        Pregnant_Smoker_td.hidden = true;
+        onsetsymptoms_td.hidden = true;
+        MRIonsetlocalisation_td.hidden = true;
+        Onsetlocalisation_td.hidden = true;
+        MRIenhancing_td.hidden = true;
+        email_tr.hidden = false; 
+        email_td.hidden = false;
       }
     }
 

@@ -39,7 +39,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-        <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a/></h3>
+        <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
         <strong><a href="menu.php" id="logo">MSR</a></strong>
       </div>
 
@@ -136,35 +136,35 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <!-- basic form to pass the data in the database for the creation of a new patient -->
         <div class="container block">
           <div class="split">
-            <div class="left text-left">
+            <div class="left">
               <p>
-                <b><label for="assignid">Enter Patient ID:</label></b>
+                <label for="assignid">Enter Patient ID:</label>
               </p>
               <p>
                 <input type="number" name="assignid" placeholder="Patiend ID" required>
               </p>
               <p>
-                <b><label for="flname">Enter Patient Name:</label></b>
+                <label for="flname">Enter Patient Name:</label>
               </p>
               <p>
                 <input type="text" name="flname" placeholder="First and Last Name" required>
               </p>
               <p>
-                <b><label for="address">Patients Adress</label></b>
+                <label for="address">Patients Adress</label>
               </p>
               <p>
                 <input type="text" name="pat_address" placeholder="Patient Address">
               </p>
             </div>
-            <div class="right text-left">
+            <div class="right">
               <p>
-                <b><label for="email">Enter E-mail:</label></b>
+                <label for="email">Enter E-mail:</label>
               </p>
               <p>
                 <input type="email" name="email" placeholder="JohnDoe@email.com" required>
               </p>
               <p>
-                <b><label for="dob">Enter Date of Birth:</label></b>
+                <label for="dob">Enter Date of Birth:</label>
               </p>
               <p>
                 <input type="date" name="dob" placeholder="" required>
@@ -177,16 +177,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               </p>
             </div>
           </div>
-        </div>
-        <div class="centered">
           <p>
-            <label for="Submit"> <input type="submit" name="Submit"></label>
+            <input type="submit" name="Submit" class="bttn">
           </p>
         </div>
-
-
-
-
       </form>
 
       <?php
@@ -206,13 +200,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           $stmt = $pdo->prepare($sql);
           $stmt->execute([$doc, $pat_id, $flname, $dob, $phonenum, $email, $address, $Submit]);
         }
+
       } catch (PDOException $e) {
         die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
       ?>
-
-
-
       <footer>
         <div class="line"></div>
         <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
