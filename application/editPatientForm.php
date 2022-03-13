@@ -1,7 +1,7 @@
 <?php // session_start and timeout function
 session_start();
 error_reporting(0);
-$patientID = $_GET["id"];   // used to pass the patient id directly in the form
+$patientID = $_GET["patientid"];   // used to pass the patient id directly in the form
 $patientNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
 $patientEmail = $_GET["em"]; // used to pass the pateints age directly in the form
 $patientPhonenum = $_GET["phone"];
@@ -123,17 +123,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             </nav>
             <div class="content">
 
-                <form action="editPatientForm.php" method="POST">
+                <form action="editPatientForm.php?qpatid=<?php echo $patientID ?>" method="POST">
                     <div class="container block">
                         <div class="split">
                             <div class="left bg-white">
                                 <!-- modern stylign -->
                                 <p>
-                                <h2>Old Information</h2>
+                                    <h2>Old Information</h2>
                                 </p>
                                 <p>
                                     <label for="ID">Patient ID:</label>
-                                    <input type="text" value="<?php echo ($patientID ?? "N/A"); ?>" disabled>
+                                    <input type="text" name="patID" value="<?php echo ($patientID ?? "N/A"); ?>" disabled>
                                 </p>
                                 <p>
                                     <label for="Name">Patient Name:</label>
@@ -157,9 +157,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                 </p>
                             </div>
                             <div class="right bg-white">
-
+                                
                                 <p>
-                                <h3>New Information</h3>
+                                    <h3>New Information</h3>
                                 </p>
                                 <p>
                                     <label for="patid">Patient ID:</label>
@@ -185,23 +185,17 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                     <label for="patAdd">Patient Address:</label>
                                     <input type="text" name="newPatAddress" id="">
                                 </p>
-                                </table>
-                            </div>
+                            </table>
                         </div>
-                        <button type="submit" name="submit" class="bttn">Submit</button>
                     </div>
+                    <button type="submit" name="submit" class="bttn">Submit</button>
+                </div>
+                
+            </form>
+            
+            
 
-
-                </form>
-
-                <footer>
-                    <div class="line"></div>
-                    Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
-                </footer>
-            </div>
-        </div>
-
-        <?php
+    <?php
         //database connection
         $usersid = $_SESSION['user_id'];
         $servername = "127.0.0.1";
@@ -216,141 +210,146 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             if (isset($_POST['submit'])) {
                 //get new info from the form
                 $newPatID = $_POST['newPatID'];
+                // $qPatID = $_POST['querypatientid']; // trying to fix the queries 
                 $newPatName = $_POST['newPatName'];
                 $newPatEmail = $_POST['newPatEmail'];
                 $newPatPhonenum = $_POST['newPatPhonenum'];
                 $newPatAddress = $_POST['newPatAddress'];
                 $newPatDOB = $_POST['newPatDOB'];
+                $qPatID = $_GET['qpatid'];
+
+                
+                
 
                 // check if there is change on all the data
-                if (!empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) {
-                    $sql1 = "UPDATE patients SET Email = :newPatEmail, Patient_name = :newPatName, Patient_Address = :newPatAddress, Phonenum = :newPatPhonenum WHERE Patient_id = :patientID";
-                    $stmt = $pdo->prepare($sql1);
-                    $stmt->bindParam(":newPatEmail", $newPatEmail, PDO::PARAM_STR);
-                    $stmt->bindParam(":newPatName", $newPatName, PDO::PARAM_STR);
-                    $stmt->bindParam(":newPatAddress", $newPatAddress, PDO::PARAM_STR);
-                    $stmt->bindParam(":newPatPhonenum", $newPatPhonenum, PDO::PARAM_STR);
-                    $stmt->bindParam(":patientID", $patientID, PDO::PARAM_INT);
+                if (!empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && !empty($_POST['newPatDOB'])) {
+                    $sql = "UPDATE patients SET Email = :newPatEmail, Patient_name = :newPatName, Patient_Address = :newPatAddress, Phonenum = :newPatPhonenum WHERE Patient_id = :patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatEmail", $newPatEmail);
+                    $stmt->bindValue(":newPatName", $newPatName);
+                    $stmt->bindValue(":newPatAddress", $newPatAddress);
+                    $stmt->bindValue(":newPatPhonenum", $newPatPhonenum);
+                    $stmt->bindValue(":patientID", $qPatID);
                     $stmt->execute();
                     echo "Data changed succesfully";
                     // check if only the name is entered
                 } elseif (!empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) { //user enters only a new Name
-                    $sql2 = "UPDATE patients SET Patient_name =:newPatName WHERE Patient_id =:patientID";
-                    $stmt2 = $pdo->prepare($sql2);
-                    $stmt2->bindParam(":newPatName", $newPatName, PDO::PARAM_STR);
-                    $stmt2->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt2->execute();
+                    $sql = "UPDATE patients SET Patient_name =:newPatName WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatName", $newPatName);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                     echo "Name changed succesfully";
                     //check if only the email is entered
-                } elseif (empty($newPatName) && !empty($newPatEmail) && empty($newPatPhonenum) && empty($newPatAddress) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) {    // user enters only a new email
-                    $sql3 = "UPDATE patients SET Email =:newPatEmail WHERE Patient_id =:patientID";
-                    $stmt3 = $pdo->prepare($sql3);
-                    $stmt3->bindParam(":newPatEmail", $newPatName, PDO::PARAM_STR);
-                    $stmt3->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt3->execute();
-                    echo "Email changed succesfully";
+                } elseif (empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) {    // user enters only a new email
+                    $sql = "UPDATE patients SET Email =:newPatEmail WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatEmail", $newPatEmail);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
+                    echo "Email changed succesfully<br>";
                     // check if only the phonenum is entered
                 } elseif (empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) {    // user enters only a new phone number
-                    $sql4 = "UPDATE patients SET Phonenum =:newPatPhonenum WHERE Patient_id =:patientID";
-                    $stmt4 = $pdo->prepare($sql4);
-                    $stmt4->bindValue(":newPatPhonenum", $newPatPhonenum, PDO::PARAM_STR);
-                    $stmt4->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt4->execute();
+                    $sql = "UPDATE patients SET Phonenum =:newPatPhonenum WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatPhonenum", $newPatPhonenum);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                     echo "Number changed succesfully";
                     // check if only the address is entered
                 } elseif (empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) {    //user enters only a new Address
-                    $sql5 = "UPDATE patients SET Patient_address =:newPatAddress WHERE Patient_id =:patientID";
-                    $stmt5 = $pdo->prepare($sql5);
-                    $stmt5->bindParam(":newPatAddress", $newPatAddress, PDO::PARAM_STR);
-                    $stmt5->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt5->execute();
+                    $sql = "UPDATE patients SET Patient_address =:newPatAddress WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatAddress", $newPatAddress);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                     echo "Address changed succesfully";
                 } elseif (!empty($_POST['newPatID']) && empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
                     // check if only the PatientID is entered 
-                    $sql6 = "UPDATE patients SET Patient_id =:newPatID WHERE Patient_id =:patientID";
-                    $stmt6 = $pdo->prepare($sql6);
-                    $stmt6->bindParam(":newPatID", $newPatID, PDO::PARAM_STR);
-                    $stmt6->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt6->execute();
+                    $sql = "UPDATE patients SET Patient_id =:newPatID WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatID", $newPatID);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 } elseif (empty($_POST['newPatID']) && empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
                     // check if DOB is entered 
-                    $sql7 = "UPDATE patients SET DOB =:newPatDOB WHERE Patient_id =:patientID";
-                    $stmt7 = $pdo->prepare($sql7);
-                    $stmt7->bindParam(":newPatDOB", $newPatDOB, PDO::PARAM_STR);
-                    $stmt7->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt7->execute();
+                    $sql = "UPDATE patients SET DOB =:newPatDOB WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatDOB", $newPatDOB);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
                     // check if email&address
-                    $sql8 = "UPDATE patients SET Patient_address =:newPatAddress, Email=:newPatEmail WHERE Patient_id =:patientID";
-                    $stmt8 = $pdo->prepare($sql8);
-                    $stmt8->bindParam(":newPatAddress", $newPatAddress, PDO::PARAM_STR);
-                    $stmt8->bindParam(":newPatEmail", $newPatEmail, PDO::PARAM_STR);
-                    $stmt8->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt8->execute();
+                    $sql = "UPDATE patients SET Patient_address =:newPatAddress, Email=:newPatEmail WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatAddress", $newPatAddress);
+                    $stmt->bindValue(":newPatEmail", $newPatEmail);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
                     // check if email&dob
-                    $sql9 = "UPDATE patients SET Email =:newPatEmail, DOB=:newPatDOB WHERE Patient_id =:patientID";
-                    $stmt9 = $pdo->prepare($sql9);
-                    $stmt9->bindParam(":newPatEmail", $newPatEmail, PDO::PARAM_STR);
-                    $stmt9->bindParam(":newPatDOB", $newPatDOB, PDO::PARAM_STR);
-                    $stmt9->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt9->execute();
+                    $sql = "UPDATE patients SET Email =:newPatEmail, DOB=:newPatDOB WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatEmail", $newPatEmail);
+                    $stmt->bindValue(":newPatDOB", $newPatDOB);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
                     // check if email&phonenumber
-                    $sql10 = "UPDATE patients SET Email =:newPatEmail, Phonenum=:newPatPhonenum WHERE Patient_id =:patientID";
-                    $stmt10 = $pdo->prepare($sql10);
-                    $stmt10->bindParam(":newPatEmail", $newPatEmail, PDO::PARAM_STR);
-                    $stmt10->bindParam(":newPatPhonenum", $newPatPhonenum, PDO::PARAM_STR);
-                    $stmt10->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt10->execute();
+                    $sql = "UPDATE patients SET Email =:newPatEmail, Phonenum=:newPatPhonenum WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatEmail", $newPatEmail);
+                    $stmt->bindValue(":newPatPhonenum", $newPatPhonenum);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && !empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
                     // check if email&name - none of the rest
-                    $sql11 = "UPDATE patients SET Email =:newPatEmail, Patient_name=:newPatName WHERE Patient_id =:patientID";
-                    $stmt11 = $pdo->prepare($sql11);
-                    $stmt11->bindParam(":newPatEmail", $newPatEmail, PDO::PARAM_STR);
-                    $stmt11->bindParam(":newPatName", $newPatName, PDO::PARAM_STR);
-                    $stmt11->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt11->execute();
+                    $sql = "UPDATE patients SET Email =:newPatEmail, Patient_name=:newPatName WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatEmail", $newPatEmail);
+                    $stmt->bindValue(":newPatName", $newPatName);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && !empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
                     // check if name&address
-                    $sql12 = "UPDATE patients SET Patient_address =:newPatAddress, Patient_name=:newPatName WHERE Patient_id =:patientID";
-                    $stmt12 = $pdo->prepare($sql12);
-                    $stmt12->bindParam(":newPatAddress", $newPatAddress, PDO::PARAM_STR);
-                    $stmt12->bindParam(":newPatName", $newPatName, PDO::PARAM_STR);
-                    $stmt12->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt12->execute();
+                    $sql = "UPDATE patients SET Patient_address =:newPatAddress, Patient_name=:newPatName WHERE Patient_id =:patientID";
+                    // $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatAddress", $newPatAddress);
+                    $stmt->bindValue(":newPatName", $newPatName);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    // $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && !empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
                     // check if name&phonenumber
-                    $sql13 = "UPDATE patients SET Phonenum =:newPatPhonenum, Patient_name=:newPatName WHERE Patient_id =:patientID";
-                    $stmt13 = $pdo->prepare($sql13);
-                    $stmt13->bindParam(":newPatPhonenum", $newPatPhonenum, PDO::PARAM_STR);
-                    $stmt13->bindParam(":newPatName", $newPatName, PDO::PARAM_STR);
-                    $stmt13->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt13->execute();
+                    $sql = "UPDATE patients SET Phonenum =:newPatPhonenum, Patient_name=:newPatName WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatPhonenum", $newPatPhonenum);
+                    $stmt->bindValue(":newPatName", $newPatName);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && !empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
                     // check if name&dob
-                    $sql14 = "UPDATE patients SET Patient_name =:newPatAddress, DOB=:newPatDOB WHERE Patient_id =:patientID";
-                    $stmt14 = $pdo->prepare($sql14);
-                    $stmt14->bindParam(":newPatName", $newPatName, PDO::PARAM_STR);
-                    $stmt14->bindParam(":newPatDOB", $newPatDOB, PDO::PARAM_STR);
-                    $stmt14->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt14->execute();
+                    $sql = "UPDATE patients SET Patient_name =:newPatAddress, DOB=:newPatDOB WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatName", $newPatName);
+                    $stmt->bindValue(":newPatDOB", $newPatDOB);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
                     // check if address&phonenum
-                    $sql15 = "UPDATE patients SET Patient_address =:newPatAddress, Phonenum=:newPatPhonenum WHERE Patient_id =:patientID";
-                    $stmt15 = $pdo->prepare($sql15);
-                    $stmt15->bindParam(":newPatAddress", $newPatAddress, PDO::PARAM_STR);
-                    $stmt15->bindParam(":newPatPhonenum", $newPatPhonenum, PDO::PARAM_STR);
-                    $stmt15->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt15->execute();
+                    $sql = "UPDATE patients SET Patient_address =:newPatAddress, Phonenum=:newPatPhonenum WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatAddress", $newPatAddress);
+                    $stmt->bindValue(":newPatPhonenum", $newPatPhonenum);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }elseif (empty($_POST['newPatID']) && empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
                     // check if phonenum&dob
-                    $sql16 = "UPDATE patients SET Phonenum = :newPatPhonenum, DOB=:newPatDOB WHERE Patient_id =:patientID";
-                    $stmt16 = $pdo->prepare($sql16);
-                    $stmt16->bindParam(":newPatPhonenum", $newPatPhonenum, PDO::PARAM_STR);
-                    $stmt16->bindParam(":newPatDOB", $newPatDOB, PDO::PARAM_STR);
-                    $stmt16->bindParam(":patientID", $patientID, PDO::PARAM_INT);
-                    $stmt16->execute();
+                    $sql = "UPDATE patients SET Phonenum = :newPatPhonenum, DOB=:newPatDOB WHERE Patient_id =:patientID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":newPatPhonenum", $newPatPhonenum);
+                    $stmt->bindValue(":newPatDOB", $newPatDOB);
+                    $stmt->bindValue(":patientID", $qPatID);
+                    $stmt->execute();
                 }
             }
                 
@@ -358,8 +357,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
 
-        ?>
-
+    ?>
+                <footer>
+                    <div class="line"></div>
+                    Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
+                </footer>
+            </div>
+        </div>
 
 </body>
 
