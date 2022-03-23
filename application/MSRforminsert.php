@@ -8,6 +8,7 @@
 
   // get the $_POST info
   $NDS = $_POST['patientName'];
+  $patientAddress = $_POST['patientAddress'];
   $NDSdate = $_POST['NDSdate'];
   $NDSnum = $_POST['NDSnum'];
   $Sex = $_POST['Sex'];
@@ -66,17 +67,17 @@
 
   try {
     // inserting the data from the form in the MSR table
-    $sql = "INSERT INTO $table (NDS,NDSdate,NDSnum,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
+    $sql = "INSERT INTO $table (NDS,NDSdate,NDSnum,`address`,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
     onsetdate, Noofrelapses,Noofrelapsesrad,
     pastTREATMENT,pastTREATMENTdate,pastTREATMENTcheck,TREATMENTdate, TREATMENT, eddsscore,edsstime7_5m,edsstimePEG,
     EDSSdate,Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,MRIonsetlocalisation,MRIenhancing,MRInum,MRIenhancinglocation,
     signer,Submit)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";     //using prepared statements for security towards sql injections
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";     //using prepared statements for security towards sql injections
 
     //Execute
   if (isset($_POST["Submit"])) {
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$NDS,$NDSdate,$NDSnum,$Sex,$Age,$Race,$Comorbidities,$convsprad,$convspnum,$dateofdia,$dateofdiarad,$onsetdate,$Noofrelapses,$Noofrelapsesrad,$pastTREATMENT,
+    $stmt->execute([$NDS,$NDSdate,$NDSnum,$patientAddress,$Sex,$Age,$Race,$Comorbidities,$convsprad,$convspnum,$dateofdia,$dateofdiarad,$onsetdate,$Noofrelapses,$Noofrelapsesrad,$pastTREATMENT,
     $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime7_5m,$edssPEG,$EDSSdate,$Pregnant,$Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$MRIonsetlocalisation,$MRIenhancing,$MRInum,$MRIenhancinglocation,$signer,$Submit]);
     echo "records inserted successfully!!!!!!!!";
   } else {
@@ -87,6 +88,8 @@
     //Redirect to the Doctors Menu
     $script = file_get_contents('redirectMenu.js');
     echo "<script>".$script."</script>";
+  } else {
+    echo "something went wrong";
   }
 
   }catch(PDOException $e) {

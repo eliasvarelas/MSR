@@ -48,20 +48,20 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="/MSR/application/menu.php">
+                    <a href="admins_menu.php">
                         <i class="fas fa-home"></i>
-                        Home
+                        Admins Page
                     </a>
 
                 </li>
-                <li>
+                <!-- <li>
                     <a href="/MSR/application/patientinfo-bootstrap.php">
                         <i class="fas fa-folder"></i>
                         Existing Patients
                     </a>
 
 
-                </li>
+                </li> -->
                 <!-- <li>
                     <a href="/MSR/application/editPatientInfo.php">
                         <i class="fas fa-edit"></i>
@@ -206,18 +206,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        // θέλουμε ιεραρχική δομή των if statements, αν είναι όλα isset -> nest if -> nest if etc etc....        
         try {
             if (isset($_POST['submit'])) {
                 //get new info from the form
-                $newPatID = $_POST['newPatID'];
-                // $qPatID = $_POST['querypatientid']; // trying to fix the queries 
+                $newPatID = $_POST['newPatID']; // scared to remove this
                 $newPatName = $_POST['newPatName'];
                 $newPatEmail = $_POST['newPatEmail'];
                 $newPatPhonenum = $_POST['newPatPhonenum'];
                 $newPatAddress = $_POST['newPatAddress'];
                 $newPatDOB = $_POST['newPatDOB'];
-                $qPatID = $_GET['qpatid'];
+                $qPatID = $_GET['qpatid']; // this fixed the problem
 
                 
                 

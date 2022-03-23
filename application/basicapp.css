@@ -6,6 +6,7 @@
 /* Classes */
 
 .split {
+    /* position: relative; */
     display: flex;
     flex-direction: row;
     margin: 0 auto;
@@ -31,10 +32,13 @@
 }
 
 .container {
+    /* display: flex; */
     position: relative;
     margin: 0.5em 0.5em;
     width: min(95%, 70rem);
     max-width: 100%;
+    /* width: 100%; */
+    /* justify-content: center; */
     padding: .5em .5em;
     background-color: white;
     border-radius: 15px;
@@ -70,6 +74,18 @@
     max-width: 20%;
 }
 
+.w-50 {
+    max-width: 50%;
+}
+
+.w-70 {
+    max-width: 70%;
+}
+
+.w-auto {
+    max-width: fit-content;
+}
+
 .w-100 {
     max-width: 100%;
 }
@@ -92,7 +108,8 @@
 }
 
 .block {
-    width: min(95%, 70rem);
+    /* width: min(95%, 70rem); */
+    width: 0 auto;
     padding: 0.5em auto;
     text-align: center;
     margin: 1em;
@@ -271,7 +288,9 @@ label {
 
 td:hover {
     opacity: 110%;
-    font-weight: 800;
+    /* font-weight: 800; */
+    color: #ce99ff;
+    transition: all 0.3s;
 }
 
 footer {
@@ -292,6 +311,14 @@ footer {
 }
 
 #some {
+    position: relative;
+}
+
+#remove {
+    color: red;
+}
+
+#abso {
     position: relative;
 }
 
@@ -369,7 +396,7 @@ p {
 }
 
 td:nth-child(even) {
-    background-color: lightgrey;
+    background-color: #c4e3ed;
 }
 
 table td.tdclass.exempt {
@@ -388,6 +415,7 @@ a:focus {
     color: inherit;
     text-decoration: underline;
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .navbar {

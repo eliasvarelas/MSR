@@ -8,8 +8,8 @@ $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // assign a variable to each doctor in the db table users
-$select_query_total = "SELECT users.username,users.id,patients.Patient_id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID ORDER BY users.username";
-$select_query_doctors = "SELECT users.username FROM users WHERE username != 'admin' ORDER BY username";
+$select_query_total = "SELECT SQL_CALC_FOUND_ROWS users.username,users.id,patients.Patient_id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email,patients.Patient_address,patients.Phonenum FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID ORDER BY patients.Patient_id";
+$select_query_doctors = "SELECT SQL_CALC_FOUND_ROWS users.username, users.id, users.doc_Email, users.doc_phone FROM users WHERE username != 'admin' ORDER BY users.id";
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
@@ -53,21 +53,19 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="" >
+                    <a href="">
                         <i class="fas fa-home"></i>
                         Admins Page
                     </a>
-
                 </li>
-                <!-- <li>
-                    <a href="">
-                        <i class="fas fa-folder"></i>
-                        Existing Patients
+
+                 <li>
+                    <a href="addDoctor.php">
+                        <i class="fas fa-user-plus"></i>
+                        Add a Doctor
                     </a>
-
-
                 </li>
-                <li>
+                <!--<li>
                     <a href="">
                         <i class="fas fa-user-plus"></i>
                         Add a new Patient
@@ -122,32 +120,52 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 </div>
             </nav>
             <!-- main Content -->
-            <!-- Loop throught all the users in table users and echo their patients -->
+            <!-- create pagination for the tables -->
 
-            <!-- <table class=" text-center">
-              <tr>
-                <th>Filter by:</th>
-                <td><select name="Doctor_IDs">
-                  <option value="Doctor Names">Doctor Names</option>
-                  <option value="Patient Names">Patient Names</option>
-              </tr>
-            </table> -->
-            <div class="split">
-              <div class="left">
-                <input type="text" name="filter-patients" id="filter_Doctors_table" onkeyup="filterDoctors()" placeholder="Search Doctors Name..." class="filter w-50">
-              </div>
-              <div class="right">
-                <input type="text" name="filter-patients" id="filter_Pat_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-50">
-              </div>
-            </div>
+            <?php 
+              //define total number of results you want per page  
+              $results_per_page = 4;
+
+              // $number_of_result = mysqli_num_rows($result);
+
+              $rows = $pdo->prepare("SELECT FOUND_ROWS()"); 
+              $rows->execute();
+              $row_count =$rows->fetchColumn();
+              // echo $row_count;
+
+              //determine the total number of pages available  
+              $number_of_page = ceil ($row_count / $results_per_page);
+
+               //determine which page number visitor is currently on  
+                if (!isset ($_GET['page']) ) {  
+                  $page = 1;  
+                } else {  
+                  $page = $_GET['page'];  
+                }
+                
+                //determine the sql LIMIT starting number for the results on the displaying page  
+                $page_first_result = ($page-1) * $results_per_page;
 
 
-
-            <div class="split">
-              <div>
-                <table id="Doctors_table">
+            ?>
+              
+              
+              
+              <div class="split">
+                <div>
+                  <table id="Doctors_table" class="w-100">
                   <tr>
+                    <input type="text" name="filter-patients" id="filter_Doctors_table" onkeyup="filterDoctors()" placeholder="Search Doctors Name..." class="w-100">
+                  </tr>
+                  <tr>
+                  <th colspan="7">Total Doctors</th>
+                  </tr>
+                  <tr>
+                    <th>Doctor ID</th>
                     <th>Doctors</th>
+                    <th>Contact Information</th>
+                    <th>Edit Info</th>
+                    <th>Remove Doctor</th>
                   </tr>
     <?php
                 $result = $pdo->query($select_query_doctors);
@@ -155,7 +173,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   while($row = $result->fetch()){
     ?>
                       <tr>
+                        <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['username']; ?></td>
+                        <td><?php echo "<a href='doctors_contant_info.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."'>Contact Information</a>"; ?></td>
+                        <td><?php echo "<a href='editDoctorForm.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."'>Edit</a>"; ?></td>
+                        <td><a href="adminremovedoc.php?id= <?php echo $row["id"]; ?>" onclick="return confirm('Are you sure you want to remove the Doctor with ID: ' + <?php echo $row['id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
                       </tr>
     <?php
                 }
@@ -163,18 +185,31 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 } else{     // basic error checking
                   echo "No records matching your query were found.";
                 }
+
+                //display the link of the pages in URL  
+                for($page = 1; $page<= $number_of_page; $page++) {  
+                  echo '<a href = "index2.php?page=' . $page . '">' . $page . ' </a>';  
+                }  
     ?>
                 </table>
               </div>
 
-              <!-- <div class="line"></div> -->
               <div>
                 <table id="Patients_table">
                   <tr>
-                    <th colspan="5">Total Patients</th>
+                  <input type="text" name="filter-patients" id="filter_Pat_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-100">
                   </tr>
                   <tr>
-                    <th>Doctor</th><th>Patient IDs</th><th>Patients</th><th>Date of Birth</th><th>Emails</th>
+                    <th colspan="7">Total Patients</th>
+                  </tr>
+                  <tr>
+                    <th>Patient ID</th>
+                    <th>Patients</th>
+                    <th>Doctor</th>
+                    <th>Date of Birth</th>
+                    <th>Emails</th>
+                    <th>Edit Info</th>
+                    <th>Remove Patient</th>
                   </tr>
     <?php
                   $results = $pdo->query($select_query_total);
@@ -183,11 +218,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     ?>
 
                   <tr>
-                    <td class="tdclass exempt"><?php echo $row['username']; ?></td>
                     <td><?php echo $row['Patient_id'] ?></td>
-                    <td class="tdclass exempt"><?php echo $row['Patient_name']; ?></td>
+                    <td><?php echo $row['Patient_name']; ?></td>
+                    <td><?php echo $row['username']; ?></td>
                     <td><?php echo $row['DOB']; ?></td>
-                    <td class="tdclass exempt"><?php echo $row['Email']; ?></td>
+                    <td><?php echo $row['Email']; ?></td>
+                    <td><?php echo "<a href='editPatientFormAdmin.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']." &dob=".$row['DOB']."'>Edit</a>"; ?></td>
+                    <td><a href="adminremovepat.php?id= <?php echo $row['Patient_id']; ?>&docid= <?php echo $row['id'] ?> " onclick="return confirm('Are you sure you want to remove Patient with ID: ' + <?php echo $row['Patient_id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
                   </tr>
     <?php
                 }
@@ -200,11 +237,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               </div>
             </div>
 
-            <div class="line"></div>
-            <footer>
+            <footer id="abso">
+              <div class="line"></div>
               <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
             </footer>
-            <div class="line"></div>
         </div>
     </div>
 
@@ -222,43 +258,44 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             });
         });
     </script>
+
     <script type="text/javascript">
-    function filterPatients() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("filter_Pat_table");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("Patients_table");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[2];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
+      function filterPatients() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter_Pat_table");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("Patients_table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
           }
         }
       }
-    }
-    function filterDoctors() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("filter_Doctors_table");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("Doctors_table");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
+      function filterDoctors() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter_Doctors_table");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("Doctors_table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1]; //0 based counter
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
           }
         }
       }
-    }
     </script>
 </body>
 

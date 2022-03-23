@@ -196,10 +196,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                 echo "<th>Pregnant</th>";
                                 echo "<th>Date of Onset</th>";
                                 echo "<th>Onset Localisation</th>";
+                                echo "<th>Onset Symptoms</th>";
                                 echo "<th>Smoker</th>"; //3 outputs
                                 echo "<th>Number of Cigars</th>";
                                 echo "<th>Smoked Since</th>";
-                                echo "<th>Onset Symptoms</th>";
                                 echo "<th>MRI Onset Localisation</th>";
                                 echo "<th>CNS MRI Lesions Y/N </th>";
                                 echo "<th>CNS MRI Lesions No.</th>";
@@ -210,10 +210,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                 echo "<td>" . ($row['Pregnant'] ?? "N/A") . "</td>";
                                 echo "<td class='  '>" . $row['onsetdate'] . "</td>";
                                 echo "<td>" . ($row['Onsetlocalisation'] ?? "N/A") . "</td>";
+                                echo "<td>" . $row['onsetsymptoms'] . "</td>";
                                 echo "<td class='  '>" . ($row['smoker'] ?? "N/A") . "</td>";
                                 echo "<td>" . ($row['cigars'] ?? "N/A") . "</td>";
                                 echo "<td>" . ($row['cigardate'] ?? "N/A") . "</td>";
-                                echo "<td>" . $row['onsetsymptoms'] . "</td>";
                                 echo "<td class='  '>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
                                 echo "<td>" . $row['MRIenhancing'] . "</td>";
                                 echo "<td class='  '>" . ($row['MRInum'] ?? "N/A") . "</td>";

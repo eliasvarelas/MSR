@@ -1142,6 +1142,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       var newCell = newRow.insertCell();
 
       // Append a text node to the cell
+      var inputbox = document.createElement('input');
+      inputbox.type='text';
+      inputbox.id = 'secondinput';
+      inputbox.placeholder = 'new searching';
+      inputbox.appendChild(newCell);
       var newText = document.createTextNode('new row');
       newCell.appendChild(newText);
     }

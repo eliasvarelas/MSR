@@ -155,8 +155,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   <td><?php echo $row['Email']; ?></td>
                   <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                   <td><?php echo "<a href='Multiple_Sclerosis_app.php?id=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
-                  <td><?php echo "<a href='editPatientForm.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']."'>Edit</a>"; ?></td>
-                  <td><a href="removeuser.php?id= <?php echo $row["Patient_id"]; ?>" onclick="return confirm('Are you sure you want to remove this Patient?')">Delete</a></td> <!-- removes the patient from the app -->
+                  <td><?php echo "<a href='editPatientForm.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']." &dob=".$row['DOB']."'>Edit</a>"; ?></td>
+                  <td><a href="removeuser.php?id= <?php echo $row["Patient_id"]; ?>" onclick="return confirm('Are you sure you want to remove Patient with ID: ' + <?php echo $row['Patient_id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
                   
                 </tr>
                 
