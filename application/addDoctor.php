@@ -104,52 +104,56 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $doc = $_SESSION['user_id']; ?>
+    <div class="container">
+      <div class="block">
 
-      <form class="" action="addDoctor.php" method="post">
-        <!-- basic form to pass the data in the database for the creation of a new patient -->
-        <!-- <div class=""> -->
-          <!-- <div class="split">
-            <div class="left"> -->
-              <p>
-                <label for="assignid">Enter Doctors ID:</label>
-              </p>
-              <p>
-                <input type="number" name="assignid" placeholder="Doc ID" required>
-              </p>
-              <p>
-                 <label for="pass">Enter Temporary Password</label> 
-              </p>
-              <p>
-                  <input type="text" name="docPass" id="" required>
-              </p>
-              <p>
-                <label for="flname">Enter Doctors Name:</label>
-              </p>
-              <p>
-                <input type="text" name="flname" placeholder="First and Last Name" required>
-              </p>
-            <!-- </div>
-            <div class="right"> -->
-              <p>
-                <label for="email">Enter E-mail:</label>
-              </p>
-              <p>
-                <input type="email" name="email" placeholder="Ipokratis@email.com" required>
-              </p>
-              
-              <p>
-                <label for="">Phone Number</label>
-              </p>
-              <p>
-                <input type="number" name="phone" placeholder="Phone Number" required>
-              </p>
-            <!-- </div>
-          </div> -->
-          <p>
-            <input type="submit" name="Submit" class="bttn">
-          </p>
-        <!-- </div> -->
-      </form>
+        <form action="addDoctor.php" method="post">
+          <!-- basic form to pass the data in the database for the creation of a new patient -->
+          <!-- <div class=""> -->
+            <!-- <!-- <div class="split"> 
+              <div class="left"> -->
+                <p>
+                  <label for="assignid">Enter Doctors ID:</label>
+                </p>
+                <p>
+                  <input type="number" name="assignid" placeholder="Doc ID" required>
+                </p>
+                <p>
+                   <label for="pass">Enter Temporary Password</label> 
+                </p>
+                <p>
+                    <input type="text" name="docPass" id="" required>
+                </p>
+                <p>
+                  <label for="flname">Enter Doctors Name:</label>
+                </p>
+                <p>
+                  <input type="text" name="flname" placeholder="First and Last Name" required>
+                </p>
+              <!-- </div>
+              <div class="right"> -->
+                <p>
+                  <label for="email">Enter E-mail:</label>
+                </p>
+                <p>
+                  <input type="email" name="email" placeholder="Ipokratis@email.com" required>
+                </p>
+                
+                <p>
+                  <label for="">Phone Number</label>
+                </p>
+                <p>
+                  <input type="number" name="phone" placeholder="Phone Number" required>
+                </p>
+              <!-- </div>
+            </div> -->
+            <p>
+              <input type="submit" name="Submit" class="bttn">
+            </p>
+          <!-- </div> -->
+        </form>
+      </div>
+    </div>
 
       <?php
       //getting the POST data

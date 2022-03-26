@@ -136,15 +136,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         <!-- basic form to pass the data in the database for the creation of a new patient -->
         <div class="container block">
           <div class="split">
-            <div class="left">
+            <div class="left bg-white">
               <p>
-                <label for="assignid">Enter Patient ID:</label>
+                <label for="assignid">Patient ID:</label>
               </p>
               <p>
                 <input type="number" name="assignid" placeholder="Patiend ID" required>
               </p>
               <p>
-                <label for="flname">Enter Patient Name:</label>
+                <label for="flname">Patient Name:</label>
               </p>
               <p>
                 <input type="text" name="flname" placeholder="First and Last Name" required>
@@ -156,15 +156,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <input type="text" name="pat_address" placeholder="Patient Address">
               </p>
             </div>
-            <div class="right">
+            <div class="right bg-white">
               <p>
-                <label for="email">Enter E-mail:</label>
+                <label for="email">E-mail:</label>
               </p>
               <p>
                 <input type="email" name="email" placeholder="JohnDoe@email.com" required>
               </p>
               <p>
-                <label for="dob">Enter Date of Birth:</label>
+                <label for="dob">Date of Birth:</label>
               </p>
               <p>
                 <input type="date" name="dob" placeholder="" required>
@@ -177,9 +177,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               </p>
             </div>
           </div>
-          <p>
+          
             <input type="submit" name="Submit" class="bttn">
-          </p>
+          
         </div>
       </form>
 

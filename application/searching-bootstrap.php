@@ -271,10 +271,11 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
           <input type="submit" name="Searchbtn" value="Search">
         </form>
-        <button id="new_row_btn" onclick="addRow">Add an extra row</button>
-        <div class="line"></div>
+        <button id="new_row_btn" onclick="addRow()" name="new_row">Add an extra row</button>
+        <div id="results" class="search-results"">
 
-        <?php
+          
+          <?php
         $option = $_POST['Attributes'];
         $entry = $_POST['srchoption'];
         $sex_entry = $_POST['Sex_td'];
@@ -285,10 +286,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         $MRIonsetlocalisation_entry = $_POST['MRIonsetlocalisation'];
         $Comorbidities_entry = $_POST['Comorbidities'];
         $email_entry = $_POST['searchemail'];
-
+        
         // check if the form has been submited, if yes, validate the info and continue
         if (isset($_POST['Searchbtn'])) {
-
+          
           if ($option == 'Name') {
             $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' ORDER BY Patient_id";
             $result = $pdo->query($sql);
@@ -313,7 +314,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   </tr>
                 </table>
                 <div class="line"></div>
-              <?php }
+                <?php }
             } else {
               echo "No patient exists with this information. Name";
             }
@@ -342,15 +343,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   </tr>
                 </table>
                 <div class="line">
-
-                </div>
-
-              <?php }
+                  
+                  </div>
+                  
+                  <?php }
             } else {
               echo "No patient exists with this information. ID";
             }
           }
           if ($option == 'Sex') {
+            
             $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
             $result = $pdo->query($sql);
             if ($result->rowCount() > 0) {
@@ -812,6 +814,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
       ?>
+      </div>
       <footer>
         <div class="line"></div>
         <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
@@ -1130,26 +1133,61 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       }
     }
 
-    document.getElementById('new_row_btn').onchange = function addRow() {
-      // var table = document.getElementById('searching_query_table');
-      // var newRow = document.getElementById('new_row_btn');
-      // newRow.insertRow(1);
-      // var cell1 = newRow.insertCell(0);
-      // var cell2 = newRow.insertCell(1);
+    // document.getElementById('new_row_btn').onchange = function addRow() {
+    //   // var table = document.getElementById('searching_query_table');
+    //   // var newRow = document.getElementById('new_row_btn');
+    //   // newRow.insertRow(1);
+    //   // var cell1 = newRow.insertCell(0);
+    //   // var cell2 = newRow.insertCell(1);
 
-      var tbodyRef = document.getElementById('searching_query_table').getElementsByTagName('tbody')[0];
-      var newRow = tbodyRef.insertRow();
-      var newCell = newRow.insertCell();
+    //   var tbodyRef = document.getElementById('searching_query_table').getElementsByTagName('tbody')[0];
+    //   var newRow = tbodyRef.insertRow();
+    //   var newCell = newRow.insertCell();
 
-      // Append a text node to the cell
-      var inputbox = document.createElement('input');
-      inputbox.type='text';
-      inputbox.id = 'secondinput';
-      inputbox.placeholder = 'new searching';
-      inputbox.appendChild(newCell);
-      var newText = document.createTextNode('new row');
-      newCell.appendChild(newText);
+    //   // Append a text node to the cell
+    //   var inputbox = document.createElement('input');
+    //   inputbox.type='text';
+    //   inputbox.id = 'secondinput';
+    //   inputbox.placeholder = 'new searching';
+    //   inputbox.appendChild(newCell);
+    //   var newText = document.createTextNode('new row');
+    //   newCell.appendChild(newText);
+    // }
+
+    function addRow() {
+        var table = document.getElementById("searching_query_table");
+
+        // create the row for the inputbox header
+        var hrow = table.insertRow(3);
+
+        // create the row for the inputbox
+        var crow = table.insertRow(4);
+
+        // create a new tb row that needs to have the next header, and a new row that will have the input field
+        var headCell = hrow.insertCell(0);
+        var headerCell = document.createElement('th');
+        headerCell.id = 'newhCell';
+        headCell.innerHTML = "Second Header";
+        var insert3 = document.getElementById('tbody');
+        insert3.appendChild(headerCell);
+        var headcellcon = document.createElement('p');
+        headcellcon.innerHTML="Second Header"; // prints the header for the new row
+        var insert2 = document.getElementById('newhCell');
+        insert2.appendChild(headcellcon); 
+
+        // create the second input field
+        var cell1 = crow.insertCell(0);
+
+        // add attributes and content to the second input field
+        var inputbox = document.createElement('input');
+        inputbox.type='text';
+        inputbox.id = 'secondinput';
+        inputbox.placeholder = 'new searching';
+        inputbox.append(cell1);
+        var insert = document.getElementById('tbody');
+        insert.appendChild(inputbox);
     }
+  </script>
   </script>
 </body>
 

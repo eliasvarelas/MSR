@@ -135,7 +135,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                         $result = $pdo->query($sql);
                         if ($result->rowCount() > 0) {
                             while ($row = $result->fetch()) { //make it with more html for responsiveness
-                                echo "<table class='container block'>";  // the MSR table for the particular patient id
+                                echo "<table class=''>";  // the MSR table for the particular patient id
                                 echo "<tr>";
                                 echo "<th> Visit Number</th>";
                                 echo "<th>Name</th>";
@@ -219,11 +219,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                 echo "<td class='  '>" . ($row['MRInum'] ?? "N/A") . "</td>";
                                 echo "<td>" . ($row['MRIenhancinglocation'] ?? "N/A") . "</td>";
                                 echo "<td class='  '>" . $row['signer'] . "</td>";
-
                                 echo "</tr>";
                                 echo "<tr>";
-                                echo "<th>Documented at</th>";
-                                echo "<td>" . $row['reg_date'] . "</td>";
+                                echo "<th colspan='12'>Documented at</th>";
+                                echo "</tr>";
+                                echo "<tr>";
+                                echo "<td colspan='12'>" . $row['reg_date'] . "</td>";
                                 echo "</tr>";
                                 echo "</table>";
                 ?>

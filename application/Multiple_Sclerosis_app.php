@@ -43,30 +43,30 @@
                     </div>
                     <div class="right block text-left">
 
-                        <p>
+                        <div class="tab-row">
                             <label for="name">Patient Name</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME ?>" required>
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="address">Patient Address</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12" value="<?php echo $patientADR; ?>" required>
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="date">Date</label> <input type="date" name="NDSdate" id="date" required>
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="PatientID">Patient ID</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID ?>" required>
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="PatientSex">Sex</label> 
                             <input type="radio" name="Sex" id="Sex" value="Male"> Male 
                             <input type="radio" name="Sex" id="" value="Female"> Female
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="Age">Age</label> <input type="number" name="Age" min="1" max="150" id="Age" placeholder="Age">
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="Race">Race</label>
                             <select id="Race" name="Race" required>
                                 <option value="American Indian">American Indian</option>
@@ -76,8 +76,8 @@
                                 <option value="Caucasian">Caucasian</option>
                                 <option value="Unknown">Unknown</option>
                             </select>
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="Comorbidities">Comorbidities</label>
                             <input type="text" list="Comorbidities" name="Comorbidities" />
                             <datalist id="Comorbidities">
@@ -89,7 +89,7 @@
                                 <option value="Dyslipidemia">Dyslipidemia</option>
                                 <option value="Autoimmune">Autoimmune</option>
                             </datalist>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,39 +100,47 @@
 
             <div class="split container block">
                 <div class="left right-border text-right ">
-                    <p>
-                        <label for="onsetdate">Date of Onset:</label>
-                        <input type="date" name="onsetdate" id="onsetdate" required>
-                    </p>
-                    <p>
-                        <label for="">MS Type Now:</label>
-                        <input type="text" name="convsprad" list="msType_now" placeholder="MS Type now" required>
-                        <datalist id="msType_now" name="convsprad">
-                            <option value="RR">RR</option>
-                            <option value="SP">SP</option>
-                            <option value="PP">PP</option>
-                            <option value="Other">Other</option>
-                        </datalist>
-                    </p>
-                    <p>
+                    <div class="tab-row">
+                        <!-- <div class="table-column"> -->
+                            <label for="onsetdate">Date of Onset:</label>
+                        <!-- </div> -->
+                        <!-- <div class="table-column"> -->
+                            <input type="date" name="onsetdate" id="onsetdate" required>
+                        <!-- </div> -->
+                    </div>
+                    <div class="tab-row">
+                        <!-- <div class="table-column"> -->
+                            <label for="">MS Type Now:</label>
+                        <!-- </div> -->
+                        <!-- <div class="table-column"> -->
+                            <input type="text" name="convsprad" list="msType_now" placeholder="MS Type now" required>
+                            <datalist id="msType_now" name="convsprad">
+                                <option value="RR">RR</option>
+                                <option value="SP">SP</option>
+                                <option value="PP">PP</option>
+                                <option value="Other">Other</option>
+                            </datalist>
+                        <!-- </div> -->
+                    </div>
+                    <div class="tab-row">
                         <label for="convsp">Conversion to SP if possible:</label>
                         <input type="text" name="convspnum" placeholder="E.x 1">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Noofrelapses">Number of Relapses (RR only) Since last visit/year</label>
                         <input type="number" min="0" name="Noofrelapses" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="pastdatestart">PAST Disease Modifying Treatment: Date started:</label>
                         <input type="date" name="pastTREATMENT" id="pastDate" required>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="pastdatestop">PAST Disease Modifying Treatment: Date stopped:</label>
                         <input type="date" name="pastTREATMENTdate" id="pastDateStopped" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="pastTREATMENTreason">Reason:</label>
                         <input type="text" name="pastTREATMENTcheck" id="pastTREATMENTcheck" list="pastTREATMENTcheckreason" placeholder="Reason" required>
                         <datalist id="pastTREATMENTcheckreason" name="pastTREATMENTcheck">
@@ -140,20 +148,20 @@
                             <option value="Side effects">Side effects</option>
                             <option value="Other">Other</option>
                         </datalist>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="pastDate">PRESENT Disease Modifying Treatment Date</label>
                         <input type="date" name="TREATMENTdate" id="presentdate" required>
-                    </p>
+                    </div>
                 </div>
 
                 <div class="right text-right ">
-                    <p>
+                    <div class="tab-row">
                         <label for="dateofdia">Date of Diagnosis</label>
                         <input type="date" name="dateofdia" required>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="dateofdiarads">MS Type at Diagnosis</label>
                         <input type="text" name="dateofdiarad" list="dateofdiarad" placeholder="E.x. RR" required>
                         <datalist id="dateofdiarad">
@@ -162,23 +170,25 @@
                             <option value="PP">PP</option>
                             <option value="Other">Other</option>
                         </datalist>
-                    </p>
+                    </div>
 
 
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Severity">Severity</label>
                         <select name="Noofrelapsesrad" id="">
                             <option value="Mild">Mild</option>
                             <option value="Moderate">Moderate</option>
                             <option value="Severe">Severe</option>
                         </select>
-                    </p>
+                    </div>
 
 
-                    <p>
-                        <label for="meds">Past Medication:</label>
-                        <input type="text" name="pastTREATMENT" list="meds" placeholder="Past Medicin" required>
+                    <div class="tab-row">
+                        <!-- <div class="table-column"> -->
+                            <label for="meds">Past Medication:</label>
+                        <!-- </div> -->
+                        <!-- <input type="text" name="pastTREATMENT" list="meds" placeholder="Past Medicin" required>
                         <datalist id="meds">
                             <option value="Alemtuzumab">Alemtuzumab</option>
                             <option value="Avonex">Avonex</option>
@@ -193,12 +203,31 @@
                             <option value="Tecfidera">Tecfidera</option>
                             <option value="Teriflunomide">Teriflunomide</option>
                             <option value="None">None</option>
-                        </datalist>
-                    </p>
+                        </datalist> -->
+                        <!-- <div class=""> -->
+                            <div id="pastMeds" class="dropdown-check-list table-column" tabindex="100">
+                                <span class="anchor">Medication</span>
+                                <ul class="items">
+                                    <li>Alemtuzumab<input type="checkbox" name="pastTREATMENT" value="Alemtuzumab"></li>
+                                    <li>Avonex<input type="checkbox" name="pastTREATMENT" value="Avonex"></li>
+                                    <li>Betaferon<input type="checkbox" name="pastTREATMENT" value="Betaferon"></li>
+                                    <li>Copaxone<input type="checkbox" name="pastTREATMENT" value="Copaxone"></li>
+                                    <li>Extavia<input type="checkbox" name="pastTREATMENT" value="Extavia"></li>
+                                    <li>Fingolimod<input type="checkbox" name="pastTREATMENT" value="Fingolimod"></li>
+                                    <li>Mitoxantrone<input type="checkbox" name="pastTREATMENT" value="Mitoxantrone"></li>
+                                    <li>Ocrelizumab<input type="checkbox" name="pastTREATMENT" value="Ocrelizumab"></li>
+                                    <li>Rebif<input type="checkbox" name="pastTREATMENT" value="Rebif"></li>
+                                    <li>Tecfidera<input type="checkbox" name="pastTREATMENT" value="Tecfidera"></li>
+                                    <li>Teriflunomide<input type="checkbox" name="pastTREATMENT" value="Teriflunomide"></li>
+                                    <li>None<input type="checkbox" name="pastTREATMENT" value="None"></li>
+                                </ul>
+                            </div>
+                        <!-- </div> -->
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="meds">Present Medication:</label>
-                        <input type="text" name="TREATMENT" list="meds" placeholder="Present Medicin" required>
+                        <!-- <input type="text" name="TREATMENT" list="meds" placeholder="Present Medicin" required>
                         <datalist id="meds">
                             <option value="Alemtuzumab">Alemtuzumab</option>
                             <option value="Avonex">Avonex</option>
@@ -213,27 +242,44 @@
                             <option value="Tecfidera">Tecfidera</option>
                             <option value="Teriflunomide">Teriflunomide</option>
                             <option value="None">None</option>
-                        </datalist>
-                    </p>
+                        </datalist> -->
+                        <div id="presentMeds" class="dropdown-check-list table-column" tabindex="100">
+                                <span class="anchor">Medication</span>
+                                <ul class="items">
+                                    <li>Alemtuzumab<input type="checkbox" name="TREATMENT" value="Alemtuzumab"></li>
+                                    <li>Avonex<input type="checkbox" name="TREATMENT" value="Avonex"></li>
+                                    <li>Betaferon<input type="checkbox" name="TREATMENT" value="Betaferon"></li>
+                                    <li>Copaxone<input type="checkbox" name="TREATMENT" value="Copaxone"></li>
+                                    <li>Extavia<input type="checkbox" name="TREATMENT" value="Extavia"></li>
+                                    <li>Fingolimod<input type="checkbox" name="TREATMENT" value="Fingolimod"></li>
+                                    <li>Mitoxantrone<input type="checkbox" name="TREATMENT" value="Mitoxantrone"></li>
+                                    <li>Ocrelizumab<input type="checkbox" name="TREATMENT" value="Ocrelizumab"></li>
+                                    <li>Rebif<input type="checkbox" name="TREATMENT" value="Rebif"></li>
+                                    <li>Tecfidera<input type="checkbox" name="TREATMENT" value="Tecfidera"></li>
+                                    <li>Teriflunomide<input type="checkbox" name="TREATMENT" value="Teriflunomide"></li>
+                                    <li>None<input type="checkbox" name="TREATMENT" value="None"></li>
+                                </ul>
+                            </div>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="dateEDSS">Date Current EDSS was Taken</label>
                         <input type="date" name="EDSSdate" id="" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="EDSS" class="w-100">Current EDSS Score:</label>
                         <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10 " required>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="PEGtest">Nine-Hole PEG Test</label>
                         <input type="time" name="edsstimePEG" id="" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <!-- change the eddsscore to the correct term -->
                         <label for="timedWalk">7.5 meters Timed Walk</label>
                         <input type="time" name="edsstime" required>
-                    </p>
+                    </div>
 
 
                 </div>
@@ -242,9 +288,9 @@
             <h2>TIER 2 - Central Nervous System MRI</h2>
 
             <!-- <div class="split"> -->
-            <div class="block split container text-left">
-                <div class="left right-border text-left">
-                    <p>
+            <div class="block container text-left">
+                <!-- <div class="left right-border text-left"> -->
+                    <div class="tab-row">
                         <label for="MRIonset">CNS MRI Onset Localisation:</label>
                         <!-- <input type="text" name="MRIonsetlocalisation" list="MRIonsetlocalisation" placeholder="E.x. Visual">
                             <datalist id="MRIonsetlocalisation">
@@ -254,88 +300,101 @@
                                     <option value="Brainstem">Brainstem</option>
                                     <option value="Cerebellum">Cerebellum</option>
                                 </datalist> -->
-                    </p>
+                                <div id="mriOnset" class="dropdown-check-list table-column" >
+                                    <span class="anchor">Localisation</span>
+                                    <ul class="items">
+                                    <li><input type="checkbox" name="MRIonsetlocalisation" value="Visual" class="exempt" id="MRIonsetloc">Visual</li>
+                                    <li><input type="checkbox" name="MRIonsetlocalisation" value="Spinal" class="exempt" id="MRIonsetloc1">Spinal</li>
+                                    <li><input type="checkbox" name="MRIonsetlocalisation" value="Cortex" class="exempt" id="MRIonsetloc2">Cortex</li>
+                                    <li><input type="checkbox" name="MRIonsetlocalisation" value="Cerebellar" class="exempt" id="MRIonsetloc3">Cerebellar</li>
+                                    <li><input type="checkbox" name="MRIonsetlocalisation" value="Brainstem" class="exempt" id="MRIonsetloc4">Brainstem</li>
+                                    <li><input type="checkbox" name="MRIonsetlocalisation" value="None" class="exempt" id="MRIonsetloc5">None</li>
+                                </ul>
+                            </div>
+                    </div>
                     <!-- <label for="" hidden></label> -->
-                    <p>
+                    <!-- <div class="tab-row">
                         <label for="Visual">Visual</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Visual" id="MRIonsetloc2">
-                    </p>
-
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Spinal">Spinal</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Spinal" id="MRIonsetloc">
-                    </p>
-
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Cortex">Cortex</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Cortex" id="MRIonsetloc1">
-                    </p>
-
-
-
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Cerebellar">Cerebellar</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Cerebellar" id="MRIonsetloc3">
-                    </p>
-
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Brainstem">Brainstem</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Brainstem" id="MRIonsetloc4">
-                    </p>
-                    <p>
-
-
+                    </div>
+                    <div class="tab-row">
                         <label for="None">None</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="None" id="MRIonsetloc5">
-                    </p>
+                    </div> -->
 
-                </div>
+                <!-- </div> -->
 
-                <div class="right">
-                        <p>
+                <!-- <div class="right"> -->
+                        <div class="tab-row">
                             <label for="MRIenchancing Lesions">CNS MRI Enhancing Lesions last 12 months:</label>
                             <select name="MRIenhancing" id="MRIenhancing" required>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
 
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="">Number of Lesions:</label> <input name="MRInum" type="number" id="MRInum" placeholder="Number of Lesions">
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="MRIenchancing Lesions Loc">MRI Enchancing Lesions Location:</label>
-                        </p>
+                            <div id="MRIlesions" class="dropdown-check-list table-column" tabindex="100">
+                                <span class="anchor">Locations</span>
+                                <ul class="items">
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Visual" class="exempt" id="MRIloc">Visual</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Spinal" class="exempt" id="MRIloc1">Spinal</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Cortex" class="exempt" id="MRIloc2">Cortex</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Cerebellar" class="exempt" id="MRIloc3">Cerebellar</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Brainstem" class="exempt" id="MRIloc4">Brainstem</li>
+                                </ul>
+                            </div>
+                        </div>
 
 
-                        <p>
+                        <!-- <div class="tab-row">
                             <label for="Spinal">Spinal</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Spinal" id="MRIloc">
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Cortex">Cortex</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Cortex" id="MRIloc1">
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Visual">Visual</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Visual" id="MRIloc2">
-                        </p>
+                        </div>
 
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Cerebellar">Cerebellar</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Cerebellar" id="MRIloc3">
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Brainstem">Brainstem</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Brainstem" id="MRIloc4">
-                        </p>
+                        </div> -->
                     
 
-                </div>
+                <!-- </div> -->
 
             </div>
 
@@ -344,64 +403,79 @@
             <div class="split container block">
                 <div class="left right-border text-right">
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Pregnant">Is Patient Pregnant?</label>
                         <select name="Pregnant" id="">
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Smoker">Smoker</label>
                         <select name="smoker" id="smoker">
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="numofCigs">Number of Cigars</label>
                         <input type="number" name="cigars" id="numofcig" placeholder="Cigars per day">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="lastcig">Smoked Last:</label>
                         <input type="date" name="cigardate" id="dateofcig">
-                    </p>
+                    </div>
 
 
                 </div>
 
                 <div class="right  text-right">
 
-                    <p>
+                    <!-- <div class="tab-row">
                         <label for="onsetLocalisation">Onset Localisation</label>
-                    </p>
+                    </div> -->
 
-                    <p>
+                    <div class="tab-row">
+                            <label for="MRIenchancing Lesions Loc">Onset Localisation:</label>
+                            <div id="onsetLoc" class="dropdown-check-list table-column" tabindex="100">
+                                    <span class="anchor">Locations</span>
+                                    <ul class="items">
+                                    <li>Visual<input type="checkbox" name="MRIenhancinglocation" value="Visual" class="exempt" id="MRIloc"></li>
+                                    <li>Spinal<input type="checkbox" name="MRIenhancinglocation" value="Spinal" class="exempt" id="MRIloc1"></li>
+                                    <li>Cortex<input type="checkbox" name="MRIenhancinglocation" value="Cortex" class="exempt" id="MRIloc2"></li>
+                                    <li>Cerebellar<input type="checkbox" name="MRIenhancinglocation" value="Cerebellar" class="exempt" id="MRIloc3"></li>
+                                    <li>Brainstem<input type="checkbox" name="MRIenhancinglocation" value="Brainstem" class="exempt" id="MRIloc4"></li>
+                                    <!-- <li><input type="checkbox" name="MRIenhancinglocation" value="None" class="exempt" id="MRIloc">None</li> -->
+                                </ul>
+                            </div>
+                        </div>
+
+                    <!-- <div class="tab-row">
                         <label for="Spinal">Spinal</label>
                         <input type="checkbox" name="Onselocalisation" value="Spinal">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Cortex">Cortex</label>
                         <input type="checkbox" name="Onselocalisation" value="Cortex">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Visual">Visual</label>
                         <input type="checkbox" name="Onselocalisation" value="Visual">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Cerebellar">Cerebellar</label>
                         <input type="checkbox" name="Onselocalisation" value="Cerebellar">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Brainstem">Brainstem</label>
                         <input type="checkbox" name="Onselocalisation" value="Brainstem">
-                    </p>
-                    <p>
+                    </div> -->
+                    <div class="tab-row">
                         <label for="onsetsymptoms">CNS Onset Symptoms</label>
                         <input type="text" name="onsetsymptoms" id="onsetsymptoms" list="onsetsymptomslist" placeholder="E.x. Vision">
                         <datalist id="onsetsymptomslist" name="onsetsymptoms">
@@ -416,7 +490,7 @@
                             <option value="Encephalopathy">Encephalopathy</option>
                             <option value="Other">Other</option>
                         </datalist>
-                    </p>
+                    </div>
 
                 </div>
             </div>
@@ -429,19 +503,16 @@
                 </h3>
                 <!-- <p id="some">
 
-                </p> -->
+                </div> -->
             </div>
         </div>
 
         <div class="note-wrapper container">
             <strong>By clicking the <i>Reset</i> button any input that you have entered in the form will be erased and will NOT be saved!</strong>
-        </div>
-        <p>
-            <h3>
-                Reset the form?
-                <input type="reset" name="resetform" id="resetbutton">
-            </h3>
-        </p>
+            <br>
+            <input type="reset" name="resetform" id="resetbutton">
+        </div>    
+        
 
     </form>
 
@@ -450,16 +521,14 @@
         document.getElementById("gr").onclick = function() {
             location.href = "Multiple_Sclerosis_app_gr.php";
         };
-    </script>
-    <!-- <script type="text/javascript">
-        // date validating client-side for pastStarted-pastEnded treatment
-        document.getElementById('pastDate').addEventListener("change", function() {
-            var inputpastdateStart = this.value;
-            var pastdatestart = new Date(inputpastdateStart);
-            document.getElementById('datestoped').setAttribute("min", inputpastdateStart);
-        });
-    </script>  -->
-    <script type="text/javascript">
+    
+        // // date validating client-side for pastStarted-pastEnded treatment
+        // document.getElementById('pastDate').addEventListener("change", function() {
+        //     var inputpastdateStart = this.value;
+        //     var pastdatestart = new Date(inputpastdateStart);
+        //     document.getElementById('datestoped').setAttribute("min", inputpastdateStart);
+        // });
+    
         // dynamicly disabling certain input boxes in the MRI tier
         document.getElementById('MRIenhancing').onchange = function disableInpMRI() {
             if (this.value === 'Yes') {
@@ -499,6 +568,49 @@
                 return true;
             }
         }
+
+        // js for the dropdowns with the checkboxes
+
+        // dropdown with past medication
+        var checkList = document.getElementById('pastMeds');
+        checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+            if (checkList.classList.contains('visible'))
+                checkList.classList.remove('visible');
+            else
+                checkList.classList.add('visible');
+        }
+        // dropdown with present medication
+        var checkList2 = document.getElementById('presentMeds');
+        checkList2.getElementsByClassName('anchor')[0].onclick = function(evt) {
+            if (checkList2.classList.contains('visible'))
+                checkList2.classList.remove('visible');
+            else
+                checkList2.classList.add('visible');
+        }
+        // dropdown with MRI onset locations
+        var checkList3 = document.getElementById('mriOnset');
+        checkList3.getElementsByClassName('anchor')[0].onclick = function(evt) {
+            if (checkList3.classList.contains('visible'))
+                checkList3.classList.remove('visible');
+            else
+                checkList3.classList.add('visible');
+        }
+        // dropdown with MRI lesion locations
+        var checkList4 = document.getElementById('MRIlesions');
+        checkList4.getElementsByClassName('anchor')[0].onclick = function(evt) {
+            if (checkList4.classList.contains('visible'))
+                checkList4.classList.remove('visible');
+            else
+                checkList4.classList.add('visible');
+        }
+        // dropdown with onset locations
+        var checkList5 = document.getElementById('onsetLoc');
+        checkList5.getElementsByClassName('anchor')[0].onclick = function(evt) {
+            if (checkList5.classList.contains('visible'))
+                checkList5.classList.remove('visible');
+            else
+                checkList5.classList.add('visible');
+        }
     
         //  not Done yet!! calculates the age of the person based on Date of Birth
         // function calcAge() {
@@ -517,8 +629,5 @@
         //     var ageinputbox = document.getElementById('Age').innerHTML = Age; // make it print the calculated Age on page load
         // }
     </script>
-    
-
 </body>
-
 </html>

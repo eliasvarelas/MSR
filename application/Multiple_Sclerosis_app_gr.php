@@ -43,30 +43,30 @@
                     </div>
                     <div class="right block text-left">
 
-                        <p>
+                        <div class="tab-row">
                             <label for="name">'Ονομα Ασθενή</label> <input type="text" name="patientName" placeholder="E.x John Doe" value="<?php echo $patientNAME ?>" required>
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="address">Διεύθυνση Ασθενή</label> <input type="text" name="patientAddress" placeholder="E.x Alexandras Street 12" value="<?php echo $patientADR; ?>" required>
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="date">Ημερομηνία</label> <input type="date" name="NDSdate" id="date" required>
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="PatientID">ΑΜΚΑ</label> <input type="number" name="NDSnum" id="" placeholder="Patient ID" value="<?php echo $patientID ?>" required>
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="PatientSex">Φύλο</label> 
                             <input type="radio" name="Sex" id="Sex" value="Male"> Αρσενικό 
                             <input type="radio" name="Sex" id="" value="Female"> Θυληκό
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="Age">Ηλικία</label> <input type="number" name="Age" min="1" max="150" id="Age" placeholder="Age">
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="Race">Φυλή</label>
                             <select id="Race" name="Race" required>
                                 <option value="American Indian">Ιθαγενής Αμερικάνος</option>
@@ -76,8 +76,8 @@
                                 <option value="Caucasian">Καυκάσιος</option>
                                 <option value="Unknown">Άγνωστο</option>
                             </select>
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="Comorbidities">Συννοσηρότητες</label>
                             <input type="text" list="Comorbidities" name="Comorbidities" />
                             <datalist id="Comorbidities">
@@ -89,7 +89,7 @@
                                 <option value="Dyslipidemia">Δυσλιπιδαιμία</option>
                                 <option value="Autoimmune">Αυτοάνοσα</option>
                             </datalist>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,11 +100,11 @@
 
             <div class="split container block">
                 <div class="left right-border text-right ">
-                    <p>
+                    <div class="tab-row">
                         <label for="onsetdate">Ημερομηνία Έναρξης:</label>
                         <input type="date" name="onsetdate" id="onsetdate" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="">Τύπος MS Τώρα:</label>
                         <input type="text" name="convsprad" list="msType_now" placeholder="MS Type now" required>
                         <datalist id="msType_now" name="convsprad">
@@ -113,26 +113,26 @@
                             <option value="PP">PP</option>
                             <option value="Other">Άλλο</option>
                         </datalist>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="convsp">Μετατροπή σε SP (αν γίνεται):</label>
                         <input type="text" name="convspnum" placeholder="E.x 1">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Noofrelapses">Αριθμός Υποτροπιάσεων (μονο RR) απο την τελευταία επίσκεψη/έτος</label>
                         <input type="number" min="0" name="Noofrelapses" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="pastdatestart">Ημερομηνία Έναρξης Παλιάς Φαρμακευτικής Αγωγής:</label>
                         <input type="date" name="pastTREATMENT" id="pastDate" required>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="pastdatestop">Ημερομηνία Διακοπής Παλιάς Φαρμακευτικής Αγωγής:</label>
                         <input type="date" name="pastTREATMENTdate" id="pastDateStopped" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="pastTREATMENTreason">Λόγος Διακοπής:</label>
                         <input type="text" name="pastTREATMENTcheck" id="pastTREATMENTcheck" list="pastTREATMENTcheckreason" placeholder="Reason" required>
                         <datalist id="pastTREATMENTcheckreason" name="pastTREATMENTcheck">
@@ -140,20 +140,20 @@
                             <option value="Side effects">Παρενέργειες</option>
                             <option value="Other">Άλλο</option>
                         </datalist>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="pastDate">Ημερομηνία Παρούσας Φαρμακευτικής Αγωγής:</label>
                         <input type="date" name="TREATMENTdate" id="presentdate" required>
-                    </p>
+                    </div>
                 </div>
 
                 <div class="right text-right ">
-                    <p>
+                    <div class="tab-row">
                         <label for="dateofdia">Ημερομηνία Διάγνωσης</label>
                         <input type="date" name="dateofdia" required>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="dateofdiarads">Τύπος MS κατα την Διάγνωση</label>
                         <input type="text" name="dateofdiarad" list="dateofdiarad" placeholder="E.x. RR" required>
                         <datalist id="dateofdiarad">
@@ -162,21 +162,21 @@
                             <option value="PP">PP</option>
                             <option value="Other">Άλλο</option>
                         </datalist>
-                    </p>
+                    </div>
 
 
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Severity">Σοβαρότητα</label>
                         <select name="Noofrelapsesrad" id="">
                             <option value="Mild">Ήπια</option>
                             <option value="Moderate">Μέτρια</option>
                             <option value="Severe">Σοβαρή</option>
                         </select>
-                    </p>
+                    </div>
 
 
-                    <p>
+                    <div class="tab-row">
                         <label for="meds">Παλιά Φαρμακευτική Αγωγή:</label>
                         <input type="text" name="pastTREATMENT" list="meds" placeholder="Past Medicin" required>
                         <datalist id="meds">
@@ -194,9 +194,9 @@
                             <option value="Teriflunomide">Teriflunomide</option>
                             <option value="None">Καμία</option>
                         </datalist>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="meds">Παρούσα Φαρμακευτική Αγωγή:</label>
                         <input type="text" name="TREATMENT" list="meds" placeholder="Present Medicin" required>
                         <datalist id="meds">
@@ -214,26 +214,26 @@
                             <option value="Teriflunomide">Teriflunomide</option>
                             <option value="None">Καμία</option>
                         </datalist>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="dateEDSS">Ημερομηνία Υπολογισμού Τωρινού EDSS</label>
                         <input type="date" name="EDSSdate" id="" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="EDSS" class="w-100">Τωρινός Βαθμός EDSS:</label>
                         <input type="number" name="eddsscore" id="edssscore" min="1" max="10" placeholder="1-10 " required>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="PEGtest">Nine-Hole PEG Test</label>
                         <input type="time" name="edsstimePEG" id="" required>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <!-- change the eddsscore to the correct term -->
                         <label for="timedWalk">7.5 meters Timed Walk</label>
                         <input type="time" name="edsstime" required>
-                    </p>
+                    </div>
 
 
                 </div>
@@ -244,7 +244,7 @@
             <!-- <div class="split"> -->
             <div class="block split container text-left">
                 <div class="left right-border text-left">
-                    <p>
+                    <div class="tab-row">
                         <label for="MRIonset">CNS MRI Onset Localisation:</label>
                         <!-- <input type="text" name="MRIonsetlocalisation" list="MRIonsetlocalisation" placeholder="E.x. Visual">
                             <datalist id="MRIonsetlocalisation">
@@ -254,76 +254,76 @@
                                     <option value="Brainstem">Brainstem</option>
                                     <option value="Cerebellum">Cerebellum</option>
                                 </datalist> -->
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Visual">Οπτικό</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Visual" id="MRIonsetloc2">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Spinal">Νωτιαίος</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Spinal" id="MRIonsetloc">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Cortex">Φλοιός</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Cortex" id="MRIonsetloc1">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Cerebellar">Παρεγκεφαλικός</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Cerebellar" id="MRIonsetloc3">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="Brainstem">Εγκεφαλικό Επεισόδιο</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="Brainstem" id="MRIonsetloc4">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="None">Κανένα</label>
                         <input type="checkbox" name="MRIonsetlocalisation" value="None" id="MRIonsetloc5">
-                    </p>
+                    </div>
 
                 </div>
 
                 <div class="right">
-                        <p>
+                        <div class="tab-row">
                             <label for="MRIenchancing Lesions">ΚΝΣ MRI Επιδείνωση Βλαβών στους Τελευταίους 12 Μήνες:</label>
                             <select name="MRIenhancing" id="MRIenhancing" required>
                                 <option value="Yes">Ναι</option>
                                 <option value="No">Όχι</option>
                             </select>
 
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="">Αριθμός Βλαβών:</label> <input name="MRInum" type="number" id="MRInum" placeholder="Number of Lesions">
-                        </p>
-                        <p>
+                        </div>
+                        <div class="tab-row">
                             <label for="MRIenchancing Lesions Loc">MRI Τοποθεσία Επιδεινούμενων Βλαβών:</label>
-                        </p>
+                        </div>
 
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Spinal">Νωτιαίος</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Spinal" id="MRIloc">
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Cortex">Φλοιός</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Cortex" id="MRIloc1">
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Visual">Οπτικός</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Visual" id="MRIloc2">
-                        </p>
+                        </div>
 
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Cerebellar">Παρεγκεφαλικός</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Cerebellar" id="MRIloc3">
-                        </p>
+                        </div>
 
-                        <p>
+                        <div class="tab-row">
                             <label for="Brainstem">Εγκεφαλικό Επεισόδιο</label>
                             <input type="checkbox" name="MRIenhancinglocation" value="Brainstem" id="MRIloc4">
-                        </p>
+                        </div>
                     
 
                 </div>
@@ -335,64 +335,64 @@
             <div class="split container block">
                 <div class="left right-border text-right">
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Pregnant">Είναι Έγγυος;</label>
                         <select name="Pregnant" id="">
                             <option value="Yes">Ναι</option>
                             <option value="No">Όχι</option>
                         </select>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Smoker">Είναι Καπνιστής;</label>
                         <select name="smoker" id="smoker">
                             <option value="Yes">Ναι</option>
                             <option value="No">Όχι</option>
                         </select>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="numofCigs">Αριθμός Τσιγάρων / Μέρα</label>
                         <input type="number" name="cigars" id="numofcig" placeholder="Cigars per day">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="lastcig">Τελευταία Φορά Κάπνισε:</label>
                         <input type="date" name="cigardate" id="dateofcig">
-                    </p>
+                    </div>
 
 
                 </div>
 
                 <div class="right  text-right">
 
-                    <p>
+                    <div class="tab-row">
                         <label for="onsetLocalisation">Εντοπισμός Έναρξης</label>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Spinal">Νωτιαίος</label>
                         <input type="checkbox" name="Onselocalisation" value="Spinal">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Cortex">Φλοιός</label>
                         <input type="checkbox" name="Onselocalisation" value="Cortex">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Visual">Οπτικά</label>
                         <input type="checkbox" name="Onselocalisation" value="Visual">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Cerebellar">Παρεγκεφαλικός</label>
                         <input type="checkbox" name="Onselocalisation" value="Cerebellar">
-                    </p>
+                    </div>
 
-                    <p>
+                    <div class="tab-row">
                         <label for="Brainstem">Εγκεφαλικό Επεισόδιο</label>
                         <input type="checkbox" name="Onselocalisation" value="Brainstem">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="tab-row">
                         <label for="onsetsymptoms">ΚΝΣ Συμπτώματα Έναρξης</label>
                         <input type="text" name="onsetsymptoms" id="onsetsymptoms" list="onsetsymptomslist" placeholder="E.x. Vision">
                         <datalist id="onsetsymptomslist" name="onsetsymptoms">
@@ -406,7 +406,7 @@
                             <option value="Encephalopathy">Εγκεφαλοπάθεια</option>
                             <option value="Other">Άλλο</option>
                         </datalist>
-                    </p>
+                    </div>
 
                 </div>
             </div>
@@ -423,12 +423,12 @@
         <div class="note-wrapper container">
             <strong>Πατώντας το κουμπί <i>Reset</i> όλα τα δεδομένα που έχετε εισάγει στην φόρμα θα διαγραφούν χωρίς να αποθηκευτούν!</strong>
         </div>
-        <p>
+        <div class="tab-row">
             <h3>
                 Reset the form?
                 <input type="reset" name="resetform" id="resetbutton">
             </h3>
-        </p>
+        </div>
 
     </form>
 
@@ -486,23 +486,7 @@
                 return true;
             }
         }
-    
-        //  not Done yet!! calculates the age of the person based on Date of Birth
-        // function calcAge() {
-        //     var date = new Date();
-        //     var day = date.getDate(),
-        //         month = date.getMonth() + 1,
-        //         year = date.getFullYear();
 
-        //     month = (month < 10 ? "0" : "") + month;
-        //     day = (day < 10 ? "0" : "") + day;
-
-        //     var today = year + "/" + month + "/" + day;
-        //     var dateOfBirth = document.getElementById('dob');
-        //     var Age = today - dateOfBirth;
-
-        //     var ageinputbox = document.getElementById('Age').innerHTML = Age; // make it print the calculated Age on page load
-        // }
     </script>
     
 

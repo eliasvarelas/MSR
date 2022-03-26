@@ -31,19 +31,6 @@
     min-height: 100%;
 }
 
-.container {
-    /* display: flex; */
-    position: relative;
-    margin: 0.5em 0.5em;
-    width: min(95%, 70rem);
-    max-width: 100%;
-    /* width: 100%; */
-    /* justify-content: center; */
-    padding: .5em .5em;
-    background-color: white;
-    border-radius: 15px;
-}
-
 .note-wrapper {
     display: block;
     margin-top: 1em;
@@ -107,8 +94,29 @@
     margin: 1em;
 }
 
+.container {
+    /* display: flex; */
+    display: grid;
+    /* position: relative; */
+    justify-content: center;
+    margin: 0.5em 0.5em;
+    width: max(95%, 70rem);
+    max-width: 100%;
+    /* width: 100%; */
+    /* justify-content: center; */
+    padding: .5em .5em;
+    background-color: inherit;
+    border-radius: 15px;
+}
+
 .block {
-    /* width: min(95%, 70rem); */
+    width: max(95%, 70rem);
+    /* position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0%); */
+    /* display: grid;
+    justify-content: center; */
     width: 0 auto;
     padding: 0.5em auto;
     text-align: center;
@@ -215,6 +223,22 @@
     background-color: #000;
 }
 
+.search-results {
+    display: grid;
+    margin-top: 0.5em;
+    /* border: 1px solid red; */
+    margin-bottom: 0.5em;
+    padding: 25px;
+}
+
+.rounded>td {
+    border-radius: 19px;
+}
+
+.padded-tb {
+    margin: 1.6em;
+}
+
 
 /* attributes */
 
@@ -294,8 +318,9 @@ td:hover {
 }
 
 footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
+    /* top: 80%; */
     width: 100%;
 }
 
@@ -378,12 +403,14 @@ th {
     /* Title box color */
     background-color: #3691b0;
     color: black;
+    padding: 0 4px;
     /* margin: auto; */
 }
 
 td {
     background-color: white;
     color: black;
+    padding: 0 4px;
     /* margin: auto; */
 }
 
@@ -399,9 +426,10 @@ td:nth-child(even) {
     background-color: #c4e3ed;
 }
 
-table td.tdclass.exempt {
+
+/* table td.tdclass.exempt {
     background-color: white;
-}
+} */
 
 a,
 a:hover,
@@ -615,6 +643,7 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
+    /* position: relative; */
     width: 100%;
     padding: 20px;
     min-height: 100vh;
