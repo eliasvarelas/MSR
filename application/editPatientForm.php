@@ -224,12 +224,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                 // check if there is change on all the data
                 if (!empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && !empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && !empty($_POST['newPatDOB'])) {
-                    $sql = "UPDATE patients SET Email = :newPatEmail, Patient_name = :newPatName, Patient_Address = :newPatAddress, Phonenum = :newPatPhonenum WHERE Patient_id = :patientID";
+                    $sql = "UPDATE patients SET Email = :newPatEmail, Patient_name = :newPatName, Patient_Address = :newPatAddress, Phonenum = :newPatPhonenum, DOB = :newPatDOB WHERE Patient_id = :patientID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newPatEmail", $newPatEmail);
                     $stmt->bindValue(":newPatName", $newPatName);
                     $stmt->bindValue(":newPatAddress", $newPatAddress);
                     $stmt->bindValue(":newPatPhonenum", $newPatPhonenum);
+                    $stmt->bindValue(":newPatDOB", $newPatDOB);
                     $stmt->bindValue(":patientID", $qPatID);
                     $stmt->execute();
                     echo "Data changed succesfully";
@@ -258,7 +259,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     $stmt->execute();
                     echo "Number changed succesfully";
                     // check if only the address is entered
-                } elseif (empty($_POST['newPatName']) && !empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) {    //user enters only a new Address
+                } elseif (empty($_POST['newPatName']) && empty($_POST['newPatEmail']) && empty($_POST['newPatPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatID']) && empty($_POST['newPatDOB'])) {    //user enters only a new Address
                     $sql = "UPDATE patients SET Patient_address =:newPatAddress WHERE Patient_id =:patientID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newPatAddress", $newPatAddress);
@@ -352,7 +353,12 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     $stmt->bindValue(":patientID", $qPatID);
                     $stmt->execute();
                 }
+
+                // redirect to patientinfo
+                $script = file_get_contents('redirectPatientsTable.js');
+                echo "<script>".$script."</script>";
             }
+
                 
             } catch (PDOException $e) {
                 die("ERROR: Could not able to execute $sql. " . $e->getMessage());

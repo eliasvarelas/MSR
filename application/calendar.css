@@ -11340,6 +11340,7 @@ h5,
     position: absolute;
     width: 50%;
     height: 500px;
+    /* height: 100%; */
     top: 0;
     right: 0;
     display: none;

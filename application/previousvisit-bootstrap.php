@@ -131,11 +131,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
                     try {
                         $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
+                        $visitID = 0;
                         $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
                         $result = $pdo->query($sql);
                         if ($result->rowCount() > 0) {
                             while ($row = $result->fetch()) { //make it with more html for responsiveness
-                                echo "<table class=''>";  // the MSR table for the particular patient id
+                                // $visitID += 1;
+                                // $sqlq = "INSERT INTO MSR (visit_id) VALUES (?) WHERE NDSnum = $patientID ";
+                                // $stmt = $pdo->prepare($sqlq);
+                                // $stmt->execute([$visitID]);
+                                echo "<table class='padded'>";  // the MSR table for the particular patient id
                                 echo "<tr>";
                                 echo "<th> Visit Number</th>";
                                 echo "<th>Name</th>";
@@ -227,11 +232,14 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                 echo "<td colspan='12'>" . $row['reg_date'] . "</td>";
                                 echo "</tr>";
                                 echo "</table>";
+                            
                 ?>
             <!-- </div> -->
             <!-- <div class="line"></div> -->
             
                 <?php       }
+                // add the visitID number to the db
+                
                 // Free result set
                 unset($result);
                     } else {   // basic error checking

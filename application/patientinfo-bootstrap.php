@@ -128,7 +128,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       try { ?>
-        <div class="container">
+      <div class="container">
           <input type="text" name="filter-patients" id="filter_Patients_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-100">
           <table id="Patients_table" class="w-100 dual_bg">
             <!-- prints the table with the patients -->
@@ -140,6 +140,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
               <th>History</th>
               <th>Add a Follow Up Visit</th>
               <th>Edit Patient Info</th>
+              <th>Contact Info</th>
               <th>Remove Patient</th>
             </tr>
             <?php
@@ -156,6 +157,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                   <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                   <td><?php echo "<a href='Multiple_Sclerosis_app.php?id=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "'>Add Follow up</a>"; ?></td> <!-- Passes the patients id in the form for minimazing user error -->
                   <td><?php echo "<a href='editPatientForm.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']." &dob=".$row['DOB']."'>Edit</a>"; ?></td>
+                  <td><?php echo "<a href='patientContactInfo.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']." &dob=".$row['DOB']."'>Contact Info</a>"; ?></td>
                   <td><a href="removeuser.php?id= <?php echo $row["Patient_id"]; ?>" onclick="return confirm('Are you sure you want to remove Patient with ID: ' + <?php echo $row['Patient_id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
                   
                 </tr>
@@ -173,7 +175,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           </table>
 
         </div>
-        <footer>
+        <footer id="">
           <div class="line"></div>
           <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
         </footer>

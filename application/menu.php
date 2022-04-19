@@ -183,9 +183,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <input class="input" type="text" id="name" name="event_name" maxlength="36">
                     <label class="form-label" id="valueFromMyButton" for="count">Number of people to invite</label>
                     <input class="input" type="number" name="No_of_Persons" id="count" min="0" max="1000000" maxlength="7">
-                    <label class="form-label" id="valueFromButton" for="location">Location (Street/Address)</label>
+                    <label class="form-label" id="valueFromMyButton" for="location">Location (Street/Address)</label>
                     <input class="input" type="text" id="street" name="location">
-                    <label class="form-label" id="valueFromTheButton" for="name">Emails</label>
+                    <label class="form-label" id="valueFromMyButton" for="name">Emails</label>
                     <input class="input" type="email" id="email" name="email_invites">
                     <input type="button" value="Cancel" class="button" id="cancel-button">
                     <input type="submit" value="OK" class="button button-white" id="ok_button" name="ok_button">

@@ -206,7 +206,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <th>Patient ID</th>
                     <th>Patients</th>
                     <th>Doctor</th>
-                    <th>Date of Birth</th>
+                    <!-- <th>Date of Birth</th> -->
                     <th>Emails</th>
                     <th>Edit Info</th>
                     <th>Remove Patient</th>
@@ -221,7 +221,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                     <td><?php echo $row['Patient_id'] ?></td>
                     <td><?php echo $row['Patient_name']; ?></td>
                     <td><?php echo $row['username']; ?></td>
-                    <td><?php echo $row['DOB']; ?></td>
+                    <!-- <td><?php echo $row['DOB']; ?></td> -->
                     <td><?php echo $row['Email']; ?></td>
                     <td><?php echo "<a href='editPatientFormAdmin.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']." &dob=".$row['DOB']."'>Edit</a>"; ?></td>
                     <td><a href="adminremovepat.php?id= <?php echo $row['Patient_id']; ?>&docid= <?php echo $row['id'] ?> " onclick="return confirm('Are you sure you want to remove Patient with ID: ' + <?php echo $row['Patient_id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->

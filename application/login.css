@@ -25,7 +25,7 @@ div {
     text-align: center;
     background-color: #fafafa;
     padding: .25em;
-    margin: .25em;
+    margin-bottom: .25em;
     font-family: 'Roboto', sans-serif;
     border-radius: .25em;
     text-emphasis: bold;
@@ -55,5 +55,9 @@ button {
 }
 
 img {
-    margin-bottom: 4em;
+    margin-bottom: 0.5em;
+}
+
+.tab-row {
+    display: table-row;
 }

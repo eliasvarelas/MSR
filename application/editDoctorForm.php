@@ -352,7 +352,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         }
 
     ?>
-                <footer>
+                <footer id="foo">
                     <div class="line"></div>
                     Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
                 </footer>

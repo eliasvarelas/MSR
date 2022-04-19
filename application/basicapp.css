@@ -153,7 +153,7 @@
 
 .padded {
     padding: 1em 1em;
-    margin: 0;
+    margin: 1em;
 }
 
 .bordered {
@@ -249,6 +249,7 @@ form {
 p {
     display: table-row;
     font-family: 'Roboto', sans-serif;
+    justify-items: center;
 }
 
 label {
@@ -345,6 +346,10 @@ footer {
 
 #abso {
     position: relative;
+}
+
+#foo {
+    position: fixed;
 }
 
 #logo,

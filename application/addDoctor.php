@@ -104,56 +104,57 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $doc = $_SESSION['user_id']; ?>
-    <div class="container">
       <div class="block">
+        <h2>Create a New User</h2>
+      </div>
+    <div class="container block">
+      <!-- <div class="block"> -->
 
         <form action="addDoctor.php" method="post">
-          <!-- basic form to pass the data in the database for the creation of a new patient -->
+          <!-- basic form to pass the data in the database for the creation of a new doc -->
           <!-- <div class=""> -->
-            <!-- <!-- <div class="split"> 
-              <div class="left"> -->
+            <div class="split">  
+              <div class="left bg-white"> 
                 <p>
-                  <label for="assignid">Enter Doctors ID:</label>
-                </p>
-                <p>
+                  <label for="assignid">Doctors ID:</label>
+                <!-- </p>
+                <p> -->
                   <input type="number" name="assignid" placeholder="Doc ID" required>
                 </p>
                 <p>
-                   <label for="pass">Enter Temporary Password</label> 
-                </p>
-                <p>
+                   <label for="pass">Temporary Password</label> 
+                <!-- </p>
+                <p> -->
                     <input type="text" name="docPass" id="" required>
                 </p>
                 <p>
-                  <label for="flname">Enter Doctors Name:</label>
-                </p>
-                <p>
+                  <label for="flname">Doctors Name:</label>
+                <!-- </p>
+                <p> -->
                   <input type="text" name="flname" placeholder="First and Last Name" required>
                 </p>
-              <!-- </div>
-              <div class="right"> -->
+              </div>
+              <div class="right bg-white">
                 <p>
-                  <label for="email">Enter E-mail:</label>
-                </p>
-                <p>
+                  <label for="email">E-mail:</label>
+                <!-- </p>
+                <p> -->
                   <input type="email" name="email" placeholder="Ipokratis@email.com" required>
                 </p>
                 
                 <p>
                   <label for="">Phone Number</label>
-                </p>
-                <p>
+                <!-- </p>
+                <p> -->
                   <input type="number" name="phone" placeholder="Phone Number" required>
                 </p>
-              <!-- </div>
-            </div> -->
-            <p>
-              <input type="submit" name="Submit" class="bttn">
-            </p>
-          <!-- </div> -->
+              </div>
+            </div>
+            
+            <input type="submit" name="Submit" class="bttn">
         </form>
-      </div>
     </div>
+    <!-- </div> -->
 
       <?php
       //getting the POST data
@@ -163,6 +164,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       $phonenum = $_POST['phone'];
       $email = $_POST['email'];
       $pass = $_POST['docPass'];
+      $passwordHash = password_hash($pass, PASSWORD_BCRYPT, array("cost" => 12));
     //   $address = $_POST['pat_address'];
       $Submit = $_POST['Submit'];
 
@@ -171,14 +173,33 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         if (isset($_POST['Submit'])) {
           $stmt = $pdo->prepare($sql);
-          $stmt->execute([$doc_id, $flname,$pass, $phonenum, $email]);
+          $stmt->execute([$doc_id, $flname,$passwordHash, $phonenum, $email]);
+          if ($sql) {
+            $from = "MSRegistryRegistriationservice@gmail.com";
+            $to = $email;
+            $subject = "Welcome to The Multiple Sclerosis Registry Doctor.";
+            $message = "Mr/Ms ". $flname ." welcome. An account has been created for you via an Admin of our systems with the following information: <br>
+              Name: ".$flname ."  
+              Doctors ID: ". $doc_id." 
+              Email: ". $email ." 
+              Password: " . $pass ." 
+              To login, please click the following link: http://localhost:3000/MSR/application/changepass.php";            
+            $headers = "From:" . $from;
+            if(mail($to,$subject,$message, $headers)) {
+              echo "The email message was sent.";
+            } else {
+              echo "The email message was not sent.";
+            }
+          } else {
+            echo "The emails was not sent";
+          }
         }
 
       } catch (PDOException $e) {
         die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
       ?>
-      <footer>
+      <footer id="foo">
         <div class="line"></div>
         <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
       </footer>

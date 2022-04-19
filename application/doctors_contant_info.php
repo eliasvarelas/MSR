@@ -124,9 +124,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             <div class="content">
 
 
-                <!-- <div class=""> -->
-                    <h2>Doctors <u><?php echo $docNAME ?></u> Contact Info</h2>
-                <!-- </div> -->
+                <div class="block">
+                    <h2>Doctor's <u><?php echo $docNAME ?></u> Contact Info</h2>
+                </div>
                 
                 <div class="split container">
                     <div class="left">
@@ -310,7 +310,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         }
 
     ?>
-                <footer>
+                <footer id="foo">
                     <div class="line"></div>
                     Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
                 </footer>
