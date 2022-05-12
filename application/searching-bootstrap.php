@@ -1,14 +1,14 @@
 <?php
-session_start();
-error_reporting(0);
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
-  // last request was more than 30 minutes ago
-  session_unset();     // unset $_SESSION variable for the run-time
-  session_destroy();   // destroy session data in storage
-  $scripttimedout = file_get_contents('timeout.js');
-  echo "<script>" . $scripttimedout . "</script>";
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+  session_start();
+  error_reporting(0);
+  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+    $scripttimedout = file_get_contents('timeout.js');
+    echo "<script>" . $scripttimedout . "</script>";
+  }
+  $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
 ?>
 <!DOCTYPE html>
@@ -134,9 +134,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           <!-- Heading for explaining the following element to the user -->
           <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
 
-          <!-- Advanced Searching API -->
+          <!-- Advanced Searching API my ass!!! need to copy what i did for the second row in the main event as well!!! -->
+          
           <table class="query_header" id="searching_query_table">
-
             <tr id="tablerow" class="">
               <th id="selectth">
                 <select class="selection" name="Attributes" id="Attributes">
@@ -1155,40 +1155,658 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
     // }
 
     function addRow() {
+      // hide the button
+      document.getElementById('new_row_btn').hidden = true;
+
+      // counters to keep track of the previous attributes clicked
+      
+      
+      // **  counter that finds the attributed that was selected on the first round
+      var prevAtt = document.getElementById('Attributes');
+      var prevAttval = prevAtt.options[prevAtt.selectedIndex].value;
+      // works fine
+
+
         var table = document.getElementById("searching_query_table");
 
-        // create the row for the inputbox header
-        var hrow = table.insertRow(3);
+        // creates the row for the inputbox header
+        var hrow = table.insertRow(2);
 
-        // create the row for the inputbox
-        var crow = table.insertRow(4);
+        
 
-        // create a new tb row that needs to have the next header, and a new row that will have the input field
+        //creates a new tb row that needs to have the next header, and a new row that will have the input field
         var headCell = hrow.insertCell(0);
         var headerCell = document.createElement('th');
-        headerCell.id = 'newhCell';
-        headCell.innerHTML = "Second Header";
-        var insert3 = document.getElementById('tbody');
-        insert3.appendChild(headerCell);
-        var headcellcon = document.createElement('p');
-        headcellcon.innerHTML="Second Header"; // prints the header for the new row
-        var insert2 = document.getElementById('newhCell');
-        insert2.appendChild(headcellcon); 
+        headCell.id = 'newhCell';
+        // creates the header for the second info box
+        // headCell.innerHTML = "More Info"; 
 
+        // create the row for the inputbox
+        var crow = table.insertRow(3);
+        
         // create the second input field
-        var cell1 = crow.insertCell(0);
+        var cell = crow.insertCell(0);
+        cell.id = 'newInputCell';
+        var newInputBox = document.createElement('input');
 
-        // add attributes and content to the second input field
-        var inputbox = document.createElement('input');
-        inputbox.type='text';
-        inputbox.id = 'secondinput';
-        inputbox.placeholder = 'new searching';
-        inputbox.append(cell1);
-        var insert = document.getElementById('tbody');
-        insert.appendChild(inputbox);
+        
+
+        var select = document.createElement('select');
+        select.setAttribute('id','newSelect');
+        select.setAttribute('name','newAttributes');
+       
+        
+        // the options in the new select attributes row
+        var op1 = document.createElement('option');
+        op1.value= 'Options' ;
+        op1.setAttribute('disabled',true);
+        op1.innerHTML='Options';
+
+        select.appendChild(op1);
+
+        var op2 = document.createElement('option');
+        op2.value= 'Name' ;
+        op2.setAttribute('id','newInput')
+        op2.innerHTML='Name';
+        select.appendChild(op2);
+
+        var op3 = document.createElement('option');
+        op3.value= 'ID' ;
+        op3.setAttribute('id','newInput')
+        op3.innerHTML='Patient ID';
+        select.appendChild(op3);
+
+        var op4 = document.createElement('option');
+        op4.value= 'Sex' ;
+        op4.setAttribute('id','newInput')
+        op4.innerHTML='Sex';
+        select.appendChild(op4);
+        
+        var op5 = document.createElement('option');
+        op5.value= 'Email' ;
+        op5.setAttribute('id','newInput')
+        op5.innerHTML='Patient Email';
+        select.appendChild(op5);
+
+        var op6 = document.createElement('option');
+        op6.value= 'Age' ;
+        op6.setAttribute('id','newInput')
+        op6.innerHTML='Age >';
+        select.appendChild(op6);
+
+        var op7 = document.createElement('option');
+        op7.value= 'Agesmaller' ;
+        op7.setAttribute('id','newInput')
+        op7.innerHTML='Age <';
+        select.appendChild(op7);
+
+        var op8 = document.createElement('option');
+        op8.value= 'Race' ;
+        op8.setAttribute('id','newInput')
+        op8.innerHTML='Race';
+        select.appendChild(op8);
+
+        var op9 = document.createElement('option');
+        op9.value= 'PhoneNumber' ;
+        op9.setAttribute('id','newInput')
+        op9.innerHTML='Phone Number';
+        select.appendChild(op9);
+
+        var op10 = document.createElement('option');
+        op10.value= 'Comorbidities' ;
+        op10.setAttribute('id','newInput')
+        op10.innerHTML='Comorbidities';
+        select.appendChild(op10);
+
+        var op11 = document.createElement('option');
+        op11.value= 'EDSS' ;
+        op11.setAttribute('id','newInput')
+        op11.innerHTML='EDSS Score';
+        select.appendChild(op11);
+
+        var op12 = document.createElement('option');
+        op12.value= 'Pregnant' ;
+        op12.setAttribute('id','newInput')
+        op12.innerHTML='Is Pregnant';
+        select.appendChild(op12);
+
+        var op13 = document.createElement('option');
+        op13.value= 'Onsetlocalisation' ;
+        op13.setAttribute('id','newInput')
+        op13.innerHTML='Onset Localisation';
+        select.appendChild(op13);
+
+        var op14 = document.createElement('option');
+        op14.value= 'Smoker' ;
+        op14.setAttribute('id','newInput')
+        op14.innerHTML='Is a Smoker';
+        select.appendChild(op14);
+
+        var op15 = document.createElement('option');
+        op15.value= 'onsetsymptoms' ;
+        op15.setAttribute('id','newInput')
+        op15.innerHTML='Onset Symptoms';
+        select.appendChild(op15);
+
+        var op16 = document.createElement('option');
+        op16.value= 'MRIenhancing' ;
+        op16.setAttribute('id','newInput')
+        op16.innerHTML='MRI Enhancing Lesions';
+        select.appendChild(op16);
+
+        var op17 = document.createElement('option');
+        op17.value= 'MRInum' ;
+        op17.setAttribute('id','newInput')
+        op17.innerHTML='MRI Lesion No.';
+        select.appendChild(op17);
+
+        var op18 = document.createElement('option');
+        op18.value= 'MRIonsetlocalisation' ;
+        op18.setAttribute('id','newInput')
+        op18.innerHTML='MRI Onset Localisation';
+        select.appendChild(op18);
+
+        select.onchange = function changeSelect(){
+          //todo needs to remove the fields of the previous boxes after changing to a new select value
+          
+          if (select.value == 'Name') {
+            newInputBox.type = "text";
+            newInputBox.setAttribute('name','newName');
+            newInputBox.setAttribute('placeholder','Name');
+            cell.appendChild(newInputBox);
+          } else if (select.value == 'ID') {
+            newInputBox.type = "text";
+            newInputBox.setAttribute('name','newID');
+            newInputBox.setAttribute('placeholder','Patient ID');
+            cell.appendChild(newInputBox);
+          } else if (select.value == 'Sex') { 
+            newInputBox.type = "radio";
+            newInputBox.setAttribute('name','newSex');
+            // creates a label for the button
+            var sexLabel = document.createElement('label');
+            sexLabel.setAttribute('for','Male');
+            sexLabel.innerHTML = ": Male";
+            newInputBox.setAttribute('value','Male');
+            // creates the new radio button for the female value
+            var newFemaleRadio = document.createElement('input');
+            newFemaleRadio.type = "radio";
+            newFemaleRadio.setAttribute('name','newSex');
+            newFemaleRadio.setAttribute('value','Female');
+            // creates a label for the button
+            var sexLabel1 = document.createElement('label');
+            sexLabel1.setAttribute('for','Female');
+            sexLabel1.innerHTML = ": Female";
+            
+            // appends the elements to the table cell
+            cell.appendChild(newInputBox);
+            cell.appendChild(sexLabel);
+            cell.appendChild(newFemaleRadio);
+            cell.appendChild(sexLabel1);
+          } else if (select.value == 'Email') {
+            newInputBox.type = "email";
+            newInputBox.setAttribute('name','newEmail')
+            newInputBox.setAttribute('placeholder','Email');
+            cell.appendChild(newInputBox);
+          } else if (select.value == 'Age') {
+            newInputBox.type = "number";
+            newInputBox.setAttribute('name','newAge')
+            newInputBox.setAttribute('placeholder','Age greater than');
+            cell.appendChild(newInputBox);
+          } else if (select.value == 'Agesmaller') {
+            newInputBox.type = "number";
+            newInputBox.setAttribute('name','newAgesmaller')
+            newInputBox.setAttribute('placeholder','Age smaller than');
+            cell.appendChild(newInputBox);
+          } else if (select.value == 'Race') { //** it prints the values by the buttons with some style 
+            newInputBox.type = "radio";
+            newInputBox.setAttribute('name','newRace')
+            newInputBox.setAttribute('value','Caucasian');
+            var raceLabel = document.createElement('label');
+            raceLabel.setAttribute('for','Caucasian');
+            raceLabel.innerHTML = ": Caucasian";
+            cell.appendChild(newInputBox);
+            cell.appendChild(raceLabel);
+
+            var newRacebox1 = document.createElement('input');
+            newRacebox1.type = "radio";
+            newRacebox1.setAttribute('name','newRace');
+            newRacebox1.setAttribute('value','American Indian');
+            var raceLabel1 = document.createElement('label');
+            raceLabel1.setAttribute('for','American Indian');
+            raceLabel1.innerHTML = ": American Indian";
+            cell.appendChild(newRacebox1);
+            cell.appendChild(raceLabel1);
+
+            var newRacebox2 = document.createElement('input');
+            newRacebox2.type = "radio";
+            newRacebox2.setAttribute('name','newRace');
+            newRacebox2.setAttribute('value','Asian');
+            var raceLabel2 = document.createElement('label');
+            raceLabel2.setAttribute('for','Asian');
+            raceLabel2.innerHTML = ": Asian";
+            cell.appendChild(newRacebox2);
+            cell.appendChild(raceLabel2);
+            
+
+            var newRacebox3 = document.createElement('input');
+            newRacebox3.type = "radio";
+            newRacebox3.setAttribute('name','newRace');
+            newRacebox3.setAttribute('value','Black');
+            var raceLabel3 = document.createElement('label');
+            raceLabel3.setAttribute('for','Black');
+            raceLabel3.innerHTML = ": Black";
+            cell.appendChild(newRacebox3);
+            cell.appendChild(raceLabel3);
+
+            var newRacebox4 = document.createElement('input');
+            newRacebox4.type = "radio";
+            newRacebox4.setAttribute('name','newRace');
+            newRacebox4.setAttribute('value','Hispanic');
+            var raceLabel4 = document.createElement('label');
+            raceLabel4.setAttribute('for','Hispanic');
+            raceLabel4.innerHTML = ": Hispanic";
+            cell.appendChild(newRacebox4);
+            cell.appendChild(raceLabel4);
+
+            var newRacebox5 = document.createElement('input');
+            newRacebox5.type = "radio";
+            newRacebox5.setAttribute('name','newRace');
+            newRacebox5.setAttribute('value','Unknown');
+            var raceLabel5 = document.createElement('label');
+            raceLabel5.setAttribute('for','Unknown');
+            raceLabel5.innerHTML = ": Unknown";
+            cell.appendChild(newRacebox5);
+            cell.appendChild(raceLabel5);
+          } else if (select.value == 'PhoneNumber') {
+            newInputBox.type = "text";
+            newInputBox.setAttribute('name','newPhonenum')
+            newInputBox.setAttribute('placeholder','Phone Number');
+            cell.appendChild(newInputBox);
+
+          } else if (select.value == 'Comorbidities') { 
+            newInputBox.type = "checkbox";
+            newInputBox.setAttribute('name','newComorbidities')
+            newInputBox.setAttribute('value','Diabetes');
+            cell.appendChild(newInputBox);
+
+            var comorLabel = document.createElement('label');
+            comorLabel.setAttribute('for','Diabetes');
+            comorLabel.innerHTML = ": Diabetes";
+            cell.appendChild(comorLabel);
+
+            var newComorBox1 = document.createElement('input');
+            newComorBox1.type = "checkbox";
+            newComorBox1.setAttribute('name','newComorbidities');
+            newComorBox1.setAttribute('value','Obesity');
+            cell.appendChild(newComorBox1);
+
+            var comorLabel1 = document.createElement('label');
+            comorLabel1.setAttribute('for','Obesity');
+            comorLabel1.innerHTML = ": Obesity";
+            cell.appendChild(comorLabel1);
+
+            var newComorBox2 = document.createElement('input');
+            newComorBox2.type = "checkbox";
+            newComorBox2.setAttribute('name','newComorbidities');
+            newComorBox2.setAttribute('value','Heart Disease');
+            cell.appendChild(newComorBox2);
+
+            var comorLabel2 = document.createElement('label');
+            comorLabel2.setAttribute('for','Heart Disease');
+            comorLabel2.innerHTML = ": Heart Disease";
+            cell.appendChild(comorLabel2);
+
+            var newComorBox3 = document.createElement('input');
+            newComorBox3.type = "checkbox";
+            newComorBox3.setAttribute('name','newComorbidities');
+            newComorBox3.setAttribute('value','Renal Failure');
+            cell.appendChild(newComorBox3);
+
+            var comorLabel3 = document.createElement('label');
+            comorLabel3.setAttribute('for','Renal Failure');
+            comorLabel3.innerHTML = ": Renal Failure";
+            cell.appendChild(comorLabel3);
+
+            var newComorBox4 = document.createElement('input');
+            newComorBox4.type = "checkbox";
+            newComorBox4.setAttribute('name','newComorbidities');
+            newComorBox4.setAttribute('value','Dyslipidemia');
+            cell.appendChild(newComorBox4);
+
+            var comorLabel4 = document.createElement('label');
+            comorLabel4.setAttribute('for','Dyslipidemia');
+            comorLabel4.innerHTML = ": Dyslipidemia";
+            cell.appendChild(comorLabel4);
+
+            var newComorBox5 = document.createElement('input');
+            newComorBox5.type = "checkbox";
+            newComorBox5.setAttribute('name','newComorbidities');
+            newComorBox5.setAttribute('value','Autoimmune');
+            cell.appendChild(newComorBox5);
+
+            var comorLabel5 = document.createElement('label');
+            comorLabel5.setAttribute('for','Autoimmune');
+            comorLabel5.innerHTML = ": Autoimmune";
+            cell.appendChild(comorLabel5);
+
+          } else if (select.value == 'EDSS') {
+            var newBox = document.createElement('input');
+            newBox.type = "number";
+            newBox.setAttribute('name','newEDSS');
+            newBox.setAttribute('placeholder','1-10');
+            cell.appendChild(newBox);
+            cell.removeChild(newComorBox1);
+            cell.removeChild(newComorBox2);
+            cell.removeChild(newComorBox3);
+            cell.removeChild(newComorBox4);
+            cell.removeChild(newComorBox5);
+
+          } else if (select.value == 'Pregnant'){ 
+            var newPregnantBox = document.createElement('input');
+            newPregnantBox.type = "radio";
+            newPregnantBox.setAttribute('name','newPregnant');
+            newPregnantBox.setAttribute('value','Yes');
+            cell.appendChild(newPregnantBox);
+
+            var pregnantLabel = document.createElement('label');
+            pregnantLabel.setAttribute('for','Yes');
+            pregnantLabel.innerHTML = ": Yes";
+            cell.appendChild(pregnantLabel);
+
+            var newPregnantBox1 = document.createElement('input');
+            newPregnantBox1.type = "radio";
+            newPregnantBox1.setAttribute('name','newPregnant');
+            newPregnantBox1.setAttribute('value','No');
+            cell.appendChild(newPregnantBox1);
+
+            var pregnantLabel1 = document.createElement('label');
+            pregnantLabel1.setAttribute('for','No');
+            pregnantLabel1.innerHTML = ": No";
+            cell.appendChild(pregnantLabel1);
+
+          } else if (select.value == 'Onsetlocalisation') { 
+            var newOnsetBox = document.createElement('input');
+            newOnsetBox.type = "checkbox";
+            newOnsetBox.setAttribute('name','newOnsetlocalisation');
+            newOnsetBox.setAttribute('value','Spinal');
+            cell.appendChild(newOnsetBox);
+
+            var onsetLabel = document.createElement('label');
+            onsetLabel.setAttribute('for','Spinal');
+            onsetLabel.innerHTML = ": Spinal";
+            cell.appendChild(onsetLabel);
+
+            var newOnsetBox1 = document.createElement('input');
+            newOnsetBox1.type = "checkbox";
+            newOnsetBox1.setAttribute('name','newOnsetlocalisation');
+            newOnsetBox1.setAttribute('value','Cortex');
+            cell.appendChild(newOnsetBox1);
+
+            var onsetLabel1 = document.createElement('label');
+            onsetLabel1.setAttribute('for','Cortex');
+            onsetLabel1.innerHTML = ": Cortex";
+            cell.appendChild(onsetLabel1);
+
+            var newOnsetBox2 = document.createElement('input');
+            newOnsetBox2.type = "checkbox";
+            newOnsetBox2.setAttribute('name','newOnsetlocalisation');
+            newOnsetBox2.setAttribute('value','Brainstem');
+            cell.appendChild(newOnsetBox2);
+
+            var onsetLabel2 = document.createElement('label');
+            onsetLabel2.setAttribute('for','Brainstem');
+            onsetLabel2.innerHTML = ": Brainstem";
+            cell.appendChild(onsetLabel2);
+
+            var newOnsetBox3 = document.createElement('input');
+            newOnsetBox3.type = "checkbox";
+            newOnsetBox3.setAttribute('name','newOnsetlocalisation');
+            newOnsetBox3.setAttribute('value','Cerebellum');
+            cell.appendChild(newOnsetBox3);
+
+            var onsetLabel3 = document.createElement('label');
+            onsetLabel3.setAttribute('for','Cerebellum');
+            onsetLabel3.innerHTML = ": Cerebellum";
+            cell.appendChild(onsetLabel3);
+
+            var newOnsetBox4 = document.createElement('input');
+            newOnsetBox4.type = "checkbox";
+            newOnsetBox4.setAttribute('name','newOnsetlocalisation');
+            newOnsetBox4.setAttribute('value','Visual');
+            cell.appendChild(newOnsetBox4);
+
+            var onsetLabel4 = document.createElement('label');
+            onsetLabel4.setAttribute('for','Visual');
+            onsetLabel4.innerHTML = ": Visual";
+            cell.appendChild(onsetLabel4);
+          } else if (select.value == 'Smoker') {  
+            var newSmokerbox = document.createElement('input');
+            newSmokerbox.type = "radio";
+            newSmokerbox.setAttribute('name','newSmoker');
+            newSmokerbox.setAttribute('value','Yes');
+            cell.appendChild(newSmokerbox);
+
+            var smokerLabel = document.createElement('label');
+            smokerLabel.setAttribute('for','Yes');
+            smokerLabel.innerHTML = ": Yes";
+            cell.appendChild(smokerLabel);
+
+            var newSmokerbox1 = document.createElement('input');
+            newSmokerbox1.type = "radio";
+            newSmokerbox1.setAttribute('name','newSmoker');
+            newSmokerbox1.setAttribute('value','No');
+            cell.appendChild(newSmokerbox1);
+
+            var smokerLabel1 = document.createElement('label');
+            smokerLabel1.setAttribute('for','No');
+            smokerLabel1.innerHTML = ": No";
+            cell.appendChild(smokerLabel1);
+
+          } else if(select.value == 'onsetsymptoms'){ 
+            var newOnsetsymptomsbox = document.createElement('input');
+            newOnsetsymptomsbox.type = "checkbox";
+            newOnsetsymptomsbox.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox.setAttribute('value','Vision');
+            cell.appendChild(newOnsetsymptomsbox);
+
+            var onsympLabel = document.createElement('label');
+            onsympLabel.setAttribute('for','Vision');
+            onsympLabel.innerHTML = ": Vision";
+            cell.appendChild(onsympLabel);
+
+            var newOnsetsymptomsbox1 = document.createElement('input');
+            newOnsetsymptomsbox1.type = "checkbox";
+            newOnsetsymptomsbox1.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox1.setAttribute('value','Motor');
+            cell.appendChild(newOnsetsymptomsbox1);
+
+            var onsympLabel1 = document.createElement('label');
+            onsympLabel1.setAttribute('for','Motor');
+            onsympLabel1.innerHTML = ": Motor";
+            cell.appendChild(onsympLabel1);
+
+            var newOnsetsymptomsbox2 = document.createElement('input');
+            newOnsetsymptomsbox2.type = "checkbox";
+            newOnsetsymptomsbox2.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox2.setAttribute('value','Sensory');
+            cell.appendChild(newOnsetsymptomsbox2);
+
+            var onsympLabel2 = document.createElement('label');
+            onsympLabel2.setAttribute('for','Sensory');
+            onsympLabel2.innerHTML = ": Sensory";
+            cell.appendChild(onsympLabel2);
+
+            var newOnsetsymptomsbox3 = document.createElement('input');
+            newOnsetsymptomsbox3.type = "checkbox";
+            newOnsetsymptomsbox3.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox3.setAttribute('value','Coordination');
+            cell.appendChild(newOnsetsymptomsbox3);
+
+            var onsympLabel3 = document.createElement('label');
+            onsympLabel3.setAttribute('for','Coordination');
+            onsympLabel3.innerHTML = ": Coordination";
+            cell.appendChild(onsympLabel3);
+
+            var newOnsetsymptomsbox4 = document.createElement('input');
+            newOnsetsymptomsbox4.type = "checkbox";
+            newOnsetsymptomsbox4.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox4.setAttribute('value','Bowel/Bladder');
+            cell.appendChild(newOnsetsymptomsbox4);
+
+            var onsympLabel4 = document.createElement('label');
+            onsympLabel4.setAttribute('for','Bowel/Bladder');
+            onsympLabel4.innerHTML = ": Bowel/Bladder";
+            cell.appendChild(onsympLabel4);
+
+            var newOnsetsymptomsbox5 = document.createElement('input');
+            newOnsetsymptomsbox5.type = "checkbox";
+            newOnsetsymptomsbox5.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox5.setAttribute('value','Fatigue');
+            cell.appendChild(newOnsetsymptomsbox5);
+
+            var onsympLabel5 = document.createElement('label');
+            onsympLabel5.setAttribute('for','Fatigue');
+            onsympLabel5.innerHTML = ": Fatigue";
+            cell.appendChild(onsympLabel5);
+
+            var newOnsetsymptomsbox6 = document.createElement('input');
+            newOnsetsymptomsbox6.type = "checkbox";
+            newOnsetsymptomsbox6.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox6.setAttribute('value','Cognitive');
+            cell.appendChild(newOnsetsymptomsbox6);
+
+            var onsympLabel6 = document.createElement('label');
+            onsympLabel6.setAttribute('for','Cognitive');
+            onsympLabel6.innerHTML = ": Cognitive";
+            cell.appendChild(onsympLabel6);
+
+            var newOnsetsymptomsbox7 = document.createElement('input');
+            newOnsetsymptomsbox7.type = "checkbox";
+            newOnsetsymptomsbox7.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox7.setAttribute('value','Encephalopathy');
+            cell.appendChild(newOnsetsymptomsbox7);
+
+            var onsympLabel7 = document.createElement('label');
+            onsympLabel7.setAttribute('for','Encephalopathy');
+            onsympLabel7.innerHTML = ": Encephalopathy";
+            cell.appendChild(onsympLabel7);
+
+            var newOnsetsymptomsbox8 = document.createElement('input');
+            newOnsetsymptomsbox8.type = "checkbox";
+            newOnsetsymptomsbox8.setAttribute('name','newOnsetsymptoms');
+            newOnsetsymptomsbox8.setAttribute('value','Other');
+            cell.appendChild(newOnsetsymptomsbox8);
+
+            var onsympLabel8 = document.createElement('label');
+            onsympLabel8.setAttribute('for','Other');
+            onsympLabel8.innerHTML = ": Other";
+            cell.appendChild(onsympLabel8);
+
+          } else if (select.value == 'MRIenhancing') {  
+            var newMRIenhBox = document.createElement('input');
+            newMRIenhBox.type = "radio";
+            newMRIenhBox.setAttribute('name','newMRIenhancing');
+            newMRIenhBox.setAttribute('value','Yes');
+            cell.appendChild(newMRIenhBox);
+
+            var mrienhLabel = document.createElement('label');
+            mrienhLabel.setAttribute('for','Yes');
+            mrienhLabel.innerHTML = ": Yes";
+            cell.appendChild(mrienhLabel);
+
+            var newMRIenhBox1 = document.createElement('input');
+            newMRIenhBox1.type = "radio";
+            newMRIenhBox1.setAttribute('name','newMRIenhancing');
+            newMRIenhBox1.setAttribute('value','No');
+            cell.appendChild(newMRIenhBox1);
+
+            var mrienhLabel1 = document.createElement('label');
+            mrienhLabel1.setAttribute('for','No');
+            mrienhLabel1.innerHTML = ": No";
+            cell.appendChild(mrienhLabel1);
+
+          } else if (select.value == 'MRInum') {
+            var newMRInumBox = document.createElement('input');
+            newMRInumBox.type = "number";
+            newMRInumBox.setAttribute('name','newMRInum');
+            newMRInumBox.setAttribute('placeholder','MRI Lesion No.');
+            cell.appendChild(newMRInumBox);
+          } else if (select.value == 'MRIonsetlocalisation'){ 
+            var newMRIonsetBox = document.createElement('input');
+            newMRIonsetBox.type = "checkbox";
+            newMRIonsetBox.setAttribute('name','newMRIonsetlocalisation');
+            newMRIonsetBox.setAttribute('value','Visual');
+            cell.appendChild(newMRIonsetBox);
+
+            var mrionsetLabel = document.createElement('label');
+            mrionsetLabel.setAttribute('for','Visual');
+            mrionsetLabel.innerHTML = ": Visual";
+            cell.appendChild(mrionsetLabel);
+
+            var newMRIonsetBox1 = document.createElement('input');
+            newMRIonsetBox1.type = "checkbox";
+            newMRIonsetBox1.setAttribute('name','newMRIonsetlocalisation');
+            newMRIonsetBox1.setAttribute('value','Spinal');
+            cell.appendChild(newMRIonsetBox1);
+
+            var mrionsetLabel1 = document.createElement('label');
+            mrionsetLabel1.setAttribute('for','Spinal');
+            mrionsetLabel1.innerHTML = ": Spinal";
+            cell.appendChild(mrionsetLabel1);
+
+            var newMRIonsetBox4 = document.createElement('input');
+            newMRIonsetBox4.type = "checkbox";
+            newMRIonsetBox4.setAttribute('name','newMRIonsetlocalisation');
+            newMRIonsetBox4.setAttribute('value','Cortex');
+            cell.appendChild(newMRIonsetBox4);
+
+            var mrionsetLabel1 = document.createElement('label');
+            mrionsetLabel1.setAttribute('for','Cortex');
+            mrionsetLabel1.innerHTML = ": Cortex";
+            cell.appendChild(mrionsetLabel1);
+
+            var newMRIonsetBox2 = document.createElement('input');
+            newMRIonsetBox2.type = "checkbox";
+            newMRIonsetBox2.setAttribute('name','newMRIonsetlocalisation');
+            newMRIonsetBox2.setAttribute('value','Brainstem');
+            cell.appendChild(newMRIonsetBox2);
+
+            var mrionsetLabel2 = document.createElement('label');
+            mrionsetLabel2.setAttribute('for','Brainstem');
+            mrionsetLabel2.innerHTML = ": Brainstem";
+            cell.appendChild(mrionsetLabel2);
+
+            var newMRIonsetBox3 = document.createElement('input');
+            newMRIonsetBox3.type = "checkbox";
+            newMRIonsetBox3.setAttribute('name','newMRIonsetlocalisation');
+            newMRIonsetBox3.setAttribute('value','Cerebellum');
+            cell.appendChild(newMRIonsetBox3);
+
+            var mrionsetLabel3 = document.createElement('label');
+            mrionsetLabel3.setAttribute('for','Cerebellum');
+            mrionsetLabel3.innerHTML = ": Cerebellum";
+            cell.appendChild(mrionsetLabel3);
+          }
+        };
+
+        headCell.appendChild(select);
+        
+        
+        //disable the element selected in the first attributes selection
+        // ** works perfectly
+        var op = document.getElementById("newSelect").getElementsByTagName("option");
+        for (var i = 0; i < op.length; i++) {
+          if (op[i].value == prevAttval) {
+            op[i].selected = false;
+            op[i].disabled = true;
+          }
+        }
+
+
+                
     }
   </script>
-  </script>
+  
 </body>
 
 </html>
