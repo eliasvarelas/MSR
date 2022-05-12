@@ -218,6 +218,12 @@
     border-radius: 19px;
 }
 
+.bg-inh {
+    background-color: inherit;
+    padding: 1em 1em;
+    border-radius: 19px;
+}
+
 .editForm>p {
     border-bottom: #000;
     background-color: #000;
@@ -239,6 +245,14 @@
     margin: 1.6em;
 }
 
+.form {
+    display: block;
+    margin: auto;
+    /* align-items: center;
+    justify-content: center; */
+    border: 1px solid black;
+}
+
 
 /* attributes */
 
@@ -253,9 +267,9 @@ p {
 }
 
 label {
-    display: table-cell;
+    /* display: table-cell; */
     font-family: 'Roboto', sans-serif;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 input {
@@ -305,16 +319,18 @@ input[type=time] {
 
 label {
     text-align: left;
-    margin-top: max(50%, 5em);
+    /* margin-top: max(50%, 5em); */
     padding: 5px 5px;
     margin: 8px 0;
     color: #000;
 }
 
-td:hover {
+table tr:hover td {
     opacity: 110%;
     /* font-weight: 800; */
-    color: #ce99ff;
+    /* color: #ce99ff; */
+    background-color: #99ccff;
+    /* background-color: #3ca1c3; */
     transition: all 0.3s;
 }
 
@@ -359,6 +375,12 @@ a:focus {
     text-decoration: none;
 }
 
+#searching_query_table tr:hover td {
+    text-decoration: none;
+    opacity: 100%;
+    background-color: white;
+}
+
 
 /* Media Queries */
 
@@ -386,12 +408,13 @@ a:focus {
 body {
     font-family: 'Roboto', sans-serif;
     background: #fafafa;
+    /* background-color: #e6e6e6; */
 }
 
 table,
 th,
 td {
-    border: 1px solid black;
+    border: 1px solid #cccccc;
     border-collapse: collapse;
     /* padding:5px; */
     text-align: center;
@@ -406,7 +429,7 @@ td {
 th {
     /* background-color: #7386D5; */
     /* Title box color */
-    background-color: #3691b0;
+    background-color: #2a7189;
     color: black;
     padding: 0 4px;
     /* margin: auto; */
@@ -417,6 +440,8 @@ td {
     color: black;
     padding: 0 4px;
     /* margin: auto; */
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
 }
 
 p {
@@ -428,7 +453,8 @@ p {
 }
 
 td:nth-child(even) {
-    background-color: #c4e3ed;
+    /* background-color: #c4e3ed; */
+    background-color: white;
 }
 
 
@@ -449,6 +475,11 @@ a:focus {
     text-decoration: underline;
     transition: all 0.3s;
     cursor: pointer;
+}
+
+.addpatient label {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
 }
 
 .navbar {
@@ -496,7 +527,9 @@ span {
 .filter {
     max-width: 100%;
     min-width: 50%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-radius: 0%;
+    /* -webkit-border: none; */
 }
 
 
@@ -677,12 +710,13 @@ a.article:hover {
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 768px) {
+@media (max-width: 790px) {
     #sidebar {
         min-width: 80px;
         max-width: 80px;
         text-align: center;
         margin-left: -80px !important;
+        /* margin-left: 0px; */
     }
     .dropdown-toggle::after {
         top: auto;

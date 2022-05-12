@@ -134,9 +134,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
       <form class="form" action="addpatient-bootstrap.php" method="post">
         <!-- basic form to pass the data in the database for the creation of a new patient -->
-        <div class="container block">
+        <div class="container block ">
           <div class="split">
-            <div class="left bg-white">
+            <div class="left bg-white addpatient">
               <p>
                 <label for="assignid">Patient ID:</label>
               </p>
@@ -156,7 +156,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <input type="text" name="pat_address" placeholder="Patient Address">
               </p>
             </div>
-            <div class="right bg-white">
+            <div class="right bg-white addpatient">
               <p>
                 <label for="email">E-mail:</label>
               </p>
