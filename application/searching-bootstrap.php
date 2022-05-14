@@ -270,9 +270,10 @@
           </table>
 
           <input type="submit" name="Searchbtn" value="Search">
+          <button type="button" id="new_row_btn" onclick="addRow()" name="new_row">Add an extra row</button>
         </form>
-        <button id="new_row_btn" onclick="addRow()" name="new_row">Add an extra row</button>
         <div id="results" class="search-results"">
+          <h3 id="resultheader"></h3>
 
           
           <?php
@@ -286,534 +287,1585 @@
         $MRIonsetlocalisation_entry = $_POST['MRIonsetlocalisation'];
         $Comorbidities_entry = $_POST['Comorbidities'];
         $email_entry = $_POST['searchemail'];
+
+        
+        // second row of attributes
+        $new_row = $_POST['new_row']; // the button that adds the new row
+        $newoption = $_POST['newAttributes']; // the new select
+        //** the new input fields */
+        $newName = $_POST['newName'];
+        $newID = $_POST['newID'];
+        $newSex = $_POST['newSex'];
+        $newAge = $_POST['newAge'];
+        $newAgesmaller = $_POST['newAgesmaller'];
+        $newRace = $_POST['newRace'];
+        $newEmail = $_POST['newEmail'];
+        $newPhonenum = $_POST['newPhonenum'];
+        $newComorbidities = $_POST['newComorbidities'];
+        $newEDSS = $_POST['newEDSS'];
+        $newPregnant = $_POST['newPregnant'];
+        $newOnsetlocalisation = $_POST['newOnsetlocalisation'];
+        $newSmoker = $_POST['newSmoker'];
+        $newOnsetsymptoms = $_POST['newOnsetsymptoms'];
+        $newMRIenhancing = $_POST['newMRIenhancing'];
+        $newMRInum = $_POST['newMRInum'];
+        $newMRIonsetlocalisation = $_POST['newMRIonsetlocalisation'];
+
+        //** the variable that checks the AND/OR */
+        $and_or = $_POST['querySelector'];
         
         // check if the form has been submited, if yes, validate the info and continue
         if (isset($_POST['Searchbtn'])) {
-          
-          if ($option == 'Name') {
-            $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' ORDER BY Patient_id";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient Id</th>
-                    <th>Patient Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB'] ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-                <?php }
-            } else {
-              echo "No patient exists with this information. Name";
-            }
-          }
-          if ($option == 'ID') {
-            $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry ORDER BY Patient_id";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td> <?php echo $row['Patient_id']; ?> </td>
-                    <td><?php echo $row['Patient_name']; ?></td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line">
-                  
-                  </div>
-                  
-                  <?php }
-            } else {
-              echo "No patient exists with this information. ID";
-            }
-          }
-          if ($option == 'Sex') {
+          //checks if the user has inputed any values to the second row of attributes. if the new inputs are empty it continues with only the previous ones.
+          if (empty($newName)&&empty($newID)&&empty($newSex)&&empty($newRace)&&empty($newEmail)&&empty($newPhonenum)&&empty($newComorbidities)&&empty($newEDSS)&&empty($newPregnant)&&empty($newOnsetlocalisation)&&empty($newOnsetsymptoms)&&empty($newSmoker)&&empty($newOnsetsymptoms)&&empty($newMRIenhancing)&&empty($newMRInum)&&empty($newMRIonsetlocalisation)) {
             
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Sex</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['Sex']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. MRI enhancing";
+            if ($option == 'Name') {
+              $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient Id</th>
+                      <th>Patient Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB'] ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                  <?php }
+              } else {
+                echo "No patient exists with this information. Name";
+              }
             }
-          }
-          if ($option == 'Age') {
-            $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient Id</th>
-                    <th>Patient Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB'] ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. Age";
+            if ($option == 'ID') {
+              $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry ORDER BY Patient_id";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td> <?php echo $row['Patient_id']; ?> </td>
+                      <td><?php echo $row['Patient_name']; ?></td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line">
+                    
+                    </div>
+                    
+                    <?php }
+              } else {
+                echo "No patient exists with this information. ID";
+              }
             }
-          }
-          if ($option == 'Agesmaller') {
-            $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient Id</th>
-                    <th>Patient Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB'] ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. Age";
+            if ($option == 'Sex') {
+              
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Sex</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['Sex']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. MRI enhancing";
+              }
             }
-          }
-          if ($option == 'Race') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' ORDER BY Patient_id";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Race</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['Race']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. MRI enhancing";
+            if ($option == 'Age') {
+              $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient Id</th>
+                      <th>Patient Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB'] ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. Age";
+              }
             }
-          }
-          if ($option == 'PhoneNumber') {
-            $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum ='$entry%'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient Id</th>
-                    <th>Patient Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB'] ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
+            if ($option == 'Agesmaller') {
+              $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient Id</th>
+                      <th>Patient Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB'] ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. Age";
+              }
+            }
+            if ($option == 'Race') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' ORDER BY Patient_id";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Race</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['Race']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. MRI enhancing";
+              }
+            }
+            if ($option == 'PhoneNumber') {
+              $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum ='$entry%'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient Id</th>
+                      <th>Patient Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB'] ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              }
+            } else {
+              // echo "No patient exists with this information. Phone";
+            }
+            if ($option == 'Comorbidities') {
+              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Comorbidities</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['Comorbidities']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. Comorbidities";
+              }
+            }
+            if ($option == 'EDSS') {
+              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>EDSS Score 1-10</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['eddsscore']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. EDSS";
+              }
+            }
+            if ($option == 'Pregnant') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Is Pregnant? (Y/N)</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['Pregnant']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. Pregnant";
+              }
+            }
+            if ($option == 'Onsetlocalisation') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Onset Localisation</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['Onsetlocalisation']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. Comorbidities";
+              }
+            }
+            if ($option == 'Smoker') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Is a Smoker? (Y/N)</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['smoker']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. Smoker";
+              }
+            }
+            if ($option == 'MRIenhancing') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>MRI Enhancing Lesions (Yes/No)</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['MRIenhancing']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. MRI enhancing";
+              }
+            }
+            if ($option == 'onsetsymptoms') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Onset Symptoms</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['onsetsymptoms']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. MRI enhancing";
+              }
+            }
+            if ($option == 'MRInum') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>MRI Enhancing Lesions No.</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['MRInum']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <div class="line"></div>
+                <?php }
+              } else {
+                echo "No patient exists with this information. MRI enhancing";
+              }
+            }
+            if ($option == 'MRIonsetlocalisation') {
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>MRI Onset Localisation</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td><?php echo $row['MRIonsetlocalisation']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <?php }
+                  
+              } else {
+                echo "No patient exists with this information. MRI enhancing";
+              }
+            }
+            if ($option == 'Email') { 
+              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
+              $result = $pdo->query($sql);
+              if ($result->rowCount() > 0) {
+                while ($row = $result->fetch()) { ?>
+                  <table id="standard">
+                    <tr>
+                      <th>Patient ID</th>
+                      <th>Email</th>
+                      <th>Name</th>
+                      <th>Date of Birth</th>
+                      <th>Phone Number</th>
+                      <th>Previous Visits</th>
+                    </tr>
+                    <tr>
+                      <td><?php echo $row['Patient_id']; ?></td>
+                      <td><?php echo $row['Email']; ?></td>
+                      <td> <?php echo $row['Patient_name']; ?> </td>
+                      <td><?php echo $row['DOB']; ?></td>
+                      <td><?php echo $row['Phonenum']; ?></td>
+                      <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                    </tr>
+                  </table>
+                  <?php }
+                  
+              } else {
+                echo "No patient exists with this information. Email";
+              }
             }
           } else {
-            // echo "No patient exists with this information. Phone";
-          }
-          if ($option == 'Comorbidities') {
-            $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Comorbidities</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['Comorbidities']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. Comorbidities";
+            //todo enter the queries for the second attributes here
+            // this works as expected
+
+            //after SO question
+
+            if ($option == 'Name') {
+              if ($newoption == 'ID' && !empty($newID)) {
+                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' $and_or Patient_id = '$newID' ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient Id</th>
+                        <th>Patient Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB'] ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                    <?php }
+                } else {
+                  echo "No patient exists with this information. Name+ID";
+                }
+              }
+              if ($newoption == 'Sex' && !empty($newSex)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' $and_or patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Sex</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Sex']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. Name+Sex";
+                  }
+              }
+              if ($newoption == 'Email' && !empty($newEmail)) {
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$newEmail' $and_or patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Sex</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Sex']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                 } else {
+                  echo "No patient exists with this information. Name+Email";
+                }
+              }
+              if ($newoption == 'Age' && !empty($newAge)) { // something here doesnt work....
+                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' $and_or patients.Patient_name LIKE '%$entry%' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient Id</th>
+                        <th>Patient Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB'] ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Age";
+                }
+              }
+              if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {// something here doesnt work....
+                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' $and_or patients.Patient_name LIKE '%$entry%' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient Id</th>
+                        <th>Patient Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB'] ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Agesmaller";
+                }
+              }
+              if ($newoption == 'Race' && !empty($newRace)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' $and_or patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Race</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Race']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Race";
+                }
+              }
+              if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
+                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum ='$entry%' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Phone Number";
+                }
+              }
+              if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Comorbidities</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Comorbidities']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Comorbidities";
+                }
+              }
+              if ($newoption == 'EDSS' && !empty($newEDSS)) {
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>EDSS Score 1-10</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['eddsscore']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+EDSS";
+                }
+              }
+              if ($newoption == 'Pregnant' && !empty($newPregnant)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Is Pregnant? (Y/N)</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Pregnant']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Pregnant";
+                }
+              }
+              if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Onset Localisation</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Onsetlocalisation']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+OnsetLocalisation";
+                }
+              }
+              if ($newoption == 'Smoker' && !empty($newSmoker)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Is a Smoker? (Y/N)</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['smoker']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Smoker";
+                }
+              }
+              if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Onset Symptoms</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['onsetsymptoms']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Onset";
+                }
+              }
+              if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>MRI Enhancing Lesions (Yes/No)</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['MRIenhancing']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+MRI enhancing";
+                }
+              }
+              if ($newoption == 'MRInum' && !empty($newMRInum)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>MRI Enhancing Lesions No.</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['MRInum']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+MRInum";
+                }
+              }
+              if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' $and_or patients.Patient_name LIKE '%$entry%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>MRI Onset Localisation</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['MRIonsetlocalisation']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <?php }
+                    
+                } else {
+                  echo "No patient exists with this information. Name+MRIonset";
+                }
+              }
+            }
+            if ($option == 'ID') {
+              if ($newoption == 'Sex' && !empty($newSex)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = $entry $and_or MSR.Sex = '$newSex' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Sex</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Sex']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. ID+Sex";
+                  }
+              }
+              if ($newoption == 'Name' && !empty($newName)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = $entry $and_or Patient_name LIKE '%$newName%' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. ID+Name";
+                  }
+              }
+              if ($newoption == 'Email' && !empty($newEmail)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = $entry $and_or patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. ID+Email";
+                  }
+              }
+              if ($newoption == 'Age' && !empty($newAge)) { // something here doesnt work....
+                $sql = "SELECT * FROM patients WHERE (timestampdiff(year,dob,curdate()) > '$newAge') $and_or patients.Patient_id = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>DOB</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. ID+Age";
+                  }
+              }
+              if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) { // something here doesnt work....
+                $sql = "SELECT * FROM patients WHERE (timestampdiff(year,dob,curdate()) < '$newAge') $and_or patients.Patient_id = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                echo"Age smaller";
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>DOB</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. ID+Age";
+                  }
+              }
+              if ($newoption == 'Race' && !empty($newRace)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = '$entry' $and_or MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Race</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Race']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. ID+Race";
+                  }
+              }
+              if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
+                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid $and_or Patient_id = '$entry' $and_or Phonenum ='$newPhonenum%'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. ID+Phone Number";
+                }
+              }
+              if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.Comorbidities = '$newComorbidities'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Comorbidities</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Comorbidities']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Comorbidities";
+                }
+              }
+              if ($newoption == 'EDSS' && !empty($newEDSS)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = '$entry' $and_or MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>EDSS Score 1-10</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['eddsscore']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+EDSS";
+                }
+              }
+              if ($newoption == 'Pregnant' && !empty($newPregnant)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.Pregnant = '$newPregnant'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Is Pregnant? (Y/N)</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Pregnant']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. ID+Pregnant";
+                }
+              }
+              if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Onset Localisation</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Onsetlocalisation']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+OnsetLocalisation";
+                }
+              }
+              if ($newoption == 'Smoker' && !empty($newSmoker)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.smoker = '$newSmoker'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Is a Smoker? (Y/N)</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['smoker']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Smoker";
+                }
+              }
+              if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Onset Symptoms</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['onsetsymptoms']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+Onset";
+                }
+              }
+              if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.MRIenhancing = '$newMRIenhancing'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>MRI Enhancing Lesions (Yes/No)</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['MRIenhancing']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+MRI enhancing";
+                }
+              }
+              if ($newoption == 'MRInum' && !empty($newMRInum)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.MRInum = '$newMRInum'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>MRI Enhancing Lesions No.</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['MRInum']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                } else {
+                  echo "No patient exists with this information. Name+MRInum";
+                }
+              }
+              if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid $and_or MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>MRI Onset Localisation</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['MRIonsetlocalisation']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <?php }
+                    
+                } else {
+                  echo "No patient exists with this information. Name+MRIonset";
+                }
+              }
+            }
+            if ($option == 'Sex') {
+              if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$entry' $and_or patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $result = $pdo->query($sql);
+                if ($result->rowCount() > 0) {
+                  while ($row = $result->fetch()) { ?>
+                    <table id="standard">
+                      <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Sex</th>
+                        <th>Previous Visits</th>
+                      </tr>
+                      <tr>
+                        <td><?php echo $row['Patient_id']; ?></td>
+                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['Sex']; ?></td>
+                        <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
+                      </tr>
+                    </table>
+                    <div class="line"></div>
+                  <?php }
+                  } else {
+                    echo "No patient exists with this information. Name+Sex";
+                  }
+              }
             }
           }
-          if ($option == 'EDSS') {
-            $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>EDSS Score 1-10</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['eddsscore']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. EDSS";
-            }
-          }
-          if ($option == 'Pregnant') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Is Pregnant? (Y/N)</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['Pregnant']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. Pregnant";
-            }
-          }
-          if ($option == 'Onsetlocalisation') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Onset Localisation</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['Onsetlocalisation']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. Comorbidities";
-            }
-          }
-          if ($option == 'Smoker') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Is a Smoker? (Y/N)</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['smoker']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. Smoker";
-            }
-          }
-          if ($option == 'MRIenhancing') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>MRI Enhancing Lesions (Yes/No)</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['MRIenhancing']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. MRI enhancing";
-            }
-          }
-          if ($option == 'onsetsymptoms') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Onset Symptoms</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['onsetsymptoms']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. MRI enhancing";
-            }
-          }
-          if ($option == 'MRInum') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>MRI Enhancing Lesions No.</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['MRInum']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <div class="line"></div>
-              <?php }
-            } else {
-              echo "No patient exists with this information. MRI enhancing";
-            }
-          }
-          if ($option == 'MRIonsetlocalisation') {
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>MRI Onset Localisation</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td><?php echo $row['MRIonsetlocalisation']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <?php }
-                
-            } else {
-              echo "No patient exists with this information. MRI enhancing";
-            }
-          }
-          if ($option == 'Email') { //BUG!!! Prints only 4 outputs when there are more available
-            $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
-            $result = $pdo->query($sql);
-            if ($result->rowCount() > 0) {
-              while ($row = $result->fetch()) { ?>
-                <table id="standard">
-                  <tr>
-                    <th>Patient ID</th>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Phone Number</th>
-                    <th>Previous Visits</th>
-                  </tr>
-                  <tr>
-                    <td><?php echo $row['Patient_id']; ?></td>
-                    <td><?php echo $row['Email']; ?></td>
-                    <td> <?php echo $row['Patient_name']; ?> </td>
-                    <td><?php echo $row['DOB']; ?></td>
-                    <td><?php echo $row['Phonenum']; ?></td>
-                    <td><?php echo "<a href='/application/previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                  </tr>
-                </table>
-                <?php }
-                
-            } else {
-              echo "No patient exists with this information. Email";
-            }
-          }
-        }
+        }    
       } catch (PDOException $e) {
         die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
-      ?>
+    ?>
       </div>
       <footer>
         <div class="line"></div>
@@ -1133,27 +2185,6 @@
       }
     }
 
-    // document.getElementById('new_row_btn').onchange = function addRow() {
-    //   // var table = document.getElementById('searching_query_table');
-    //   // var newRow = document.getElementById('new_row_btn');
-    //   // newRow.insertRow(1);
-    //   // var cell1 = newRow.insertCell(0);
-    //   // var cell2 = newRow.insertCell(1);
-
-    //   var tbodyRef = document.getElementById('searching_query_table').getElementsByTagName('tbody')[0];
-    //   var newRow = tbodyRef.insertRow();
-    //   var newCell = newRow.insertCell();
-
-    //   // Append a text node to the cell
-    //   var inputbox = document.createElement('input');
-    //   inputbox.type='text';
-    //   inputbox.id = 'secondinput';
-    //   inputbox.placeholder = 'new searching';
-    //   inputbox.appendChild(newCell);
-    //   var newText = document.createTextNode('new row');
-    //   newCell.appendChild(newText);
-    // }
-
     function addRow() {
       // hide the button
       document.getElementById('new_row_btn').hidden = true;
@@ -1166,13 +2197,17 @@
       var prevAttval = prevAtt.options[prevAtt.selectedIndex].value;
       // works fine
 
-
         var table = document.getElementById("searching_query_table");
 
         // creates the row for the inputbox header
         var hrow = table.insertRow(2);
 
-        
+        // formats the table a bit nicer
+        var col = document.getElementById('selectth');
+        col.setAttribute('colspan','2');
+
+        var col1 = document.getElementById('inputBox');
+        col1.setAttribute('colspan','2');
 
         //creates a new tb row that needs to have the next header, and a new row that will have the input field
         var headCell = hrow.insertCell(0);
@@ -1206,109 +2241,139 @@
 
         var op2 = document.createElement('option');
         op2.value= 'Name' ;
-        op2.setAttribute('id','newInput')
+        op2.setAttribute('id','newInput');
         op2.innerHTML='Name';
         select.appendChild(op2);
 
         var op3 = document.createElement('option');
         op3.value= 'ID' ;
-        op3.setAttribute('id','newInput')
+        op3.setAttribute('id','newInput');
         op3.innerHTML='Patient ID';
         select.appendChild(op3);
 
         var op4 = document.createElement('option');
         op4.value= 'Sex' ;
-        op4.setAttribute('id','newInput')
+        op4.setAttribute('id','newInput');
         op4.innerHTML='Sex';
         select.appendChild(op4);
         
         var op5 = document.createElement('option');
         op5.value= 'Email' ;
-        op5.setAttribute('id','newInput')
+        op5.setAttribute('id','newInput');
         op5.innerHTML='Patient Email';
         select.appendChild(op5);
 
         var op6 = document.createElement('option');
         op6.value= 'Age' ;
-        op6.setAttribute('id','newInput')
+        op6.setAttribute('id','newInput');
         op6.innerHTML='Age >';
         select.appendChild(op6);
 
         var op7 = document.createElement('option');
         op7.value= 'Agesmaller' ;
-        op7.setAttribute('id','newInput')
+        op7.setAttribute('id','newInput');
         op7.innerHTML='Age <';
         select.appendChild(op7);
 
         var op8 = document.createElement('option');
         op8.value= 'Race' ;
-        op8.setAttribute('id','newInput')
+        op8.setAttribute('id','newInput');
         op8.innerHTML='Race';
         select.appendChild(op8);
 
         var op9 = document.createElement('option');
         op9.value= 'PhoneNumber' ;
-        op9.setAttribute('id','newInput')
+        op9.setAttribute('id','newInput');
         op9.innerHTML='Phone Number';
         select.appendChild(op9);
 
         var op10 = document.createElement('option');
         op10.value= 'Comorbidities' ;
-        op10.setAttribute('id','newInput')
+        op10.setAttribute('id','newInput');
         op10.innerHTML='Comorbidities';
         select.appendChild(op10);
 
         var op11 = document.createElement('option');
         op11.value= 'EDSS' ;
-        op11.setAttribute('id','newInput')
+        op11.setAttribute('id','newInput');
         op11.innerHTML='EDSS Score';
         select.appendChild(op11);
 
         var op12 = document.createElement('option');
         op12.value= 'Pregnant' ;
-        op12.setAttribute('id','newInput')
+        op12.setAttribute('id','newInput');
         op12.innerHTML='Is Pregnant';
         select.appendChild(op12);
 
         var op13 = document.createElement('option');
         op13.value= 'Onsetlocalisation' ;
-        op13.setAttribute('id','newInput')
+        op13.setAttribute('id','newInput');
         op13.innerHTML='Onset Localisation';
         select.appendChild(op13);
 
         var op14 = document.createElement('option');
         op14.value= 'Smoker' ;
-        op14.setAttribute('id','newInput')
+        op14.setAttribute('id','newInput');
         op14.innerHTML='Is a Smoker';
         select.appendChild(op14);
 
         var op15 = document.createElement('option');
         op15.value= 'onsetsymptoms' ;
-        op15.setAttribute('id','newInput')
+        op15.setAttribute('id','newInput');
         op15.innerHTML='Onset Symptoms';
         select.appendChild(op15);
 
         var op16 = document.createElement('option');
         op16.value= 'MRIenhancing' ;
-        op16.setAttribute('id','newInput')
+        op16.setAttribute('id','newInput');
         op16.innerHTML='MRI Enhancing Lesions';
         select.appendChild(op16);
 
         var op17 = document.createElement('option');
         op17.value= 'MRInum' ;
-        op17.setAttribute('id','newInput')
+        op17.setAttribute('id','newInput');
         op17.innerHTML='MRI Lesion No.';
         select.appendChild(op17);
 
         var op18 = document.createElement('option');
         op18.value= 'MRIonsetlocalisation' ;
-        op18.setAttribute('id','newInput')
+        op18.setAttribute('id','newInput');
         op18.innerHTML='MRI Onset Localisation';
         select.appendChild(op18);
 
+        //**  add the functionality to perform queries either with the AND portal or the OR portal
+        var queryHeadCell = hrow.insertCell(1);
+        var queryHead = document.createElement('th');
+        queryHead.innerHTML = 'Add with AND / OR';
+        queryHead.classList.toggle('text-center');
+        queryHeadCell.appendChild(queryHead);
+        
+        var queryCell = crow.insertCell(1);
+        var andorSelect = document.createElement('select');
+        andorSelect.setAttribute('name','querySelector');
+        andorSelect.setAttribute('selected',true);
+        andorSelect.setAttribute('id','querySelector');
+
+        var queryOpt = document.createElement('option');
+        queryOpt.value = 'AND';
+        queryOpt.innerHTML = 'AND';
+        andorSelect.appendChild(queryOpt);
+
+        var queryOpt1 = document.createElement('option');
+        queryOpt1.value = 'OR';
+        queryOpt1.innerHTML = 'OR';
+        andorSelect.appendChild(queryOpt1);
+
+        queryCell.appendChild(andorSelect);
+
         select.onchange = function changeSelect(){
           //todo needs to remove the fields of the previous boxes after changing to a new select value
-          
+          // todo if the select.value!= something, somethingInputBox=hidden try changing the newInputBox for a new var in each if statement...
+          // if (select.value != 'Sex') {
+          //   // newInputBox.hidden = true;
+          //   sexLabel.hidden = true;
+          //   sexLabel1.hidden = true;
+          // } else 
           if (select.value == 'Name') {
             newInputBox.type = "text";
             newInputBox.setAttribute('name','newName');
@@ -1786,6 +2851,13 @@
             mrionsetLabel3.setAttribute('for','Cerebellum');
             mrionsetLabel3.innerHTML = ": Cerebellum";
             cell.appendChild(mrionsetLabel3);
+          }
+
+          while (select.value !== 'Race'){
+            newRacebox1.setAttribute('hidden','true');
+            newRacebox2.setAttribute('hidden','true');
+            newRacebox3.setAttribute('hidden','true');
+            newRacebox4.setAttribute('hidden','true');
           }
         };
 
