@@ -9,6 +9,11 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_SESSION['user'])) {
+    $return_to_login = file_get_contents('jsredirectlogin.js');
+    echo "<script>" . $return_to_login . "</script>";
+  }
+
 ?>
 <!DOCTYPE html>
 <html>

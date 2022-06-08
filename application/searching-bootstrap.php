@@ -10,6 +10,12 @@
   }
   $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
+
+  if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_SESSION['user'])) {
+    $return_to_login = file_get_contents('jsredirectlogin.js');
+    echo "<script>" . $return_to_login . "</script>";
+  }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -7154,10 +7160,10 @@
 
     // formats the table a bit nicer
     var col = document.getElementById('selectth');
-    col.setAttribute('colspan', '2');
+    // col.setAttribute('colspan', '2');
 
     var col1 = document.getElementById('inputBox');
-    col1.setAttribute('colspan', '2');
+    // col1.setAttribute('colspan', '2');
 
     //creates a new tb row that needs to have the next header, and a new row that will have the input field
     var headCell = hrow.insertCell(0);
@@ -7167,10 +7173,10 @@
     // headCell.innerHTML = "More Info"; 
 
     // create the row for the inputbox
-    var crow = table.insertRow(3);
+    // var crow = table.insertRow(3);
 
     // create the second input field
-    var cell = crow.insertCell(0);
+    var cell = hrow.insertCell(1);
     cell.id = 'newInputCell';
     var newInputBox = document.createElement('input');
 

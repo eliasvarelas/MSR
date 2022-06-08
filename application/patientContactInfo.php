@@ -15,6 +15,11 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     echo "<script>" . $scripttimedout . "</script>";
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_SESSION['user'])) {
+    $return_to_login = file_get_contents('jsredirectlogin.js');
+    echo "<script>" . $return_to_login . "</script>";
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -137,7 +142,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                                     <input type="text" name="patID" value="<?php echo ($patientID ?? "N/A"); ?>" disabled>
                                 </p>
                                 <p>
-                                    <label for="Name">Patient Name:</label>
+                                    <label for="Name">Name:</label>
                                     <input type="text" value="<?php echo ($patientNAME ?? "N/A"); ?>" disabled>
                                 </p>
                                 <p>
@@ -148,15 +153,15 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                             </div>
                             <div class="right bg-white">
                                 <p>
-                                    <label for="Email">Patient Email:</label>
+                                    <label for="Email">Email:</label>
                                     <input type="text" value="<?php echo ($patientEmail ?? "N/A"); ?>" disabled>
                                 </p>
                                 <p>
-                                    <label for="Phone Number">Patient Phone Number:</label>
+                                    <label for="Phone Number">Phone Number:</label>
                                     <input type="text" value="<?php echo ($patientPhonenum ?? "N/A"); ?>" disabled>
                                 </p>
                                 <p>
-                                    <label for="old address">Patient Address:</label>
+                                    <label for="old address">Address:</label>
                                     <input type="text" value="<?php echo ($patientAdr ?? "N/A"); ?>" disabled>
                                 </p>
                             </div>
