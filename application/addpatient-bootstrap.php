@@ -140,50 +140,40 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
       <form class="form" action="addpatient-bootstrap.php" method="post">
         <!-- basic form to pass the data in the database for the creation of a new patient -->
         <div class="container block ">
-          <div class="split">
-            <div class="left bg-white addpatient">
-              <p>
-                <label for="assignid">Patient ID:</label>
-              </p>
-              <p>
-                <input type="number" name="assignid" placeholder="Patiend ID" required>
-              </p>
-              <p>
-                <label for="flname">Patient Name:</label>
-              </p>
-              <p>
-                <input type="text" name="flname" placeholder="First and Last Name" required>
-              </p>
-              <p>
-                <label for="address">Patients Adress</label>
-              </p>
-              <p>
-                <input type="text" name="pat_address" placeholder="Patient Address">
-              </p>
+          <!-- <div class="split"> -->
+            <!-- <div class="left addpatient"> -->
+              <div class="row">                
+                  <label for="assignid">Patient ID:</label>
+                  <input type="number" name="assignid" placeholder="Patiend ID" required>
+                
+                  <label for="flname">Patient Name:</label>
+                  <input type="text" name="flname" placeholder="First and Last Name" required>
+
+                  <label for="address">Patients Adress</label>                
+                  <input type="text" name="pat_address" placeholder="Patient Address">
+              </div>
+            <!-- </div> -->
+            <!-- <div class="right addpatient"> -->
+            <div class="row">
+              <label for="email">E-mail:</label>
+              <input type="email" name="email" placeholder="JohnDoe@email.com" required>
+
+              <label for="dob">Date of Birth:</label>
+              <input type="date" name="dob" placeholder="" required>
+
+              <label for="">Phone Number</label>
+              <input type="number" name="phone" placeholder="Phone Number" required>
             </div>
-            <div class="right bg-white addpatient">
-              <p>
-                <label for="email">E-mail:</label>
+              
+              
+              <!-- </p> -->
+              <!-- <p> -->
               </p>
-              <p>
-                <input type="email" name="email" placeholder="JohnDoe@email.com" required>
-              </p>
-              <p>
-                <label for="dob">Date of Birth:</label>
-              </p>
-              <p>
-                <input type="date" name="dob" placeholder="" required>
-              </p>
-              <p>
-                <label for="">Phone Number</label>
-              </p>
-              <p>
-                <input type="number" name="phone" placeholder="Phone Number" required>
-              </p>
-            </div>
-          </div>
+            <!-- </div> -->
+          <!-- </div>
+         -->
           
-            <input type="submit" name="Submit" class="bttn">
+            <input type="submit" name="Submit" class="bttn" value="Create Patient">
           
         </div>
       </form>
@@ -210,7 +200,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         die("ERROR: Could not able to execute $sql. " . $e->getMessage());
       }
       ?>
-      <footer>
+      <footer id="stat">
         <div class="line"></div>
         <p>Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.</p>
       </footer>

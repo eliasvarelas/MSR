@@ -16,6 +16,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     echo "<script>" . $return_to_login . "</script>";
   }
 
+
+  
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -124,7 +127,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     </div>
                 </div>
             </nav>
-            <!-- <div class="content"> -->
+            <div class="container">
 
                 <?php
                     $servername = "127.0.0.1";
@@ -138,15 +141,12 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     try {
                         $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
                         $visitID = 0;
+                        
                         $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
                         $result = $pdo->query($sql);
                         if ($result->rowCount() > 0) {
                             while ($row = $result->fetch()) { //make it with more html for responsiveness
-                                // $visitID += 1;
-                                // $sqlq = "INSERT INTO MSR (visit_id) VALUES (?) WHERE NDSnum = $patientID ";
-                                // $stmt = $pdo->prepare($sqlq);
-                                // $stmt->execute([$visitID]);
-                                echo "<table class='padded'>";  // the MSR table for the particular patient id
+                                echo "<table class='w-fit'>";  // the MSR table for the particular patient id
                                 echo "<tr>";
                                 echo "<th> Visit Number</th>";
                                 echo "<th>Name</th>";
@@ -162,7 +162,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                                 echo "<th>Date of Diagnosis</th>";
                                 echo "</tr>";
                                 echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
+                                echo "<td>" . ($row['visit_id'] ?? 'N/A') . "</td>";
                                 echo "<td class='  '>" . $row['NDS'] . "</td>";
                                 echo "<td>" . $row['NDSdate'] . "</td>";
                                 echo "<td class='  '>" . $row['NDSnum'] . "</td>";
@@ -238,27 +238,32 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                                 echo "<td colspan='12'>" . $row['reg_date'] . "</td>";
                                 echo "</tr>";
                                 echo "</table>";
+                                echo "<div class='marg-bot'><input type='text' value='some' hidden></div>";
                             
                 ?>
-            <!-- </div> -->
-            <!-- <div class="line"></div> -->
-            
-                <?php       }
+
+
+
+<!-- <div class="line"></div> -->
+
+<?php       }
                 // add the visitID number to the db
                 
                 // Free result set
                 unset($result);
-                    } else {   // basic error checking
-                        echo "No records matching your query were found.";
-                    }
-        
+            } else {   // basic error checking
+                echo "No records matching your query were found.";
+            }
+            
+            
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        ?>
 
-                    } catch (PDOException $e) {
-                        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-                    }
-                ?>
-
+        </div>
             <footer id="some">
+                
                 <div class="line"></div>
                 Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
             </footer>

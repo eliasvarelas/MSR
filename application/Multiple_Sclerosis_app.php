@@ -12,6 +12,11 @@
         echo "<script>" . $scripttimedout . "</script>";
     }
     $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+
+    $doc = $_SESSION['user_id'];
+    // query to get the last visit id -> add 1 to the value
+    // $visit_num = 0;
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -357,11 +362,11 @@
                             <div id="MRIlesions" class="dropdown-check-list table-column" tabindex="100">
                                 <span class="anchor">Locations</span>
                                 <ul class="items">
-                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Visual" class="exempt" id="MRIloc">Visual</li>
-                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Spinal" class="exempt" id="MRIloc1">Spinal</li>
-                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Cortex" class="exempt" id="MRIloc2">Cortex</li>
-                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Cerebellar" class="exempt" id="MRIloc3">Cerebellar</li>
-                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Brainstem" class="exempt" id="MRIloc4">Brainstem</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Visual" id="MRIloc">Visual</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Spinal"  id="MRIloc1">Spinal</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Cortex"  id="MRIloc2">Cortex</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Cerebellar"  id="MRIloc3">Cerebellar</li>
+                                    <li><input type="checkbox" name="MRIenhancinglocation" value="Brainstem"  id="MRIloc4">Brainstem</li>
                                 </ul>
                             </div>
                         </div>

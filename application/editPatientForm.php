@@ -130,9 +130,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             <div class="content">
 
                 <form action="editPatientForm.php?qpatid=<?php echo $patientID ?>" method="POST">
-                    <div class="container block">
+                    <div class="container">
                         <div class="split">
-                            <div class="left bg-white">
+                            <div class="left block">
                                 <!-- modern stylign -->
                                 <p>
                                     <h2>Old Information</h2>
@@ -162,7 +162,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                                     <input type="text" value="<?php echo ($patientAdr ?? "N/A"); ?>" disabled>
                                 </p>
                             </div>
-                            <div class="right bg-white">
+                            <div class="right block">
                                 
                                 <p>
                                     <h3>New Information</h3>

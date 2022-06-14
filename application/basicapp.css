@@ -9,17 +9,20 @@
     /* position: relative; */
     display: flex;
     flex-direction: row;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     width: 100%;
     /* height: auto; */
+    min-width: 0;
 }
 
 .split>.left,
 .split>.right {
-    flex-basis: 100%;
-    max-width: 50%;
-    width: 0 auto;
+    /* flex-basis: 100%; */
+    max-width: 100%;
+    min-width: 50%;
+    /* width: 0 auto; */
     margin-left: 0;
+    margin-right: 0;
 }
 
 .split>.left+.right {
@@ -70,11 +73,15 @@
 }
 
 .w-auto {
-    max-width: fit-content;
+    width: auto;
 }
 
 .w-100 {
     max-width: 100%;
+}
+
+.w-fit {
+    width: fit-content();
 }
 
 .lang {
@@ -95,36 +102,27 @@
 }
 
 .container {
-    /* display: flex; */
     display: grid;
-    /* position: relative; */
+    position: relative;
+    /* float: left; */
     justify-content: center;
-    margin: 0.5em 0.5em;
-    width: max(95%, 70rem);
-    max-width: 100%;
-    /* width: 100%; */
-    /* justify-content: center; */
+    width: fit-content();
     padding: .5em .5em;
-    background-color: inherit;
     border-radius: 15px;
+    border: 1px solid red;
+}
+
+.container>table {
+    position: static;
+    /* border: 10px dotted goldenrod; */
 }
 
 .block {
-    width: max(95%, 70rem);
-    /* position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0%); */
-    /* display: grid;
-    justify-content: center; */
-    width: 0 auto;
-    padding: 0.5em auto;
-    text-align: center;
-    margin: 1em;
+    /* width: max(95%, 70rem); */
+    position: relative;
+    max-width: 100%;
     background-color: #2a7189;
     border-radius: 19px;
-    -webkit-box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
-    box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, 0.84);
 }
 
 .block>.borderless {
@@ -152,8 +150,13 @@
 }
 
 .padded {
-    padding: 1em 1em;
-    margin: 1em;
+    /* padding: 1em 0px; */
+    /* margin: 1em; */
+    gap: 1em;
+}
+
+.marg-bot {
+    border-bottom: 4px dotted lightgray;
 }
 
 .bordered {
@@ -200,12 +203,12 @@
 
 .bttn {
     border: none;
-    padding: 5px 2px;
+    padding: 3px 2px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    /* margin: 4px 2px; */
     cursor: pointer;
     background-color: white;
     color: black;
@@ -214,13 +217,13 @@
 
 .bg-white {
     background-color: white;
-    padding: 1em 1em;
+    /* padding: 1em 1em; */
     border-radius: 19px;
 }
 
 .bg-inh {
     background-color: inherit;
-    padding: 1em 1em;
+    /* padding: 1em 1em; */
     border-radius: 19px;
 }
 
@@ -251,6 +254,17 @@
     /* align-items: center;
     justify-content: center; */
     border: 1px solid black;
+}
+
+.col {
+    display: table-column;
+    font-family: 'Roboto', sans-serif;
+    justify-items: center;
+}
+
+.row {
+    display: table-row;
+    font-family: 'Roboto', sans-serif;
 }
 
 
@@ -345,6 +359,13 @@ footer {
 
 /* ids */
 
+
+/* footer static id */
+
+#stat {
+    position: absolute;
+}
+
 #purple {
     background-color: #ce99ff;
 }
@@ -432,14 +453,14 @@ th {
     /* Title box color */
     background-color: #2a7189;
     color: black;
-    padding: 0 4px;
+    padding: .5em;
     /* margin: auto; */
 }
 
 td {
     background-color: white;
     color: black;
-    padding: 0 4px;
+    padding: .25em;
     /* margin: auto; */
     border: none;
     border-bottom: 1px solid #e6e6e6;
@@ -457,11 +478,6 @@ td:nth-child(even) {
     /* background-color: #c4e3ed; */
     background-color: white;
 }
-
-
-/* table td.tdclass.exempt {
-    background-color: white;
-} */
 
 a,
 a:hover,
@@ -761,20 +777,37 @@ a.article:hover {
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1920px) {
     #sidebar ul li a i {
         font-size: 2em;
     }
     #sidebar {
         min-width: 80px;
-        max-width: 150px;
+        max-width: 250px;
         text-align: center;
-        margin-left: -80px !important;
     }
     #sidebar ul li a span {
-        font-size: 1em;
+        font-size: 1.2em;
+    }
+    /* #content table th td { */
+    /* font-size: 1em; */
+    /* color: green; */
+    /* } */
+}
+
+@media (min-width: 1440px) {
+    #sidebar ul li a i {
+        font-size: 4em;
+    }
+    #sidebar {
+        min-width: 80px;
+        max-width: 250px;
+        text-align: center;
+    }
+    #sidebar ul li a span {
+        font-size: 1.5em;
     }
     #content table th td {
-        font-size: 0.8em;
+        font-size: 1em;
     }
 }

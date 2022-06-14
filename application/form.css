@@ -13,6 +13,10 @@ body {
     font-size: 18px;
 }
 
+form {
+    margin-top: 0;
+}
+
 
 /* Classes */
 
@@ -36,6 +40,7 @@ body {
     flex-basis: 100%;
     max-width: 50%;
     min-height: 100%;
+    /* gap: 5em; */
 }
 
 .right-border {
@@ -311,3 +316,59 @@ label {
 .dropdown-check-list.visible .items {
     display: block;
 }
+
+@media (max-width: 790px) {
+    img {
+        max-width: 50px;
+        border: 1px solid red;
+    }
+    .lang {
+        max-width: 60px;
+        max-height: 50px;
+    }
+    label,
+    input[type=text],
+    input[type=date],
+    input[type=number],
+    input[type=time] {
+        font-size: 10px;
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 1027px) {
+    label,
+    input[type=text],
+    input[type=date],
+    input[type=number],
+    input[type=time] {
+        font-size: 15px;
+    }
+}
+
+
+/* @media (max-width: 1920px) {
+    img {
+        max-width: 30em;
+    }
+    label,
+    input[type=text],
+    input[type=date],
+    input[type=number],
+    input[type=time] {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 2570px) {
+    img {
+        max-width: 36em;
+    }
+    label,
+    input[type=text],
+    input[type=date],
+    input[type=number],
+    input[type=time] {
+        font-size: 1.6em;
+    }
+} */

@@ -66,31 +66,48 @@
  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   try {
+
+    
+    //get the value of the last visit number
+    $query = "SELECT visit_id FROM MSR WHERE NDSnum = $NDSnum";
+    $result = $pdo->query($query);
+      if ($result->rowCount() > 0) {
+        $visit_id = $row['visit_id'];
+        if ($visit_id == null) {
+          $visit_id = 0;
+        }
+        $newvisit_id = $visit_id + 1;
+      }
+
+
     // inserting the data from the form in the MSR table
-    $sql = "INSERT INTO $table (NDS,NDSdate,NDSnum,`address`,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
+    $sql = "INSERT INTO $table (visit_id,NDS,NDSdate,NDSnum,`address`,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
     onsetdate, Noofrelapses,Noofrelapsesrad,
     pastTREATMENT,pastTREATMENTdate,pastTREATMENTcheck,TREATMENTdate, TREATMENT, eddsscore,edsstime7_5m,edsstimePEG,
     EDSSdate,Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,MRIonsetlocalisation,MRIenhancing,MRInum,MRIenhancinglocation,
     signer,Submit)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";     //using prepared statements for security towards sql injections
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";     //using prepared statements for security towards sql injections
 
     //Execute
   if (isset($_POST["Submit"])) {
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$NDS,$NDSdate,$NDSnum,$patientAddress,$Sex,$Age,$Race,$Comorbidities,$convsprad,$convspnum,$dateofdia,$dateofdiarad,$onsetdate,$Noofrelapses,$Noofrelapsesrad,$pastTREATMENT,
-    $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime7_5m,$edssPEG,$EDSSdate,$Pregnant,$Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$MRIonsetlocalisation,$MRIenhancing,$MRInum,$MRIenhancinglocation,$signer,$Submit]);
+    $stmt->execute([$newvisit_id,$NDS,$NDSdate,$NDSnum,$patientAddress,$Sex,$Age,$Race,$Comorbidities,$convsprad,$convspnum,$dateofdia,
+    $dateofdiarad,$onsetdate,$Noofrelapses,$Noofrelapsesrad,$pastTREATMENT,
+    $pastTREATMENTdate,$pastTREATMENTcheck,$TREATMENTdate,$TREATMENT,$eddsscore,$edsstime7_5m,$edssPEG,$EDSSdate,$Pregnant,
+    $Onsetlocalisation,$smoker,$cigars,$cigardate,$onsetsymptoms,$MRIonsetlocalisation,$MRIenhancing,$MRInum,
+    $MRIenhancinglocation,$signer,$Submit]);
     echo "records inserted successfully!!!!!!!!";
   } else {
     echo "Im sorry, there was an error";  // basic error handling
   }
 
-  if ($sql) {
-    //Redirect to the Doctors Menu
-    $script = file_get_contents('redirectMenu.js');
-    echo "<script>".$script."</script>";
-  } else {
-    echo "something went wrong";
-  }
+  // if ($sql) {
+  //   //Redirect to the Doctors Menu
+  //   $script = file_get_contents('redirectMenu.js');
+  //   echo "<script>".$script."</script>";
+  // } else {
+  //   echo "something went wrong";
+  // }
 
   }catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();

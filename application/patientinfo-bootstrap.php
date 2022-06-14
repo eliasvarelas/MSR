@@ -135,8 +135,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
       try { ?>
       <div class="container">
           <input type="text" name="filter-patients" id="filter_Patients_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-100">
-          <table id="Patients_table" class="w-100 dual_bg">
-            <!-- prints the table with the patients -->
+          
+          <!-- prints the table with the patients -->
+          <table id="Patients_table" class="w-100">
             <tr>
               <th>Patient ID</th>
               <th>Patient Name</th>
