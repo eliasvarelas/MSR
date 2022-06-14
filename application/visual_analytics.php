@@ -30,6 +30,8 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="visual_analytics.js" charset="utf-8"></script>
+
 </head>
 
 <body>
@@ -131,15 +133,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             <td colspan="3" class="">
               <select id="type_of_chart" name="charts">
                 <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
+                <option value="Bar_chart">Bar chart</option> <!-- classic pie -->
               </select>
             </td>
-          </tr>
+          <!-- </tr> -->
 
-          <tr id="attribute_row">
+          <!-- <tr id=""> -->
             <!-- select the attribute for which the chart will be printed -->
             <th>Select an Attribute</th>
 
-            <td colspan="3" class="">
+            <td colspan="3" id="attribute_row">
               <select id="attributes" name="attributes">
                 <option value="Sex" id="p_Sex">Sex</option>
               </select>
@@ -148,7 +151,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
           </tr>
         </table>
 
-        <button type="submit" name="makeGraph" value="Create Graph" id="test">Create Graph</button>
+        <button type="submit" name="makeGraph" value="Create Graph" id="test" onclick="Graphs()">Create Graph</button>
       
       </form>
       
@@ -185,49 +188,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
       });
     });
   </script>
-
-  <!-- <script src="visual_analytics.js" charset="utf-8"></script> -->
-  <script>
-
-var width = 960,
-    height = 500,
-    radius = Math.min(width, height) / 2;
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(0);
-
-// defines wedge size
-var pie = d3.layout.pie()
-    .sort(null)
-    .value(function (d) { return d.ratio; });
-
-var svg = d3.select("#d3-container").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-d3.json("JSON_File.json", function(error, data) {
-  node = data.data[0].ap[0].floorratio;  // <------ here
-
-  var g = svg.selectAll(".arc")
-      .data(pie(node))
-      .enter().append("g")
-      .attr("class", "arc");
-
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.floor); });
-
-  g.append("text")
-      .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".35em")
-      .style("text-anchor", "middle")
-      .text(function (d) { return d.data.floor; });
-});
-</script>
 </body>
 
 </html>
@@ -271,13 +231,13 @@ d3.json("JSON_File.json", function(error, data) {
 
             
             
-            $statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
+            $statement = $pdo->prepare("SELECT DISTINCT NDS,Sex FROM MSR");
             $statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
             $json = json_encode($results);
             // echo $json;
             
-            $fp = fopen('JSON_File.json', 'w');
+            $fp = fopen('File.json', 'w');
             fwrite($fp, $json);
             fclose($fp);
 
