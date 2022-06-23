@@ -299,6 +299,7 @@
         // second row of attributes
         $new_row = $_POST['new_row']; // the button that adds the new row
         $newoption = $_POST['newAttributes']; // the new select
+        
         //** the new input fields */
         $newName = $_POST['newName'];
         $newID = $_POST['newID'];
@@ -389,7 +390,7 @@
             }
             if ($option == 'Sex') {
               
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -478,7 +479,7 @@
               }
             }
             if ($option == 'Race') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' ORDER BY Patient_id";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' ORDER BY Patient_id";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -533,12 +534,12 @@
                   </table>
                   <div class="line"></div>
                 <?php }
+              } else {
+              echo "No patient exists with this information. Phone";
               }
-            } else {
-              // echo "No patient exists with this information. Phone";
             }
             if ($option == 'Comorbidities') {
-              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry'";
+              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -569,7 +570,7 @@
               }
             }
             if ($option == 'EDSS') {
-              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
+              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -600,7 +601,7 @@
               }
             }
             if ($option == 'Pregnant') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -631,7 +632,7 @@
               }
             }
             if ($option == 'Onsetlocalisation') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -662,7 +663,7 @@
               }
             }
             if ($option == 'Smoker') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry'";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -693,7 +694,7 @@
               }
             }
             if ($option == 'MRIenhancing') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -724,7 +725,7 @@
               }
             }
             if ($option == 'onsetsymptoms') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -755,7 +756,7 @@
               }
             }
             if ($option == 'MRInum') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -786,7 +787,7 @@
               }
             }
             if ($option == 'MRIonsetlocalisation') {
-              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
+              $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -817,7 +818,7 @@
               }
             }
             if ($option == 'Email') { 
-              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
+              $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
               $result = $pdo->query($sql);
               if ($result->rowCount() > 0) {
                 while ($row = $result->fetch()) { ?>
@@ -847,7 +848,8 @@
             }
           } else {
             //** enter the queries for the second attributes here (works fine)
-            if ($option == 'Name') {
+
+            if ($option == 'Name') { // add the join on 
               if ($newoption == 'ID' && !empty($newID)) {
                 $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
@@ -878,7 +880,7 @@
                 }
               }
               if ($newoption == 'Sex' && !empty($newSex)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -909,7 +911,7 @@
                   }
               }
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$newEmail' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$newEmail' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -998,7 +1000,7 @@
                 }
               }
               if ($newoption == 'Race' && !empty($newRace)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1058,7 +1060,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1089,7 +1091,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1120,7 +1122,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1151,7 +1153,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1182,7 +1184,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1213,7 +1215,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1244,7 +1246,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1275,7 +1277,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1306,7 +1308,7 @@
                 }
               }
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1339,7 +1341,7 @@
             }
             if ($option == 'ID') {
               if ($newoption == 'Sex' && !empty($newSex)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = $entry AND MSR.Sex = '$newSex' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = $entry AND MSR.Sex = '$newSex' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1370,7 +1372,7 @@
                   }
               }
               if ($newoption == 'Name' && !empty($newName)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = $entry AND Patient_name LIKE '%$newName%' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = $entry AND Patient_name LIKE '%$newName%' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1399,7 +1401,7 @@
                   }
               }
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = $entry AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = $entry AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1491,7 +1493,7 @@
                   }
               }
               if ($newoption == 'Race' && !empty($newRace)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = '$entry' AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1551,7 +1553,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Comorbidities = '$newComorbidities'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Comorbidities = '$newComorbidities'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1582,7 +1584,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients,MSR WHERE patients.Patient_id = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1613,7 +1615,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1644,7 +1646,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1675,7 +1677,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1706,7 +1708,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1737,7 +1739,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1768,7 +1770,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1799,7 +1801,7 @@
                 }
               }
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients,MSR WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1832,7 +1834,7 @@
             }
             if ($option == 'Sex') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND MSR.Sex = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1844,6 +1846,7 @@
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Sex</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -1853,17 +1856,18 @@
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['Sex']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
                     <div class="line"></div>
                   <?php }
                   } else {
-                    echo "No patient exists with this information. Name+Sex";
+                    echo "No patient exists with this information. Sex+Name";
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1874,6 +1878,7 @@
                         <th>Date of Birth</th>
                         <th>Phone Number</th>
                         <th>Email</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -1882,6 +1887,7 @@
                         <td><?php echo $row['DOB'] ?></td>
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -1892,7 +1898,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE MSR.Sex = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1921,7 +1927,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Sex = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Sex = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1952,7 +1958,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Sex = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Sex = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1983,7 +1989,7 @@
                   }
               }
               if ($newoption == 'Race' && !empty($newRace)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.Race FROM patients,MSR WHERE MSR.Sex = '$entry' AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.Race,MSR.reg_date FROM patients join MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -1995,6 +2001,7 @@
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Race</th>
+                        <th>Date and Time of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -2004,17 +2011,18 @@
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['Race']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
-                    <div class="line"></div>
+                    <!-- <div class="line"></div> -->
                   <?php }
                   } else {
                     echo "No patient exists with this information. ID+Race";
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Sex = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Sex = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2043,7 +2051,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2074,7 +2082,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE MSR.Sex = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2105,7 +2113,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2138,7 +2146,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2171,7 +2179,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2204,7 +2212,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2235,7 +2243,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients,MSR WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2266,7 +2274,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2297,7 +2305,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients,MSR WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2330,7 +2338,7 @@
             }
             if ($option == 'Age') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2361,7 +2369,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2390,7 +2398,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2417,40 +2425,9 @@
                   } else {
                     echo "No patient exists with this information. ID+Email";
                   }
-              }
-              if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid ORDER BY Patient_id";
-                $result = $pdo->query($sql);
-                if ($result->rowCount() > 0) {
-                  while ($row = $result->fetch()) { ?>
-                    <table id="standard">
-                      <tr>
-                        <th>Patient ID</th>
-                        <th>Name</th>
-                        <th>Date of Birth</th>
-                        <th>Phone Number</th>
-                        <th>Sex</th>
-                        <th>DOB</th>
-                        <th>Previous Visits</th>
-                      </tr>
-                      <tr>
-                        <td><?php echo $row['Patient_id']; ?></td>
-                        <td> <?php echo $row['Patient_name']; ?> </td>
-                        <td><?php echo $row['DOB']; ?></td>
-                        <td><?php echo $row['Phonenum']; ?></td>
-                        <td><?php echo $row['Sex']; ?></td>
-                        <td><?php echo $row['DOB']; ?></td>
-                        <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
-                      </tr>
-                    </table>
-                    <div class="line"></div>
-                  <?php }
-                  } else {
-                    echo "No patient exists with this information. ID+Age";
-                  }
-              }
+              } 
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients join MSR on patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND (timestampdiff(year,dob,curdate()) < '$newAge') AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2462,6 +2439,7 @@
                         <th>Phone Number</th>
                         <th>Sex</th>
                         <th>DOB</th>
+                        <th>Date/Time of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -2471,17 +2449,18 @@
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Sex']; ?></td>
                         <td><?php echo $row['DOB']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
                     <div class="line"></div>
                   <?php }
                   } else {
-                    echo "No patient exists with this information. ID+Age";
+                    echo "No patient exists with this information. Age>+Age<";
                   }
               }
               if ($newoption == 'Race' && !empty($newRace)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.Race FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2512,7 +2491,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2541,7 +2520,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients,MSR WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Comorbidities = '$newComorbidities'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Comorbidities = '$newComorbidities'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2572,7 +2551,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2603,7 +2582,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2636,7 +2615,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients,MSR WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2669,7 +2648,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2702,7 +2681,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2733,7 +2712,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2764,7 +2743,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2795,7 +2774,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2828,7 +2807,7 @@
             }
             if ($option == 'Agesmaller') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2859,7 +2838,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2888,7 +2867,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2917,7 +2896,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2948,7 +2927,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -2979,7 +2958,7 @@
                   }
               }
               if ($newoption == 'Race' && !empty($newRace)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.Race FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3010,7 +2989,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3039,7 +3018,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients,MSR WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Comorbidities = '$newComorbidities'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Comorbidities = '$newComorbidities'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3070,7 +3049,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3101,7 +3080,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3134,7 +3113,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients,MSR WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3167,7 +3146,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3200,7 +3179,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3231,7 +3210,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3262,7 +3241,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3293,7 +3272,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3325,8 +3304,8 @@
               }
             }
             if ($option == 'Race') {
-              if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+              if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now... FIXED!!! $entry -> $race_entry
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3338,6 +3317,7 @@
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Race</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -3347,6 +3327,7 @@
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['Race']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -3357,7 +3338,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3386,7 +3367,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE MSR.Race = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3415,7 +3396,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3446,7 +3427,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3477,7 +3458,7 @@
                   }
               }
               if ($newoption == 'Race' && !empty($newRace)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.Race FROM patients,MSR WHERE MSR.Race = '$entry' AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND MSR.Race = '$newRace' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3508,7 +3489,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Race = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Race = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3537,7 +3518,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3568,7 +3549,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE MSR.Race = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3599,7 +3580,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3632,7 +3613,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3665,7 +3646,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3698,7 +3679,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3729,7 +3710,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race FROM patients,MSR WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3760,7 +3741,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3791,7 +3772,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race FROM patients,MSR WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3824,7 +3805,7 @@
             }
             if ($option == 'PhoneNumber') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3855,7 +3836,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3884,7 +3865,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE MSR.Race = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3913,7 +3894,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3944,7 +3925,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Race = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -3975,7 +3956,7 @@
                   }
               }
               if ($newoption == 'Race' && !empty($newRace)) {
-                // $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.Race FROM patients,MSR WHERE patients.Phonenum = '$entry' AND  AND Doctor_ID = $usersid ORDER BY Patient_id";
+                // $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND  AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4006,7 +3987,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4035,7 +4016,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race FROM patients,MSR WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4066,7 +4047,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients,MSR WHERE patients.Phonenum = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4097,7 +4078,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4130,7 +4111,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race FROM patients,MSR WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4163,7 +4144,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4196,7 +4177,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4227,7 +4208,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race FROM patients,MSR WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4258,7 +4239,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4289,7 +4270,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race FROM patients,MSR WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4322,7 +4303,7 @@
             }
             if ($option == 'Comorbidities') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4353,7 +4334,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4382,7 +4363,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE MSR.Comorbidities = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4411,7 +4392,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4442,7 +4423,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4473,7 +4454,7 @@
                   }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Comorbidities FROM patients,MSR WHERE MSR.Comorbidities = '$entry' AND MSR.Comorbidities = '$newComorbidities' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.Comorbidities = '$newComorbidities' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4504,7 +4485,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4533,7 +4514,7 @@
                 }
               }
               if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Comorbidities FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4564,7 +4545,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients,MSR WHERE MSR.Comorbidities = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4595,7 +4576,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Comorbidities,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Comorbidities,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4628,7 +4609,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Comorbidities FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4661,7 +4642,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Comorbidities,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Comorbidities,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4694,7 +4675,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4725,7 +4706,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Comorbidities FROM patients,MSR WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4756,7 +4737,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4787,7 +4768,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Comorbidities FROM patients,MSR WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4820,7 +4801,7 @@
             }
             if ($option == 'EDSS') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4851,7 +4832,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4880,7 +4861,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients,MSR WHERE MSR.edssscore = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4909,7 +4890,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.edssscore = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.edssscore = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4940,7 +4921,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.edssscore = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.edssscore = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -4971,7 +4952,7 @@
                   }
               }
               if ($newoption == 'edssscore' && !empty($newedssscore)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.edssscore FROM patients,MSR WHERE MSR.edssscore = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5002,7 +4983,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5031,7 +5012,7 @@
                 }
               }
               if ($newoption == 'edssscore' && !empty($newedssscore)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.edssscore FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.edssscore = '$newedssscore'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.edssscore = '$newedssscore'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5062,7 +5043,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients,MSR WHERE MSR.edssscore = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5093,7 +5074,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.edssscore,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.edssscore,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5126,7 +5107,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.edssscore FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5159,7 +5140,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.edssscore,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.edssscore,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5192,7 +5173,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5223,7 +5204,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.edssscore FROM patients,MSR WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5254,7 +5235,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5285,7 +5266,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.edssscore FROM patients,MSR WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5318,7 +5299,7 @@
             }
             if ($option == 'Pregnant') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5349,7 +5330,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5378,7 +5359,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE MSR.Pregnant = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5407,7 +5388,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Pregnant = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Pregnant = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5438,7 +5419,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Pregnant = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Pregnant = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5469,7 +5450,7 @@
                   }
               }
               if ($newoption == 'edssscore' && !empty($newedssscore)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.Pregnant FROM patients,MSR WHERE MSR.Pregnant = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5502,7 +5483,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5531,7 +5512,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5562,7 +5543,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients,MSR WHERE MSR.Pregnant = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5593,7 +5574,7 @@
                 }
               }
               if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Pregnant = '$newPregnant'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5626,7 +5607,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Pregnant FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5659,7 +5640,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5692,7 +5673,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5723,7 +5704,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Pregnant FROM patients,MSR WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5754,7 +5735,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5785,7 +5766,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Pregnant FROM patients,MSR WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5818,7 +5799,7 @@
             }
             if ($option == 'Onsetlocalisation') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5849,7 +5830,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5878,7 +5859,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE MSR.Onsetlocalisation = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5907,7 +5888,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5938,7 +5919,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -5969,7 +5950,7 @@
                   }
               }
               if ($newoption == 'edssscore' && !empty($newedssscore)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.Onsetlocalisation FROM patients,MSR WHERE MSR.Onsetlocalisation = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6002,7 +5983,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6031,7 +6012,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6062,7 +6043,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients,MSR WHERE MSR.Onsetlocalisation = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6093,7 +6074,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6126,7 +6107,7 @@
                 }
               }
               if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6159,7 +6140,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Onsetlocalisation,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Onsetlocalisation,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6192,7 +6173,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6223,7 +6204,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Onsetlocalisation FROM patients,MSR WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6254,7 +6235,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6285,7 +6266,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Onsetlocalisation FROM patients,MSR WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6318,7 +6299,7 @@
             }
             if ($option == 'Smoker') {
               if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6349,7 +6330,7 @@
                   }
               }
               if ($newoption == 'ID' && !empty($newID)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6378,7 +6359,7 @@
                 }
               } 
               if ($newoption == 'Email' && !empty($newEmail)) {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE MSR.smoker = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$entry' AND patients.Email = '$newEmail' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6407,7 +6388,7 @@
                   }
               }
               if ($newoption == 'Age' && !empty($newAge)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.smoker = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$newAge') AND MSR.smoker = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6438,7 +6419,7 @@
                   }
               }
               if ($newoption == 'Agesmaller' && !empty($newAgesmaller)) {
-                $sql = "SELECT * FROM patients,MSR WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.smoker = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$newAge') AND MSR.smoker = '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6469,7 +6450,7 @@
                   }
               }
               if ($newoption == 'edssscore' && !empty($newedssscore)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.smoker FROM patients,MSR WHERE MSR.smoker = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$entry' AND MSR.edssscore = '$newedssscore' AND Doctor_ID = $usersid ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6502,7 +6483,7 @@
                   }
               }
               if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                $sql = "SELECT * FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.smoker = '$entry' AND Phonenum ='$newPhonenum%'";
+                $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.smoker = '$entry' AND Phonenum ='$newPhonenum%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6531,7 +6512,7 @@
                 }
               }
               if ($newoption == 'smoker' && !empty($newsmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newsmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newsmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6562,7 +6543,7 @@
                 }
               }
               if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients,MSR WHERE MSR.smoker = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$entry' AND MSR.eddsscore = '$newEDSS' AND Doctor_ID = $usersid";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6593,7 +6574,7 @@
                 }
               }
               if ($newoption == 'smoker' && !empty($newsmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker,patients.Doctor_ID FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newsmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newsmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6626,7 +6607,7 @@
                 }
               }
               if ($newoption == 'smoker' && !empty($newsmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker FROM patients,MSR WHERE Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newsmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newsmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6659,7 +6640,7 @@
                 }
               }
               if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker,MSR.NDSnum FROM patients,MSR WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newSmoker'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$entry' AND MSR.smoker = '$newSmoker'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6692,7 +6673,7 @@
                 }
               }
               if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients,MSR WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6723,7 +6704,7 @@
                 }
               }
               if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.smoker FROM patients,MSR WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6754,7 +6735,7 @@
                 }
               }
               if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients,MSR WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -6785,7 +6766,7 @@
                 }
               } 
               if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker FROM patients,MSR WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
