@@ -142,103 +142,206 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         $patientID = $_GET["id"]; // passes the id of the patient that was "clicked" in the patientsinfo.php table in order to get the right info
                         $visitID = 0;
                         
-                        $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID";
+                        $sql = "SELECT * FROM MSR WHERE NDSnum = $patientID ORDER BY id DESC";
                         $result = $pdo->query($sql);
-                        if ($result->rowCount() > 0) {
+                        if ($result->rowCount() > 0 ) {
                             while ($row = $result->fetch()) { //make it with more html for responsiveness
-                                echo "<table class='w-fit'>";  // the MSR table for the particular patient id
-                                echo "<tr>";
-                                echo "<th> Visit Number</th>";
-                                echo "<th>Name</th>";
-                                echo "<th>Date</th>";
-                                echo "<th>Patient Id</th>";
-                                echo "<th>Patient Address</th>";
-                                echo "<th>Gender</th>";
-                                echo "<th>Age</th>";
-                                echo "<th>Race</th>";
-                                echo "<th>Comorbidities</th>";
-                                echo "<th>MS Type NOW</th>";
-                                echo "<th>Conversion to SP</th>";
-                                echo "<th>Date of Diagnosis</th>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                echo "<td>" . ($row['visit_id'] ?? 'N/A') . "</td>";
-                                echo "<td class='  '>" . $row['NDS'] . "</td>";
-                                echo "<td>" . $row['NDSdate'] . "</td>";
-                                echo "<td class='  '>" . $row['NDSnum'] . "</td>";
-                                echo "<td>" . ($row['Patient_address'] ?? "N/A") . "</td>";
-                                echo "<td class='  '>" . $row['Sex'] . "</td>";
-                                echo "<td>" . $row['Age'] . "</td>";
-                                echo "<td>" . $row['Race'] . "</td>";
-                                echo "<td class='  '>" . $row['Comorbidities'] . "</td>";
-                                echo "<td>" . $row['convsprad'] . "</td>";
-                                echo "<td class='  '>" . $row['convspnum'] . "</td>";
-                                echo "<td>" . $row['dateofdia'] . "</td>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                echo "<th>MS Type at Diagnosis</th>";
-                                echo "<th>No. of Relapses (RR)</th>";
-                                echo "<th>Severity</th>";
-                                echo "<th>Date of Past treatment</th>";
-                                echo "<th>Past Medication</th>";
-                                echo "<th>End of past Medication</th>";
-                                echo "<th>Date of Present Treatment</th>";
-                                echo "<th>Present Medication</th>";
-                                echo "<th>Current EDSS Score</th>";
-                                echo "<th>7.5 meters Timed walk </th>";
-                                echo "<th>9-Hole PEG test</th>";
-                                echo "<th>Date of EDSS</th>"; //2 outputs
-                                echo "</tr>";
-                                echo "<tr>";
-                                echo "<td>" . $row['dateofdiarad'] . "</td>";
-                                echo "<td class='  '>" . $row['Noofrelapses'] . "</td>";
-                                echo "<td>" . $row['Noofrelapsesrad'] . "</td>";
-                                echo "<td class='  '>" . $row['pastTREATMENTdate'] . "</td>";
-                                echo "<td>" . $row['pastTREATMENT'] . "</td>";
-                                echo "<td class='  '>" . $row['pastTREATMENTcheck'] . "</td>";
-                                echo "<td>" . $row['TREATMENTdate'] . "</td>";
-                                echo "<td class='  '>" . $row['TREATMENT'] . "</td>";
-                                echo "<td>" . $row['eddsscore'] . "</td>";
-                                echo "<td class='  '>" . $row['edsstime7_5m']  . "</td>";
-                                echo "<td>" . ($row['edsstimePEG'] ?? "N/A") . "</td>";
-                                echo "<td>" . $row['EDSSdate'] . '<br>' . $row['EDSSdaterad'] . "</td>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                echo "<th>Pregnant</th>";
-                                echo "<th>Date of Onset</th>";
-                                echo "<th>Onset Localisation</th>";
-                                echo "<th>Onset Symptoms</th>";
-                                echo "<th>Smoker</th>"; //3 outputs
-                                echo "<th>Number of Cigars</th>";
-                                echo "<th>Smoked Since</th>";
-                                echo "<th>MRI Onset Localisation</th>";
-                                echo "<th>CNS MRI Lesions Y/N </th>";
-                                echo "<th>CNS MRI Lesions No.</th>";
-                                echo "<th>CNS MRI Location</th>";
-                                echo "<th>Person Signing the form</th>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                echo "<td>" . ($row['Pregnant'] ?? "N/A") . "</td>";
-                                echo "<td class='  '>" . $row['onsetdate'] . "</td>";
-                                echo "<td>" . ($row['Onsetlocalisation'] ?? "N/A") . "</td>";
-                                echo "<td>" . $row['onsetsymptoms'] . "</td>";
-                                echo "<td class='  '>" . ($row['smoker'] ?? "N/A") . "</td>";
-                                echo "<td>" . ($row['cigars'] ?? "N/A") . "</td>";
-                                echo "<td>" . ($row['cigardate'] ?? "N/A") . "</td>";
-                                echo "<td class='  '>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
-                                echo "<td>" . $row['MRIenhancing'] . "</td>";
-                                echo "<td class='  '>" . ($row['MRInum'] ?? "N/A") . "</td>";
-                                echo "<td>" . ($row['MRIenhancinglocation'] ?? "N/A") . "</td>";
-                                echo "<td class='  '>" . $row['signer'] . "</td>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                echo "<th colspan='12'>Documented at</th>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                echo "<td colspan='12'>" . $row['reg_date'] . "</td>";
-                                echo "</tr>";
-                                echo "</table>";
-                                echo "<div class='marg-bot'><input type='text' value='some' hidden></div>";
+
+                                // echo "<div class ='patientCard'>";
+                                    echo "<table class=''>";  // the MSR table for the particular patient id
+                                    echo "<tr>";
+                                    // echo "<th> Visit Number</th>";
+                                    echo "<th>Name</th>";
+                                    echo "<th>Date</th>";
+                                    echo "<th>Patient Id</th>";
+                                    echo "<th>Patient Address</th>";
+                                    echo "<th>Gender</th>";
+                                    echo "<th>Age</th>";
+                                    echo "<th>Race</th>";
+                                    echo "<th>Comorbidities</th>";
+                                    echo "<th>MS Type NOW</th>";
+                                    echo "<th>Conversion to SP</th>";
+                                    echo "<th>Date of Diagnosis</th>";
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                    // echo "<td>" . ($row['visit_id'] ?? 'N/A') . "</td>";
+                                    echo "<td class='  '>" . $row['NDS'] . "</td>";
+                                    echo "<td>" . $row['NDSdate'] . "</td>";
+                                    echo "<td class='  '>" . $row['NDSnum'] . "</td>";
+                                    echo "<td>" . ($row['Patient_address'] ?? "N/A") . "</td>";
+                                    echo "<td class='  '>" . $row['Sex'] . "</td>";
+                                    echo "<td>" . $row['Age'] . "</td>";
+                                    echo "<td>" . $row['Race'] . "</td>";
+                                    echo "<td class='  '>" . $row['Comorbidities'] . "</td>";
+                                    echo "<td>" . $row['convsprad'] . "</td>";
+                                    echo "<td class='  '>" . $row['convspnum'] . "</td>";
+                                    echo "<td>" . $row['dateofdia'] . "</td>";
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                    echo "<th>MS Type at Diagnosis</th>";
+                                    echo "<th>No. of Relapses (RR)</th>";
+                                    echo "<th>Severity</th>";
+                                    echo "<th>Date of Past treatment</th>";
+                                    echo "<th>Past Medication</th>";
+                                    echo "<th>End of past Medication</th>";
+                                    echo "<th>Date of Present Treatment</th>";
+                                    echo "<th>Present Medication</th>";
+                                    echo "<th>Current EDSS Score</th>";
+                                    echo "<th>7.5 meters Timed walk </th>";
+                                    echo "<th>9-Hole PEG test</th>";
+                                    
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                    echo "<td>" . $row['dateofdiarad'] . "</td>";
+                                    echo "<td class='  '>" . $row['Noofrelapses'] . "</td>";
+                                    echo "<td>" . $row['Noofrelapsesrad'] . "</td>";
+                                    echo "<td class='  '>" . $row['pastTREATMENTdate'] . "</td>";
+                                    echo "<td>" . $row['pastTREATMENT'] . "</td>";
+                                    echo "<td class='  '>" . $row['pastTREATMENTcheck'] . "</td>";
+                                    echo "<td>" . $row['TREATMENTdate'] . "</td>";
+                                    echo "<td class='  '>" . $row['TREATMENT'] . "</td>";
+                                    echo "<td>" . $row['eddsscore'] . "</td>";
+                                    echo "<td class='  '>" . $row['edsstime7_5m']  . "</td>";
+                                    echo "<td>" . ($row['edsstimePEG'] ?? "N/A") . "</td>";
+                                    
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                    echo "<th>Date of EDSS</th>"; //2 outputs
+                                    echo "<th>Pregnant</th>";
+                                    echo "<th>Date of Onset</th>";
+                                    echo "<th>Onset Localisation</th>";
+                                    echo "<th>Onset Symptoms</th>";
+                                    echo "<th>Smoker</th>"; //3 outputs
+                                    echo "<th>Number of Cigars</th>";
+                                    echo "<th>Smoked Since</th>";
+                                    echo "<th>MRI Onset Localisation</th>";
+                                    echo "<th>CNS MRI Lesions Y/N </th>";
+                                    echo "<th>CNS MRI Lesions No.</th>";
+                                    
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                    echo "<td>" . $row['EDSSdate'] . '<br>' . $row['EDSSdaterad'] . "</td>";
+                                    echo "<td>" . ($row['Pregnant'] ?? "N/A") . "</td>";
+                                    echo "<td class='  '>" . $row['onsetdate'] . "</td>";
+                                    echo "<td><span style='max-width:100px;'>" . ($row['Onsetlocalisation'] ?? "N/A") . "</span></td>";
+                                    echo "<td>" . $row['onsetsymptoms'] . "</td>";
+                                    echo "<td class='  '>" . ($row['smoker'] ?? "N/A") . "</td>";
+                                    echo "<td>" . ($row['cigars'] ?? "N/A") . "</td>";
+                                    echo "<td>" . ($row['cigardate'] ?? "N/A") . "</td>";
+                                    echo "<td class='  '>" . ($row['MRIonsetlocalisation'] ?? "N/A") . "</td>";
+                                    echo "<td>" . $row['MRIenhancing'] . "</td>";
+                                    echo "<td class='  '>" . ($row['MRInum'] ?? "N/A") . "</td>";
+                                    
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                    echo "<th>CNS MRI Location</th>";
+                                    echo "<th>Person Signing the form</th>";
+                                    echo "<th colspan='9'>Documented at</th>";
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                    echo "<td>" . ($row['MRIenhancinglocation'] ?? "N/A") . "</td>";
+                                    echo "<td class='  '>" . $row['signer'] . "</td>";
+                                    echo "<td colspan='9'>" . $row['reg_date'] . "</td>";
+                                    echo "</tr>";
+                                    echo "</table>";
+                                    echo "<div class='line'></div>";
+
+
+                                    // echo "<div class='tier1-1'>";
+                                    // echo "<div class='infoBox'>";
+                                    //     echo "<label>Date of Visit: </label>";
+                                    //     echo $row['NDSdate'];
+                                    // echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Patient Name: </label>";
+                                    //         echo $row['NDS'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Patient ID: </label>";
+                                    //         echo $row['NDSnum'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Patient Address: </label>";
+                                    //         echo ($row['Patient_address'] ?? "Ν/Α");
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Gender: </label>";
+                                    //         echo $row['Sex'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Age: </label>";
+                                    //         echo $row['Age'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Race: </label>";
+                                    //         echo $row['Race'];
+                                    //     echo "</div>";
+                                    // echo "</div>";
+                                    
+                                    // echo "<div class='tier1-2'>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Comorbidities: </label>";
+                                    //         echo $row['Comorbidities'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>MS Type Now: </label>";
+                                    //         echo $row['convsprad'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Conversion to SP: </label>";
+                                    //         echo $row['convspnum'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Date of Diagnosis: </label>";
+                                    //         echo $row['dateofdia'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>MS Type at Diagnosis: </label>";
+                                    //         echo $row[''];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Number of Relapses (RR): </label>";
+                                    //         echo $row[''];
+                                    //         echo "</div>";
+                                    // echo "</div>";
+                                    // echo "<div class='tier1-3'>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Severity: </label>";
+                                    //         echo $row[''];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Start Date of Past Treatment: </label>";
+                                    //         echo $row[''];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Stopped Medication: </label>";
+                                    //         echo $row['pastTREATMENT'];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>End Date of Past Treatment: </label>";
+                                    //         echo $row[''];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Start Date of Present Treatment: </label>";
+                                    //         echo $row[''];
+                                    //     echo "</div>";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Present Medication: </label>";
+                                    //         echo $row['TREATMENT'];
+                                    //     echo "</div>";
+                                    // echo"</div>";
+                                    // echo "<div class='tier2-1>'";
+                                    //     echo "<div class='infoBox'>";
+                                    //         echo "<label>Current EDSS Score: </label>";
+                                    //         echo $row['eddsscore'];
+                                    //     echo "</div>";
+                                    // echo"</div>";
+                                
+                                
+                                // echo "</div>";
+                                
+                                
+                                // echo "<div class='marg-bot'><input type='text' value='some' hidden></div>";
                             
                 ?>
 
@@ -262,12 +365,11 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         ?>
 
         </div>
-            <footer id="some">
-                
-                <div class="line"></div>
-                Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
-            </footer>
-        </div>
+        <footer id="some">        
+            <!-- <div class="line"></div> -->
+            Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
+        </footer>
+    </div>
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->

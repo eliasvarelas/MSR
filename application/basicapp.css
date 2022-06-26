@@ -82,6 +82,7 @@
 
 .w-fit {
     width: fit-content();
+    /* margin-right: 1em; */
 }
 
 .lang {
@@ -102,19 +103,71 @@
 }
 
 .container {
-    display: grid;
+    /* display: grid; */
     position: relative;
     /* float: left; */
     justify-content: center;
-    width: fit-content();
+    width: 100%;
+    /* width: fit-content(); */
     padding: .5em .5em;
     border-radius: 15px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .container>table {
-    position: static;
+    position: relative;
     /* border: 10px dotted goldenrod; */
+}
+
+.patientCard{
+    display: grid;
+    /* position: relative; */
+    border: 1px solid red;
+    gap: 0.3em;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.tier1-1{
+    position: relative;
+    top: 0;
+    border: 1px solid black;
+    width: fit-content;
+    padding: 0 0.4em;
+    border-radius: 25px;
+    border: 1px solid black;
+}
+.tier1-2{
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 1px solid black;
+    width: fit-content;
+    padding: 0 0.4em;
+    border-radius: 25px;
+    border: 1px solid red;
+}
+.tier1-3{
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 1px solid black;
+    width: fit-content;
+    padding: 0 0.4em;
+    border-radius: 25px;
+    border: 1px solid green;
+}
+.tier1-3{
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 1px solid black;
+    width: fit-content;
+    padding: 0 0.4em;
+    border-radius: 25px;
+    border: 1px solid violet;
+}
+
+.infoBox{
+    margin: 0.1em;
 }
 
 .block {
@@ -157,6 +210,7 @@
 
 .marg-bot {
     border-bottom: 4px dotted lightgray;
+    margin: 20px 0px;
 }
 
 .bordered {
@@ -253,7 +307,7 @@
     margin: auto;
     /* align-items: center;
     justify-content: center; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .col {
@@ -267,6 +321,9 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.overflow {
+    overflow-wrap: normal;
+}
 
 /* attributes */
 
@@ -283,6 +340,12 @@ p {
 label {
     /* display: table-cell; */
     font-family: 'Roboto', sans-serif;
+    border-radius: 15px;
+    text-align: left;
+    /* margin-top: max(50%, 5em); */
+    padding: 0 2px;
+    /* margin: 8px 0; */
+    color: #000;
     /* font-weight: 700; */
 }
 
@@ -332,13 +395,7 @@ input[type=time] {
     /* background-color: ; */
 }
 
-label {
-    text-align: left;
-    /* margin-top: max(50%, 5em); */
-    padding: 5px 5px;
-    margin: 8px 0;
-    color: #000;
-}
+
 
 table tr:hover td {
     opacity: 110%;
@@ -442,6 +499,7 @@ td {
     text-align: center;
     font-family: 'Roboto', sans-serif;
     text-emphasis: bold;
+    table-layout: fixed;
 }
 
 .w-100 {
@@ -464,6 +522,7 @@ td {
     /* margin: auto; */
     border: none;
     border-bottom: 1px solid #e6e6e6;
+    word-wrap: break-word;
 }
 
 p {

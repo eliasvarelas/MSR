@@ -40,27 +40,29 @@ function Graphs() {
         console.log("varsvg - beforeJSON - pie");
 
         //* crashes here, "Uncaught (in promise) TypeError: NetworkError when attempting to fetch resource."
-        d3.json("File.json", function(error, data) {
-            node = data.data[0].ap[0];
+        // d3.json("File.json", function(error, data) {
+        //     node = data.data[0].ap[0];
 
-            console.log(data);
+        //     console.log(data);
 
 
-            var g = svg.selectAll(".arc")
-                .data(pie(node))
-                .enter().append("g")
-                .attr("class", "arc");
+        //     var g = svg.selectAll(".arc")
+        //         .data(pie(node))
+        //         .enter().append("g")
+        //         .attr("class", "arc");
 
-            g.append("path")
-                .attr("d", arc)
-                .style("fill", function(d) { return color(d.data.floor); });
+        //     g.append("path")
+        //         .attr("d", arc)
+        //         .style("fill", function(d) { return color(d.data.floor); });
 
-            g.append("text")
-                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-                .attr("dy", ".35em")
-                .style("text-anchor", "middle")
-                .text(function(d) { return d.data.floor; });
-        });
+        //     g.append("text")
+        //         .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        //         .attr("dy", ".35em")
+        //         .style("text-anchor", "middle")
+        //         .text(function(d) { return d.data.floor; });
+        // });
+
+        d3.json("File.json").then(function(data) { console.log(data) });
     } else if (type.value == 'Bar_chart') { // needs an edit but works fine
         var width = 960,
             height = 500,
