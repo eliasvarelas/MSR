@@ -111,7 +111,9 @@
 
   }catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
-    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    echo"<div class='error'>";
+      die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    echo "</div>";
   }
 
 ?>

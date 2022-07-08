@@ -51,16 +51,16 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
 
       <ul class="list-unstyled components">
         <li>
-          <a href="menu.php">
+          <a href="admins_menu.php">
             <i class="fas fa-home"></i>
-            Home
+            Admins Page
           </a>
 
         </li>
         <li>
           <a href="patientinfo-bootstrap.php">
             <i class="fas fa-folder"></i>
-            Existing Patients
+            Add a Doctor
           </a>
 
 
@@ -71,18 +71,24 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             Edit Patient Info
           </a>
         </li> -->
-        <li>
+        <!-- <li>
           <a href="addpatient-bootstrap.php">
             <i class="fas fa-user-plus"></i>
             Add a new Patient
           </a>
+        </li> -->
+        <li class="">
+            <a href="admin_searching.php" class="dropdown-toggle" ::after>
+                <i class="fas fa-search"></i>
+                Search Doctors
+            </a>
         </li>
         <li class="active">
-          <a href="">
-            <i class="fas fa-search"></i>
-            Advanced Search
-          </a>
-        </li>
+            <a href="admin_patient_searching.php">
+                <i class="fas fa-search"></i>
+                Advanced Patient Search
+            </a>
+        </li> 
         <li>
           <a href="visual_analytics.php">
             <i class="fas fa-chart-bar"></i>
@@ -137,7 +143,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       try { ?>
-        <form class="form" action="searching-bootstrap.php" method="post">
+        <form class="form" action="admin_patient_searching.php" method="post">
           <!-- Heading for explaining the following element to the user -->
           <h5 id="intro"> Please Enter the Name of the Patient You Are Looking For </h5>
 
@@ -333,12 +339,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             if (empty($newName) && empty($newID) && empty($newSex) && empty($newAge) && empty($newAgesmaller) && empty($newRace) && empty($newEmail) && empty($newPhonenum) && empty($newComorbidities) && empty($newEDSS) && empty($newPregnant) && empty($newOnsetlocalisation) && empty($newOnsetsymptoms) && empty($newSmoker) && empty($newOnsetsymptoms) && empty($newMRIenhancing) && empty($newMRInum) && empty($newMRIonsetlocalisation)) {
 
               if ($option == 'Name') {
-                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients WHERE Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient Id</th>
                         <th>Patient Name</th>
                         <th>Date of Birth</th>
@@ -347,6 +354,8 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                        <td>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB'] ?></td>
@@ -362,12 +371,14 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'ID') {
-                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id =$entry ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients WHERE Patient_id =$entry ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
@@ -376,7 +387,8 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
-                        <td> <?php echo $row['Patient_id']; ?> </td>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
+                        <td> <?php echo $row['Patient_id'];?></td>
                         <td><?php echo $row['Patient_name']; ?></td>
                         <td><?php echo $row['DOB']; ?></td>
                         <td><?php echo $row['Phonenum']; ?></td>
@@ -395,12 +407,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Sex') {
 
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
@@ -410,6 +423,8 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                        
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
@@ -432,6 +447,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient Id</th>
                         <th>Patient Name</th>
                         <th>Date of Birth</th>
@@ -440,8 +456,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
-                        <td> <?php echo $row['Patient_name']; ?> </td>
+                        <td><?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB'] ?></td>
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
@@ -461,6 +478,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient Id</th>
                         <th>Patient Name</th>
                         <th>Date of Birth</th>
@@ -469,6 +487,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB'] ?></td>
@@ -484,26 +503,30 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Race') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Race = '$race_entry' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Race</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo $row['Race']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
@@ -515,12 +538,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'PhoneNumber') {
-                $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum ='$entry%'";
+                $sql = "SELECT * FROM patients WHERE Phonenum ='$entry%'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient Id</th>
                         <th>Patient Name</th>
                         <th>Date of Birth</th>
@@ -529,6 +553,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB'] ?></td>
@@ -544,7 +569,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Comorbidities') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Comorbidities = '$Comorbidities_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -575,7 +600,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'EDSS') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.eddsscore = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -606,12 +631,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Pregnant') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
@@ -621,6 +647,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
@@ -637,12 +664,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Onsetlocalisation') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
@@ -652,6 +680,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
@@ -668,7 +697,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Smoker') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.smoker = '$Pregnant_Smoker_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -699,12 +728,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'MRIenhancing') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
@@ -714,6 +744,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
@@ -730,7 +761,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'onsetsymptoms') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -761,7 +792,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'MRInum') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRInum = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -792,12 +823,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'MRIonsetlocalisation') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
+                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
@@ -807,6 +839,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
@@ -822,12 +855,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Email') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
                     <table id="standard">
                       <tr>
+                        <th>Doctor ID</th>
                         <th>Patient ID</th>
                         <th>Email</th>
                         <th>Name</th>
@@ -836,6 +870,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
@@ -854,12 +889,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
 
               if ($option == 'Name') {
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT * FROM patients WHERE Patient_name LIKE '%$entry%' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -869,6 +905,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -885,12 +922,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -901,6 +939,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -918,12 +957,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Email' && !empty($newEmail)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$newEmail' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Email = '$newEmail' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -934,6 +974,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -957,6 +998,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -966,6 +1008,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -988,6 +1031,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -997,6 +1041,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -1013,12 +1058,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Race = '$race_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1029,6 +1075,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1046,12 +1093,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Phonenum ='$entry%' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT * FROM patients WHERE Phonenum ='$entry%' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1061,6 +1109,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1077,12 +1126,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Comorbidities = '$Comorbidities_entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1093,6 +1143,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1110,12 +1161,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'EDSS' && !empty($newEDSS)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.eddsscore = '$entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.eddsscore = '$entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1126,6 +1178,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1143,12 +1196,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Pregnant = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1159,6 +1213,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1176,12 +1231,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1192,6 +1248,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1209,12 +1266,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.smoker = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1225,6 +1283,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1242,12 +1301,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1258,6 +1318,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1275,12 +1336,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1291,6 +1353,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1308,12 +1371,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRInum = '$entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1324,6 +1388,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1341,12 +1406,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND patients.Patient_name LIKE '%$entry%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1357,6 +1423,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1381,6 +1448,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1391,6 +1459,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1413,6 +1482,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1422,6 +1492,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         </tr>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
                           <td><?php echo $row['Phonenum']; ?></td>
@@ -1442,6 +1513,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1452,6 +1524,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['DOB']; ?></td>
                           <td><?php echo $row['Phonenum']; ?></td>
                           <td><?php echo $row['Email']; ?></td>
@@ -1471,6 +1544,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1480,6 +1554,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1503,6 +1578,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1512,6 +1588,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1534,6 +1611,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1543,6 +1621,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1559,12 +1638,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_id = '$entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients WHERE Patient_id = '$entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1573,6 +1653,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1588,12 +1669,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Comorbidities = '$newComorbidities'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1603,6 +1685,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1625,6 +1708,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1634,6 +1718,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1650,12 +1735,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1665,6 +1751,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>  
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1681,12 +1768,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1696,6 +1784,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1712,12 +1801,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1727,6 +1817,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1743,12 +1834,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1758,6 +1850,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1774,12 +1867,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1789,6 +1883,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1805,12 +1900,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1820,6 +1916,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1836,12 +1933,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = '$entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1851,6 +1949,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1868,12 +1967,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Sex') {
                 if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1884,6 +1984,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1901,12 +2002,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Sex = '$sex_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -1916,6 +2018,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -1938,6 +2041,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1947,6 +2051,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -1969,6 +2074,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -1979,6 +2085,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2002,6 +2109,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2011,6 +2119,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2033,6 +2142,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2043,6 +2153,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2060,12 +2171,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2075,6 +2187,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2091,12 +2204,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND MSR.Comorbidities = '$newComorbidities'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND MSR.Comorbidities = '$newComorbidities'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2107,6 +2221,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2130,6 +2245,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2140,6 +2256,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2157,12 +2274,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Sex = '$sex_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2173,6 +2291,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -2192,12 +2311,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2208,6 +2328,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -2227,12 +2348,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Sex = '$sex_entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2243,6 +2365,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -2262,12 +2385,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2278,6 +2402,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2295,12 +2420,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2311,6 +2437,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2328,12 +2455,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2344,6 +2472,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2361,12 +2490,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Sex = '$sex_entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2377,6 +2507,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2395,7 +2526,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Age') { 
                 if ($newoption == 'Name' && !empty($newName)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.(timestampdiff(year,dob,curdate()) > '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
@@ -2426,7 +2557,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.(timestampdiff(year,dob,curdate()) > '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
@@ -2461,6 +2592,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2469,6 +2601,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2490,6 +2623,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2500,6 +2634,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2523,6 +2658,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2533,6 +2669,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2557,6 +2694,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2566,6 +2704,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2582,12 +2721,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2596,6 +2736,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2611,12 +2752,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Comorbidities = '$newComorbidities'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Comorbidities = '$newComorbidities'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2626,6 +2768,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2648,6 +2791,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2657,6 +2801,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2673,12 +2818,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Pregnant = '$newPregnant' ORDER BY patients.Patient_id";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.(timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Pregnant = '$newPregnant' ORDER BY patients.Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2689,6 +2835,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2706,12 +2853,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2722,6 +2870,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2739,12 +2888,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.(timestampdiff(year,dob,curdate()) > '$entry') AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2755,6 +2905,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2772,12 +2923,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2787,6 +2939,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2803,12 +2956,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2818,6 +2972,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2834,12 +2989,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2849,6 +3005,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2865,12 +3022,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) > '$entry') AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2880,6 +3038,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2897,12 +3056,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Agesmaller') { 
                 if ($newoption == 'Name' && !empty($newName)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.(timestampdiff(year,dob,curdate()) < '$entry') AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2911,6 +3071,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2927,12 +3088,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.(timestampdiff(year,dob,curdate()) < '$entry') AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -2941,6 +3103,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -2962,6 +3125,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -2970,6 +3134,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -2991,6 +3156,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3000,6 +3166,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3022,6 +3189,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3032,6 +3200,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3055,6 +3224,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3064,6 +3234,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3080,12 +3251,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3094,6 +3266,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3109,12 +3282,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Comorbidities = '$newComorbidities'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Comorbidities = '$newComorbidities'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3124,6 +3298,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3146,6 +3321,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3155,6 +3331,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3171,12 +3348,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Sex,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.(timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3187,6 +3365,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3204,12 +3383,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3220,6 +3400,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3237,12 +3418,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Sex,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.(timestampdiff(year,dob,curdate()) < '$entry') AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3253,6 +3435,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3270,12 +3453,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3285,6 +3469,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3301,12 +3486,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3316,6 +3502,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3332,12 +3519,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3347,6 +3535,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3363,12 +3552,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE (timestampdiff(year,dob,curdate()) < '$entry') AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3378,6 +3568,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3395,12 +3586,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Race') {
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.Race = '$race_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3411,6 +3603,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3428,12 +3621,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Race = '$race_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -3443,6 +3637,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -3465,6 +3660,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3474,6 +3670,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3496,6 +3693,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3506,6 +3704,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3529,6 +3728,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3539,6 +3739,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3562,6 +3763,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3572,6 +3774,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3589,12 +3792,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3604,6 +3808,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3620,12 +3825,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND MSR.Comorbidities = '$newComorbidities'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND MSR.Comorbidities = '$newComorbidities'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3636,6 +3842,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3659,6 +3866,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3669,6 +3877,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3686,12 +3895,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Race = '$race_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3702,6 +3912,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -3721,12 +3932,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3737,6 +3949,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -3756,12 +3969,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$race_entry' AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Race = '$race_entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3772,6 +3986,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -3791,12 +4006,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3807,6 +4023,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3824,12 +4041,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3840,6 +4058,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3857,12 +4076,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3873,6 +4093,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3890,12 +4111,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Race = '$race_entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3906,6 +4128,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3924,12 +4147,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'PhoneNumber') {
                 if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.patients.Phonenum = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -3940,6 +4164,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -3957,12 +4182,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Race = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Race = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -3972,6 +4198,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -3994,6 +4221,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4002,6 +4230,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4023,6 +4252,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4032,6 +4262,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4054,6 +4285,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4063,6 +4295,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4085,6 +4318,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4094,6 +4328,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4110,12 +4345,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Sex ='$newSex'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.Sex ='$newSex'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4126,6 +4362,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4143,12 +4380,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4158,6 +4396,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4180,6 +4419,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4189,6 +4429,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4205,12 +4446,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Race,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.patients.Phonenum = '$entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4221,6 +4463,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4238,12 +4481,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4254,6 +4498,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4271,12 +4516,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Phonenum = '$entry' AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Race,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.patients.Phonenum = '$entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4287,6 +4533,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4304,12 +4551,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4319,6 +4567,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4335,12 +4584,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4350,6 +4600,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4366,12 +4617,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4381,6 +4633,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4397,12 +4650,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Race FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Phonenum = '$entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4412,7 +4666,8 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
-                          <td><?php echo $row['Patient_id']; ?></td>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
+                          <td><?php echo $row['Patient_id']; ?></td>z
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
                           <td><?php echo $row['Phonenum']; ?></td>
@@ -4429,12 +4684,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Comorbidities') {
                 if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$Comorbidities_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.Comorbidities = '$Comorbidities_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4444,6 +4700,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4460,12 +4717,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Comorbidities = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -4474,6 +4732,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -4495,6 +4754,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4503,6 +4763,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4524,6 +4785,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4533,6 +4795,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4555,6 +4818,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4564,6 +4828,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4586,6 +4851,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4596,6 +4862,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -4615,12 +4882,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4629,6 +4897,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4644,12 +4913,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Comorbidities' && !empty($newComorbidities)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.Comorbidities = '$newComorbidities'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4659,6 +4929,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4681,6 +4952,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4690,6 +4962,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4706,12 +4979,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Comorbidities,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Comorbidities,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Comorbidities = '$entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4722,6 +4996,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4739,12 +5014,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4755,6 +5031,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4772,12 +5049,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Comorbidities,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Comorbidities = '$entry' AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Comorbidities,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Comorbidities = '$entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4788,6 +5066,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4805,12 +5084,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4820,6 +5100,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4836,12 +5117,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4851,6 +5133,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4867,12 +5150,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4882,6 +5166,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4898,12 +5183,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Comorbidities = '$entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4913,6 +5199,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4930,12 +5217,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'EDSS') {
                 if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.edssscore = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -4945,6 +5233,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -4961,12 +5250,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.edssscore = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -4975,6 +5265,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -4996,6 +5287,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5004,6 +5296,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5025,6 +5318,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5034,6 +5328,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5056,6 +5351,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5065,6 +5361,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5087,6 +5384,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5096,6 +5394,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5112,12 +5411,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.eddsscore = '$entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5126,6 +5426,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5141,12 +5442,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'edssscore' && !empty($newedssscore)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.edssscore = '$newedssscore'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.edssscore,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.edssscore = '$newedssscore'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5156,6 +5458,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5178,6 +5481,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5188,6 +5492,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -5207,12 +5512,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.edssscore,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.edssscore,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.edssscore = '$entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5223,6 +5529,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5240,12 +5547,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5256,6 +5564,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5273,12 +5582,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.edssscore,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.edssscore = '$entry' AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.edssscore,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.edssscore = '$entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5289,6 +5599,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5306,12 +5617,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5321,6 +5633,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5337,12 +5650,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5352,6 +5666,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5368,12 +5683,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5383,6 +5699,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5399,12 +5716,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.edssscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.edssscore = '$entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5414,6 +5732,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5431,12 +5750,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Pregnant') {
                 if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.Pregnant = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5446,6 +5766,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5462,12 +5783,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Pregnant = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -5476,6 +5798,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -5497,6 +5820,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5505,6 +5829,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5526,6 +5851,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5535,6 +5861,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5557,6 +5884,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5566,6 +5894,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5588,6 +5917,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5598,6 +5928,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5615,12 +5946,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5629,6 +5961,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5644,12 +5977,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5659,6 +5993,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5681,6 +6016,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5690,6 +6026,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5706,12 +6043,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$Pregnant_Smoker_entry' AND MSR.Sex = '$newSex'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,MSR.Pregnant,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Pregnant = '$Pregnant_Smoker_entry' AND MSR.Sex = '$newSex'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5722,6 +6060,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -5741,12 +6080,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5757,6 +6097,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5774,12 +6115,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Pregnant = '$entry' AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Pregnant = '$entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5790,6 +6132,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5807,12 +6150,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5822,6 +6166,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5838,12 +6183,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5853,6 +6199,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5869,12 +6216,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5884,6 +6232,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5900,12 +6249,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Pregnant = '$entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5915,6 +6265,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5932,12 +6283,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Onsetlocalisation') { 
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -5947,6 +6299,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -5963,12 +6316,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -5977,6 +6331,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -5998,6 +6353,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6006,6 +6362,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6027,6 +6384,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6036,6 +6394,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6058,6 +6417,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6067,6 +6427,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6089,6 +6450,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6099,6 +6461,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6116,12 +6479,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6130,6 +6494,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6145,12 +6510,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Sex = '$newSex'"; 
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Sex = '$newSex'"; 
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6161,6 +6527,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -6186,6 +6553,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6195,6 +6563,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6211,12 +6580,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Race = '$newRace'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Race = '$newRace'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6227,6 +6597,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6244,12 +6615,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6260,6 +6632,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6277,12 +6650,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Onsetlocalisation,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Onsetlocalisation,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6293,6 +6667,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6310,12 +6685,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6325,6 +6701,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6341,12 +6718,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6356,6 +6734,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6372,12 +6751,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6387,6 +6767,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6403,12 +6784,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6418,6 +6800,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6435,12 +6818,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Smoker') {
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.smoker = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6450,6 +6834,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6466,12 +6851,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.smoker = '$Pregnant_Smoker_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -6481,6 +6867,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -6503,6 +6890,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6512,6 +6900,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6534,6 +6923,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6543,6 +6933,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6565,6 +6956,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6574,6 +6966,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6590,12 +6983,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) {
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6604,6 +6998,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6619,12 +7014,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Sex = '$newSex'"; 
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Sex = '$newSex'"; 
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6635,6 +7031,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -6660,6 +7057,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6669,6 +7067,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6685,12 +7084,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Race = '$newRace'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Race = '$newRace'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6701,6 +7101,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6718,12 +7119,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.Onsetlocalisation = '$Onsetlocalisation_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6734,6 +7136,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6751,12 +7154,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.smoker = '$Pregnant_Smoker_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.smoker = '$Pregnant_Smoker_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6767,6 +7171,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6784,12 +7189,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6800,6 +7206,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6817,12 +7224,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6832,6 +7240,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6848,12 +7257,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6863,6 +7273,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6879,12 +7290,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.smoker = '$Pregnant_Smoker_entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6894,6 +7306,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6911,12 +7324,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'MRIenhancing') {
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6927,6 +7341,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -6944,12 +7359,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -6959,6 +7375,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -6981,6 +7398,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -6991,6 +7409,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7014,6 +7433,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7024,6 +7444,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7047,6 +7468,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7057,6 +7479,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7074,12 +7497,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) { // something is wrong, revisit this query
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7089,6 +7513,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7105,12 +7530,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Sex = '$newSex'"; 
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Sex = '$newSex'"; 
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7121,6 +7547,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7146,6 +7573,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7156,6 +7584,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7175,12 +7604,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7191,6 +7621,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7208,12 +7639,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7224,6 +7656,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7243,12 +7676,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7259,6 +7693,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7278,12 +7713,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7294,6 +7730,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7313,12 +7750,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7329,6 +7767,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7348,12 +7787,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7364,6 +7804,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7383,12 +7824,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.MRIenhancing,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIenhancing = '$Pregnant_Smoker_entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7399,6 +7841,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7419,12 +7862,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'onsetsymptoms') {
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7435,6 +7879,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7452,12 +7897,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -7468,6 +7914,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -7491,6 +7938,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7501,6 +7949,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7524,6 +7973,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7534,6 +7984,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7557,6 +8008,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7567,6 +8019,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7584,12 +8037,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) { // something is wrong, revisit this query
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7599,6 +8053,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7615,12 +8070,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Sex = '$newSex'"; 
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Sex = '$newSex'"; 
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7631,6 +8087,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7656,6 +8113,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7666,6 +8124,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7685,12 +8144,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7701,6 +8161,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7718,12 +8179,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7734,6 +8196,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7753,12 +8216,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7769,6 +8233,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7788,12 +8253,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7804,6 +8270,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7823,12 +8290,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7839,6 +8307,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7858,12 +8327,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7874,6 +8344,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7893,12 +8364,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.onsetsymptoms = '$Onsetsymptoms_entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7909,6 +8381,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -7929,12 +8402,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'MRInum') {
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.MRInum = '$entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -7945,6 +8419,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -7962,12 +8437,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRInum = '$entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -7978,6 +8454,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -8001,6 +8478,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8011,6 +8489,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8034,6 +8513,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8044,6 +8524,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8067,6 +8548,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8077,6 +8559,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8094,12 +8577,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) { // something is wrong, revisit this query
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8109,6 +8593,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8125,12 +8610,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND MSR.Sex = '$newSex'"; 
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND MSR.Sex = '$newSex'"; 
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8141,6 +8627,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8166,6 +8653,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8176,6 +8664,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8195,12 +8684,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRInum = '$entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8211,6 +8701,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8228,12 +8719,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8244,6 +8736,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8263,12 +8756,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRInum = '$entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRInum = '$entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8279,6 +8773,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8298,12 +8793,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8314,6 +8810,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8333,12 +8830,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8349,6 +8847,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8368,12 +8867,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'onsetsymptoms' && !empty($newOnsetsymptoms)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND Doctor_ID = $usersid AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND MSR.onsetsymptoms = '$newOnsetsymptoms'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8384,6 +8884,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8403,12 +8904,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRInum = '$entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8419,6 +8921,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8439,12 +8942,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Email') {
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND patients.Email = '$email_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.patients.Email = '$email_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8455,6 +8959,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8471,12 +8976,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Email = '$email_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.patients.Email = '$email_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -8487,6 +8993,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -8509,6 +9016,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8519,6 +9027,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8542,6 +9051,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8552,6 +9062,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8575,6 +9086,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8585,6 +9097,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8602,12 +9115,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) { // something is wrong, revisit this query
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Email = '$email_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8617,6 +9131,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8633,12 +9148,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Email = '$email_entry' AND MSR.Sex = '$newSex'"; 
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND MSR.Sex = '$newSex'"; 
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8649,6 +9165,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Date of Visit</th>
                           <th>Previous Visits</th>
                         </tr>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <tr>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
@@ -8673,6 +9190,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8683,6 +9201,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8700,12 +9219,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Email = '$email_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.patients.Email = '$email_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8716,6 +9236,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8733,12 +9254,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND patients.Email = '$email_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8749,6 +9271,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8766,12 +9289,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND patients.Email = '$email_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.patients.Email = '$email_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8782,6 +9306,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8799,12 +9324,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8815,6 +9341,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8832,12 +9359,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8848,6 +9376,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8865,12 +9394,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8881,6 +9411,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8898,12 +9429,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIonsetlocalisation' && !empty($newMRIonsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Email = '$email_entry' AND MSR.MRIonsetlocalisation = '$newMRIonsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8914,6 +9446,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8932,12 +9465,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'MRIonsetlocalisation') {
                 if ($newoption == 'Name' && !empty($newName)) { 
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -8948,6 +9482,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -8964,12 +9499,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'ID' && !empty($newID)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Patient_id = '$newID' ORDER BY Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient Id</th>
                           <th>Patient Name</th>
                           <th>Date of Birth</th>
@@ -8980,6 +9516,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB'] ?></td>
@@ -9002,6 +9539,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9012,6 +9550,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9035,6 +9574,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9045,6 +9585,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9068,6 +9609,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9078,6 +9620,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9095,12 +9638,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'PhoneNumber' && !empty($newPhonenum)) { // something is wrong, revisit this query
-                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Phonenum ='$newPhonenum%'";
+                  $sql = "SELECT * FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Phonenum ='$newPhonenum%'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9110,6 +9654,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                          <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9126,12 +9671,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Sex = '$newSex'"; 
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Sex = '$newSex'"; 
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9142,6 +9688,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9165,6 +9712,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9175,6 +9723,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9192,12 +9741,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Race' && !empty($newRace)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.Race,MSR.reg_date,patients.Doctor_ID,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Race = '$newRace' ORDER BY patients.Patient_id";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9208,6 +9758,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9225,12 +9776,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Onsetlocalisation' && !empty($newOnsetlocalisation)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Onsetlocalisation = '$newOnsetlocalisation'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9241,6 +9793,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9258,12 +9811,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Pregnant' && !empty($newPregnant)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Doctor_ID = $usersid AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Pregnant = '$newPregnant'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,MSR.Pregnant,MSR.NDSnum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.Pregnant = '$newPregnant'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9274,6 +9828,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9291,12 +9846,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRIenhancing' && !empty($newMRIenhancing)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Doctor_ID = $usersid AND MSR.MRIenhancing = '$newMRIenhancing'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,MSR.reg_date,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.MRIenhancing = '$newMRIenhancing'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9307,6 +9863,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9324,12 +9881,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Smoker' && !empty($newSmoker)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Doctor_ID = $usersid AND MSR.smoker = '$newSmoker'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,MSR.smoker,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.smoker = '$newSmoker'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9340,6 +9898,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9357,12 +9916,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'MRInum' && !empty($newMRInum)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Doctor_ID = $usersid AND MSR.MRInum = '$newMRInum'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND MSR.MRInum = '$newMRInum'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9373,6 +9933,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -9390,12 +9951,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                   }
                 }
                 if ($newoption == 'Email' && !empty($newEmail)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND Doctor_ID = $usersid AND patients.Email = '$newEmail'";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,MSR.onsetsymptoms,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry' AND patients.Email = '$newEmail'";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
                       <table id="standard">
                         <tr>
+                            <th>Doctor ID</th>
                           <th>Patient ID</th>
                           <th>Name</th>
                           <th>Date of Birth</th>
@@ -9406,6 +9968,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                           <th>Previous Visits</th>
                         </tr>
                         <tr>
+                            <td><?php echo $row['Doctor_ID']; ?></td>
                           <td><?php echo $row['Patient_id']; ?></td>
                           <td> <?php echo $row['Patient_name']; ?> </td>
                           <td><?php echo $row['DOB']; ?></td>
@@ -10693,4 +11256,4 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
 
 </body>
 
-</html>
+</html>ß

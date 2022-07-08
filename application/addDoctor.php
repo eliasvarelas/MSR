@@ -53,10 +53,10 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         <li>
             <a href="admins_menu.php">
                 <i class="fas fa-home"></i>
-                Home
+                Admins Menu
             </a>
         </li>
-        <li>
+        <li class="active">
             <a href="addDoctor.php">
                 <i class="fas fa-user-plus"></i>
                 Add a Doctor
@@ -202,7 +202,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         }
 
       } catch (PDOException $e) {
-        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        echo"<div class='error'>";
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+          echo "</div>";
       }
       ?>
       <footer id="foo">

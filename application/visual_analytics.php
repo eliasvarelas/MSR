@@ -245,8 +245,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
 
           } catch (PDOException $e) {
-            echo $statement . "<br>" . $e->getMessage();
-            die("ERROR: Could not able to execute $statement. " . $e->getMessage());
+            echo"<div class='error'>";
+              echo $statement . "<br>" . $e->getMessage();
+              die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+            echo "</div>";
           }
         }
 

@@ -197,7 +197,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         }
 
       } catch (PDOException $e) {
-        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        echo"<div class='error'>";
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+          echo "</div>";
       }
       ?>
       <footer id="stat">

@@ -152,7 +152,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                                     echo "<tr>";
                                     // echo "<th> Visit Number</th>";
                                     echo "<th>Name</th>";
-                                    echo "<th>Date</th>";
+                                    echo "<th>Date of Visit</th>";
                                     echo "<th>Patient Id</th>";
                                     echo "<th>Patient Address</th>";
                                     echo "<th>Gender</th>";
