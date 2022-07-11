@@ -276,7 +276,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             </tr>
             <tr id="Email_tr" hidden>
               <td id="Email_td" hidden>
-                <input type="email" name="searchemail" id="searchingEmail">
+                <input type="text" name="searchemail" id="searchingEmail">
               </td>
             </tr>
             </tbody>
@@ -354,7 +354,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
-                        <td>
+                        
                         <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
@@ -407,7 +407,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               }
               if ($option == 'Sex') {
 
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Sex = '$sex_entry' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -420,6 +420,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Sex</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -431,6 +432,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['Sex']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -441,7 +443,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Age') {
-                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) > '$entry' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -472,7 +474,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Agesmaller') {
-                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' AND Doctor_ID = $usersid ORDER BY Patient_id";
+                $sql = "SELECT * FROM patients WHERE timestampdiff(year,dob,curdate()) < '$entry' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -503,7 +505,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Race') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Race = '$race_entry' ORDER BY Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Race,MSR.reg_date,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Race = '$race_entry' ORDER BY Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -553,7 +555,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
-                          <td><?php echo $row['Doctor_ID']; ?></td>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB'] ?></td>
@@ -569,7 +571,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Comorbidities') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Comorbidities = '$Comorbidities_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Comorbidities,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Comorbidities = '$Comorbidities_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -600,7 +602,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'EDSS') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.eddsscore = '$entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.eddsscore,patients.Doctor_ID FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.eddsscore = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -631,7 +633,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Pregnant') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Pregnant,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Pregnant = '$Pregnant_Smoker_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -644,6 +646,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Is Pregnant? (Y/N)</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -654,6 +657,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['Pregnant']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -664,7 +668,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Onsetlocalisation') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Onsetlocalisation,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.Onsetlocalisation = '$Onsetlocalisation_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -677,6 +681,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Onset Localisation</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -687,6 +692,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['Onsetlocalisation']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -697,7 +703,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Smoker') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.smoker = '$Pregnant_Smoker_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.smoker,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.smoker = '$Pregnant_Smoker_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -709,6 +715,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Is a Smoker? (Y/N)</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -718,6 +725,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['smoker']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -728,7 +736,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'MRIenhancing') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIenhancing,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIenhancing = '$Pregnant_Smoker_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -741,6 +749,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>MRI Enhancing Lesions (Yes/No)</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -751,6 +760,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['MRIenhancing']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -761,7 +771,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'onsetsymptoms') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.onsetsymptoms,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.onsetsymptoms = '$Onsetsymptoms_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -773,6 +783,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Onset Symptoms</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -782,6 +793,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['onsetsymptoms']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -792,7 +804,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'MRInum') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRInum = '$entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRInum,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRInum = '$entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -804,6 +816,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>MRI Enhancing Lesions No.</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -813,6 +826,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['MRInum']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -823,7 +837,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'MRIonsetlocalisation') {
-                $sql = "SELECT DISTINCT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.MRIonsetlocalisation,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND MSR.MRIonsetlocalisation = '$MRIonsetlocalisation_entry'";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -836,6 +850,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>MRI Onset Localisation</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -846,6 +861,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['Phonenum']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['MRIonsetlocalisation']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -855,7 +871,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 }
               }
               if ($option == 'Email') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,patients.Doctor_ID,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -867,15 +883,17 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <th>Name</th>
                         <th>Date of Birth</th>
                         <th>Phone Number</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
-                          <td><?php echo $row['Doctor_ID']; ?></td>
+                        <td><?php echo $row['Doctor_ID']; ?></td>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
                         <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>

@@ -237,7 +237,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             $json = json_encode($results);
             // echo $json;
             
-            $fp = fopen('File.json', 'w');
+            $fp = fopen('/Users/hliasvarelas/github/d3js/File.json', 'w');
             fwrite($fp, $json);
             fclose($fp);
 
