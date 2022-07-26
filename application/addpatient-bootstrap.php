@@ -138,40 +138,47 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
       $doc = $_SESSION['user_id']; ?>
 
       <form class="form" action="addpatient-bootstrap.php" method="post">
+        <div class="container">
         <!-- basic form to pass the data in the database for the creation of a new patient -->
-        <div class="container block ">
-          <!-- <div class="split"> -->
-            <!-- <div class="left addpatient"> -->
-              <div class="row">                
+          <div class="split">
+            <div class="left">
+
+              <div class="row">
                   <label for="assignid">Patient ID:</label>
                   <input type="number" name="assignid" placeholder="Patiend ID" required>
-                
+              </div>
+
+              <div class="row">
                   <label for="flname">Patient Name:</label>
                   <input type="text" name="flname" placeholder="First and Last Name" required>
+              </div>
 
+              <div class="row">
                   <label for="address">Patients Adress</label>                
                   <input type="text" name="pat_address" placeholder="Patient Address">
               </div>
-            <!-- </div> -->
-            <!-- <div class="right addpatient"> -->
-            <div class="row">
-              <label for="email">E-mail:</label>
-              <input type="email" name="email" placeholder="JohnDoe@email.com" required>
 
-              <label for="dob">Date of Birth:</label>
-              <input type="date" name="dob" placeholder="" required>
+            </div> 
+            <div class="right">
 
-              <label for="">Phone Number</label>
-              <input type="number" name="phone" placeholder="Phone Number" required>
+              <div class="row">
+                <label for="email">E-mail:</label>
+                <input type="email" name="email" placeholder="JohnDoe@email.com" required>
+              </div>
+
+              <div class="row">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" name="dob" placeholder="" required>
+              </div>
+
+              <div class="row">
+                <label for="">Phone Number</label>
+                <input type="number" name="phone" placeholder="Phone Number" required>
+              </div>
+              
             </div>
-              
-              
-              <!-- </p> -->
-              <!-- <p> -->
-              </p>
-            <!-- </div> -->
-          <!-- </div>
-         -->
+        </div>  
+
           
             <input type="submit" name="Submit" class="bttn" value="Create Patient">
           

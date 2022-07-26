@@ -125,7 +125,7 @@
                     </div>
                     <div class="tab-row">
                         <label for="pastdatestart">Ημερομηνία Έναρξης Παλιάς Φαρμακευτικής Αγωγής:</label>
-                        <input type="date" name="pastTREATMENT" id="pastDate" required>
+                        <input type="date" name="pastTREATMENTstart" id="pastDate" required>
                     </div>
 
                     <div class="tab-row">

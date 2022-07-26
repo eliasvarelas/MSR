@@ -130,16 +130,19 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             <div class="content">
 
                 <form action="editPatientForm.php?qpatid=<?php echo $patientID ?>" method="POST">
-                    <div class="container">
+                    <div class="container block ">
                         <div class="split">
-                            <div class="left block">
+                            <div class="left w-100">
                                 <!-- modern stylign -->
                                 <p>
                                     <h2>Old Information</h2>
                                 </p>
                                 <p>
-                                    <label for="ID">Patient ID:</label>
+                                    <label for="ID">Patient ID*:</label>
                                     <input type="text" name="patID" value="<?php echo ($patientID ?? "N/A"); ?>" disabled>
+                                </p>
+                                <p>
+                                --------------------------------------------------------------
                                 </p>
                                 <p>
                                     <label for="Name">Patient Name:</label>
@@ -162,40 +165,45 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                                     <input type="text" value="<?php echo ($patientAdr ?? "N/A"); ?>" disabled>
                                 </p>
                             </div>
-                            <div class="right block">
+                            <div class="right w-100">
                                 
                                 <p>
                                     <h3>New Information</h3>
                                 </p>
                                 <p>
-                                    <label for="patid">Patient ID:</label>
-                                    <input type="number" name="newPatID">
+                                    <label for="patid">Patient ID*:</label>
+                                    <input type="number" name="newPatID" id="newPatID">
+                                    <!-- <input type="checkbox" name="enable ID" id="enableID"> -->
+                                </p>
+                                <p>
+                                    --------------------------------------------------------------
                                 </p>
                                 <p>
                                     <label for="patName">Patient Name:</label>
-                                    <input type="text" name="newPatName" id="">
+                                    <input type="text" name="newPatName" id="newPatName">
                                 </p>
                                 <p>
                                     <label for="DOB">Date of Birth:</label>
-                                    <input type="date" name="newPatDOB">
+                                    <input type="date" name="newPatDOB" id="newPatDOB">
                                 </p>
                                 <p>
                                     <label for="patEmail">Patient Email:</label>
-                                    <input type="email" name="newPatEmail" id="">
+                                    <input type="email" name="newPatEmail" id="newPatEmail">
                                 </p>
                                 <p>
                                     <label for="phonenum">Patient Phone Number:</label>
-                                    <input type="number" name="newPatPhonenum" id="">
+                                    <input type="number" name="newPatPhonenum" id="newPatPhonenum">
                                 </p>
                                 <p>
                                     <label for="patAdd">Patient Address:</label>
-                                    <input type="text" name="newPatAddress" id="">
+                                    <input type="text" name="newPatAddress" id="newPatAddress">
                                 </p>
                             </table>
                         </div>
                     </div>
-                    <button type="submit" name="submit" class="bttn">Submit</button>
                 </div>
+                <p>*If the new Patient ID field is used, all the other fields will be disabled</p>
+                <button type="submit" name="submit" class="bttn centered">Submit</button>
                 
             </form>
             
@@ -378,6 +386,44 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 </footer>
             </div>
         </div>
+
+
+        <script>
+            var newPatID = document.getElementById('newPatID');
+            function useValue(){
+
+            
+                var idValue = newPatID.value;
+
+                var newPatName = document.getElementById('newPatName');
+                var newPatDOB = document.getElementById('newPatDOB');
+                var newPatEmail = document.getElementById('newPatEmail');
+                var newPatPhonenum = document.getElementById('newPatPhonenum');
+                var newPatAddress = document.getElementById('newPatAddress');
+
+                if (idValue !== null){
+                    newPatName.setAttribute('disabled',true);
+                    newPatDOB.setAttribute('disabled',true);
+                    newPatEmail.setAttribute('disabled',true);
+                    newPatPhonenum.setAttribute('disabled',true);
+                    newPatAddress.setAttribute('disabled',true);
+                } else {
+                    newPatName.setAttribute('disabled',false);
+                    newPatDOB.setAttribute('disabled',false);
+                    newPatEmail.setAttribute('disabled',false);
+                    newPatPhonenum.setAttribute('disabled',false);
+                    newPatAddress.setAttribute('disabled',false);
+                }
+                
+                
+                
+                
+            };
+            newPatID.onchange = useValue;  
+            // newPatID.onblur = useValue;
+            
+            
+        </script>
 
 </body>
 

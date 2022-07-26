@@ -76,18 +76,24 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         Add a new Patient
                     </a>
                 </li>-->
-                 <li>
-                    <a href="admin_searching.php">
-                        <i class="fas fa-search"></i>
-                        Advanced Search
-                    </a>
-                </li> 
-                <li>
-                    <a href="">
-                        <i class="fas fa-paper-plane"></i>
-                        Visual Analytics Tool D3
-                    </a>
-                </li>
+                <li class="">
+            <a href="admin_searching.php" class="dropdown-toggle" ::after>
+                <i class="fas fa-search"></i>
+                Search Doctors
+            </a>
+        </li>
+        <li class="">
+            <a href="admin_patient_searching.php">
+                <i class="fas fa-search"></i>
+                Advanced Patient Search
+            </a>
+        </li> 
+        <li>
+          <a href="">
+            <i class="fas fa-chart-bar"></i>
+            Visual Analytics Tool D3
+          </a>
+        </li>
             </ul>
         </nav>
 

@@ -59,7 +59,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         </li>
         <li>
           <a href="patientinfo-bootstrap.php">
-            <i class="fas fa-folder"></i>
+            <i class="fas fa-user-plus"></i>
             Add a Doctor
           </a>
 
@@ -90,7 +90,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             </a>
         </li> 
         <li>
-          <a href="visual_analytics.php">
+          <a href="">
             <i class="fas fa-chart-bar"></i>
             Visual Analytics Tool D3
           </a>

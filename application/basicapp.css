@@ -216,6 +216,10 @@
     max-width: 90%;
 }
 
+.alligner-center {
+    justify-content: center;
+}
+
 .padded {
     /* padding: 1em 0px; */
     /* margin: 1em; */

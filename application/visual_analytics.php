@@ -231,13 +231,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             
             
-            $statement = $pdo->prepare("SELECT DISTINCT NDS,Sex FROM MSR");
+            $statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
             $statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
             $json = json_encode($results);
             // echo $json;
             
-            $fp = fopen('/Users/hliasvarelas/github/d3js/File.json', 'w');
+            $fp = fopen('File.json', 'w');
             fwrite($fp, $json);
             fclose($fp);
 
