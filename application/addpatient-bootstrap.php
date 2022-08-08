@@ -154,7 +154,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               </div>
 
               <div class="row">
-                  <label for="address">Patients Adress</label>                
+                  <label for="address">Patients Adress:</label>                
                   <input type="text" name="pat_address" placeholder="Patient Address">
               </div>
 
@@ -172,7 +172,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               </div>
 
               <div class="row">
-                <label for="">Phone Number</label>
+                <label for="">Phone Number:</label>
                 <input type="number" name="phone" placeholder="Phone Number" required>
               </div>
               

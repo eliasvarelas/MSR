@@ -169,12 +169,13 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                       <input type="text" name="filter-patients" id="filter_Doctors_table" onkeyup="filterDoctors()" placeholder="Search Doctors Name..." class="w-100">
                     </tr>
                     <tr>
-                    <th colspan="5">Total Doctors</th>
+                    <th colspan="6">Total Doctors</th>
                     </tr>
                     <tr>
                       <th>Doctor ID</th>
                       <th>Doctors</th>
                       <th>Contact Information</th>
+                      <th>Patients</th>
                       <th>Edit Info</th>
                       <th>Remove Doctor</th>
                     </tr>
@@ -187,6 +188,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['username']; ?></td>
                         <td><?php echo "<a href='doctors_contant_info.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."'>Contact Information</a>"; ?></td>
+                        <td><?php echo "<a href='doc_patients.php?docid=" . $row['id'] ."'>Patients</a>"; ?></td>
                         <td><?php echo "<a href='editDoctorForm.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."'>Edit</a>"; ?></td>
                         <td><a href="adminremovedoc.php?id= <?php echo $row["id"]; ?>" onclick="return confirm('Are you sure you want to remove the Doctor with ID: ' + <?php echo $row['id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
                       </tr>

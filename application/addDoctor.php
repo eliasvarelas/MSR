@@ -201,8 +201,8 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
           if ($sql) {
             $from = "MSRegistryRegistriationservice@gmail.com";
             $to = $email;
-            $subject = "Welcome to The Multiple Sclerosis Registry Doctor.";
-            $message = "Mr/Ms ". $flname ." welcome. An account has been created for you via an Admin of our systems with the following information: <br>
+            $subject = "Welcome to The Multiple Sclerosis Registry Doctor:". $flname ;
+            $message = "Mr/Ms ". $flname ." welcome. An account has been created for you via an Admin of our systems with the following information:
               Name: ".$flname ."  
               Doctors ID: ". $doc_id." 
               Email: ". $email ." 
@@ -215,7 +215,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               echo "The email message was not sent.";
             }
           } else {
-            echo "The emails was not sent";
+            echo "The email was not sent";
           }
         }
 

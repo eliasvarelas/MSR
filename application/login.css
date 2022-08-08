@@ -21,7 +21,8 @@ div {
 }
 
 .box input[type="text"],
-.box input[type="password"] {
+.box input[type="password"],
+.box input[type="email"] {
     text-align: center;
     background-color: #fafafa;
     padding: .25em;

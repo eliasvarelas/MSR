@@ -321,7 +321,7 @@
 }
 
 .form {
-    display: block;
+    display: table;
     margin: auto;
     /* align-items: center;
     justify-content: center; */
@@ -350,13 +350,13 @@ form {
 }
 
 p {
-    display: table-row;
+    /* display: table-row; */
     font-family: 'Roboto', sans-serif;
     justify-items: center;
 }
 
 label {
-    /* display: table-cell; */
+    display: table-cell;
     font-family: 'Roboto', sans-serif;
     border-radius: 15px;
     text-align: left;
@@ -439,6 +439,7 @@ footer {
 
 #stat {
     position: absolute;
+    max-width: auto;
 }
 
 #purple {
