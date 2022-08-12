@@ -22,6 +22,7 @@ $dbname = "MSR";
   $onsetdate = $_POST['onsetdate'];
   $Noofrelapses = $_POST['Noofrelapses'];
   $Noofrelapsesrad = $_POST['Noofrelapsesrad'];
+  $pastTREATMENTstart = $_POST['pastTREATMENTstart'];
   $pastTREATMENT = $_POST['pastTREATMENT'];
   $pastTREATMENTdate = $_POST['pastTREATMENTdate'];
   $pastTREATMENTcheck = $_POST['pastTREATMENTcheck'];
@@ -82,11 +83,11 @@ $dbname = "MSR";
 
     // inserting the data from the form in the MSR table
     $sql = "INSERT INTO $table (visit_id,NDS,NDSdate,NDSnum,`address`,Sex,Age,Race,Comorbidities,convsprad,convspnum, dateofdia,dateofdiarad,
-    onsetdate, Noofrelapses,Noofrelapsesrad,
+    onsetdate, Noofrelapses,Noofrelapsesrad,pastTREATMENTstart,
     pastTREATMENT,pastTREATMENTdate,pastTREATMENTcheck,TREATMENTdate, TREATMENT, eddsscore,edsstime7_5m,edsstimePEG,
     EDSSdate,Pregnant, Onsetlocalisation, smoker,cigars,cigardate, onsetsymptoms,MRIonsetlocalisation,MRIenhancing,MRInum,MRIenhancinglocation,
     signer,Submit)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";     //using prepared statements for security towards sql injections
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";     //using prepared statements for security towards sql injections
 
     //Execute
   if (isset($_POST["Submit"])) {
@@ -111,7 +112,9 @@ $dbname = "MSR";
 
   }catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
-    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    echo"<div class='error'>";
+      die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    echo "</div>";
   }
 
 ?>

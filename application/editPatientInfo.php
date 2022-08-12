@@ -173,7 +173,9 @@ $dbname = "MSR";
                             echo "No records matching your query were found.";
                         }
                     } catch (PDOException $e) {
-                        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+                        echo"<div class='error'>";
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+          echo "</div>";
                     }
                     ?>
 

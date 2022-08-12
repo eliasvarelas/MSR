@@ -138,7 +138,7 @@
                     </div>
                     <div class="tab-row">
                         <label for="pastdatestart">PAST Disease Modifying Treatment: Date started:</label>
-                        <input type="date" name="pastTREATMENT" id="pastDate" required>
+                        <input type="date" name="pastTREATMENTstart" id="pastDate" required>
                     </div>
 
                     <div class="tab-row">
@@ -149,7 +149,7 @@
                         <label for="pastTREATMENTreason">Reason:</label>
                         <input type="text" name="pastTREATMENTcheck" id="pastTREATMENTcheck" list="pastTREATMENTcheckreason" placeholder="Reason" required>
                         <datalist id="pastTREATMENTcheckreason" name="pastTREATMENTcheck">
-                            <option value="Lack of efficasy">Lack of efficasy</option>
+                            <option value="Lack of efficasy">Lack of efficacy</option>
                             <option value="Side effects">Side effects</option>
                             <option value="Other">Other</option>
                         </datalist>

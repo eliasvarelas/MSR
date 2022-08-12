@@ -175,7 +175,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
               echo "No records matching your query were found.";
             }
           } catch (PDOException $e) {
+            echo"<div class='error'>";
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+          echo "</div>";
           }
           ?>
           </table>

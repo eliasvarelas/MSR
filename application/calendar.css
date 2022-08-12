@@ -10990,7 +10990,7 @@ h5,
     overflow-y: scroll;
     height: 100%;
     width: 50%;
-    float: right;
+    /* float: right; */
     margin: 0px auto;
     display: inline-block;
     padding: 0px;
@@ -11068,7 +11068,7 @@ h5,
     font: 13px Helvetica, Arial, san-serif;
     display: inline-block;
     padding: 2em;
-    float: left;
+    /* float: left; */
 }
 
 @media (max-width: 991.98px) {
@@ -11392,4 +11392,31 @@ h5,
 
 .error-input {
     border-color: #cd4dcc;
+}
+
+#sidebar.active .sidebar-header h3,
+#sidebar.active .CTAs {
+    display: none;
+}
+
+#sidebar.active .sidebar-header strong {
+    display: block;
+}
+
+#sidebar .sidebar-header {
+    padding: 17px;
+    background: #2a7189;
+    /* width: min-content; */
+}
+
+#sidebar .sidebar-header strong {
+    display: none;
+    font-size: 1.1em;
+    color: white;
+    
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
 }

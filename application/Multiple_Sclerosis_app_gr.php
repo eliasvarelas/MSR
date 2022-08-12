@@ -125,7 +125,7 @@
                     </div>
                     <div class="tab-row">
                         <label for="pastdatestart">Ημερομηνία Έναρξης Παλιάς Φαρμακευτικής Αγωγής:</label>
-                        <input type="date" name="pastTREATMENT" id="pastDate" required>
+                        <input type="date" name="pastTREATMENTstart" id="pastDate" required>
                     </div>
 
                     <div class="tab-row">
@@ -412,7 +412,7 @@
             </div>
 
             <div class="block container">
-
+                
                 <h3>Υπογράφων Φόρμας:
                     <input type="text" name="signer" required>
                     <input type="submit" name="Submit" value="Submit" id="subm" required>
@@ -423,7 +423,7 @@
         <div class="note-wrapper container">
             <strong>Πατώντας το κουμπί <i>Reset</i> όλα τα δεδομένα που έχετε εισάγει στην φόρμα θα διαγραφούν χωρίς να αποθηκευτούν!</strong>
         </div>
-        <div class="tab-row">
+        <div class="tab-row centered">
             <h3>
                 Reset the form?
                 <input type="reset" name="resetform" id="resetbutton">

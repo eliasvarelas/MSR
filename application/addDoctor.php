@@ -53,14 +53,32 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         <li>
             <a href="admins_menu.php">
                 <i class="fas fa-home"></i>
-                Home
+                Admins Menu
             </a>
         </li>
-        <li>
+        <li class="active">
             <a href="addDoctor.php">
                 <i class="fas fa-user-plus"></i>
                 Add a Doctor
             </a>
+        </li>
+        <li class="">
+            <a href="admin_searching.php" class="dropdown-toggle" ::after>
+                <i class="fas fa-search"></i>
+                Search Doctors
+            </a>
+        </li>
+        <li class="">
+            <a href="admin_patient_searching.php">
+                <i class="fas fa-search"></i>
+                Advanced Patient Search
+            </a>
+        </li> 
+        <li>
+          <a href="">
+            <i class="fas fa-chart-bar"></i>
+            Visual Analytics Tool D3
+          </a>
         </li>
       </ul>
     </nav>
@@ -183,8 +201,8 @@ $dbname = "MSR";
           if ($sql) {
             $from = "MSRegistryRegistriationservice@gmail.com";
             $to = $email;
-            $subject = "Welcome to The Multiple Sclerosis Registry Doctor.";
-            $message = "Mr/Ms ". $flname ." welcome. An account has been created for you via an Admin of our systems with the following information: <br>
+            $subject = "Welcome to The Multiple Sclerosis Registry Doctor:". $flname ;
+            $message = "Mr/Ms ". $flname ." welcome. An account has been created for you via an Admin of our systems with the following information:
               Name: ".$flname ."  
               Doctors ID: ". $doc_id." 
               Email: ". $email ." 
@@ -197,12 +215,14 @@ $dbname = "MSR";
               echo "The email message was not sent.";
             }
           } else {
-            echo "The emails was not sent";
+            echo "The email was not sent";
           }
         }
 
       } catch (PDOException $e) {
-        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        echo"<div class='error'>";
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+          echo "</div>";
       }
       ?>
       <footer id="foo">

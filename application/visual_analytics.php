@@ -29,8 +29,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="visual_analytics.js" charset="utf-8"></script>
+  <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+  <!-- <script src="visual_analytics.js" charset="utf-8"></script> -->
+  <script src="https://d3js.org/d3.v4.js"></script>
 
 </head>
 
@@ -172,27 +173,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
     </div>
   </div>
-
-  <!-- jQuery CDN - Slim version (=without AJAX) -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!-- Popper.JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-  <!-- Bootstrap JS -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-  
-  <script type="text/javascript">//sidebarCollapse
-    $(document).ready(function() {
-      $('#sidebarCollapse').on('click', function() {
-        $('#sidebar').toggleClass('active');
-      });
-    });
-  </script>
-</body>
-
-</html>
-
-<?php
+  <?php
 
         $usersid = $_SESSION['user_id'];
         $servername = "127.0.0.1";
@@ -231,7 +212,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             
             
-            $statement = $pdo->prepare("SELECT DISTINCT NDS,Sex FROM MSR");
+            $statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
             $statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
             $json = json_encode($results);
@@ -245,10 +226,179 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
 
           } catch (PDOException $e) {
-            echo $statement . "<br>" . $e->getMessage();
-            die("ERROR: Could not able to execute $statement. " . $e->getMessage());
+            echo"<div class='error'>";
+              echo $statement . "<br>" . $e->getMessage();
+              die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+            echo "</div>";
           }
         }
 
 
         ?>
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript">//sidebarCollapse
+    $(document).ready(function() {
+      $('#sidebarCollapse').on('click', function() {
+        $('#sidebar').toggleClass('active');
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    // var option = document.getElementById('test').onclick = function somefun() {
+      
+
+
+
+function Graphs() {
+    var type = document.getElementById('type_of_chart');
+
+    if (type.value == "Pie_chart") {
+
+      d3.request("http://localhost:8000")
+        .mimeType("application/json")
+        .response(function(xhr) { return JSON.parse(xhr.responseText); });
+
+      
+        var width = 960,
+        height = 500,
+        radius = Math.min(width, height) / 2;
+        
+        console.log("pie1");
+        
+        var color = d3.scaleOrdinal()
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+        
+        console.log("pie2");
+        
+        var arc = d3.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+
+        console.log("pie3");
+        
+        // defines wedge size
+        var pie = d3.pie()
+        .sort(null)
+        .value(function(d) { return d.ratio; });
+        
+        console.log("varpie");
+        
+        
+        var svg = d3.select("#d3-container").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        
+        console.log("varsvg - beforeJSON - pie");
+        
+        d3.json("JSON_File.json", function(error, data) {
+          if (error) throw error;
+          console.log(data);
+        });
+      
+      console.log("some test");
+      
+      //* crashes here, "Uncaught (in promise) TypeError: NetworkError when attempting to fetch resource."
+      // d3.json("File.json", function(error, data) {
+        //     node = data.data[0].ap[0];
+        
+        //     console.log(data);
+        
+        
+        //     var g = svg.selectAll(".arc")
+        //         .data(pie(node))
+        //         .enter().append("g")
+        //         .attr("class", "arc");
+        
+        //     g.append("path")
+        //         .attr("d", arc)
+        //         .style("fill", function(d) { return color(d.data.floor); });
+        
+        //     g.append("text")
+        //         .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        //         .attr("dy", ".35em")
+        //         .style("text-anchor", "middle")
+        //         .text(function(d) { return d.data.floor; });
+        // });
+        
+        
+
+        // d3.json("File.json").then(function(data) {
+        //   console.log(data);
+        // });
+        
+        
+      } else if (type.value == 'Bar_chart') { // needs an edit but works fine
+        var width = 960,
+        height = 500,
+        radius = Math.min(width, height) / 2;
+
+        console.log("bar1");
+
+        var color = d3.scaleOrdinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+        console.log("bar2");
+
+        var arc = d3.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(0);
+
+        console.log("bar3");
+
+        // defines wedge size
+        var pie = d3.pie()
+            .sort(null)
+            .value(function(d) { return d.ratio; });
+
+        console.log("Bar");
+
+
+        var svg = d3.select("#d3-container").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        console.log("varsvg - beforeJSON - bar");
+
+
+        d3.json("File.json", function(error, data) {
+            node = data.data[0].ap[0];
+
+            console.log("inJSON - bar");
+
+
+            var g = svg.selectAll(".arc")
+                .data(pie(node))
+                .enter().append("g")
+                .attr("class", "arc");
+
+            g.append("path")
+                .attr("d", arc)
+                .style("fill", function(d) { return color(d.data.floor); });
+
+            g.append("text")
+                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+                .attr("dy", ".35em")
+                .style("text-anchor", "middle")
+                .text(function(d) { return d.data.floor; });
+        });
+    }
+}
+
+// }
+</script>
+</body>
+
+</html>
+

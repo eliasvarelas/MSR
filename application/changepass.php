@@ -69,7 +69,9 @@ try {
           }
       }
     } catch (\Exception $e) {
-    
+      echo"<div class='error'>";
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+          echo "</div>";
     }
 ?>
 
