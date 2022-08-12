@@ -128,7 +128,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 </div>
             </nav>
             <div class="container">
-
+                <h2>Patient History</h2>
                 <?php
                     $servername = "127.0.0.1";
                     $username = "root";

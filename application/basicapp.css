@@ -293,6 +293,12 @@
     border-radius: 19px;
 }
 
+.bg-blue {
+    background-color: #2a7189;
+    /* padding: 1em 1em; */
+    border-radius: 19px;
+}
+
 .bg-inh {
     background-color: inherit;
     /* padding: 1em 1em; */
