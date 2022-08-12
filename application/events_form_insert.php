@@ -2,9 +2,10 @@
   session_start();
   //database connection
   $servername = "127.0.0.1";
-  $username = "root";
-  $password = "bioinformatics";
-  $dbname = "BIHElab";
+  $servername = "localhost";
+$username = "phpmyadmin";
+$password = "root";
+$dbname = "MSR";
   $table = "eventsLog";
 
   // get the $_POST info

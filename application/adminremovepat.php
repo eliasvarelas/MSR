@@ -4,10 +4,10 @@ $patientID = $_GET["id"];
 $usersid = $_SESSION['user_id'];
 $docID = $_GET['docid'];
 
-$servername = "127.0.0.1";
-$username = "root";
-$password = "bioinformatics";
-$dbname = "BIHElab";
+$servername = "localhost";
+$username = "phpmyadmin";
+$password = "root";
+$dbname = "MSR";
 
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

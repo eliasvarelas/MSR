@@ -130,10 +130,10 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             <div class="container">
 
                 <?php
-                    $servername = "127.0.0.1";
-                    $username = "root";
-                    $password = "bioinformatics";
-                    $dbname = "BIHElab";
+                    $servername = "localhost";
+$username = "phpmyadmin";
+$password = "root";
+$dbname = "MSR";
 
                     $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

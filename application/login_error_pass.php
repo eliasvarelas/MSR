@@ -4,10 +4,10 @@ session_start();
 require 'lib/password.php';
 
 //database connection
-$servername = "127.0.0.1";
-$username = "root";
-$password = "bioinformatics";
-$dbname = "BIHElab";
+$servername = "localhost";
+$username = "phpmyadmin";
+$password = "root";
+$dbname = "MSR";
 
 //initiallizing the pdo argument
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);

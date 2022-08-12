@@ -1,13 +1,52 @@
 <?php
 session_start();
+?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login : MS Registry</title>
+  <link rel="stylesheet" href="/MSR/application/login.css">
+</head>
+<body>
+  <div>
+    <form action="login.php" method="post" class="box" style="text-align:center;"> <!-- basic login form -->
+      <img src="MSregistry_ionian_new_logo.png">
+        <p>
+          <h3>Please Login </h3>
+          <!-- <label for="user_name">Username:</label> -->
+          <input type="text" name="user_name" id="user_name" placeholder="Username" required>
+        </p>
+        <p>
+          <!-- <label for="password">Password:</label> -->
+          <input type="password" name="password" id="pass" placeholder="Password" required>
+        </p>
+
+        <input type="submit" value="Login" name="Submit" class="button">
+    </form>
+    <p> Don't have an Account? <br> <button type="button" id="register" name="Sign up" >Sign up</button> <!-- redirecting to the register page -->
+    </p>
+  </div>
+
+  <script type="text/javascript">
+        document.getElementById("register").onclick = function () {
+          location.href = "register.php";
+        };
+      </script>
+</body>
+</html>
+
+
+
+<?php
 require 'lib/password.php';
 
 //database connection
-$servername = "127.0.0.1";
-$username = "root";
-$password = "bioinformatics";
-$dbname = "BIHElab";
+$servername = "localhost";
+$username = "phpmyadmin";
+$password = "root";
+$dbname = "MSR";
 
 //initiallizing the pdo argument
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -81,37 +120,3 @@ try {
 
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Login : MS Registry</title>
-  <link rel="stylesheet" href="/MSR/application/login.css">
-</head>
-<body>
-  <div>
-    <form action="login.php" method="post" class="box" style="text-align:center;"> <!-- basic login form -->
-      <img src="MSregistry_ionian_new_logo.png">
-        <p>
-          <h3>Please Login </h3>
-          <!-- <label for="user_name">Username:</label> -->
-          <input type="text" name="user_name" id="user_name" placeholder="Username" required>
-        </p>
-        <p>
-          <!-- <label for="password">Password:</label> -->
-          <input type="password" name="password" id="pass" placeholder="Password" required>
-        </p>
-
-        <input type="submit" value="Login" name="Submit" class="button">
-    </form>
-    <p> Don't have an Account? <br> <button type="button" id="register" name="Sign up" >Sign up</button> <!-- redirecting to the register page -->
-    </p>
-  </div>
-
-  <script type="text/javascript">
-        document.getElementById("register").onclick = function () {
-          location.href = "register.php";
-        };
-      </script>
-</body>
-</html>
