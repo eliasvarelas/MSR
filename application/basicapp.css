@@ -125,7 +125,8 @@
     /* width: fit-content(); */
     padding: .5em .5em;
     border-radius: 15px;
-    /* border: 1px solid red; */
+	background-color: blue;
+    
 }
 
 .container>table {
@@ -313,7 +314,7 @@
 .search-results {
     display: grid;
     margin-top: 0.5em;
-    /* border: 1px solid red; */
+    
     margin-bottom: 0.5em;
     padding: 25px;
 }
