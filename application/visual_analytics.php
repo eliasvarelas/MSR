@@ -134,7 +134,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
             <td colspan="3" class="">
               <select id="type_of_chart" name="charts">
                 <option value="Pie_chart">Pie chart</option> <!-- classic pie -->
-                <option value="Bar_chart">Bar chart</option> <!-- classic pie -->
+                <option value="Bar_chart">Bar chart</option> <!-- classic bar chart -->
+                <option value="Bar_chart">Area</option> <!-- classic bar chart -->
+                <option value="Bar_chart">Line chart</option> <!-- classic bar chart -->
+                
               </select>
             </td>
           <!-- </tr> -->
@@ -145,7 +148,23 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             <td colspan="3" id="attribute_row">
               <select id="attributes" name="attributes">
-                <option value="Sex" id="p_Sex">Sex</option>
+                <option value="Patient_name">Name</option>
+                <option value="Patient_id">ID</option>
+                <option value="Sex">Sex</option>
+                <option value="Race">Race</option>
+                <option value="Age">Age</option>
+                <option value="Comorbidities">Comorbidities</option>
+                <option value="Email">Email</option>
+                <option value="eddsscore">EDSS Score</option>
+                <option value="Phonenum">Phone Number</option>
+                <option value="onsetsymptoms">Onset Symptoms</option>
+                <option value="Onsetlocalisation">Onset Localisation</option>
+                <option value="smoker">Smoker</option>
+                <option value="Pregnant">Pregnant</option>
+                <option value="MRIenhancing">MRI Enhanced Lesions</option>
+                <option value="MRInum">MRI Enhanced Lesions Number</option>
+                <option value="MRIonsetlocalisation">MRI Onset Localisation</option>
+                
               </select>
             </td>
 
@@ -176,12 +195,13 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   <?php
 
         $usersid = $_SESSION['user_id'];
-        $servername = "127.0.0.1";
-        $username = "root";
-        $password = "bioinformatics";
-        $dbname = "BIHElab";
+        $servername = "localhost";
+$username = "phpmyadmin";
+$password = "root";
+$dbname = "MSR";
         // get data from the form
         $createGraph = $_POST['makeGraph'];
+	  	$attributes = $_POST['attributes'];
 
         if (isset($_POST['makeGraph'])) {
           try {
@@ -212,8 +232,16 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
             
             
-            $statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
-            $statement->execute();
+            $statement = $pdo->prepare("SELECT $attributes FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum");
+            
+			  
+			// hardcoded JSON file  
+			// $statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
+            
+			  
+			  
+			 
+			$statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
             $json = json_encode($results);
             // echo $json;
