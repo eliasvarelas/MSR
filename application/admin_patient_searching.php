@@ -92,7 +92,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         <li>
           <a href="">
             <i class="fas fa-chart-bar"></i>
-            Visual Analytics Tool D3
+            Visual Analytics Tool
           </a>
         </li>
       </ul>

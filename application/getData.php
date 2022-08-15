@@ -45,7 +45,7 @@ if( $_SERVER['REQUEST_METHOD']=='POST' && isset(
             
             case 'Patient_id':
                 $sql='SELECT `Patient_id` as name, count(*) as number 
-                          FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
+                          FROM patients
                           WHERE Doctor_ID = :userid
                           GROUP BY Patient_name';
                 $args=array(':userid'   =>  $usersid);
@@ -76,7 +76,7 @@ if( $_SERVER['REQUEST_METHOD']=='POST' && isset(
             break;
 				
 			case 'Comorbidities':
-                $sql='SELECT `Comorbidities` as name, count(*) as number 
+                $sql='SELECT `Comorbidities` as name, count(DISTINCT *) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
                           WHERE Doctor_ID = :userid
                           GROUP BY Comorbidities';
@@ -84,8 +84,8 @@ if( $_SERVER['REQUEST_METHOD']=='POST' && isset(
             break;
 				
 			case 'Email':
-                $sql='SELECT `Email` as name, count(*) as number 
-                          FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
+                $sql='SELECT DISTINCT Email as name, count(*) as number 
+                          FROM patients
                           WHERE Doctor_ID = :userid
                           GROUP BY Email';
                 $args=array(':userid'   =>  $usersid);

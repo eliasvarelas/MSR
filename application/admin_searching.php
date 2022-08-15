@@ -77,7 +77,7 @@
         <li>
             <a href="">
                 <i class="fas fa-chart-bar"></i>
-                Visual Analytics Tool D3
+                Visual Analytics Tool
             </a>
         </li>
       </ul>
