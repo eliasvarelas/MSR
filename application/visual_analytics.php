@@ -24,7 +24,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- Our Custom CSS -->
-  <link rel="stylesheet" href="basicapp.css">
+  <link rel="stylesheet" href="basicapp-notnow.css">
 
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -196,18 +196,20 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
         $usersid = $_SESSION['user_id'];
         $servername = "localhost";
-$username = "phpmyadmin";
-$password = "root";
-$dbname = "MSR";
+		$username = "phpmyadmin";
+		$password = "root";
+		$dbname = "MSR";
         // get data from the form
         $createGraph = $_POST['makeGraph'];
 	  	$attributes = $_POST['attributes'];
 
+	  $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+      // set the PDO error mode to exception
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	  
         if (isset($_POST['makeGraph'])) {
           try {
-            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            // set the PDO error mode to exception
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        		echo $attributes;
 
             // making this file a test file, GOAL IS just 1 fully working graph!
             // $sql = "SELECT NDS,Sex FROM MSR";
@@ -232,11 +234,11 @@ $dbname = "MSR";
 
             
             
-            $statement = $pdo->prepare("SELECT $attributes FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum");
+            // $statement = $pdo->prepare("SELECT $attributes FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum");
             
 			  
 			// hardcoded JSON file  
-			// $statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
+			$statement = $pdo->prepare("SELECT NDS,Sex FROM MSR");
             
 			  
 			  
@@ -290,9 +292,9 @@ function Graphs() {
 
     if (type.value == "Pie_chart") {
 
-      d3.request("http://localhost:8000")
-        .mimeType("application/json")
-        .response(function(xhr) { return JSON.parse(xhr.responseText); });
+      // d3.request("http://localhost:8000")
+      //   .mimeType("application/json")
+      //   .response(function(xhr) { return JSON.parse(xhr.responseText); });
 
       
         var width = 960,
@@ -328,10 +330,14 @@ function Graphs() {
         
         console.log("varsvg - beforeJSON - pie");
         
-        d3.json("JSON_File.json", function(error, data) {
-          if (error) throw error;
-          console.log(data);
-        });
+        // d3.json("JSON_File.json", function(error, data) {
+        //   if (error) throw error;
+        //   console.log(data);
+        // });
+		
+		d3.json("/MSR/application/users.json", function(data) {
+    		console.log(data);
+		});
       
       console.log("some test");
       
@@ -400,7 +406,7 @@ function Graphs() {
         console.log("varsvg - beforeJSON - bar");
 
 
-        d3.json("File.json", function(error, data) {
+        d3.json("users.json", function(error, data) {
             node = data.data[0].ap[0];
 
             console.log("inJSON - bar");
