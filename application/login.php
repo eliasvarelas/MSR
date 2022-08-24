@@ -7,7 +7,7 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <title>Login : MS Registry</title>
-  <link rel="stylesheet" href="/MSR/application/login.css">
+  <link rel="stylesheet" href="/MSR/application/login_new.css">
 </head>
 <body>
   <div>

@@ -9,7 +9,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // assign a variable to each doctor in the db table users
 $select_query_total = "SELECT SQL_CALC_FOUND_ROWS users.username,users.id,patients.Patient_id,patients.Doctor_ID,patients.Patient_name,patients.DOB,patients.Email,patients.Patient_address,patients.Phonenum FROM users,patients WHERE username != 'admin' AND users.id = patients.Doctor_ID ORDER BY patients.Patient_id";
-$select_query_doctors = "SELECT SQL_CALC_FOUND_ROWS users.username, users.id, users.doc_Email, users.doc_phone FROM users WHERE username != 'admin' ORDER BY users.id";
+$select_query_doctors = "SELECT SQL_CALC_FOUND_ROWS users.username, users.id, users.doc_Email, users.doc_phone,users.fname,users.lname FROM users WHERE username != 'admin' ORDER BY users.id";
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
@@ -38,7 +38,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="basicapp.css">
+    <link rel="stylesheet" href="basicapp-notnow.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -89,9 +89,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             </a>
         </li> 
         <li>
-          <a href="">
+          <a href="visual_analytics_google_admin.php">
             <i class="fas fa-chart-bar"></i>
-            Visual Analytics Tool D3
+            Visual Analytics Tool
           </a>
         </li>
             </ul>
@@ -131,34 +131,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 </div>
             </nav>
             <!-- main Content -->
-            <!-- create pagination for the tables -->
-
-            <?php 
-              //define total number of results you want per page  
-              $results_per_page = 4;
-
-              // $number_of_result = mysqli_num_rows($result);
-
-              $rows = $pdo->prepare("SELECT FOUND_ROWS()"); 
-              $rows->execute();
-              $row_count =$rows->fetchColumn();
-              // echo $row_count;
-
-              //determine the total number of pages available  
-              $number_of_page = ceil ($row_count / $results_per_page);
-
-               //determine which page number visitor is currently on  
-                if (!isset ($_GET['page']) ) {  
-                  $page = 1;  
-                } else {  
-                  $page = $_GET['page'];  
-                }
-                
-                //determine the sql LIMIT starting number for the results on the displaying page  
-                $page_first_result = ($page-1) * $results_per_page;
-
-
-            ?>
+            
               
               
               
@@ -187,9 +160,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                       <tr>
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['username']; ?></td>
-                        <td><?php echo "<a href='doctors_contant_info.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."'>Contact Information</a>"; ?></td>
+                        <td><?php echo "<a href='doctors_contant_info.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."&fname=".$row['fname']."&lname=".$row['lname']."'>Contact Information</a>"; ?></td>
                         <td><?php echo "<a href='doc_patients.php?docid=" . $row['id'] ."'>Patients</a>"; ?></td>
-                        <td><?php echo "<a href='editDoctorForm.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."'>Edit</a>"; ?></td>
+                        <td><?php echo "<a href='editDoctorForm.php?docid=" . $row['id'] . "&nm=" . $row['username'] . "&em=" . $row['doc_Email'] . "&phone=".$row['doc_phone']."&fname=".$row['fname']."&lname=".$row['lname']."'>Edit</a>"; ?></td>
                         <td><a href="adminremovedoc.php?id= <?php echo $row["id"]; ?>" onclick="return confirm('Are you sure you want to remove the Doctor with ID: ' + <?php echo $row['id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
                       </tr>
                   <?php
@@ -199,14 +172,10 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     echo "No records matching your query were found.";
                   }
 
-                  //display the link of the pages in URL  
-                  for($page = 1; $page<= $number_of_page; $page++) {  
-                    echo '<a href = "index2.php?page=' . $page . '">' . $page . ' </a>';  
-                  }  
                   ?>
                   </table>
                 </div>
-                <div class="right">
+                <div class="right" id="pat_tbl">
                   <table id="Patients_table" class="w-100">
                     <tr>
                     <input type="text" name="filter-patients" id="filter_Pat_table" onkeyup="filterPatients()" placeholder="Search Patient Name..." class="filter w-100">
@@ -214,30 +183,31 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     <tr>
                       <th colspan="6">Total Patients</th>
                     </tr>
-                    <tr>
-                      <th>Patient ID</th>
-                      <th>Patients</th>
-                      <th>Doctor</th>
-                      <!-- <th>Date of Birth</th> -->
-                      <th>Emails</th>
-                      <th>Edit Info</th>
-                      <th>Remove Patient</th>
-                    </tr>
-                    <?php
-                    $results = $pdo->query($select_query_total);
-                    if($results->rowCount() > 0){
-                      while($row = $results->fetch()){
-                    ?>
+					<tbody>
 
-                    <tr>
-                      <td><?php echo $row['Patient_id'] ?></td>
-                      <td><?php echo $row['Patient_name']; ?></td>
-                      <td><?php echo $row['username']; ?></td>
-                      <!-- <td><?php echo $row['DOB']; ?></td> -->
-                      <td><?php echo $row['Email']; ?></td>
-                      <td><?php echo "<a href='editPatientFormAdmin.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']." &dob=".$row['DOB']."'>Edit</a>"; ?></td>
-                      <td><a href="adminremovepat.php?id= <?php echo $row['Patient_id']; ?>&docid= <?php echo $row['id'] ?> " onclick="return confirm('Are you sure you want to remove Patient with ID: ' + <?php echo $row['Patient_id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
-                    </tr>
+						<tr>
+						  <th>Patient ID</th>
+						  <th>Patients</th>
+						  <th>Doctor</th>
+						  <th>Emails</th>
+						  <th>Edit Info</th>
+						  <th>Remove Patient</th>
+						</tr>
+						<?php
+						$results = $pdo->query($select_query_total);
+						if($results->rowCount() > 0){
+						  while($row = $results->fetch()){
+						?>
+
+						<tr>
+						  <td><?php echo $row['Patient_id'] ?></td>
+						  <td><?php echo $row['Patient_name']; ?></td>
+						  <td><?php echo $row['username']; ?></td>
+						  <td><?php echo $row['Email']; ?></td>
+						  <td><?php echo "<a href='editPatientFormAdmin.php?patientid=" . $row['Patient_id'] . "&nm=" . $row['Patient_name'] . "&adr=" . $row['Patient_address'] . "&em=" . $row['Email'] . "&phone=".$row['Phonenum']." &dob=".$row['DOB']."'>Edit</a>"; ?></td>
+						  <td><a href="adminremovepat.php?id= <?php echo $row['Patient_id']; ?>&docid= <?php echo $row['id'] ?> " onclick="return confirm('Are you sure you want to remove Patient with ID: ' + <?php echo $row['Patient_id']; ?> + '?')" id="remove">Delete</a></td> <!-- removes the patient from the app -->
+						</tr>
+					</tbody>
                   <?php
                   }
                   unset($results);
@@ -257,7 +227,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -290,6 +260,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
           }
         }
       }
+
       function filterDoctors() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("filter_Doctors_table");
@@ -307,7 +278,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             }
           }
         }
-      }
+      }		
     </script>
 </body>
 

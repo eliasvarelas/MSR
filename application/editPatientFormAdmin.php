@@ -34,7 +34,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="basicapp.css">
+    <link rel="stylesheet" href="basicapp-notnow.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -47,7 +47,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
+                <h3><a href="admins_menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
                 <strong><a href="menu.php" id="logo">MSR</a></strong>
             </div>
 
@@ -130,72 +130,79 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             <div class="content">
 
                 <form action="editPatientForm.php?qpatid=<?php echo $patientID ?>" method="POST">
-                    <div class="container block">
+                    <div class="container bg-blue w-100">
                         <div class="split">
-                            <div class="left bg-white">
+                            <div class="left">
                                 <!-- modern stylign -->
-                                <p>
+                                <div class="row">
                                     <h2>Old Information</h2>
-                                </p>
-                                <p>
-                                    <label for="ID">Patient ID:</label>
+                                </div>
+                                <div class="row">
+                                    <label for="ID">Patient ID*:</label>
                                     <input type="text" name="patID" value="<?php echo ($patientID ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+								<div class="row">
+                                --------------------------------------------------------------
+                                </div>
+                                <div class="row">
                                     <label for="Name">Patient Name:</label>
                                     <input type="text" value="<?php echo ($patientNAME ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="oldDOB">Date of Birth:</label>
                                     <input type="date" value="<?php echo ($DOB ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="Email">Patient Email:</label>
                                     <input type="text" value="<?php echo ($patientEmail ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="Phone Number">Patient Phone Number:</label>
                                     <input type="text" value="<?php echo ($patientPhonenum ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="old address">Patient Address:</label>
                                     <input type="text" value="<?php echo ($patientAdr ?? "N/A"); ?>" disabled>
-                                </p>
+                                </div>
                             </div>
-                            <div class="right bg-white">
+                            <div class="right">
                                 
-                                <p>
+                                <div class="row">
                                     <h3>New Information</h3>
-                                </p>
-                                <p>
-                                    <label for="patid">Patient ID:</label>
-                                    <input type="number" name="newPatID">
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
+                                    <label for="patid">Patient ID*:</label>
+                                    <input type="number" name="newPatID" id="newPatID">
+                                </div>
+								<div class="row">
+                                --------------------------------------------------------------
+                                </div>
+                                <div class="row">
                                     <label for="patName">Patient Name:</label>
-                                    <input type="text" name="newPatName" id="">
-                                </p>
-                                <p>
+                                    <input type="text" name="newPatName" id="newPatName">
+                                </div>
+                                <div class="row">
                                     <label for="DOB">Date of Birth:</label>
-                                    <input type="date" name="newPatDOB">
-                                </p>
-                                <p>
+                                    <input type="date" name="newPatDOB" id="newPatDOB">
+                                </div>
+                                <div class="row">
                                     <label for="patEmail">Patient Email:</label>
-                                    <input type="email" name="newPatEmail" id="">
-                                </p>
-                                <p>
+                                    <input type="email" name="newPatEmail" id="newPatEmail">
+                                </div>
+                                <div class="row">
                                     <label for="phonenum">Patient Phone Number:</label>
-                                    <input type="number" name="newPatPhonenum" id="">
-                                </p>
-                                <p>
+                                    <input type="number" name="newPatPhonenum" id="newPatPhonenum">
+                                </div>
+                                <div class="row">
                                     <label for="patAdd">Patient Address:</label>
-                                    <input type="text" name="newPatAddress" id="">
-                                </p>
+                                    <input type="text" name="newPatAddress" id="newPatAddress">
+                                </div>
                             </table>
                         </div>
                     </div>
-                    <button type="submit" name="submit" class="bttn">Submit</button>
                 </div>
+				<p>*If the new Patient ID field is used, all the other fields will be disabled</p>
+                    <button type="submit" name="submit" class="bttn">Submit</button>
                 
             </form>
             
@@ -371,6 +378,45 @@ $dbname = "MSR";
             </div>
         </div>
 
+		
+		
+		<script>
+            var newPatID = document.getElementById('newPatID');
+            function useValue(){
+
+            
+                var idValue = newPatID.value;
+
+                var newPatName = document.getElementById('newPatName');
+                var newPatDOB = document.getElementById('newPatDOB');
+                var newPatEmail = document.getElementById('newPatEmail');
+                var newPatPhonenum = document.getElementById('newPatPhonenum');
+                var newPatAddress = document.getElementById('newPatAddress');
+
+                if (idValue !== null){
+                    newPatName.setAttribute('disabled',true);
+                    newPatDOB.setAttribute('disabled',true);
+                    newPatEmail.setAttribute('disabled',true);
+                    newPatPhonenum.setAttribute('disabled',true);
+                    newPatAddress.setAttribute('disabled',true);
+                } else {
+                    newPatName.setAttribute('disabled',false);
+                    newPatDOB.setAttribute('disabled',false);
+                    newPatEmail.setAttribute('disabled',false);
+                    newPatPhonenum.setAttribute('disabled',false);
+                    newPatAddress.setAttribute('disabled',false);
+                }
+                
+                
+                
+                
+            };
+            newPatID.onchange = useValue;  
+            // newPatID.onblur = useValue;
+            
+            
+        </script>
+		
 </body>
 
 </html>

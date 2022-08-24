@@ -29,7 +29,7 @@
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- Our Custom CSS -->
-  <link rel="stylesheet" href="basicapp.css">
+  <link rel="stylesheet" href="basicapp-notnow.css">
 
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -44,7 +44,7 @@
     <!-- Sidebar  -->
     <nav id="sidebar"> 
       <div class="sidebar-header">
-        <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
+        <h3><a href="admins_menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
         <strong><a href="menu.php" id="logo">MSR</a></strong>
       </div>
 
@@ -75,7 +75,7 @@
             </a>
         </li> 
         <li>
-            <a href="">
+            <a href="visual_analytics_google_admin.php">
                 <i class="fas fa-chart-bar"></i>
                 Visual Analytics Tool
             </a>
@@ -119,24 +119,26 @@
 
       <?php
       $usersid = $_SESSION['user_id'];
-      $servername = "127.0.0.1";
-      $username = "root";
-      $password = "bioinformatics";
-      $dbname = "BIHElab";
+      $servername = "localhost";
+$username = "phpmyadmin";
+$password = "root";
+$dbname = "MSR";
 
       $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       try { ?>
         <form action="admin_searching.php" method="POST" id="doc_form" onsubmit="patientAppear();return false;">
-            <h3>First select the Doctor whose patients you wish to search</h3>
+            <h3>Doctors registered in MS Registry</h3>
             
         <?php 
 
             echo"<table class='w-100' id='small'>";
             echo"<tr>";
                 echo"<th>"."Doctor ID"."</th>";
-                echo"<th>"."Doctor Name"."</th>";
+                // echo"<th>"."Doctors First name"."</th>";
+                // echo"<th>"."Doctors Last name"."</th>";
+                echo"<th>"."Doctors username"."</th>";
                 echo"<th>"."Email"."</th>";
                 echo"<th>"."Phone Number"."</th>";
                 echo"<th>"."Doctor Registered at:"."</th>";
@@ -149,6 +151,8 @@
                 while ($row_doc = $results_doc->fetch()) { 
                     echo"<tr>";
                         echo "<td>".$row_doc['id']."</td>";
+                        // echo"<td>".($row_doc['fname'] ?? "N/A")."</td>";
+                        // echo"<td>".($row_doc['lname'] ?? "N/A")."</td>";
                         echo"<td>".($row_doc['username']??"N/A")."</td>";
                         echo"<td>".($row_doc['doc_Email']??"N/A")."</td>";
                         echo"<td>".($row_doc['doc_phone']??"N/A")."</td>";
@@ -159,8 +163,8 @@
             }
             echo"</table>";
         ?> 
-            <p>By pressing the <i>Submit</i> the patients searching form will appear</p>
-            <button type="submit" id="submit_doc" name="docSubmit" onsubmit="patientAppear()">Submit</button>
+            
+            <!-- <button type="submit" id="submit_doc" name="docSubmit" onsubmit="patientAppear()">Submit</button> -->
         </form> 
         
         <div id="results" class="search-results">

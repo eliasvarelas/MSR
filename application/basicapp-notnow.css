@@ -226,6 +226,9 @@
     /* margin: 1em; */
     gap: 1em;
 }
+.pad{
+	padding: 5px;
+}
 
 .marg-bot {
     border-bottom: 4px dotted lightgray;

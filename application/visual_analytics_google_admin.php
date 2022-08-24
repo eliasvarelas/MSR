@@ -64,47 +64,52 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar">
-      <div class="sidebar-header">
-        <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
-        <strong><a href="menu.php" id="logo">MSR</a></strong>
-      </div>
+      
+            <div class="sidebar-header">
+                <h3>Multiple Sclerosis Registry</h3>
+                <strong>MSR</strong>
+            </div>
 
-      <ul class="list-unstyled components">
-        <li>
-          <a href="menu.php">
-            <i class="fas fa-home"></i>
-            Home
-          </a>
+            <ul class="list-unstyled components">
+                <li class="">
+                    <a href="admins_menu.php">
+                        <i class="fas fa-home"></i>
+                        Admins Page
+                    </a>
+                </li>
 
-        </li>
-        <li>
-          <a href="patientinfo-bootstrap.php">
-            <i class="fas fa-folder"></i>
-            Existing Patients
-          </a>
-
-
-        </li>
-        <li>
-          <a href="addpatient-bootstrap.php">
-            <i class="fas fa-user-plus"></i>
-            Add a new Patient
-          </a>
-        </li>
-        <li>
-          <a href="searching-bootstrap.php">
-            <i class="fas fa-search"></i>
-            Advanced Search
-          </a>
-        </li>
-        <li class="active">
-          <a href=" ">
-            <i class="fas fa-chart-bar"></i>
-            Visual Analytics Tool
-          </a>
-        </li>
-      </ul>
-    </nav>
+                 <li>
+                    <a href="addDoctor.php">
+                        <i class="fas fa-user-plus"></i>
+                        Add a Doctor
+                    </a>
+                </li>
+                <!--<li>
+                    <a href="">
+                        <i class="fas fa-user-plus"></i>
+                        Add a new Patient
+                    </a>
+                </li>-->
+				<li class="">
+					<a href="admin_searching.php" class="dropdown-toggle" ::after>
+						<i class="fas fa-search"></i>
+						Search Doctors
+					</a>
+				</li>
+				<li class="">
+					<a href="admin_patient_searching.php">
+						<i class="fas fa-search"></i>
+						Advanced Patient Search
+					</a>
+				</li> 
+				<li class="active">
+				  <a href="">
+					<i class="fas fa-chart-bar"></i>
+					Visual Analytics Tool
+				  </a>
+				</li>
+            </ul>
+        </nav>
 
     <!-- Page Content  -->
     <div id="content">
@@ -153,7 +158,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 <option value='Col_chart'>Column chart
                 <option value='Area_chart'>Area
                 <option value='Line_chart'>Line chart
-                <option value='Histogram'>Histogram
               </select>
             </td>
             <th>Select an Attribute</th>
@@ -212,7 +216,6 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
                 case 'Col_chart':return new google.visualization.ColumnChart( container );
                 case 'Area_chart':return new google.visualization.AreaChart( container );
                 case 'Line_chart':return new google.visualization.LineChart( container );
-                case 'Histogram':return new google.visualization.Histogram( container );
                 default: return false;
             }           
         };
@@ -241,7 +244,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         q('button[name="create"]').addEventListener('click',e=>{
             let fd=new FormData( q('form[name="chart-options"]') );
             
-            fetch( 'getData.php', { method:'post', body:fd } )
+            fetch( 'getData_admin.php', { method:'post', body:fd } )
                 .then( r=>r.json() )
                 .then( json=>{
                     drawChart( json, q('select[name="charts"]').value );

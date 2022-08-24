@@ -147,10 +147,8 @@ $dbname = "MSR";
                         if ($result->rowCount() > 0 ) {
                             while ($row = $result->fetch()) { //make it with more html for responsiveness
 
-                                // echo "<div class ='patientCard'>";
                                     echo "<table class=''>";  // the MSR table for the particular patient id
                                     echo "<tr>";
-                                    // echo "<th> Visit Number</th>";
                                         echo "<th>Name</th>";
                                         echo "<th>Date of Visit</th>";
                                         echo "<th>Patient Id</th>";
@@ -164,11 +162,10 @@ $dbname = "MSR";
                                         echo "<th>Date of Diagnosis</th>";
                                     echo "</tr>";
                                     echo "<tr>";
-                                    // echo "<td>" . ($row['visit_id'] ?? 'N/A') . "</td>";
                                         echo "<td class='  '>" . $row['NDS'] . "</td>";
                                         echo "<td>" . $row['NDSdate'] . "</td>";
                                         echo "<td class='  '>" . $row['NDSnum'] . "</td>";
-                                        echo "<td>" . ($row['Patient_address'] ?? "N/A") . "</td>";
+                                        echo "<td>" . ($row['address'] ?? "N/A") . "</td>";
                                         echo "<td class='  '>" . $row['Sex'] . "</td>";
                                         echo "<td>" . $row['Age'] . "</td>";
                                         echo "<td>" . $row['Race'] . "</td>";

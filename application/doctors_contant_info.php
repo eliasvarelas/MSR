@@ -5,6 +5,10 @@ $docID = $_GET["docid"];   // used to pass the patient id directly in the form
 $docNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
 $docEmail = $_GET["em"]; // used to pass the pateints age directly in the form
 $docPhonenum = $_GET["phone"];
+$fname = $_GET["fname"];
+$lname = $_GET["lname"];
+
+
 // $docAdr = $_GET['adr'];
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
@@ -34,7 +38,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="basicapp.css">
+    <link rel="stylesheet" href="basicapp-notnow.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -47,7 +51,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
+                <h3><a href="admins_menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
                 <strong><a href="menu.php" id="logo">MSR</a></strong>
             </div>
 
@@ -133,32 +137,40 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 <div class="block">
                     <h2>Doctor's <u><?php echo $docNAME ?></u> Contact Info</h2>
                 </div>
-                
-                <div class="split container">
-                    <div class="left">
-
-                        <p>
-                            <label for="ID">Doctor ID:</label>
-                            <input type="text" name="docID" value="<?php echo ($docID ?? "N/A"); ?>" disabled>
-                        </p>
-                        <p>
-                            <label for="Name">Doctors Name:</label>
-                            <input type="text" value="<?php echo ($docNAME ?? "N/A"); ?>" disabled>
-                        </p>
-                    </div>
-                    <div class="right">
-
-                        
-                        <p>
-                            <label for="Email">Email:</label>
-                            <input type="email" value="<?php echo ($docEmail ?? "N/A"); ?>" disabled>
-                        </p>
-                        <p>
-                            <label for="Phone Number">Phone Number:</label>
-                            <input type="text" value="<?php echo ($docPhonenum ?? "N/A"); ?>" disabled>
-                        </p>
-                    </div>
-                </div>
+				
+				<div class="container bg-blue w-100">
+					<div class="split">
+						<div class="left">
+							<div class="row">
+								<label for="ID">Doctor ID:</label>
+								<input type="text" name="docID" value="<?php echo ($docID ?? "N/A"); ?>" disabled>
+							</div>
+							<div class="row">
+								<label for="fname">First Name:</label>
+								<input type="text" name="fname" value="<?php echo ($fname ?? "N/A"); ?>" disabled>
+							</div>
+							<div class="row">
+								<label for="lname">Last Name:</label>
+								<input type="text" name="docID" value="<?php echo ($lname ?? "N/A"); ?>" disabled>
+							</div>
+							
+						</div>
+						<div class="right">
+							<div class="row">
+								<label for="Name">Doctors username:</label>
+								<input type="text" value="<?php echo ($docNAME ?? "N/A"); ?>" disabled>
+							</div>
+							<div class="row">
+								<label for="Email">Email:</label>
+								<input type="email" value="<?php echo ($docEmail ?? "N/A"); ?>" disabled>
+							</div>
+							<div class="row">
+								<label for="Phone Number">Phone Number:</label>
+								<input type="text" value="<?php echo ($docPhonenum ?? "N/A"); ?>" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
 
     <?php
         //database connection

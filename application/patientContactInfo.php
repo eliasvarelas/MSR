@@ -34,7 +34,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="basicapp.css">
+    <link rel="stylesheet" href="basicapp-notnow.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -128,42 +128,40 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 </div>
             </nav>
             <div class="content">
-
-                <form action="patientContactInfo.php?qpatid=<?php echo $patientID ?>" method="POST">
-                    <div class="container block">
+				<h2>Patients Contact Information</h2>
+                <form action="patientContactInfo.php?qpatid=<?php echo $patientID ?>" method="POST" class='form'>
+                    <div class="container bg-blue w-100">
                         <div class="split">
-                            <div class="left bg-white">
+                            <div class="left">
                                 <!-- modern stylign -->
-                                <p>
-                                    <h2>Old Information</h2>
-                                </p>
-                                <p>
+                                
+                                <div class='row'>
                                     <label for="ID">Patient ID:</label>
                                     <input type="text" name="patID" value="<?php echo ($patientID ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class='row'>
                                     <label for="Name">Name:</label>
                                     <input type="text" value="<?php echo ($patientNAME ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class='row'>
                                     <label for="oldDOB">Date of Birth:</label>
                                     <input type="date" value="<?php echo ($DOB ?? "N/A"); ?>" disabled>
-                                </p>
+                                </div>
                                 
                             </div>
-                            <div class="right bg-white">
-                                <p>
+                            <div class="right">
+                                <div class='row'>
                                     <label for="Email">Email:</label>
                                     <input type="text" value="<?php echo ($patientEmail ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class='row'>
                                     <label for="Phone Number">Phone Number:</label>
                                     <input type="text" value="<?php echo ($patientPhonenum ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class='row'>
                                     <label for="old address">Address:</label>
                                     <input type="text" value="<?php echo ($patientAdr ?? "N/A"); ?>" disabled>
-                                </p>
+                                </div>
                             </div>
                             </table>
                         </div>
@@ -191,7 +189,9 @@ $dbname = "MSR";
     ?>
                 <footer id="foo">
                     <div class="line"></div>
-                    Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
+                    <p>
+						Application created by the Laboratory of Bioinformatics and Human Electrophysiology of the Ionian University.
+					</p>
                 </footer>
             </div>
         </div>

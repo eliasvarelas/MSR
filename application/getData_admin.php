@@ -36,131 +36,127 @@ if( $_SERVER['REQUEST_METHOD']=='POST' && isset(
         */
         switch( $attributes ){
             case 'Patient_name':
-                $sql='SELECT DISTINCT `Patient_name` as name, count(*) as number 
-                          FROM patients WHERE Doctor_ID = :userid GROUP BY Patient_name';
+                $sql='SELECT `Patient_name` as name, count(*) as number 
+                          FROM patients GROUP BY Patient_name';
                 $args=array(
-                    ':userid'   =>  $usersid
+                    
                 );
             break;
             
             case 'Patient_id':
-                $sql='SELECT DISTINCT `Patient_id` as name, count(*) as number 
+                $sql='SELECT `Patient_id` as name, count(*) as number 
                           FROM patients
-                          WHERE Doctor_ID = :userid
-                          GROUP BY Patient_id';
-                $args=array(':userid'   =>  $usersid);
+                          GROUP BY Patient_name';
+                $args=array();
             break;
             
             case 'Sex':
-                $sql='SELECT DISTINCT Sex as name, count(*) as number 
+                $sql='SELECT Sex as name, count(*) as number 
                           FROM MSR JOIN patients ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
                           GROUP BY Sex';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'Race':
-                $sql='SELECT DISTINCT Race as name, count(*) as number 
-                          FROM MSR JOIN patients ON MSR.NDSnum = patients.Patient_id 
-                          WHERE Doctor_ID = :userid
+                $sql='SELECT Race as name, count(*) as number 
+                          FROM MSR JOIN patients ON MSR.NDSnum = patients.Patient_id
                           GROUP BY `Race`';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'Age':
-                $sql='SELECT DISTINCT `Age` as name, count(*) as number 
+                $sql='SELECT `Age` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY Age';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'Comorbidities':
                 $sql='SELECT `Comorbidities` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY Comorbidities';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'Email':
-                $sql='SELECT DISTINCT Email as name, count(*) as number 
+                $sql='SELECT Email as name, count(*) as number 
                           FROM patients
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY Email';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'eddsscore':
                 $sql='SELECT `eddsscore` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY eddsscore';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'Phonenum':
                 $sql='SELECT `Phonenum` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY Phonenum';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'onsetsymptoms':
                 $sql='SELECT `onsetsymptoms` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY onsetsymptoms';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'Onsetlocalisation':
                 $sql='SELECT `Onsetlocalisation` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY Onsetlocalisation';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'smoker':
                 $sql='SELECT `smoker` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY smoker';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'Pregnant':
                 $sql='SELECT `Pregnant` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY Pregnant';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'MRIenhancing':
                 $sql='SELECT `MRIenhancing` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY MRIenhancing';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'MRInum':
                 $sql='SELECT `MRInum` as name, count(*) as number 
-                          FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum
                           GROUP BY MRInum';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
 				
 			case 'MRIonsetlocalisation':
                 $sql='SELECT `MRIonsetlocalisation` as name, count(*) as number 
                           FROM patients JOIN MSR ON patients.Patient_id = MSR.NDSnum 
-                          WHERE Doctor_ID = :userid
+                          
                           GROUP BY MRIonsetlocalisation';
-                $args=array(':userid'   =>  $usersid);
+                $args=array();
             break;
             
             

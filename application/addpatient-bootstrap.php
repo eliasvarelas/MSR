@@ -201,11 +201,19 @@ $dbname = "MSR";
         if (isset($_POST['Submit'])) {
           $stmt = $pdo->prepare($sql);
           $stmt->execute([$doc, $pat_id, $flname, $dob, $phonenum, $email, $address, $Submit]);
-        }
+        
+			if($sql){
+			  //Redirect to the Menu page
+			  $script = file_get_contents('redirectPatientsTable.js');
+			  echo "<script>".$script."</script>";
+			}
+		
+		}
+		
 
       } catch (PDOException $e) {
-        echo"<div class='error'>";
-            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+		  echo"<div class='error'>";
+        	die("ERROR: Could not able to execute $sql. " . $e->getMessage()); 
           echo "</div>";
       }
       ?>

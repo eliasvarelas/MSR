@@ -34,7 +34,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="basicapp.css">
+    <link rel="stylesheet" href="basicapp-notnow.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -88,7 +88,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                 <li>
                     <a href="/MSR/application/visual_analytics.php">
                         <i class="fas fa-chart-bar"></i>
-                        Visual Analytics Tool D3
+                        Visual Analytics Tool
                     </a>
                 </li> -->
             </ul>
@@ -134,70 +134,70 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                         <div class="split">
                             <div class="left w-100">
                                 <!-- modern stylign -->
-                                <p>
+                                <div class="row">
                                     <h2>Old Information</h2>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="ID">Patient ID*:</label>
                                     <input type="text" name="patID" value="<?php echo ($patientID ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                 --------------------------------------------------------------
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="Name">Patient Name:</label>
                                     <input type="text" value="<?php echo ($patientNAME ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="oldDOB">Date of Birth:</label>
                                     <input type="date" value="<?php echo ($DOB ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="Email">Patient Email:</label>
                                     <input type="text" value="<?php echo ($patientEmail ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="Phone Number">Patient Phone Number:</label>
                                     <input type="text" value="<?php echo ($patientPhonenum ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="old address">Patient Address:</label>
                                     <input type="text" value="<?php echo ($patientAdr ?? "N/A"); ?>" disabled>
-                                </p>
+                                </div>
                             </div>
                             <div class="right w-100">
                                 
-                                <p>
+                                <div class="row">
                                     <h3>New Information</h3>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="patid">Patient ID*:</label>
                                     <input type="number" name="newPatID" id="newPatID">
                                     <!-- <input type="checkbox" name="enable ID" id="enableID"> -->
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     --------------------------------------------------------------
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="patName">Patient Name:</label>
                                     <input type="text" name="newPatName" id="newPatName">
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="DOB">Date of Birth:</label>
                                     <input type="date" name="newPatDOB" id="newPatDOB">
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="patEmail">Patient Email:</label>
                                     <input type="email" name="newPatEmail" id="newPatEmail">
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="phonenum">Patient Phone Number:</label>
                                     <input type="number" name="newPatPhonenum" id="newPatPhonenum">
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="patAdd">Patient Address:</label>
                                     <input type="text" name="newPatAddress" id="newPatAddress">
-                                </p>
+                                </div>
                             </table>
                         </div>
                     </div>
@@ -378,7 +378,6 @@ $dbname = "MSR";
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
           echo "</div>";
         }
-
     ?>
                 <footer>
                     <div class="line"></div>
@@ -386,9 +385,7 @@ $dbname = "MSR";
                 </footer>
             </div>
         </div>
-
-
-        <script>
+<script>
             var newPatID = document.getElementById('newPatID');
             function useValue(){
 

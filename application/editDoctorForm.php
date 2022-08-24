@@ -5,6 +5,8 @@ $docID = $_GET["docid"];   // used to pass the patient id directly in the form
 $docNAME = $_GET["nm"]; // used to pass the pateint name directly in the form
 $docEmail = $_GET["em"]; // used to pass the pateints age directly in the form
 $docPhonenum = $_GET["phone"];
+$fname = $_GET["fname"];
+$lname = $_GET["lname"];
 // $docAdr = $_GET['adr'];
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 18000)) {
     // last request was more than 30 minutes ago
@@ -33,7 +35,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="basicapp.css">
+    <link rel="stylesheet" href="basicapp-notnow.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -133,58 +135,72 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
                     <h2>Edit the Doctors Info</h2>
                 </div>
 
-                <form action="editDoctorForm.php?docid=<?php echo $docID ?>" method="POST">
-                    <div class="container block">
+                <form action="editDoctorForm.php?docid=<?php echo $docID ?>" method="POST" class ="form w-100">
+                    <div class="container bg-blue w-100">
                         <div class="split">
-                            <div class="left bg-white">
-                                <!-- modern stylign -->
-                                <p>
+                            <div class="left">
+                                <div class="row">
                                     <h2>Old Information</h2>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="ID">Doctor ID:</label>
                                     <input type="text" name="docID" value="<?php echo ($docID ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
-                                    <label for="Name">Doctors Name:</label>
+                                </div>
+                                <div class="row">
+                                    <label for="Name">Doctors Username:</label>
                                     <input type="text" value="<?php echo ($docNAME ?? "N/A"); ?>" disabled>
-                                </p>
-                                
-                                <p>
+                                </div>
+								<div class="row">
+                                    <label for="fname">Doctors First Name:</label>
+                                    <input type="text" value="<?php echo ($fname ?? "N/A"); ?>" disabled>
+                                </div>
+								<div class="row">
+                                    <label for="lname">Doctors Last Name:</label>
+                                    <input type="text" value="<?php echo ($lname ?? "N/A"); ?>" disabled>
+                                </div>
+                                <div class="row">
                                     <label for="Email">Doctors Email:</label>
                                     <input type="email" value="<?php echo ($docEmail ?? "N/A"); ?>" disabled>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="Phone Number">Doctor Phone Number:</label>
                                     <input type="text" value="<?php echo ($docPhonenum ?? "N/A"); ?>" disabled>
-                                </p>
+                                </div>
                                 
                                 
                             </div>
-                            <div class="right bg-white">
+                            <div class="right">
                                 
-                                <p>
+                                <div class="row">
                                     <h3>New Information</h3>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="docid">Doc ID:</label> 
                                     <input type="number" id="docidinp" name="newDocID" >
                                     <!-- <button id="docidbtn">Enable Field</button> -->
-                                </p>
-                                <p>
-                                    <label for="patName">Doctors Name:</label>
+                                </div>
+								<div class="row">
+                                    <label for="patName">Doctors Username:</label>
                                     <input type="text" name="newDocName" id="docnameinp" >
                                     <!-- <button id="docnamebtn"></button> -->
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
+                                    <label for="newFname">Doctors First Name:</label>
+                                    <input type="text" name="newDocFName" id="docfnameinp" >
+                                </div>
+								<div class="row">
+                                    <label for="newLname">Doctors Last Name:</label>
+                                    <input type="text" name="newDocLName" id="doclnameinp" >
+                                </div>
+                                <div class="row">
                                     <label for="patEmail">Doctors Email:</label>
                                     <input type="email" name="newDocEmail" id="docemailinp" >
                                     <!-- <button id="docemailbtn"></button> -->
-                                </p>
-                                <p>
+                                </div>
+                                <div class="row">
                                     <label for="phonenum">Doctors Phone Number:</label>
                                     <input type="number" name="newDocPhonenum" id="">
-                                </p>
+                                </div>
                                 
                             </table>
                         </div>
@@ -200,9 +216,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
         //database connection
         $usersid = $_SESSION['user_id']; // this is the id of the admin.
         $servername = "localhost";
-$username = "phpmyadmin";
-$password = "root";
-$dbname = "MSR";
+		$username = "phpmyadmin";
+		$password = "root";
+		$dbname = "MSR";
         $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
@@ -213,20 +229,23 @@ $dbname = "MSR";
                 $newDocName = $_POST['newDocName'];
                 $newDocEmail = $_POST['newDocEmail'];
                 $newDocPhonenum = $_POST['newDocPhonenum'];
-                // $qPatID = $_GET['qpatid'];
+				$newDocFName = $_POST['newDocFName'];
+				$newDocLName = $_POST['newDocLName'];
 
                 // check if there is change on all the data except from the new ID
-                if (!empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum'])  && empty($_POST['newDocID'])) {
-                    $sql = "UPDATE users SET doc_Email = :newDocEmail, username = :newDocName, doc_phone = :newDocPhonenum WHERE id = :docID";
+                if (!empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum'])  && empty($_POST['newDocID']) && !empty($_POST['newDocFName']) && !empty($_POST['newDocLName']) ) {
+                    $sql = "UPDATE users SET doc_Email = :newDocEmail, username = :newDocName, doc_phone = :newDocPhonenum, fname = :fname, lname = :lname WHERE id = :docID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newDocEmail", $newDocEmail);
                     $stmt->bindValue(":newDocName", $newDocName);
                     $stmt->bindValue(":newDocPhonenum", $newDocPhonenum);
                     $stmt->bindValue(":docID", $docID);
+                    $stmt->bindValue(":fname", $newDocFName);
+                    $stmt->bindValue(":lname", $newDocLName);
                     $stmt->execute();
                     echo "Data changed succesfully";
                     // check if only the name is entered
-                } elseif (!empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB'])) { //user enters only a new Name
+                } elseif (!empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) { //user enters only a new Name
                     $sql = "UPDATE users SET username =:newDocName WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newDocName", $newDocName);
@@ -234,7 +253,7 @@ $dbname = "MSR";
                     $stmt->execute();
                     echo "Name changed succesfully";
                     //check if only the email is entered
-                } elseif (empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB'])) {    // user enters only a new email
+                } elseif (empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) {    // user enters only a new email
                     $sql = "UPDATE users SET doc_Email =:newDocEmail WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newDocEmail", $newDocEmail);
@@ -242,7 +261,7 @@ $dbname = "MSR";
                     $stmt->execute();
                     echo "Email changed succesfully<br>";
                     // check if only the phonenum is entered
-                } elseif (empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB'])) {    // user enters only a new phone number
+                } elseif (empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) {    // user enters only a new phone number
                     $sql = "UPDATE users SET doc_phone =:newDocPhonenum WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newDocPhonenum", $newDocPhonenum);
@@ -250,22 +269,43 @@ $dbname = "MSR";
                     $stmt->execute();
                     echo "Number changed succesfully";
                     // check if only the address is entered
-                } elseif (empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB'])) {    //user enters only a new Address
+                } elseif (empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) {    //user enters only a new Address
                     $sql = "UPDATE users SET Patient_address =:newPatAddress WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newPatAddress", $newPatAddress);
                     $stmt->bindValue(":docID", $docID);
                     $stmt->execute();
                     echo "Address changed succesfully";
-                } elseif (!empty($_POST['newDocID']) && empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
+                } elseif (!empty($_POST['newDocID']) && empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) {
                     // check if only the PatientID is entered 
                     $sql = "UPDATE users SET id =:newDocID WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindValue(":newDocID", $newDocID);
                     $stmt->bindValue(":docID", $docID);
                     $stmt->execute();
-                } 
-                elseif (empty($_POST['newDocID']) && empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
+                } elseif (empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLname']) ) {   // check for fname only
+                    $sql = "UPDATE users SET fname = :fname WHERE id =:docID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":fname", $newDocFName);
+                    $stmt->bindValue(":docID", $docID);
+                    $stmt->execute();
+                    echo "Address changed succesfully fname only";
+                } elseif (empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFname']) && !empty($_POST['newDocLname']) ) {   // check for lname only
+                    $sql = "UPDATE users SET lname = :lname WHERE id =:docID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":lname", $newDocLName);
+                    $stmt->bindValue(":docID", $docID);
+                    $stmt->execute();
+                    echo "Address changed succesfully lname only";
+                } elseif (empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newDocID']) && empty($_POST['newPatDOB']) && !empty($_POST['newDocFname']) && !empty($_POST['newDocLname']) ) {   // check for fname&lname only
+                    $sql = "UPDATE users SET fname = :fname, lname =:lname WHERE id =:docID";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":fname", $newDocFName);
+                    $stmt->bindValue(":lname", $newDocLName);
+                    $stmt->bindValue(":docID", $docID);
+                    $stmt->execute();
+                    echo "Address changed succesfully fname&lane";
+                } elseif (empty($_POST['newDocID']) && empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) {
                     // check if email&phonenumber
                     $sql = "UPDATE users SET doc_Email =:newDocEmail, doc_phone=:newDocPhonenum WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
@@ -273,7 +313,7 @@ $dbname = "MSR";
                     $stmt->bindValue(":newDocPhonenum", $newDocPhonenum);
                     $stmt->bindValue(":docID", $docID);
                     $stmt->execute();
-                }elseif (empty($_POST['newDocID']) && !empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
+                } elseif (empty($_POST['newDocID']) && !empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) {
                     // check if email&name
                     $sql = "UPDATE users SET Email =:newDocEmail, username=:newDocName WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
@@ -281,7 +321,7 @@ $dbname = "MSR";
                     $stmt->bindValue(":newDocName", $newDocName);
                     $stmt->bindValue(":docID", $docID);
                     $stmt->execute();
-                }elseif (empty($_POST['newDocID']) && !empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
+                } elseif (empty($_POST['newDocID']) && !empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && empty($_POST['newPatDOB']) && empty($_POST['newDocFName']) && empty($_POST['newDocLName'])) {
                     // check if name&phonenumber
                     $sql = "UPDATE users SET doc_phone =:newDocPhonenum, username=:newDocName WHERE id =:docID";
                     $stmt = $pdo->prepare($sql);
@@ -289,67 +329,9 @@ $dbname = "MSR";
                     $stmt->bindValue(":newDocName", $newDocName);
                     $stmt->bindValue(":docID", $docID);
                     $stmt->execute();
-                }
-                // elseif (empty($_POST['newDocID']) && empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
-                //     // check if DOB is entered 
-                //     $sql = "UPDATE users SET DOB =:newPatDOB WHERE id =:docID";
-                //     $stmt = $pdo->prepare($sql);
-                //     $stmt->bindValue(":newPatDOB", $newPatDOB);
-                //     $stmt->bindValue(":docID", $docID);
-                //     $stmt->execute();
-                // }
-                // elseif (empty($_POST['newDocID']) && empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
-                //     // check if email&address
-                //     $sql = "UPDATE users SET Patient_address =:newPatAddress, Email=:newDocEmail WHERE id =:docID";
-                //     $stmt = $pdo->prepare($sql);
-                //     $stmt->bindValue(":newPatAddress", $newPatAddress);
-                //     $stmt->bindValue(":newDocEmail", $newDocEmail);
-                //     $stmt->bindValue(":docID", $docID);
-                //     $stmt->execute();
-                // }
-                // elseif (empty($_POST['newDocID']) && empty($_POST['newDocName']) && !empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
-                //     // check if email&dob
-                //     $sql = "UPDATE users SET Email =:newDocEmail, DOB=:newPatDOB WHERE id =:docID";
-                //     $stmt = $pdo->prepare($sql);
-                //     $stmt->bindValue(":newDocEmail", $newDocEmail);
-                //     $stmt->bindValue(":newPatDOB", $newPatDOB);
-                //     $stmt->bindValue(":docID", $docID);
-                //     $stmt->execute();
-                // }elseif (empty($_POST['newDocID']) && !empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
-                    //     // check if name&address
-                    //     $sql = "UPDATE users SET Patient_address =:newPatAddress, username=:newDocName WHERE id =:docID";
-                    //     // $stmt = $pdo->prepare($sql);
-                    //     $stmt->bindValue(":newPatAddress", $newPatAddress);
-                //     $stmt->bindValue(":newDocName", $newDocName);
-                //     $stmt->bindValue(":docID", $docID);
-                //     // $stmt->execute();
-                // }
-                // elseif (empty($_POST['newDocID']) && !empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
-                //     // check if name&dob
-                //     $sql = "UPDATE users SET username =:newPatAddress, DOB=:newPatDOB WHERE id =:docID";
-                //     $stmt = $pdo->prepare($sql);
-                //     $stmt->bindValue(":newDocName", $newDocName);
-                //     $stmt->bindValue(":newPatDOB", $newPatDOB);
-                //     $stmt->bindValue(":docID", $docID);
-                //     $stmt->execute();
-                // }
-                // elseif (empty($_POST['newDocID']) && empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && !empty($_POST['newPatAddress']) && empty($_POST['newPatDOB'])) {
-                //     // check if address&phonenum
-                //     $sql = "UPDATE users SET Patient_address =:newPatAddress, doc_phone=:newDocPhonenum WHERE id =:docID";
-                //     $stmt = $pdo->prepare($sql);
-                //     $stmt->bindValue(":newPatAddress", $newPatAddress);
-                //     $stmt->bindValue(":newDocPhonenum", $newDocPhonenum);
-                //     $stmt->bindValue(":docID", $docID);
-                //     $stmt->execute();
-                // }elseif (empty($_POST['newDocID']) && empty($_POST['newDocName']) && empty($_POST['newDocEmail']) && !empty($_POST['newDocPhonenum']) && empty($_POST['newPatAddress']) && !empty($_POST['newPatDOB'])) {
-                //     // check if phonenum&dob
-                //     $sql = "UPDATE users SET doc_phone = :newDocPhonenum, DOB=:newPatDOB WHERE id =:docID";
-                //     $stmt = $pdo->prepare($sql);
-                //     $stmt->bindValue(":newDocPhonenum", $newDocPhonenum);
-                //     $stmt->bindValue(":newPatDOB", $newPatDOB);
-                //     $stmt->bindValue(":docID", $docID);
-                //     $stmt->execute();
-                // }
+                } else {
+					echo "something went wrong";
+				}
             }
                 
             } catch (PDOException $e) {
@@ -365,17 +347,6 @@ $dbname = "MSR";
                 </footer>
             </div>
         </div>
-
-
-        
-        <script>
-            var docIDbutton = document.getElementById('docidbtn');
-            var docIDinp = document.getElementById('docidinp');
-
-            docIDbutton.onclick = function enableFields() {
-                docIDinp.setAttribute('disabled', false);
-            }
-        </script>
 </body>
 
 </html>

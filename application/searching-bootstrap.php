@@ -270,7 +270,7 @@ $dbname = "MSR";
             </tr>
             <tr id="Email_tr" hidden>
               <td id="Email_td" hidden>
-                <input type="email" name="searchemail" id="searchingEmail">
+                <input type="email" name="searchemail" id="searchingEmail" placeholder="john@email.com">
               </td>
             </tr>
             </tbody>
@@ -399,7 +399,7 @@ $dbname = "MSR";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
-                    <table id="standard">
+    				<table id="standard">
                       <tr>
                         <th>Patient ID</th>
                         <th>Name</th>
@@ -408,7 +408,7 @@ $dbname = "MSR";
                         <th>Email</th>
                         <th>Sex</th>
                         <th>Previous Visits</th>
-                      </tr>
+                      </tr>                
                       <tr>
                         <td><?php echo $row['Patient_id']; ?></td>
                         <td> <?php echo $row['Patient_name']; ?> </td>
@@ -421,6 +421,7 @@ $dbname = "MSR";
                     </table>
                     <div class="line"></div>
                   <?php }
+	
                 } else {
                   echo "No patient exists with this information. MRI enhancing";
                 }
@@ -822,7 +823,7 @@ $dbname = "MSR";
                 }
               }
               if ($option == 'Email') {
-                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
+                $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND patients.Email = '$email_entry' ORDER BY patients.Patient_id";
                 $result = $pdo->query($sql);
                 if ($result->rowCount() > 0) {
                   while ($row = $result->fetch()) { ?>
@@ -833,6 +834,7 @@ $dbname = "MSR";
                         <th>Name</th>
                         <th>Date of Birth</th>
                         <th>Phone Number</th>
+                        <th>Date of Visit</th>
                         <th>Previous Visits</th>
                       </tr>
                       <tr>
@@ -841,6 +843,7 @@ $dbname = "MSR";
                         <td> <?php echo $row['Patient_name']; ?> </td>
                         <td><?php echo $row['DOB']; ?></td>
                         <td><?php echo $row['Phonenum']; ?></td>
+                        <td><?php echo $row['reg_date']; ?></td>
                         <td><?php echo "<a href='previousvisit-bootstrap.php?id=" . $row['Patient_id'] . "'>Previous Visits</a>"; ?></td>
                       </tr>
                     </table>
@@ -850,8 +853,7 @@ $dbname = "MSR";
                 }
               }
             } else {
-              //** enter the queries for the second attributes here (works fine)
-
+              
               if ($option == 'Name') {
                 if ($newoption == 'ID' && !empty($newID)) {
                   $sql = "SELECT * FROM patients WHERE Doctor_ID = $usersid AND Patient_name LIKE '%$entry%' AND Patient_id = '$newID' ORDER BY Patient_id";
@@ -885,7 +887,7 @@ $dbname = "MSR";
                   }
                 }
                 if ($newoption == 'Sex' && !empty($newSex)) {
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Patient_id = MSR.NDSnum AND Doctor_ID = $usersid AND MSR.Sex = '$newSex' AND patients.Patient_name LIKE '%$entry%' ORDER BY Patient_id, reg_date";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>
@@ -1868,7 +1870,7 @@ $dbname = "MSR";
               }
               if ($option == 'Sex') {
                 if ($newoption == 'Name' && !empty($newName)) { //somethings not right right now...
-                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id";
+                  $sql = "SELECT patients.Patient_id,patients.Patient_name,patients.DOB,patients.Phonenum,patients.Email,MSR.Sex,MSR.reg_date FROM patients JOIN  MSR ON patients.Patient_id = MSR.NDSnum WHERE patients.Doctor_ID = $usersid AND MSR.Sex = '$sex_entry' AND patients.Patient_name LIKE '$newName%' ORDER BY Patient_id, reg_date";
                   $result = $pdo->query($sql);
                   if ($result->rowCount() > 0) {
                     while ($row = $result->fetch()) { ?>

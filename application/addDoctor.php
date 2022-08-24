@@ -31,7 +31,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- Our Custom CSS -->
-  <link rel="stylesheet" href="basicapp.css">
+  <link rel="stylesheet" href="basicapp-notnow.css">
 
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -45,7 +45,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-        <h3><a href="menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
+        <h3><a href="admins_menu.php" id="logo">Multiple Sclerosis Registry<a /></h3>
         <strong><a href="menu.php" id="logo">MSR</a></strong>
       </div>
 
@@ -75,7 +75,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['logged_in']) &&  !isset($_
             </a>
         </li> 
         <li>
-          <a href="visual_analytics_google.php">
+          <a href="visual_analytics_google_admin.php">
             <i class="fas fa-chart-bar"></i>
             Visual Analytics Tool
           </a>
@@ -128,56 +128,46 @@ $dbname = "MSR";
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $doc = $_SESSION['user_id']; ?>
-      <div class="block">
+      <div class="container block">
         <h2>Create a New User</h2>
       </div>
-    <div class="container block">
+    
       <!-- <div class="block"> -->
 
-        <form action="addDoctor.php" method="post">
+    <form action="addDoctor.php" method="post" class="form">
           <!-- basic form to pass the data in the database for the creation of a new doc -->
-          <!-- <div class=""> -->
+          <div class="container bg-blue w-100">
             <div class="split">  
-              <div class="left bg-white"> 
-                <p>
-                  <label for="assignid">Doctors ID:</label>
-                <!-- </p>
-                <p> -->
-                  <input type="number" name="assignid" placeholder="Doc ID" required>
-                </p>
-                <p>
-                   <label for="pass">Temporary Password</label> 
-                <!-- </p>
-                <p> -->
-                    <input type="text" name="docPass" id="" required>
-                </p>
-                <p>
-                  <label for="flname">Doctors Name:</label>
-                <!-- </p>
-                <p> -->
-                  <input type="text" name="flname" placeholder="First and Last Name" required>
-                </p>
+              <div class="left"> 
+                <div class="row">
+					<label for="assignid">Doctors ID:</label>
+					<input type="number" name="assignid" placeholder="Doc ID" required>
+				</div>
+				<div class="row">
+					<label for="pass">Temporary Password</label>   
+					  <input type="text" name="docPass" id="" required>
+				</div>
+				<div class="row">
+					<label for="flname">Doctors Name:</label>
+                  	<input type="text" name="flname" placeholder="First and Last Name" required>  
+				</div>
               </div>
-              <div class="right bg-white">
-                <p>
-                  <label for="email">E-mail:</label>
-                <!-- </p>
-                <p> -->
-                  <input type="email" name="email" placeholder="Ipokratis@email.com" required>
-                </p>
-                
-                <p>
-                  <label for="">Phone Number</label>
-                <!-- </p>
-                <p> -->
-                  <input type="number" name="phone" placeholder="Phone Number" required>
-                </p>
+              <div class="right">
+                <div class = "row">
+					<label for="email">E-mail:</label>
+                  	<input type="email" name="email" placeholder="Ipokratis@email.com" required>
+				</div>
+                <div class = "row">
+					  <label for="">Phone Number</label>
+                  	  <input type="number" name="phone" placeholder="Phone Number" required>
+				</div>
               </div>
             </div>
-            
-            <input type="submit" name="Submit" class="bttn">
-        </form>
-    </div>
+			  <input type="submit" name="Submit" class="bttn" value="Submit">
+          </div>            
+    </form>
+    <!-- </div> -->
+		
     <!-- </div> -->
 
       <?php
